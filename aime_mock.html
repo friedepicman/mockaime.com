@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mock AIME Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #004488;
+    }
+    select, button {
+      font-size: 16px;
+      padding: 8px;
+      margin: 10px 5px;
+    }
+    .problem {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+    .answer {
+      margin-top: 10px;
+    }
+    input[type="text"] {
+      padding: 6px;
+      font-size: 16px;
+      width: 100px;
+    }
+    .stats {
+      margin: 10px 0;
+      font-size: 15px;
+      color: #333;
+    }
+    .result {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 18px;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+  </style>
+
+  <!-- MathJax configuration (must come before loading script) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        ignoreHtmlClass: 'no-mathjax',
+        processHtmlClass: 'mathjax-process'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1>Mock AIME Generator</h1>
+
+  <label for="difficulty">Select Difficulty Level:</label>
+  <select id="difficulty">
+    <option value="1">1 - Easiest</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5" selected>5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10 - Hardest</option>
+  </select>
+
+  <button onclick="generateMock()">Generate Mock</button>
+  <button onclick="checkAnswers()">Check Answers</button>
+
+  <div class="stats" id="stats"></div>
+  <div id="problems"></div>
+
+  <script>
+    const sampleSizes = {
+      1: [6, 5, 4, 0],
+      2: [5, 5, 5, 0],
+      3: [5, 5, 4, 1],
+      4: [5, 5, 3, 2],
+      5: [5, 4, 4, 2],
+      6: [5, 4, 3, 3],
+      7: [4, 5, 3, 3],
+      8: [4, 4, 4, 3],
+      9: [4, 4, 3, 4],
+      10: [3, 4, 4, 4]
+    };
+
+    let allProblems = [];
+    let chosenProblems = [];
+
+    fetch('all_problems_with_all_difficulties.json')
+      .then(res => res.json())
+      .then(data => {
+        allProblems = data;
+        console.log("Loaded", allProblems.length, "problems.");
+      });
+
+    function bucketizeProblems() {
+      const buckets = {
+        "3-3.5": [],
+        "4-4.5": [],
+        "5-5.5": [],
+        "6-7": []
+      };
+
+      for (const p of allProblems) {
+        let d = p.difficulty;
+        if (typeof d === "string") d = parseFloat(d);
+        if (isNaN(d)) continue;
+
+        const answerType = p.answer_type?.toLowerCase().trim();
+        if (answerType !== "positive integer <= 1000") continue;
+
+        if (d >= 3 && d <= 3.5) buckets["3-3.5"].push(p);
+        else if (d > 3.5 && d <= 4.5) buckets["4-4.5"].push(p);
+        else if (d > 4.5 && d <= 5.5) buckets["5-5.5"].push(p);
+        else if (d > 5.5 && d <= 7) buckets["6-7"].push(p);
+      }
+
+      return buckets;
+    }
+
+    function sample(arr, n) {
+      const copy = [...arr];
+      const result = [];
+      while (result.length < n && copy.length > 0) {
+        const idx = Math.floor(Math.random() * copy.length);
+        result.push(copy.splice(idx, 1)[0]);
+      }
+      return result;
+    }
+
+    async function generateMock() {
+      const level = parseInt(document.getElementById("difficulty").value);
+      const [n1, n2, n3, n4] = sampleSizes[level];
+      const buckets = bucketizeProblems();
+
+      // Show stats
+      const stats = document.getElementById("stats");
+      stats.innerHTML = `
+        Bucket counts for problems with answer_type "positive integer <= 1000":<br>
+        (3–3.5): ${buckets["3-3.5"].length} needed ${n1}<br>
+        (4–4.5): ${buckets["4-4.5"].length} needed ${n2}<br>
+        (5–5.5): ${buckets["5-5.5"].length} needed ${n3}<br>
+        (6–7): ${buckets["6-7"].length} needed ${n4}
+      `;
+
+      // Check if we have enough
+      if (
+        buckets["3-3.5"].length < n1 ||
+        buckets["4-4.5"].length < n2 ||
+        buckets["5-5.5"].length < n3 ||
+        buckets["6-7"].length < n4
+      ) {
+        document.getElementById("problems").innerHTML = `<p style="color:red;"><strong>Not enough problems to generate mock.</strong></p>`;
+        return;
+      }
+
+      // Sample and shuffle
+      chosenProblems = [
+        ...sample(buckets["3-3.5"], n1),
+        ...sample(buckets["4-4.5"], n2),
+        ...sample(buckets["5-5.5"], n3),
+        ...sample(buckets["6-7"], n4)
+      ].sort(() => Math.random() - 0.5);
+
+      const container = document.getElementById("problems");
+      container.innerHTML = "";
+      chosenProblems.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "problem mathjax-process";
+        div.innerHTML = `
+          <strong>Problem ${i + 1}:</strong>
+          <p>${p.text}</p>
+          <div class="answer">Answer: <input type="text" maxlength="3" data-index="${i}" /></div>
+          <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
+          <span class="result" id="result-${i}"></span>
+        `;
+        container.appendChild(div);
+      });
+
+      // Wait for MathJax to process these elements
+      if (window.MathJax) {
+        try {
+          await MathJax.typesetPromise();
+        } catch (err) {
+          console.error('MathJax typeset failed: ', err);
+        }
+      }
+    }
+
+    function checkAnswers() {
+      chosenProblems.forEach((p, i) => {
+        const userAnswer = document.querySelector(`input[data-index="${i}"]`).value.trim();
+        const resultSpan = document.getElementById(`result-${i}`);
+        if (userAnswer === p.answer) {
+          resultSpan.textContent = "✔️";
+          resultSpan.className = "result correct";
+        } else {
+          resultSpan.textContent = "❌";
+          resultSpan.className = "result incorrect";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

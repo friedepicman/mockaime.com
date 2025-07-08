@@ -1,0 +1,189 @@
+Problem 1:
+Six consecutive positive integers are written on slips of paper. The slips are then handed out to Ethan, Jacob, and Karthik, such that each of them receives two slips. The product of Ethan's numbers is $20,$ and the product of Jacob's numbers is $24.$ Compute the product of Karthik's numbers.
+
+Problem 2:
+Let $RANDOM$ be a regular hexagon with side length $1.$ Points $I$ and $T$ lie on segments $\overline{RA}$ and $\overline{DO},$ respectively, such that $MI=MT$ and $\angle{TMI}=90^\circ.$ Compute the area of triangle $MIT.$
+
+Problem 3:
+Suppose that $a,b,$ and $c$ are distinct positive integers such that $a^bb^c=a^c.$ Across all possible values of $a,b,$ and $c,$ compute the minimum value of $a+b+c.$
+
+Problem 4:
+Compute the number of ways to pick a three-element subset of $$\{10^1+1, 10^2+1, 10^3+1, 10^4+1, 10^5+1, 10^6+1, 10^7+1\}$$ such that the product of the $3$ numbers in the subset has no digits besides $0$ and $1$ when written in base $10.$
+
+Problem 5:
+Let $f$ be a function on nonnegative integers such that $f(0)=0$ and $$f(3n+2)=f(3n+1)=f(3n)+1=3f(n)+1$$ for all integers $n \ge 0.$ Compute the sum of all nonnegative integers $m$ such that $f(m)=13.$
+
+Problem 6:
+A positive integer $n$ is stacked if $2n$ has the same number of digits as $n$ and the digits of $2n$ are multiples of the corresponding digits of $n.$ For example, $1203$ is stacked because $2 \times 1203 = 2406,$ and $2, 4, 0, 6$ are multiples of $1, 2, 0, 3,$ respectively. Compute the number of stacked integers less than $1000.$
+
+Problem 7:
+Let triangle $ABC$ have $AB = 5, BC = 8,$ and $\angle ABC = 60^\circ.$ A circle $\omega$ tangent to segments $AB$ and $BC$ intersects segment $CA$ at points $X$ and $Y$ such that points $C, Y , X,$ and $A$ lie along $CA$ in this order. If $\omega$ is tangent to $AB$ at point $Z$ and $ZY \parallel BC,$ compute the radius of $\omega.$
+
+Problem 8:
+Let $$f(x) = \left|\left|\cdots\left|\left|\left|\left|x\right|-1\right|-2\right|-3\right|-\cdots \right|-10\right|.$$ Compute $f(1)+f(2)+\cdots+f(54)+f(55).$
+
+Problem 9:
+Let $ABCDEF$ be a regular hexagon with center $O$ and side length $1.$ Point $X$ is placed in the interior of the hexagon such that $\angle BXC = \angle AXE = 90^\circ.$ Compute all possible values of $OX.$
+
+Problem 10:
+Let $S = \{1, 2, 3, . . . , 64\}.$ Compute the number of ways to partition $S$ into $16$ arithmetic sequences such that each arithmetic sequence has length $4$ and common difference $1, 4,$ or $16.$
+
+Problem 11:
+Compute the number of ways to fill each of the $12$ empty cells in the grid below with one of $T, A, L,$ or $C$ such that each of the four rows, columns, and bolded $2 \times 2$ square regions contains each letter exactly once.
+
+Problem 12:
+Paul is in the desert and has a pile of gypsum crystals. No matter how he divides the pile into two nonempty piles, at least one of the resulting piles has a number of crystals that, when written in base $10,$ has a sum of digits at least $7.$ Given that Paul’s initial pile has at least two crystals, compute the smallest possible number of crystals in the initial pile.
+
+Problem 13:
+Points $K,A,L,C,I,T,E$ are such that triangles $CAT$ and $ELK$ are equilateral, share a center $I,$ and points $E,L,K$ lie on sides $CA, AT, TC$ respectively. If the area of triangle $CAT$ is double the area of triangle $ELK$ and $CI = 2,$ compute the minimum possible value of $CK.$
+
+Problem 14:
+Compute $$\sum_{i=1}^{4} \sum_{t=1}^{4} \sum_{e=1}^{4} \left\lfloor \frac{ite}{5} \right\rfloor.$$
+
+Problem 15:
+Alf, the alien from the s TV show, has a big appetite for the mineral apatite. However, he’s currently on a diet, so for each integer $k \ge 1,$ he can eat exactly $k$ pieces of apatite on day $k.$ Additionally, if he eats apatite on day $k,$ he cannot eat on any of days $k + 1, k + 2, \ldots, 2k - 1.$ Compute the maximum total number of pieces of apatite Alf could eat over days $1,2, \ldots,99,100.$
+
+Problem 16:
+Let $FELDSPAR$ be a regular octagon, and let $I$ be a point in its interior such that $\angle FIL = \angle LID =$  $\angle DIS$  $=\angle SIA.$ Compute $\angle IAR$ in degrees.
+
+Problem 17:
+Jasper and Rose are playing a game. Twenty-six - ounce jugs are in a line, labeled Quart $\text{A}$ through Quart $\text{Z}$ from left to right. All twenty-six jugs are initially full. Jasper and Rose take turns making one of the following two moves: remove a positive integer number of ounces (possibly all) from the leftmost nonempty jug, orremove anequalpositive integer number of ounces from the two leftmost nonempty jugs, possiblyemptying them. Neither player may remove more ounces from a jug than it currently contains. Jasper plays first. A player’s score is the number of ounces they take from Quart $\text{Z}.$ If both players play to maximize their score, compute the maximum score that Jasper can guarantee.
+
+Problem 18:
+For all positive integers $r$ and $s,$ let $\text{Top}(r,s)$ denote the top number (i.e., numerator) when $r$  $s$ is written in simplified form. For instance, $\text{Top}(20,24) = 5.$ Compute the number of ordered pairs of positive integers $(a,z)$ such that $200 \le a \le 300$ and $\text{Top}(a,z) = \text{Top}(z,a-1).$
+
+Problem 19:
+Compute the number of ways to color each cell of an $18 \times 18$ square grid either ruby or sapphire such that each contiguous $3 \times 3$ subgrid has exactly $1$ ruby cell.
+
+Problem 20:
+Isabella the geologist discovers a diamond deep underground via an X-ray machine. The diamond has the shape of a convex cyclic pentagon $PABCD$ with . Soon after the discovery, her X-ray breaks, and she only recovers partial information about its dimensions. She knows that , and . Compute .
+
+Problem 21:
+The integers from $1$ to $9$ are arranged in a $3\times3$ grid. The rows and columns of the grid correspond to $6$ three-digit numbers, reading rows from left to right, and columns from top to bottom. Compute the least possible value of the largest of the $6$ numbers.
+
+Problem 22:
+Compute the sum of all positive integers $x$ such that $(x-17)\sqrt{x-1}+(x-1)\sqrt{x+15}$ is an integer.
+
+Problem 23:
+Rectangle $R$ with area $20$ and diagonal of length $7$ is translated $2$ units in some direction to form a new rectangle $R'.$ The vertices of $R$ and $R'$ that are not contained in the other rectangle form a convex hexagon. Compute the maximum possible area of this hexagon.
+
+Problem 24:
+Albert writes down all of the multiples of $9$ between $9$ and $999,$ inclusive. Compute the sum of the digits he wrote.
+
+Problem 25:
+Let $ABCD$ be a convex quadrilateral with area $202, AB = 4,$ and $\angle A = \angle B = 90^\circ$ such that there is exactly one point $E$ on line $CD$ satisfying $\angle AEB = 90^\circ.$ Compute the perimeter of $ABCD.$
+
+Problem 26:
+There are $5$ people who start with $1, 2, 3, 4,$ and $5$ cookies, respectively. Every minute, two different people are chosen uniformly at random. If they have $a$ and $b$ cookies and $a\neq b,$ the person with more cookies eats $|a-b|$ of their own cookies. If $a = b,$ the minute still passes with nothing happening.    Compute the expected number of minutes until all $5$ people have an equal number of cookies.
+
+Problem 27:
+A weird checkerboard is a coloring of an $8\times8$ grid constructed by making some (possibly none or all) of the following $14$ cuts: thevertical cuts along a gridline through the entire height of the board,and thehorizontal cuts along a gridline through the entire width of the board. The divided rectangles are then colored black and white such that the bottom left corner of the grid is black, and no two rectangles adjacent by an edge share a color. Compute the number of weird checkerboards that have an equal amount of area colored black and white.
+
+Problem 28:
+Compute the unique real numbers $x<3$ such that $$\sqrt{(3-x)(4-x)}+\sqrt{(4-x)(6-x)}+\sqrt{(6-x)(3-x)}=x.$$
+
+Problem 29:
+Let $P$ be a point inside isosceles trapezoid $ABCD$ with $AB \parallel CD$ such that $$\angle{PAD}=\angle{PDA}=90^\circ-\angle{BPC}.$$ If $PA=14, AB=18,$ and $CD=28,$ compute the area of $ABCD.$
+
+Problem 30:
+For each positive integer $n,$ let $f(n)$ be either the unique integer $r \in \{0,1, \ldots, n-1\}$ such that $n$ divides $15r-1,$ or $0$ if such $r$ does not exist. Compute $$f(16)+f(17)+f(18)+\cdots+f(300).$$
+
+Problem 31:
+A circle of area $1$ is cut by two distinct chords. Compute the maximum possible area of the smallest resulting piece.
+
+Problem 32:
+Compute the smallest integer $n > 72$ that has the same set of prime divisors as $72.$
+
+Problem 33:
+The graphs of the lines $$y=x+2, \quad y=3x+4, \quad y=5x+6,\quad y=7x+8,\quad y=9x+10,\quad y=11x+12$$ are drawn. These six lines divide the plane into several regions. Compute the number of regions the plane is divided into.
+
+Problem 34:
+The number $17^6$ when written out in base $10$ contains $8$ distinct digits from $1,2,\ldots,9,$ with no repeated digits or zeroes. Compute the missing nonzero digit.
+
+Problem 35:
+Let $ABCD$ be a trapezoid with $AB \parallel CD, AB=20, CD=24,$ and area $880.$ Compute the area of the triangle formed by the midpoints of $AB, AC,$ and $BD.$
+
+Problem 36:
+The vertices of a cube are labeled with the integers $1$ through $8,$ with each used exactly once. Let $s$ be the maximum sum of the labels of two edge-adjacent vertices. Compute the minimum possible value of $s$ over all such labelings.
+
+Problem 37:
+Let $\mathcal{P}$ be a regular - gon in the coordinate plane. Mark computes the number of distinct - coordinates that vertices of $\mathcal{P}$ take. Across all possible placements of $\mathcal{P}$ in the plane, compute the sum of all possible answers Mark could get.
+
+Problem 38:
+Derek is bored in math class and is drawing a flower. He first draws $8$ points $A_1, A_2, \ldots, A_8$ equally spaced around an enormous circle. He then draws $8$ arcs outside the circle where the t h arc for $i = 1, 2, \ldots, 8$ has endpoints $A_i, A_{i+1}$ with $A_9 = A_1,$ such that all of the arcs have radius $1$ and any two consecutive arcs are tangent. Compute the perimeter of Derek’s - petaled flower (not including the central circle).
+
+Problem 39:
+Compute the remainder when $$1002003004005006007008009$$ is divided by $13.$
+
+Problem 40:
+Compute the largest prime factor of $3^{12}+3^9+3^5+1.$
+
+Problem 41:
+A four-digit integer in base $10$ is friendly if its digits are four consecutive digits in any order. A four-digit integer is shy if there exist two adjacent digits in its representation that differ by $1.$ Compute the number of four-digit integers that are both friendly and shy.
+
+Problem 42:
+A dodecahedron is a polyhedron shown on the left below. One of its nets is shown on the right. Compute the label of the face opposite to $\mathcal{P}.$
+
+Problem 43:
+Let $f$ and $g$ be two quadratic polynomials with real coefficients such that the equation $f(g(x)) = 0$ has four distinct real solutions: $112, 131, 146,$ and $a.$ Compute the sum of all possible values of $a.$
+
+Problem 44:
+Let $ABCD$ be a trapezoid with $AB \parallel CD.$ Point $X$ is placed on segment $BC$ such that $\angle{BAX} = \angle{XDC}.$ Given that $AB = 5, BX =3, CX =4,$ and $CD =12,$ compute $AX.$
+
+Problem 45:
+Compute the sum of the three smallest positive integers $n$ for which $$\frac{1+2+3+\cdots+(2024n-1)+2024n}{1+2+3+\cdots+(4n-1)+4n}$$ is an integer.
+
+Problem 46:
+Compute $$\frac{2+3+\cdots+100}{1}+\frac{3+4+\cdots+100}{1+2}+\cdots+\frac{100}{1+2+\cdots+99}.$$
+
+Problem 47:
+Compute the number of ways to shade in some subset of the $16$ cells in a $4 \times 4$ grid such that each of the $25$ vertices of the grid is a corner of at least one shaded cell.
+
+Problem 48:
+Let $ABCD$ be a rectangle whose vertices are labeled in counterclockwise order with $AB=32$ and $AD=60.$ Rectangle $A'B'C'D'$ is constructed by rotating $ABCD$ counterclockwise about $A$ by $60^\circ.$ Given that lines $BB'$ and $DD'$ intersect at point $X,$ compute $CX.$
+
+Problem 49:
+An equilateral triangle is inscribed in a circle $\omega.$ A chord of $\omega$ is cut by the perimeter of the triangle into three segments of lengths $55, 121,$ and $55,$ in that order. Compute the sum of all possible side lengths of the triangle.
+
+Problem 50:
+There exists a unique line tangent to the graph of $y=x^4-20x^3+24x^2-20x+25$ at two distinct points. Compute the product of the - coordinates of the two tangency points.
+
+Problem 51:
+Two points are chosen independently and uniformly at random from the interior of the - pentomino shown below. Compute the probability that the line segment between these two points lies entirely within the - pentomino.
+
+Problem 52:
+Suppose that $a$ and $b$ are positive integers such that $\gcd(a^3 - b^3,(a-b)^3)$ is not divisible by any perfect square except $1.$ Given that $1 \le a-b \le 50,$ compute the number of possible values of $a-b$ across all such $a,b.$
+
+Problem 53:
+Consider a quarter-circle with center $O,$ arc $\widehat{AB},$ and radius $2.$ Draw a semicircle with diameter $\overline{OA}$ lying inside the quarter-circle. Points $P$ and $Q$ lie on the semicircle and segment $\overline{OB},$ respectively, such that line $PQ$ is tangent to the semicircle. As $P$ and $Q$ vary, compute the maximum possible area of triangle $BQP.$
+
+Problem 54:
+Let $f(x) = x^2 +6x+6.$ Compute the greatest real number $x$ such that $f(f(f(f(f(f(x)))))) = 0.$
+
+Problem 55:
+Let $ABC$ be an equilateral triangle. A regular hexagon $PXQYRZ$ of side length $2$ is placed so that $P, Q,$ and $R$ lie on segments $\overline{BC}, \overline{CA},$ and , respectively. If points $A, X,$ and $Y$ are collinear, compute $BC.$
+
+Problem 56:
+A right rectangular prism of silly powder has dimensions $20 \times 24 \times 25.$ Jerry the wizard applies $10$ bouts of highdroxylation to the box, each of which increases one dimension of the silly powder by $1$ and decreases a different dimension of the silly powder by $1,$ with every possible choice of dimensions equally likely to be chosen and independent of all previous choices. Compute the expected volume of the silly powder after Jerry’s routine.
+
+Problem 57:
+For any positive integer $n,$ let $f(n)$ be the number of ordered triples $(a,b,c)$ of positive integers such that dividesand Compute $f(1)+f(2)+\cdots+f(100).$
+
+Problem 58:
+The graph of the equation $\tan(x+y) = \tan(x)+2\tan(y),$ with its pointwise holes filled in, partitions the coordinate plane into congruent regions. Compute the perimeter of one of these regions.
+
+Problem 59:
+Let $ABC$ be a triangle such that $AB = 3, AC = 4,$ and $\angle{BAC} = 75^\circ.$ Square $BCDE$ is constructed outside triangle $ABC.$ Compute $AD^2 +AE^2.$
+
+Problem 60:
+Compute the number of ways to shade exactly $4$ distinct cells of a $4\times4$ grid such that no two shaded cells share one or more vertices.
+
+Problem 61:
+Positive integers $a, b,$ and $c$ have the property that $\text{lcm}(a,b), \text{lcm}(b,c),$ and $\text{lcm}(c,a)$ end in $4, 6,$ and $7,$ respectively, when written in base $10.$ Compute the minimum possible value of $a + b + c.$
+
+Problem 62:
+Let $ABC$ be an acute triangle and $D$ be the foot of altitude from $A$ to $BC.$ Let $X$ and $Y$ be points on the segment $BC$ such that $\angle{BAX} = \angle{YAC}, BX = 2, XY = 6,$ and $YC = 3.$ Given that $AD = 12,$ compute $BD.$
+
+Problem 63:
+A grid is called groovy if each cell of the grid is labeled with the smallest positive integer that does not appear below it in the same column or to the left of it in the same row. Compute the sum of the entries of a groovy $14 \times 14$ grid whose bottom left entry is $1.$
+

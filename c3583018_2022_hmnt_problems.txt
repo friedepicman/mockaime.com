@@ -1,0 +1,189 @@
+Problem 1:
+Emily’s broken clock runs backwards at five times the speed of a regular clock. Right now, it is displaying the wrong time. How many times will it display the correct time in the next 24 hours? It is an analog clock (i.e. a clock with hands), so it only displays the numerical time, not AM or PM. Emily’s clock also does not tick, but rather updates continuously.
+
+Problem 2:
+How many ways are there to arrange the numbers ,  ,  ,  ,  ,  $6$ on the vertices of a regular hexagon such that exactly 3 of the numbers are larger than both of their neighbors? Rotations and reflections are considered the same.
+
+Problem 3:
+Let $ABCD$ be a rectangle with $AB=8$ and . Two circles of radius $5$ are drawn with centers in the interior of the rectangle - one tangent to $AB$ and , and the other passing through both $C$ and . What is the area inside the rectangle and outside of both circles?
+
+Problem 4:
+Let $x<0.1$ be a positive real number. Let the foury series be , and let the fourier series be . Suppose that the sum of the fourier series is four times the sum of the foury series. Compute .
+
+Problem 5:
+An apartment building consists of 20 rooms number 1, 2,..., 20 arranged clockwise in a circle. To move from one room to another, one can either walk to the next room clockwise (i.e. from room $i$ to room ) or walk across the center to the opposite room (i.e. from room $i$ to room ) . Find the number of ways to move from room 10 to room 20 without visiting the same room twice.
+
+Problem 6:
+In a plane, equilateral triangle , square , and regular dodecagon $DEFGHIJKLMNO$ each have side length 1 and do not overlap. Find the area of the circumcircle of .
+
+Problem 7:
+In circle , two perpendicular chords intersect at a point . The two chords have midpoints $M_1$ and $M_2$ respectively, such that $PM_1=15$ and . Line $M_1M_2$ intersects $\omega$ at points $A$ and , with $M_1$ between $A$ and . Compute the largest possible value of .
+
+Problem 8:
+Compute the number of sets $S$ such that every element of $S$ is a nonnegative integer less than 16, and if $x\in S$ then .
+
+Problem 9:
+Call a positive integer $n$ quixotic if the value of   \[\operatorname{lcm}(1,2,...,n)\cdot\left(\frac11+\frac12+\frac13+\dots+\frac1n\right)\] is divisible by 45. Compute the tenth smallest quixotic integer.
+
+Problem 10:
+Compute the number of distinct pairs of the form   \[(\text{first three digits of }x,\text{ first three digits of }x^4)\] over all integers .  For example, one such pair is $(100,100)$ when .
+
+Problem 11:
+Alice and Bob are playing in an eight-player single-elimination rock-paper-scissors tournament. In the first round, all players are paired up randomly to play a match. Each round after that, the winners of the previous round are paired up randomly. After three rounds, the last remaining player is considered the champion. Ties are broken with a coin flip. Given that Alice always plays rock, Bob always plays paper, and everyone else always plays scissors, what is the probability that Alice is crowned champion? Note that rock beats scissors, scissors beats paper, and paper beats rock.
+
+Problem 12:
+Alice is thinking of a positive real number , and Bob is thinking of a positive real number . Given that $x^{\sqrt{y}}=27$ and , compute .
+
+Problem 13:
+Alice is bored in class, so she thinks of a positive integer. Every second after that, she subtracts from her current number its smallest prime divisor, possibly itself. After 2022 seconds, she realizes that her number is prime. Find the sum of all possible values of her initial number.
+
+Problem 14:
+Alice and Bob stand atop two different towers in the Arctic. Both towers are a positive integer number of meters tall and are a positive (not necessarily integer) distance away from each other. One night, the sea between them has frozen completely into reflective ice. Alice shines her flashlight directly at the top of Bob's tower, and Bob shines his flashlight at the top of Alice's tower by first reflecting it off the ice. The light from Alice's tower travels $16$ meters to get to Bob's tower, while the light from Bob's tower travels $26$ meters to get to Alice's tower. Assuming that the lights are both shown from exactly the top of their respective towers, what are the possibilities for the height of Alice's tower?
+
+Problem 15:
+Alice is once again very bored in class. On a whim, she chooses three primes ,  ,  $r$ independently and uniformly at random from the set of primes at most 30. She then calculates the roots of . What is the probability that at least one of her roots is an integer?
+
+Problem 16:
+A regular octagon is inscribed in a circle of radius 2. Alice and Bob play a game in which they take turns claiming vertices of the octagon, with Alice going first. A player wins as soon as they have selected three points that form a right angle. If all points are selected without either player winning, the game ends in a draw. Given that both players play optimally, find all positive areas of the convex polygon formed by Alice's points at the end of the game.
+
+Problem 17:
+Alice and Bob are playing in the forest. They have six sticks of length 1, 2, 3, 4, 5, 6 inches. Somehow, they have managed to arrange these sticks, such that they form the sides of an equiangular hexagon. Compute the sum of all possible values of the area of the hexagon.
+
+Problem 18:
+Alice thinks of four positive integers $a\leq b\leq c\leq d$ satisfying . What are all the possible tuples $(a,b,c,d)$ that Alice could be thinking of?
+
+Problem 19:
+Alice and Bob play the following "point guessing game." First, Alice marks an equilateral triangle $ABC$ and a point $D$ on segment $BC$ satisfying $BD=3$ and . Then, Alice chooses a point $P$ on line $AD$ and challenges Bob to mark a point $Q\neq P$ on line $AD$ such that . Alice wins if and only if Bob is unable to choose such a point. If Alice wins, what are the possible values of $\frac{BP}{PC}$ for the $P$ she chose?
+
+Problem 20:
+There are 21 competitors with distinct skill levels numbered 1, 2,..., 21. They participate in a ping-pong tournament as follows. First, a random competitor is chosen to be "active", while the rest are "inactive." Every round, a random inactive competitor is chosen to play against the current active one. The player with the higher skill will win and become (or remain) active, while the loser will be eliminated from the tournament. The tournament lasts for 20 rounds, after which there will only be one player remaining. Alice is the competitor with skill 11. What is the expected number of games that she will get to play?
+
+Problem 21:
+Two linear functions $f(x)$ and $g(x)$ satisfy the properties that for all ,   $\bullet$  $f(x) + g(x) = 2$   $\bullet$  $f(f(x)) = g(g(x))$  and . Compute .
+
+Problem 22:
+What is the smallest $r$ such that three disks of radius $r$ can completely cover up a unit disk?
+
+Problem 23:
+Find the number of ordered pairs $(A,B)$ such that the following conditions hold:   $\bullet$  $A$ and $B$ are disjoint subsets of .   $\bullet$  $|A| = |B| = 25$   $\bullet$ The median of $B$ is $1$ more than the median of .
+
+Problem 24:
+You start with a single piece of chalk of length . Every second, you choose a piece of chalk that you have uniformly at random and break it in half. You continue this until you have $8$ pieces of chalk. What is the probability that they all have length $\frac18$ ?
+
+Problem 25:
+A triple of positive integers $(a, b, c)$ is tasty if $lcm (a, b, c) | a + b + c - 1$ and . Find the sum of $a + b + c$ across all tasty triples.
+
+Problem 26:
+A triangle $XY Z$ and a circle $\omega$ of radius $2$ are given in a plane, such that $\omega$ intersects segment $\overline{XY}$ at the points ,  , segment $\overline{Y Z}$ at the points ,  , and segment $\overline{ZX}$ at the points ,  . Suppose that ,  , and . In addition, ,  ,  , and . Compute .
+
+Problem 27:
+Compute the number of ordered pairs of positive integers $(a, b)$ satisfying the equation   $$gcd(a, b) \cdot  a + b^2 = 10000.$$
+
+Problem 28:
+Consider parallelogram $ABCD$ with . Point $E$ on $\overline{AB}$ and point $F$ on $\overline{CD}$ are marked such that there exists a circle $\omega_1$ passing through ,  ,  ,  $F$ and a circle $\omega_2$ passing through ,  ,  ,  . If ,  $\omega_2$ partition $\overline{BD}$ into segments ,  $\overline{XY}$ , $\overline{Y D}$ in that order, with lengths ,  ,  , respectively, compute .
+
+Problem 29:
+Call an ordered pair $(a, b)$ of positive integers fantastic if and only if $a, b \le 10^4$ and   $$gcd(a \cdot n! - 1, a \cdot (n + 1)! + b) > 1$$ for infinitely many positive integers . Find the sum of $a + b$ across all fantastic pairs .
+
+Problem 30:
+There is a unit circle that starts out painted white. Every second, you choose uniformly at random an arc of arclength $1$ of the circle and paint it a new color. You use a new color each time, and new paint covers up old paint. Let $c_n$ be the expected number of colors visible after $n$ seconds. Compute .
+
+Problem 31:
+Compute $\sqrt{2022^2-12^6}.$
+
+Problem 32:
+The English alphabet, which has $26$ letters, is randomly permuted. Let $p_1$ be the probability that $\text{AB},$  $\text{CD},$ and $\text{EF}$ all appear as contiguous substrings. Let $p_2$ be the probability that $\text{ABC}$ and $\text{DEF}$ both appear as contiguous substrings. Compute $\tfrac{p_1}{p_2}.$
+
+Problem 33:
+A polygon $\mathcal{P}$ is drawn on the $2\text{D}$ coordinate plane. Each side of $\mathcal{P}$ is either parallel to the $x$ axis or the $y$ axis (the vertices of $\mathcal{P}$ do not have to be lattice points). Given that the interior of $\mathcal{P}$ includes the interior of the circle $x^2+y^2=2022,$ find the minimum possible perimeter of $\mathcal{P}.$
+
+Problem 34:
+Let $ABCD$ be a square of side length $2.$ Let points $X, Y,$ and $Z$ be constructed inside $ABCD$ such that $ABX, BCY,$ and $CDZ$ are equilateral triangles. Let point $W$ be outside $ABCD$ such that triangle $DAW$ is equilateral. Let the area of $WXYZ$ be $a+\sqrt{b},$ where $a$ and $b$ are integers. Find $a+b.$
+
+Problem 35:
+Suppose $x$ and $y$ are positive real numbers such that $$x+\frac{1}{y}=y+\frac{2}{x}=3.$$ Compute the maximum possible value of $xy.$
+
+Problem 36:
+Let $ABCDEF$ be a regular hexagon and let point $O$ be the center of the hexagon. How many ways can you color these seven points either red or blue such that there doesn’t exist any equilateral triangle with vertices of all the same color?
+
+Problem 37:
+All positive integers whose binary representations (excluding leading zeroes) have at least as many ’ s as ’ s are put in increasing order. Compute the number of digits in the binary representation of the t h number.
+
+Problem 38:
+Kimothy starts in the bottom-left square of a $4$ by $4$ chessboard. In one step, he can move up, down, left, or right to an adjacent square. Kimothy takes $16$ steps and ends up where he started, visiting each square exactly once (except for his starting/ending square). How many paths could he have taken?
+
+Problem 39:
+Let $ABCD$ be a trapezoid such that $AB \parallel CD, \angle{BAC}=25^\circ, \angle{ABC}=125^\circ,$ and $AB+AD=CD.$ Compute $\angle{ADC}.$
+
+Problem 40:
+A real number $x$ is chosen uniformly at random from the interval $[0, 1000].$ Find the probability that $$\left\lfloor\frac{\lfloor \tfrac{x}{2.5}\rfloor}{2.5}\right\rfloor=\left\lfloor\frac{x}{6.25}\right\rfloor.$$
+
+Problem 41:
+Isosceles trapezoid $ABCD$ with bases $AB$ and $CD$ has a point $P$ on $AB$ with $AP=11, BP=27,$  $CD=34,$ and $\angle{CPD}=90^\circ.$ Compute the height of isosceles trapezoid $ABCD.$
+
+Problem 42:
+Candice starts driving home from work at $5{:}00 \ \text{PM}.$ Starting at exactly $5{:}01 \ \text{PM},$ and every minute after that, Candice encounters a new speed limit sign and slows down by $1$ mph. Candice’s speed, in miles per hour, is always a positive integer. Candice drives for $2/3$ of a mile in total. She drives for a whole number of minutes, and arrives at her house driving slower than when she left. What time is it when she gets home?
+
+Problem 43:
+Consider the paths from $(0,0)$ to $(6,3)$ that only take steps of unit length up and right. Compute the sum of the areas bounded by the path, the - axis, and the line $x = 6$ over all such paths.    (In particular, the path from $(0,0)$ to $(6,0)$ to $(6,3)$ corresponds to an area of )
+
+Problem 44:
+Real numbers $x$ and $y$ satisfy the following equations:   \begin{align*} x &= \log_{10} (10^{y-1}+1)-1 \\ y &= \log_{10} (10^x+1)-1. \end{align*} Find $10^{x-y}.$
+
+Problem 45:
+Vijay chooses three distinct integers $a,b,c$ from the set $\{1,2,3,4,5,6,7,8,9,10,11\}.$ If $k$ is the minimum value taken on by the polynomial $a(x - b)(x - c)$ over all real numbers $x,$ and $l$ is the minimum value taken on by the polynomial $a(x-b)(x+c)$ over all real numbers $x,$ compute the maximum possible value of $k -l.$
+
+Problem 46:
+Given an angle $\theta,$ consider the polynomial $$P(x) = \sin(\theta)x^2+(\cos(\theta)+\tan(\theta))x+1.$$ Given that $P$ only has one real root, find all possible values of $\sin(\theta).$
+
+Problem 47:
+How many ways are there to color every integer either red or blue such that $n$ and $n + 7$ are the same color for all integers $n,$ and there does not exist an integer $k$ such that $k, k + 1,$ and $2k$ are all the same color?
+
+Problem 48:
+A regular tetrahedron has a square shadow of area $16$ when projected onto a flat surface (light is shone perpendicular onto the plane). Compute the sidelength of the regular tetrahedron.    (For example, the shadow of a sphere with radius 1 onto a flat surface is a disk of radius )
+
+Problem 49:
+Define the annoyingness of a permutation of the first $n$ integers to be the minimum number of copies of the permutation that are needed to be placed next to each other so that the subsequence $1,2 \ldots ,n$ appears. For instance, the annoyingness of $3,2,1$ is $3,$ and the annoyingness of $1,3,4,2$ is $2.$    A random permutation of $1,2, \ldots, 2022$ is selected. Compute the expected value of the annoyingness of this permutation.
+
+Problem 50:
+Let $\triangle{ABC}$ be an isosceles right triangle with $AB=AC=10.$ Let $M$ be the midpoint of $BC$ and $N$ the midpoint of $BM.$ Let $AN$ hit the circumcircle of $\triangle{ABC}$ again at $T.$ Compute the area of $\triangle{TBC}.$
+
+Problem 51:
+Let $P(x)$ be a quadratic polynomial with real coefficients. Suppose that $P(1) = 20, P(-1) = 22,$ and $P(P(0)) = 400.$ Compute the largest possible value of $P(10).$
+
+Problem 52:
+Find the number of pairs of integers $(a,b)$ with $1 \le a < b \le 57$ such that $a^2$ has a smaller remainder than $b^2$ when divided by $57.$
+
+Problem 53:
+Let $ABC$ be a triangle with $AB = 2021, AC = 2022,$ and $BC = 2023.$ Compute the minimum value of $AP +2BP +3CP$ over all points $P$ in the plane.
+
+Problem 54:
+A string consisting of letters $A, C, G,$ and $U$ is untranslatable if and only if it has no $\text{AUG}$ as a consecutive substring. For example, $\text{ACUGG}$ is untranslatable.    Let $a_n$ denote the number of untranslatable strings of length $n.$ It is given that there exists a unique triple of real numbers $(x,y,z)$ such that $a_n = xa_{n-1} + ya_{n-2} +za_{n-3}$ for all integers $n \ge 100.$ Compute $(x, y,z)$
+
+Problem 55:
+In convex quadrilateral $ABCD$ with $AB = 11$ and $CD = 13,$ there is a point $P$ for which $\triangle{ADP}$ and $\triangle{BCP}$ are congruent equilateral triangles. Compute the side length of these triangles.
+
+Problem 56:
+A number is chosen uniformly at random from the set of all positive integers with at least two digits, none of which are repeated. Find the probability that the number is even.
+
+Problem 57:
+How many ways are there to cut a $1$ by $1$ square into $8$ congruent polygonal pieces such that all of the interior angles for each piece are either $45$ or $90$ degrees? Two ways are considered distinct if they require cutting the square in different locations. In particular, rotations and reflections are considered distinct.
+
+Problem 58:
+Let $ABC$ be a triangle with $AB = 13, BC = 14,$ and $CA = 15.$ Pick points $Q$ and $R$ on $AC$ and $AB$ such that $\angle CBQ = \angle BCR = 90^\circ.$ There exist two points $P_1\neq P_2$ in the plane of $ABC$ such that $\triangle P_1 QR, \triangle P_2QR,$ and $\triangle ABC$ are similar (with vertices in order). Compute the sum of the distances from $P_1$ to $BC$ and $P_2$ to $BC.$
+
+Problem 59:
+Consider the set $S$ of all complex numbers $z$ with nonnegative real and imaginary part such that $$|z^2+2| \le |z|.$$ Across all $z \in S,$ compute the minimum possible value of $\tan(\theta),$ where $\theta$ is the angle formed between $z$ and the real axis.
+
+Problem 60:
+Let $ABC$ be a triangle with $AB = 8, AC = 12,$ and $BC = 5.$ Let $M$ be the second intersection of the internal angle bisector of $\angle BAC$ with the circumcircle of $ABC.$ Let $\omega$ be the circle centered at $M$ tangent to $AB$ and $AC.$ The tangents to $\omega$ from $B$ and $C,$ other than $AB$ and $AC$ respectively, intersect at a point $D.$ Compute $AD.$
+
+Problem 61:
+Given positive integers $a_1, a_2, \ldots, a_{2023}$ such that $$a_k = \sum_{i=1}^{2023} |a_k - a_i|$$ for all $1 \le k \le 2023,$ find the minimum possible value of $a_1+a_2+\ldots+a_{2023}.$
+
+Problem 62:
+Suppose point $P$ is inside triangle $ABC.$ Let $AP, BP,$ and $CP$ intersect sides $BC, CA,$ and $AB$ at points $D,$  $E,$ and $F,$ respectively. Suppose $\angle APB = \angle BPC = \angle CPA, PD = \tfrac{1}{4}, PE = \tfrac{1}{5},$ and $PF = \tfrac{1}{7}.$ Compute $AP +BP +CP.$
+
+Problem 63:
+A group of $101$ Dalmathians participate in an election, where they each vote independently on either candidate $A$ or $B$ with equal probability. If $X$ Dalmathians voted for the winning candidate, the expected value of $X^2$ can be expressed as $\tfrac{a}{b}$ for positive integers $a,b$ with $\gcd(a,b) = 1.$ Find the unique positive integer $k \le 103$ such that $103 | a-bk.$
+

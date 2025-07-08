@@ -1,0 +1,189 @@
+Problem 1:
+Four people are playing rock-paper-scissors. They each play one of the three options (rock, paper, or scissors) independently at random, with equal probability of each choice. Compute the probability that someone beats everyone else.  (In rock-paper-scissors, a player that plays rock beats a player that plays scissors, a player that plays paper beats a player that plays rock, and a player that plays scissors beats a player that plays paper.)
+
+Problem 2:
+A regular - gon $P_1P_2...P_n$ satisfies . Compute .
+
+Problem 3:
+Compute the number of positive four-digit multiples of $11$ whose sum of digits (in base ten) is divisible by .
+
+Problem 4:
+Suppose that $a$ and $b$ are real numbers such that the line $y = ax + b$ intersects the graph of $y = x^2$ at two distinct points $A$ and . If the coordinates of the midpoint of $AB$ are , compute .
+
+Problem 5:
+On an $8\times 8$ chessboard, 6 black rooks and k white rooks are placed on different cells so that each rook only attacks rooks of the opposite color. Compute the maximum possible value of .  (Two rooks attack each other if they are in the same row or column and no rooks are between them.)
+
+Problem 6:
+Let $ABCD$ be a square of side length . A circle passing through $A$ is tangent to segment $CD$ at $T$ and meets $AB$ and $AD$ again at $X\ne A$ and , respectively. Given that , compute .
+
+Problem 7:
+Compute all ordered triples $(x, y, z)$ of real numbers satisfying the following system of equations:   $$xy + z = 40$$ $$xz + y = 51$$ $$x + y + z = 19.$$
+
+Problem 8:
+Mark writes the expression $\sqrt{d}$ for each positive divisor $d$ of $8!$ on the board. Seeing that these expressions might not be worth points on HMMT, Rishabh simplifies each expression to the form $a \sqrt{b} $ where $a$ and $b$ are integers such  that $b$ is not divisible by the square of a prime number. (For example, ,  , and $\sqrt{6}$ simplify to ,  , and , respectively.) Compute the sum of $a+b$ across all expressions that Rishabh writes.
+
+Problem 9:
+An entry in a grid is called a saddle point if it is the largest number in its row and the smallest number in its column. Suppose that each cell in a $ 3 \times 3$ grid is filled with a real number, each chosen independently and uniformly at random from the interval . Compute the probability that this grid has at least one saddle point.
+
+Problem 10:
+Let $ABCD$ be a convex trapezoid such that ,  ,  , and . Among all points $X$ inside the trapezoid satisfying , compute the minimum possible value of .
+
+Problem 11:
+Tyler has an infinite geometric series with sum . He increases the first term of his sequence by $4$ and swiftly changes the subsequent terms so that the common ratio remains the same, creating a new geometric series with sum . Compute the common ratio of Tyler’s series.
+
+Problem 12:
+Suppose rectangle $FOLK$ and square $LORE$ are on the plane such that $RL = 12$ and . Compute the product of all possible areas of triangle .
+
+Problem 13:
+There are $17$ people at a party, and each has a reputation that is either ,  ,  ,  , or . Some of them split into pairs under the condition that within each pair, the two people’s reputations differ by at most . Compute the largest value of $k$ such that no matter what the reputations of these people are, they are able to form $k$ pairs
+
+Problem 14:
+Let $LOV ER$ be a convex pentagon such that $LOV E$ is a rectangle. Given that $OV = 20$ and , compute the radius of the circle passing through ,  , and $V$ .
+
+Problem 15:
+Compute the unique positive integer $n$ such that $\frac{n^3-1989}{n}$ is a perfect square.
+
+Problem 16:
+A function $g$ is ever more than a function $h$ if, for all real numbers , we have . Consider all quadratic functions $f(x)$ such that $f(1) = 16$ and $f(x)$ is ever more than both $(x + 3)^2$ and . Across all such quadratic functions , compute the minimum value of .
+
+Problem 17:
+Betty has a $3\times 4$ grid of dots. She colors each dot either red or maroon. Compute the number of ways Betty can color the grid such that there is no rectangle whose sides are parallel to the grid lines and whose vertices all have the same color.
+
+Problem 18:
+Call a number feared if it contains the digits $13$ as a contiguous substring and fearless otherwise. (For example, $132$ is feared, while $123$ is fearless.) Compute the smallest positive integer $n$ such that there exists a positive integer $a < 100$ such that $n$ and $n + 10a$ are fearless while ,  ,  ,  $n + 9a$ are all feared.
+
+Problem 19:
+Pentagon $SPEAK$ is inscribed in triangle $NOW$ such that $S$ and $P$ lie on segment ,  $K$ and $A$ lie on segment , and $E$ lies on segment . Suppose that $NS = SP = PO$ and . Given that $EP = EK = 5$ and , compute .
+
+Problem 20:
+It is midnight on April t h, and Abigail is listening to a song by her favorite artist while staring at her clock, which has an hour, minute, and second hand. These hands move continuously. Between two consecutive midnights, compute the number of times the hour, minute, and second hands form two equal angles and no two hands overlap.
+
+Problem 21:
+Let $ABC$ be an equilateral triangle with side length $2$ that is inscribed in a circle . A chord of $\omega$ passes through the midpoints of sides $AB$ and . Compute the length of this chord.
+
+Problem 22:
+A real number $x$ satisfies . Compute the value of .
+
+Problem 23:
+Two distinct similar rhombi share a diagonal. The smaller rhombus has area , and the larger rhombus has area . Compute the side length of the larger rhombus.
+
+Problem 24:
+There are six empty slots corresponding to the digits of a six-digit number. Claire and William take turns rolling a standard six-sided die, with Claire going first. They alternate with each roll until they have each rolled three times. After a player rolls, they place the number from their die roll into a remaining empty slot of their choice. Claire wins if the resulting six-digit number is divisible by , and William wins otherwise. If both players play optimally, compute the probability that Claire wins.
+
+Problem 25:
+A complex quartic polynomial $Q$ is quirky if it has four distinct roots, one of which is the sum of the other three. There are four complex values of $k$ for which the polynomial $Q(x) = x^4-kx^3-x^2-x-45$ is quirky. Compute the product of these four values of .
+
+Problem 26:
+The pairwise greatest common divisors of five positive integers are   $$2, 3, 4, 5, 6, 7, 8, p, q, r$$ in some order, for some positive integers . Compute the minimum possible value of .
+
+Problem 27:
+Let $ABCD$ be a convex trapezoid such that ,  ,  , and . Point $P \ne A$ is chosen on segment $AC$ such that . Compute .
+
+Problem 28:
+There are $n \ge 2$ coins, each with a different positive integer value. Call an integer $m$  sticky if some subset of these $n$ coins have total value . We call the entire set of coins a stick if all the sticky numbers form a consecutive range of integers. Compute the minimum total value of a stick across all sticks containing a coin of value .
+
+Problem 29:
+Let $r_k$ denote the remainder when ${127 \choose k}$ is divided by . Comput e
+
+Problem 30:
+Compute the number of ways a non-self-intersecting concave quadrilateral can be drawn in the plane such that two of its vertices are $(0, 0)$ and , and the other two vertices are two distinct lattice points ,  $(c, d)$ with ,  $c \le  59$ and ,  $d \le  5.$  (A concave quadrilateral is a quadrilateral with an angle strictly larger than . A lattice point is a point with both coordinates integers.)
+
+Problem 31:
+The formula to convert Celsius to Fahrenheit is $$F^\circ = 1.8 \cdot C^\circ + 32.$$ In Celcius, it is $10^\circ$ warmer in New York right now than in Boston. In Fahrenheit, how much warmer is it in New York than in Boston?
+
+Problem 32:
+Compute the number of dates in the year $2023$ such that when put in $\text{MM / DD / YY}$ form, the three numbers are in strictly increasing order.    For example, $06/18/23$ is such a date since $6 < 18 < 23,$ while today, $11/11/23,$ is not.
+
+Problem 33:
+Let $ABCD$ be a rectangle with $AB = 20$ and $AD = 23.$ Let $M$ be the midpoint of $CD,$ and let $X$ be the reflection of $M$ across point $A.$ Compute the area of triangle $XBD.$
+
+Problem 34:
+The number $5.6$ may be expressed uniquely (ignoring order) as a product $\underline{a}.\underline{b} \times \underline{c}.\underline{d}$ for digits $a,b,c,d$ all nonzero. Compute $\underline{a}.\underline{b}+\underline{c}.\underline{d}.$
+
+Problem 35:
+Let $ABCDE$ be a convex pentagon such that   \begin{align*} &AB+BC+CD+DE+EA=65 \text{ and} \\ &AC+CE+EB+BD+DA=72. \end{align*} Compute the perimeter of the convex pentagon whose vertices are the midpoints of the sides of $ABCDE.$
+
+Problem 36:
+There are five people in a room. They each simultaneously pick two of the other people in the room independently and uniformly at random and point at them. Compute the probability that there exists a group of three people such that each of them is pointing at the other two in the group.
+
+Problem 37:
+Suppose $a$ and $b$ be positive integers not exceeding $100$ such that $$ab=\left(\frac{\text{lcm}(a,b)}{\gcd(a,b)}\right)^2.$$ Compute the largest possible value of $a+b.$
+
+Problem 38:
+Six standard fair six-sided dice are rolled and arranged in a row at random. Compute the expected number of dice showing the same number as the sixth die in the row.
+
+Problem 39:
+The largest prime factor of $101101101101$ is a four-digit number $N.$ Compute $N.$
+
+Problem 40:
+A real number $x$ is chosen uniformly at random from the interval $(0,10).$ Compute the probability that $\sqrt{x}, \sqrt{x+7},$ and $\sqrt{10-x}$ are the side lengths of a non-degenerate triangle.
+
+Problem 41:
+Let $ABCD$ and $WXYZ$ be two squares that share the same center such that $WX \parallel AB$ and $WX < AB.$ Lines $CX$ and $AB$ intersect at $P,$ and lines $CZ$ and $AD$ intersect at $Q.$ If points $P, W,$ and $Q$ are collinear, compute the ratio $AB/WX.$
+
+Problem 42:
+A jar contains $97$ marbles that are either red, green, or blue. Neil draws two marbles from the jar without replacement and notes that the probability that they would be the same color is $\tfrac{5}{12}.$ After Neil puts his marbles back, Jerry draws two marbles from the jar with replacement. Compute the probability that the marbles that Jerry draws are the same color.
+
+Problem 43:
+Suppose $x,y,$ and $z$ are real numbers greater than $1$ such that   \begin{align*} x^{\log_y z} &= 2, \\ y^{\log_z x} &= 4,\text{ and} \\ z^{\log_x y} &= 8. \end{align*} Compute $\log_x y.$
+
+Problem 44:
+Suppose that point $D$ lies on side $BC$ of triangle $ABC$ such that $AD$ bisects $\angle BAC,$ and let $\ell$ denote the line through $A$ perpendicular to $AD.$ If the distances from $B$ and $C$ to $\ell$ are $5$ and $6,$ respectively, compute $AD.$
+
+Problem 45:
+Lucas writes two distinct positive integers on a whiteboard. He decreases the smaller number by $20$ and increases the larger number by $23,$ only to discover the product of the two original numbers is equal to the product of the two altered numbers. Compute the minimum possible sum of the original two numbers on the board.
+
+Problem 46:
+Compute the number of tuples $(a_0, a_1, a_2, a_3, a_4, a_5)$ of (not necessarily positive) integers such that $a_i \le i$ for all $0 \le i \le 5$ and $$a_0+a_1+a_2+a_3+a_4+a_5=6.$$
+
+Problem 47:
+Let $ABC$ be an equilateral triangle of side length $15.$ Let $A_b$ and $B_a$ be points on side $AB,$  $A_c$ and $C_a$ be points on $AC,$ and $B_c$ and $C_b$ be points on $BC$ such that $\triangle{AA_bA_c}, \triangle{BB_cB_a},$ and $\triangle{CC_aC_b}$ are equilateral triangles with side lengths $3,4,$ and $5,$ respectively. Compute the radius of the circle tangent to segments $\overline{A_bA_c}, \overline{B_aB_c},$ and $\overline{C_aC_b}.$
+
+Problem 48:
+Over all real numbers $x$ and $y$ such that $$x^3=3x+y \qquad \text{and} \qquad y^3=3y+x,$$ compute the sum of all possible values of $x^2+y^2.$
+
+Problem 49:
+Suppose $a,b,$ and $c$ are real numbers such that   \begin{align*} a^2-bc &= \ 14, \\ b^2-ca &= \ 14, \text{ and} \\ c^2-ab &=-3. \end{align*} Compute $|a+b+c|.$
+
+Problem 50:
+Let $ABCD$ be a square of side length $10.$ Point $E$ is on ray $\overrightarrow{AB}$ such that $AE=17,$ and point $F$ is on ray $\overrightarrow{AD}$ such that $AF=14.$ The line through $B$ parallel to $CE$ and the line through $D$ parallel to $CF$ meet at $P.$ Compute the area of quadrilateral $AEPF.$
+
+Problem 51:
+An integer $n$ is chosen uniformly at random from the set $\{1, 2, \ldots, 2023!\}.$ Compute the probability that $$\gcd(n^n+50, n+1)=1.$$
+
+Problem 52:
+There is a $6 \times 6$ grid of lights. There is a switch at the top of each column and on the left of each row. A light will only turn on if the switches corresponding to both its column and its row are in the "on" position. Compute the number of different configurations of lights.
+
+Problem 53:
+The points $A=(4,\tfrac{1}{4})$ and $B=(-5,-\tfrac{1}{5})$ lie on the hyperbola $xy=1.$ The circle with diameter $AB$ intersects this hyperbola again at points $X$ and $Y.$ Compute $XY.$
+
+Problem 54:
+Compute the smallest positive integer $k$ such that $49$ divides $\tbinom{2k}{k}.$
+
+Problem 55:
+A right triangle and a circle are drawn such that the circle is tangent to the legs of the right triangle. The circle cuts the hypotenuse into three segments of lengths $1, 24,$ and $3,$ and the segment of length $24$ is a chord of the circle. Compute the area of the triangle.
+
+Problem 56:
+Compute the smallest multiple of $63$ with an odd number of ones in its base two representation.
+
+Problem 57:
+Compute the number of ways to color the vertices of a regular heptagon red, green, or blue (with rotations and reflections distinct) such that no isosceles triangle whose vertices are vertices of the heptagon has all three vertices the same color.
+
+Problem 58:
+There is a unique quadruple of positive integers $(a,b,c,k)$ such that $c$ is not a perfect square and $a+\sqrt{b+\sqrt{c}}$ is a root of the polynomial $x^4-20x^3+108x^2-kx+9.$ Compute $c.$
+
+Problem 59:
+Let $A_1A_2\ldots A_6$ be a regular hexagon with side length $11\sqrt{3},$ and let $B_1B_2\ldots B_6$ be another regular hexagon completely inside $A_1A_2\ldots A_6$ such that for all $i \in \{1, 2, \ldots, 5\}$  $A_iA_{i+1}$ is parallel to $B_iB_{i+1}.$ Suppose that the distance between lines $A_1A_2$ and $B_1B_2$ is $7,$ the distance between lines $A_2A_3$ and $B_2B_3$ is $3,$ and the distance between lines $A_3A_4$ and $B_3B_4$ is $8.$ Compute the side length of $B_1B_2\ldots B_6.$
+
+Problem 60:
+An HMMT party has $m$ MIT students and $h$ Harvard students for some positive integers $m$ and $h,$ For every pair of people at the party, they are either friends or enemies. If every MIT student has $16$ MIT friends and $8$ Harvard friends, and every Harvard student has $7$ MIT enemies and $10$ Harvard enemies, compute how many pairs of friends there are at the party.
+
+Problem 61:
+Let $s(n)$ denote the sum of the digits (in base ten) of a positive integer $n.$ Compute the number of positive integers $n$ at most $10^4$ that satisfy $$s(11n)=2s(n).$$
+
+Problem 62:
+Compute $$\sum_{\underset{a \ge 6, b,c \ge 0}{a+b+c=12}} \frac{a!}{b!c!(a-b-c)!},$$ where the sum runs over all triples of nonnegative integers $(a,b,c)$ such that $a+b+c=12$ and $a \ge 6.$
+
+Problem 63:
+Let $\omega_1$ and $\omega_2$ be two non-intersecting circles. Suppose the following three conditions hold: The smallest of a common internal tangent ofandis equal toThe length of a common external tangent ofandis equal toIf two pointsandare selected onandrespectively, uniformly at random, then the expected value ofis Compute the distance between the centers of $\omega_1$ and $\omega_2.$
+

@@ -1,0 +1,162 @@
+[
+  {
+    "title": "2021 CMIMC Integration Bee Problem 1",
+    "text": "$$\\int_0^5 \\max(2x, x^2)\\ dx.$$  \nProposed by Connor Gordon.",
+    "solution": "I was dumb in the exam and could not understand I was making graphs and then I don't know what was I doing The main thing is to integrate $2x$ from $0$ to $2$ and $x^2$ from $2$ to $5$ \n \n Therefore $\\frac{117}{3}+4=\\boxed{43}$",
+    "link": "https://artofproblemsolving.com/community/c204707h2467827p20630562",
+    "answer": "43",
+    "answer_type": "positive integer <= 1000",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2021 CMIMC Integration Bee Problem 2",
+    "text": "Text: $$\\int\\frac{\\ln^2(x)}{x}\\ dx.$$  \nProposed by Connor Gordon.",
+    "solution": "The u substitution to employ here is $u = \\ln(x)$ giving us $du = \\frac{1}{x} dx$ Using this we get \n $$\\int u^2 du$$ This simply evaluates to \n $$\\frac{u^3}{3} + C$$ Finally eliminating the u parameter we get \n $$\\boxed{\\frac{\\ln^3(x)}{3} + C}$$",
+    "link": "https://artofproblemsolving.com/community/c204707h2467831p20630587",
+    "answer": "\\frac{\\ln^3(x)}{3} + C",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2021 CMIMC Integration Bee Problem 3",
+    "text": "$$\\int_{0}^{\\frac{\\pi}{2}}\\sin^2(x)\\sin(2x)\\ dx.$$  \nProposed by Connor Gordon.",
+    "solution": "By trigonometric identities $\\sin^2(x) \\sin(2x) = 2\\sin^3(x)\\cos(x)$ \n Therefore our integral is \n $$\\int_0^{\\frac{\\pi}{2}} 2\\sin^3(x)\\cos(x)$$ which can be evaluated with the substitution $u = \\sin(x)$ to be $\\frac{\\sin^4(x)}{2}$ \n Therefore $$\\int_0^{\\frac{\\pi}{2}} 2\\sin^3(x)\\cos(x) = \\frac{\\sin^4(x)}{2} \\Big|_0^{\\frac{\\pi}{2}} = \\frac{1}{2}$$",
+    "link": "https://artofproblemsolving.com/community/c204707h2467833p20630609",
+    "answer": "\\frac{1}{2}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2021 CMIMC Integration Bee Problem 4",
+    "text": "$$\\int_1^2\\left(x^5+6x^4+14x^3+16x^2+9x+2\\right)dx.$$  \nProposed by Connor Gordon.",
+    "solution": "From a grader's perspective (spoiler contains the answer) The answer to this problem was $\\dfrac{4591}{30}$ \n \n We got the following correct answers Correct Answers wrote 4591/30 68+(2551/30) 153 1/30 86+2432/30 336/30 65/6 665/6+211/5 This last answer came with a kind little note saying \"I am NOT going to add this > )\" \n We also received the following incorrect answers Incorrect Answers wrote 11/30 16871/105 185 75 152 + 19/30 3847/30 4291/30 153 17/60 591/5 152 1/30 154 + 19/30 \n Please be kind to your graders~ \n \n Hint The terms do factor nicely into only two terms Further hint Look at this in terms of $(x + 1)$",
+    "link": "https://artofproblemsolving.com/community/c204707h2467837p20630632",
+    "answer": "1",
+    "answer_type": "positive integer <= 1000",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2022 Integration Bee Problem 1",
+    "text": "\\[\\int_0^{\\pi/1011}\\sin^2(2022x)+\\cos^2(2022x)\\mathrm dx.\\]  \nProposed by Connor Gordon.",
+    "solution": "This is equal to $\\int_0^{\\pi/1011}1\\text dx=\\boxed{\\frac{\\pi}{1011}}$",
+    "link": "https://artofproblemsolving.com/community/c204707h2789825p24530609",
+    "answer": "\\frac{\\pi}{1011}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2022 Integration Bee Problem 2",
+    "text": "\\[\\int_{2}^2 |1 - x^2|\\ \\mathrm{d}x.\\]  \nProposed by Connor Gordon.",
+    "solution": "\\[\\int_{ 2}^2 |1 x^2|\\ \\mathrm dx\\] \\[=\\int_{ 1}^1 (1 x^2)\\ \\mathrm dx + 2\\int_{ 2}^{ 1} (x^2 1)\\ \\mathrm dx\\] $$=\\boxed{4}$$",
+    "link": "https://artofproblemsolving.com/community/c204707h2789828p24530628",
+    "answer": "4",
+    "answer_type": "positive integer <= 1000",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2022 Integration Bee Problem 3",
+    "text": "\\[\\int_0^1 x\\sqrt[4]{1 - x}\\ \\mathrm{d}x.\\]  \nProposed by Connor Gordon.",
+    "solution": "sol \\begin{align*}\\int_0^1 x\\sqrt[4]{1 x}\\ \\mathrm dx &= \\int_0^1 x^1 (1 x)^{\\frac{1}{4}}\\mathrm dx\\\\ &= \\frac{\\Gamma(2)\\Gamma(\\frac{5}{4})}{\\Gamma(2 + \\frac{5}{4})} = \\frac{1! \\cdot \\Gamma(\\frac{5}{4})}{\\frac{9}{4} \\cdot \\frac{5}{4} \\cdot \\Gamma(\\frac{5}{4})} \\\\ &= \\boxed{\\frac{16}{45}} \\end{align*}",
+    "link": "https://artofproblemsolving.com/community/c204707h2789830p24530636",
+    "answer": "\\frac{16}{45}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2022 Integration Bee Problem 4",
+    "text": "\\[\\int_0^1 \\sqrt{x}\\log(x)\\ \\mathrm{d}x.\\]  \nProposed by Connor Gordon.",
+    "solution": "Integration by Parts Let $u=\\log(x) \\text{d}v=x^{\\frac{1}{2}}\\text{d}x$ so that $\\text{d}u=\\tfrac{1}{x}\\text{d}x$ and $v=\\tfrac{2}{3}x^{\\frac{3}{2}} $ Then $$ \\frac{2}{3}x^{\\frac{3}{2}}\\log(x) \\int \\log(x)x^{\\frac{1}{2}} \\text{d}x = \\int \\frac{2}{3}x^{\\frac{1}{2}}\\text{d}x$$ $$ \\implies \\int \\log(x)x^{\\frac{1}{2}} = \\frac{2}{3}x^{\\frac{3}{2}}\\log(x) \\frac{4}{9}x^{\\frac{3}{2}} $$ Evaluating at the bounds of integration gives $\\boxed{ \\tfrac{4}{9}} $",
+    "link": "https://artofproblemsolving.com/community/c204707h2789831p24530647",
+    "answer": "\\tfrac{4}{9}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2023 Integration Bee Problem 1",
+    "text": "\\[\\int_2^0 x^2+3\\ \\mathrm dx.\\]  \nProposed by Connor Gordon.",
+    "solution": "Let's try a few of these For this one the antiderivative is just $\\frac{1}{3}x^3+3x$ The only tricky part is that the integral's bounds are backwards so the result is $ \\left(\\frac{1}{3} \\cdot 2^3 + 3 \\cdot 2\\right) = \\frac{26}{3}$",
+    "link": "https://artofproblemsolving.com/community/c204707h3039029p27358811",
+    "answer": "\\frac{26}{3}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2023 Integration Bee Problem 2",
+    "text": "\\[\\int_0^1 \\frac{1}{x+\\sqrt x}\\ \\mathrm dx.\\]  \nProposed by Connor Gordon.",
+    "solution": "sol We let $u=\\sqrt{x}$ so $du=\\frac{1}{2\\sqrt{x}} dx$ Then the integral is $$\\displaystyle\\int_0^1 \\frac{1}{u^2+u} (2u)du=\\displaystyle\\int_0^1\\frac{2}{u+1}du $$ The antiderivative is obviously $2\\log(u+1)=2\\log(\\sqrt{x}+1)$ but this is an indefinite integral so the integral is equal to $2\\log(2) \\lim_{n\\rightarrow 0} 2\\log(\\sqrt{n}+1)=\\boxed{2\\log(2)}$",
+    "link": "https://artofproblemsolving.com/community/c204707h3039030p27358815",
+    "answer": "2\\log(2)",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2023 Integration Bee Problem 3",
+    "text": "\\[\\int_0^{\\frac \\pi 4} \\cot(x)\\sqrt{\\sin(x)}\\ \\mathrm{d}x.\\]  \nProposed by Connor Gordon.",
+    "solution": "Write this into $\\int_{0}^{\\frac{\\pi}{4}}\\frac{\\cos(x)}{\\sqrt{\\sin(x)}}dx$ \n \n $u=\\sin(x)$ and integrate leads to $\\boxed{2^{\\frac{3}{4}}}$",
+    "link": "https://artofproblemsolving.com/community/c204707h3039031p27358820",
+    "answer": "2^{\\frac{3}{4}}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2023 Integration Bee Problem 4",
+    "text": "\\[\\int_0^\\infty x e^{ \\sqrt[3]{x}}\\ \\mathrm dx.\\]  \nProposed by Connor Gordon.",
+    "solution": "$u^3=x$ then integration by parts and get $\\boxed{360}$",
+    "link": "https://artofproblemsolving.com/community/c204707h3039032p27358827",
+    "answer": "360",
+    "answer_type": "positive integer <= 1000",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2024 Integration Bee Problem 1",
+    "text": "\\[\\int_1^e \\frac{\\log(x^{2024})}{x} \\mathrm{d}x.\\] Proposed by Connor Gordon.",
+    "solution": "sol $\\frac{\\log(x^{2024})}{x}=2024\\cdot\\frac{\\log(x)}{x}$ and $\\frac{d}{dx}(\\log(x))^2=2\\log(x)\\cdot\\frac{1}{x}$ so $\\int \\frac{\\log(x^{2024})}{x} \\mathrm dx=1012\\log(x)^2$ so the answer is $\\boxed{1012}$",
+    "link": "https://artofproblemsolving.com/community/c204707h3293482p30374998",
+    "answer": "1012",
+    "answer_type": "positive integer > 1000",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2024 Integration Bee Problem 2",
+    "text": "\\[\\int_0^2 |\\sin(\\pi x)|+|\\cos(\\pi x)|\\mathrm dx.\\] Proposed by Anagh Sangavarapu.",
+    "solution": "Since the graphs of $\\sin(x)$ and $\\cos(x)$ are just horizontal translations of each other and both of them have a period of $2\\pi $ it follows that \n \\begin{align*}\n\\int_0^2 |\\cos(\\pi x)| \\text{d}x = \\int_0^2 |\\sin(\\pi x)| \\text{d}x \\end{align*} Therefore we wish to compute \n \\begin{align*}\n\\int_0^2 (|\\sin(\\pi x)|+|\\cos(\\pi x)|) \\text{d}x &= \\int_0^2 (|\\sin(\\pi x)|+|\\sin(\\pi x)|) \\text{d}x \\\\\n&= \\int_0^2 2|\\sin(\\pi x)| \\\\\n&= 2\\int_0^2 |\\sin(\\pi x)| \\end{align*} Then note that $\\sin(\\pi x)>0$ for $0<x<1$ and $\\sin(\\pi x)<0$ for $1<x<2 $ so we have \n \\begin{align*}\n2\\int_0^2 |\\sin(\\pi x)| &= 2\\int_0^1 |\\sin(\\pi x)| + 2\\int_1^2 |\\sin(\\pi x)| \\\\\n&= 2\\int_0^1 \\sin(\\pi x) 2\\int_1^2 \\sin(\\pi x) \\\\\n&= 2\\left[ \\frac{\\cos(\\pi x)}{\\pi} \\Big|_0^1\\right] 2\\left[ \\frac{\\cos(\\pi x)}{\\pi}\\Big|_1^2\\right] \\\\\n&= 2\\left[ \\frac{\\cos(\\pi)}{\\pi}+\\frac{\\cos(0)}{\\pi}\\right] 2\\left[ \\frac{\\cos(2\\pi)}{\\pi}+\\frac{\\cos(\\pi)}{\\pi}\\right] \\\\\n&= 2\\left[\\frac{1}{\\pi}+\\frac{1}{\\pi}\\right] 2\\left[ \\frac{1}{\\pi}+\\left( \\frac{1}{\\pi}\\right)\\right] \\\\\n&= 2 \\cdot \\frac{2}{\\pi} 2 \\cdot \\left( \\frac{1}{\\pi} \\frac{1}{\\pi}\\right) \\\\\n&= \\frac{4}{\\pi} 2\\cdot\\left( \\frac{2}{\\pi}\\right) \\\\\n&= \\frac{4}{\\pi} \\left( \\frac{4}{\\pi}\\right)\\\\\n&= \\frac{4}{\\pi} + \\frac{4}{\\pi} \\\\\n&= \\boxed{\\frac{8}{\\pi}} \\end{align*} $\\square$",
+    "link": "https://artofproblemsolving.com/community/c204707h3293484p30375006",
+    "answer": "\\frac{8}{\\pi}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2024 Integration Bee Problem 3",
+    "text": "\\[\\int_0^1 \\frac{\\log(x)}{\\sqrt x}\\mathrm dx.\\] Proposed by Robert Trosten.",
+    "solution": "We proceed with integration by parts Let $$u=\\log(x) \\text{d}v=\\frac{1}{\\sqrt{x}} $$ Then it follows that $$\\text{d}u=\\frac{1}{x} \\ \\text{d}x v=2\\sqrt{x} $$ \n Thus we have \n \\begin{align*}\n\\int_0^1 \\frac{\\log(x)}{\\sqrt x} \\ \\text{d}x &= \\int_0^1 u \\ \\text{d}v \\\\\n&= uv \\Big|_0^1 \\int_0^1 v \\ \\text{d}u \\\\\n&= 2\\log(x)\\sqrt{x}\\Big|_0^1 \\int_0^1 2\\sqrt{x} \\cdot \\frac{1}{x} \\ \\text{d}x \\end{align*} Note that \n $$\\lim_{x \\to 0} 2\\log(x)\\sqrt{x} = 0 $$ so we have \n \\begin{align*}\n2\\log(x)\\sqrt{x}\\Big|_0^1 \\int_0^1 2\\sqrt{x} \\cdot \\frac{1}{x} \\ \\text{d}x &= 2\\log(1)\\sqrt{1} \\lim_{x \\to 0}2\\log(x)\\sqrt{x} \\int_0^1 \\frac{2}{\\sqrt{x}} \\ \\text{d}x \\\\\n&= 2\\cdot0\\cdot1 0 \\left[4\\sqrt{x}\\Big|_0^1\\right] \\\\\n&= 0 (4\\sqrt{1} 4\\sqrt{0}) \\\\\n&= 4\\cdot1+4\\cdot0 \\\\\n&= 4 + 0 \\\\\n&= \\boxed{ 4} \\end{align*} $\\square$",
+    "link": "https://artofproblemsolving.com/community/c204707h3293486p30375011",
+    "answer": "4",
+    "answer_type": "positive integer <= 1000",
+    "source": "CMIMC",
+    "year": "unknown"
+  },
+  {
+    "title": "2024 Integration Bee Problem 4",
+    "text": "\\[\\int_0^1 (x^6+6x^5+15x^4+15x^2+6x+1)\\mathrm{d}x.\\] Proposed by Robert Trosten.",
+    "solution": "We have \n \\begin{align*}\n\\int_0^1 (x^6+6x^5+15x^4+15x^2+6x+1) \\ \\text{d}x &= \\int_0^1 (x+1)^6 \\ \\text{d}x \\\\\n&= \\frac{(x+1)^7}{7}\\Big|_0^1 \\\\\n&= \\frac{(1+1)^7}{7} \\frac{(0+1)^7}{7} \\\\\n&= \\frac{2^7}{7} \\frac{1^7}{7} \\\\\n&= \\frac{128}{7} \\frac{1}{7} \\\\\n&= \\boxed{\\frac{127}{7}} \\end{align*} $\\square$",
+    "link": "https://artofproblemsolving.com/community/c204707h3293487p30375015",
+    "answer": "\\frac{127}{7}",
+    "answer_type": "other",
+    "source": "CMIMC",
+    "year": "unknown"
+  }
+]

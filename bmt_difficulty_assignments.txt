@@ -1,0 +1,879 @@
+📊 Assigned Difficulties for BMT Problems:
+
+[BMT 2024 Geometry Round #1] 2024 BMT Geometry #1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2024 Geometry Round #2] 2024 BMT Geometry #2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2024 Geometry Round #3] 2024 BMT Geometry #3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2024 Geometry Round #4] 2024 BMT Geometry #4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2024 Geometry Round #5] 2024 BMT Geometry #5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2024 Geometry Round #6] 2024 BMT Geometry #6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2024 Geometry Round #7] 2024 BMT Geometry #7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2024 Geometry Round #8] 2024 BMT Geometry #8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2024 Geometry Round #9] 2024 BMT Geometry #9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2024 Geometry Round #10] 2024 BMT Geometry #10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2023 Geometry Round #1] 2023 BMT Geometry #1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2023 Geometry Round #2] 2023 BMT Geometry #2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2023 Geometry Round #3] 2023 BMT Geometry #3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2023 Geometry Round #4] 2023 BMT Geometry #4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2023 Geometry Round #5] 2023 BMT Geometry #5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2023 Geometry Round #6] 2023 BMT Geometry #6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2023 Geometry Round #7] 2023 BMT Geometry #7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2023 Geometry Round #8] 2023 BMT Geometry #8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2023 Geometry Round #9] 2023 BMT Geometry #9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2023 Geometry Round #10] 2023 BMT Geometry #10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2023 Geometry Round #Tie 1] 2023 BMT Geometry Tiebreaker #1 → subject=Geometry Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2023 Geometry Round #Tie 2] 2023 BMT Geometry Tiebreaker #2 → subject=Geometry Tiebreaker, number=2 → difficulty = 3
+[BMT 2023 Geometry Round #Tie 3] 2023 BMT Geometry Tiebreaker #3 → subject=Geometry Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2023 Algebra Round #1] 2023 BMT Algebra #1 → subject=Algebra, number=1 → difficulty = 1.5
+[BMT 2023 Algebra Round #2] 2023 BMT Algebra #2 → subject=Algebra, number=2 → difficulty = 2
+[BMT 2023 Algebra Round #3] 2023 BMT Algebra #3 → subject=Algebra, number=3 → difficulty = 2.5
+[BMT 2023 Algebra Round #4] 2023 BMT Algebra #4 → subject=Algebra, number=4 → difficulty = 3
+[BMT 2023 Algebra Round #5] 2023 BMT Algebra #5 → subject=Algebra, number=5 → difficulty = 3.5
+[BMT 2023 Algebra Round #6] 2023 BMT Algebra #6 → subject=Algebra, number=6 → difficulty = 4
+[BMT 2023 Algebra Round #7] 2023 BMT Algebra #7 → subject=Algebra, number=7 → difficulty = 5
+[BMT 2023 Algebra Round #8] 2023 BMT Algebra #8 → subject=Algebra, number=8 → difficulty = 5.5
+[BMT 2023 Algebra Round #9] 2023 BMT Algebra #9 → subject=Algebra, number=9 → difficulty = 6
+[BMT 2023 Algebra Round #10] 2023 BMT Algebra #10 → subject=Algebra, number=10 → difficulty = 7
+[BMT 2023 Algebra Round #Tie 1] 2023 BMT Algebra Tiebreaker #1 → subject=Algebra Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2023 Algebra Round #Tie 2] 2023 BMT Algebra Tiebreaker #2 → subject=Algebra Tiebreaker, number=2 → difficulty = 3
+[BMT 2023 Algebra Round #Tie 3] 2023 BMT Algebra Tiebreaker #3 → subject=Algebra Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2023 Discrete Round #1] 2023 BMT Discrete #1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2023 Discrete Round #2] 2023 BMT Discrete #2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2023 Discrete Round #3] 2023 BMT Discrete #3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2023 Discrete Round #4] 2023 BMT Discrete #4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2023 Discrete Round #5] 2023 BMT Discrete #5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2023 Discrete Round #6] 2023 BMT Discrete #6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2023 Discrete Round #7] 2023 BMT Discrete #7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2023 Discrete Round #8] 2023 BMT Discrete #8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2023 Discrete Round #9] 2023 BMT Discrete #9 → subject=Discrete, number=9 → difficulty = 6
+[BMT 2023 Discrete Round #10] 2023 BMT Discrete #10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2023 Discrete Round #Tie 1] 2023 BMT Discrete Tiebreaker #1 → subject=Discrete Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2023 Discrete Round #Tie 2] 2023 BMT Discrete Tiebreaker #2 → subject=Discrete Tiebreaker, number=2 → difficulty = 3
+[BMT 2023 Discrete Round #Tie 3] 2023 BMT Discrete Tiebreaker #3 → subject=Discrete Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2023 General Round #1] 2023 BMT General #1 → subject=General, number=1 → difficulty = 1
+[BMT 2023 General Round #2] 2023 BMT General #2 → subject=General, number=2 → difficulty = 1
+[BMT 2023 same as Geometry 1 #4] 2023 BMT General #4 → subject=General, number=4 → difficulty = 1
+[BMT 2023 same as Discrete 1 #7] 2023 BMT General #7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2023 same as Discrete 1 #8] 2023 BMT General #8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2023 same as Discrete 1 #9] 2023 BMT General #9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2023 same as Algebra 3 #12] 2023 BMT General #12 → subject=General, number=12 → difficulty = 2
+[BMT 2023 same as Discrete 3 #16] 2023 BMT General #16 → subject=General, number=16 → difficulty = 3
+[BMT 2023 same as Geometry 4 #20] 2023 BMT General #20 → subject=General, number=20 → difficulty = 4
+[BMT 2023 same as Discrete Tie 1 #Tie 4] 2023 BMT General Tiebreaker #4 → subject=General, number=4 → difficulty = 1
+[BMT 2023 Guts Round #1] BMT 2023 Guts #1 → subject=Guts, number=1 → difficulty = 1.5
+[BMT 2023 Guts Round #2] BMT 2023 Guts #2 → subject=Guts, number=2 → difficulty = 2
+[BMT 2023 Guts Round #3] BMT 2023 Guts #3 → subject=Guts, number=3 → difficulty = 2.5
+[BMT 2023 Guts Round #4] BMT 2023 Guts #4 → subject=Guts, number=4 → difficulty = 2
+[BMT 2023 Guts Round #5] BMT 2023 Guts #5 → subject=Guts, number=5 → difficulty = 2.5
+[BMT 2023 Guts Round #6] BMT 2023 Guts #6 → subject=Guts, number=6 → difficulty = 3
+[BMT 2023 Guts Round #7] BMT 2023 Guts #7 → subject=Guts, number=7 → difficulty = 3
+[BMT 2023 Guts Round #8] BMT 2023 Guts #8 → subject=Guts, number=8 → difficulty = 3.5
+[BMT 2023 Guts Round #9] BMT 2023 Guts #9 → subject=Guts, number=9 → difficulty = 4
+[BMT 2023 Guts Round #10] BMT 2023 Guts #10 → subject=Guts, number=10 → difficulty = 3.5
+[BMT 2023 Guts Round #11] BMT 2023 Guts #11 → subject=Guts, number=11 → difficulty = 4
+[BMT 2023 Guts Round #12] BMT 2023 Guts #12 → subject=Guts, number=12 → difficulty = 4.5
+[BMT 2023 Guts Round #13] BMT 2023 Guts #13 → subject=Guts, number=13 → difficulty = 4
+[BMT 2023 Guts Round #14] BMT 2023 Guts #14 → subject=Guts, number=14 → difficulty = 4.5
+[BMT 2023 Guts Round #15] BMT 2023 Guts #15 → subject=Guts, number=15 → difficulty = 5
+[BMT 2023 Guts Round #16] BMT 2023 Guts #16 → subject=Guts, number=16 → difficulty = 5
+[BMT 2023 Guts Round #17] BMT 2023 Guts #17 → subject=Guts, number=17 → difficulty = 5.5
+[BMT 2023 Guts Round #18] BMT 2023 Guts #18 → subject=Guts, number=18 → difficulty = 6
+[BMT 2023 Guts Round #19-21] BMT 2023 Guts Round Set 7 p19-21 → subject=Guts, number=19 → difficulty = 5.5
+[BMT 2023 Guts Round #22] BMT 2023 Guts #22 → subject=Guts, number=22 → difficulty = 6
+[BMT 2023 Guts Round #23] BMT 2023 Guts #23 → subject=Guts, number=23 → difficulty = 6.5
+[BMT 2023 Guts Round #24] BMT 2023 Guts #24 → subject=Guts, number=24 → difficulty = 7
+[BMT 2023 Guts Round #25] BMT 2023 Guts #25 - sequence of largest squares inside a triangle → subject=Guts, number=25 → difficulty = 6.5
+[BMT 2023 Guts Round #26] BMT 2023 Guts #26 → subject=Guts, number=26 → difficulty = 7
+[BMT 2023 Guts Round #27] BMT 2023 Guts #27 - integer isosceles inscribed in circle → subject=Guts, number=27 → difficulty = 7.5
+[BMT 2022 Algebra Round #1] BMT 2022 Fall Algebra P1, General P2 → subject=Algebra, number=1 → difficulty = 1.5
+[BMT 2022 Algebra Round #2] BMT 2022 Fall Algebra P2 → subject=Algebra, number=2 → difficulty = 2
+[BMT 2022 Algebra Round #3] BMT 2022 Fall Algebra P3 → subject=Algebra, number=3 → difficulty = 2.5
+[BMT 2022 Algebra Round #4] BMT 2022 Fall Algebra P4 → subject=Algebra, number=4 → difficulty = 3
+[BMT 2022 Algebra Round #5] BMT 2022 Fall Algebra P5 → subject=Algebra, number=5 → difficulty = 3.5
+[BMT 2022 Algebra Round #6] BMT 2022 Fall Algebra P6 → subject=Algebra, number=6 → difficulty = 4
+[BMT 2022 Algebra Round #7] BMT 2022 Fall Algebra P7 → subject=Algebra, number=7 → difficulty = 5
+[BMT 2022 Algebra Round #8] BMT 2022 Fall Algebra P8 → subject=Algebra, number=8 → difficulty = 5.5
+[BMT 2022 Algebra Round #9] BMT 2022 Fall Algebra P9 → subject=Algebra, number=9 → difficulty = 6
+[BMT 2022 Algebra Round #10] None → subject=Algebra, number=10 → difficulty = 7
+[BMT 2022 Algebra Round #Tie 1] BMT 2022 Algebra Tiebreaker p1 → subject=Algebra Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2022 Algebra Round #Tie 2] BMT 2022 Algebra Tiebreaker p2 → subject=Algebra Tiebreaker, number=2 → difficulty = 3
+[BMT 2022 Algebra Round #Tie 3] BMT 2022 Algebra Tiebreaker p3 → subject=Algebra Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2022 Discrete Round #1] BMT 2022 Fall Discrete P1, General P3 (Food!) → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2022 Discrete Round #2] BMT 2022 Fall Discrete P2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2022 Discrete Round #3] BMT 2022 Fall Discrete P3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2022 Discrete Round #4] BMT 2022 Fall Discrete P4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2022 Discrete Round #5] BMT 2022 Fall Discrete P5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2022 Discrete Round #6] BMT 2022 Fall Discrete P6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2022 Discrete Round #7] BMT 2022 Fall Discrete P7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2022 Discrete Round #8] BMT 2022 Fall Discrete P8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2022 Discrete Round #9] BMT 2022 Fall Discrete P9 → subject=Discrete, number=9 → difficulty = 6
+[BMT 2022 Discrete Round #10] BMT 2022 Fall Discrete P10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2022 Discrete Round #Tie 1] BMT 2022 Discrete Tiebreaker p1 → subject=Discrete Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2022 Discrete Round #Tie 2] BMT 2022 Discrete Tiebreaker p2 → subject=Discrete Tiebreaker, number=2 → difficulty = 3
+[BMT 2022 Discrete Round #Tie 3] BMT 2022 Discrete Tiebreaker p3 → subject=Discrete Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2022 Geometry Round #1] BMT 2022 Geometry # 1 / General 6 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2022 Geometry Round #2] BMT 2022 Geometry #2 / General #15 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2022 Geometry Round #3] BMT 2022 Geometry #3 / General #18 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2022 Geometry Round #4] BMT 2022 Geometry #4 / General #21 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2022 Geometry Round #5] BMT 2022 Geometry #5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2022 Geometry Round #6] BMT 2022 Geometry #6 / General #24 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2022 Geometry Round #7] BMT 2022 Geometry #7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2022 Geometry Round #8] BMT 2022 Geometry #8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2022 Geometry Round #9] BMT 2022 Geometry #9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2022 Geometry Round #10] BMT 2022 Geometry #10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2022 Geometry Round #Tie 1] BMT 2022 Geometry Tiebreaker #1 → subject=Geometry Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2022 Geometry Round #Tie 2] BMT 2022 Geometry Tiebreaker #2 → subject=Geometry Tiebreaker, number=2 → difficulty = 3
+[BMT 2022 Geometry Round #Tie 3] BMT 2022 Geometry Tiebreaker #3 → subject=Geometry Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2022 Guts Round #1] BMT 2022 Guts #1 → subject=Guts, number=1 → difficulty = 1.5
+[BMT 2022 Guts Round #2] BMT 2022 Guts #2 → subject=Guts, number=2 → difficulty = 2
+[BMT 2022 Guts Round #3] BMT 2022 Guts #3 → subject=Guts, number=3 → difficulty = 2.5
+[BMT 2022 Guts Round #4] BMT 2022 Guts #4 → subject=Guts, number=4 → difficulty = 2
+[BMT 2022 Guts Round #5] BMT 2022 Guts #5 → subject=Guts, number=5 → difficulty = 2.5
+[BMT 2022 Guts Round #6] BMT 2022 Guts #6 → subject=Guts, number=6 → difficulty = 3
+[BMT 2022 Guts Round #7] BMT 2022 Guts #7 → subject=Guts, number=7 → difficulty = 3
+[BMT 2022 Guts Round #8] BMT 2022 Guts #8 → subject=Guts, number=8 → difficulty = 3.5
+[BMT 2022 Guts Round #9] BMT 2022 Guts #9 → subject=Guts, number=9 → difficulty = 4
+[BMT 2022 Guts Round #10] BMT 2022 Guts #10 → subject=Guts, number=10 → difficulty = 3.5
+[BMT 2022 Guts Round #11] BMT 2022 Guts #11 → subject=Guts, number=11 → difficulty = 4
+[BMT 2022 Guts Round #12] BMT 2022 Guts #12 → subject=Guts, number=12 → difficulty = 4.5
+[BMT 2022 Guts Round #13] BMT 2022 Guts #13 → subject=Guts, number=13 → difficulty = 4
+[BMT 2022 Guts Round #14] BMT 2022 Guts #14 → subject=Guts, number=14 → difficulty = 4.5
+[BMT 2022 Guts Round #15] BMT 2022 Guts #15 → subject=Guts, number=15 → difficulty = 5
+[BMT 2022 Guts Round #16] BMT 2022 Guts #16 → subject=Guts, number=16 → difficulty = 5
+[BMT 2022 Guts Round #17] BMT 2022 Guts #17 → subject=Guts, number=17 → difficulty = 5.5
+[BMT 2022 Guts Round #18] BMT 2022 Guts #18 → subject=Guts, number=18 → difficulty = 6
+[BMT 2022 Guts Round #19-21] BMT 2022 Guts Round Set 7 p19-21 → subject=Guts, number=19 → difficulty = 5.5
+[BMT 2022 Guts Round #22] BMT 2022 Guts #22 → subject=Guts, number=22 → difficulty = 6
+[BMT 2022 Guts Round #23] BMT 2022 Guts #23 → subject=Guts, number=23 → difficulty = 6.5
+[BMT 2022 Guts Round #24] BMT 2022 Guts #24 → subject=Guts, number=24 → difficulty = 7
+[BMT 2022 Guts Round #25] BMT 2022 Guts #25 → subject=Guts, number=25 → difficulty = 6.5
+[BMT 2022 Guts Round #26] BMT 2022 Guts #26 → subject=Guts, number=26 → difficulty = 7
+[BMT 2022 Guts Round #27] BMT 2022 Guts #27 → subject=Guts, number=27 → difficulty = 7.5
+[BMT 2022 General Round #1] BMT 2022 Fall General P1 → subject=General, number=1 → difficulty = 1
+[BMT 2022 same as Discrete 1 #4] BMT 2022 Fall General P4 (im not very good at asy) → subject=General, number=4 → difficulty = 1
+[BMT 2022 same as Discrete 1 #5] BMT 2022 Fall General P5 → subject=General, number=5 → difficulty = 1
+[BMT 2022 same as Geometry 1 #7] BMT 2022 General p7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2022 same as Geometry 1 #8] BMT 2022 General p8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2022 same as Geometry 1 #9] BMT 2022 General p9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2022 same as Geometry 1 #10] BMT 2022 General p10 → subject=General, number=10 → difficulty = 2
+[BMT 2022 same as Algebra 2 #12] BMT 2022 General p12 → subject=General, number=12 → difficulty = 2
+[BMT 2022 same as Algebra 2 #13] BMT 2022 General p13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2022 same as Geometry 2 #16] BMT 2022 General p16 → subject=General, number=16 → difficulty = 3
+[BMT 2022 same as Geometry 2 #17] BMT 2022 General p17 → subject=General, number=17 → difficulty = 3
+[BMT 2022 same as Algebra 3 #20] BMT 2022 General p20 → subject=General, number=20 → difficulty = 4
+[BMT 2022 same as Algebra Tie 1 #Tie 2] BMT 2022 General Tiebreaker #2 → subject=General, number=2 → difficulty = 1
+[BMT 2022 same as Algebra Tie 1 #Tie 3] BMT 2022 General Tiebreaker #3 → subject=General, number=3 → difficulty = 1
+[BMT 2022 same as Algebra Tie 1 #Tie 4] BMT 2022 General Tiebreaker #4 → subject=General, number=4 → difficulty = 1
+[BMT 2017 Geometry Round #1] BMT 2017 Spring - Geometry 1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2017 Geometry Round #2] BMT 2017 Spring - Geometry 2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2017 Geometry Round #3] BMT 2017 Spring - Geometry 3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2017 Geometry Round #4] BMT 2017 Spring - Geometry 4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2017 Geometry Round #5] BMT 2017 Spring - Geometry 5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2017 Geometry Round #6] BMT 2017 Spring - Geometry 6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2017 Geometry Round #7] BMT 2017 Spring - Geometry 7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2017 Geometry Round #8] BMT 2017 Spring - Geometry 8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2017 Geometry Round #9] BMT 2017 Spring - Geometry 9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2017 Geometry Round #10] BMT 2017 Spring - Geometry 10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2017 Team Round #1] 2017 BMT Team 1 → subject=Team, number=1 → difficulty = 1.5
+[BMT 2017 Team Round #2] 2017 BMT Team 2 → subject=Team, number=2 → difficulty = 2
+[BMT 2017 Team Round #3] 2017 BMT Team 3 → subject=Team, number=3 → difficulty = 2.5
+[BMT 2017 Team Round #4] acute <AOB by 2 darts on a  circular board 2017 BMT Team 4 → subject=Team, number=4 → difficulty = 3
+[BMT 2017 Team Round #5] 2017 BMT Team 5 → subject=Team, number=5 → difficulty = 3
+[BMT 2017 Team Round #6] rotating a unit square inside a unit circle 2017 BMT Team 6 → subject=Team, number=6 → difficulty = 3.5
+[BMT 2017 Team Round #7] 2017 BMT Team 7 → subject=Team, number=7 → difficulty = 4
+[BMT 2017 Team Round #8] 2017 BMT Team 8 → subject=Team, number=8 → difficulty = 4.5
+[BMT 2017 Team Round #9] right triangle, incircle and circumcircle related 2017 BMT Team 9 → subject=Team, number=9 → difficulty = 5
+[BMT 2017 Team Round #10] 2017 BMT Spring Team 10 → subject=Team, number=10 → difficulty = 5
+[BMT 2017 Team Round #11] 2017 BMT Team 11 → subject=Team, number=11 → difficulty = 5.5
+[BMT 2017 Team Round #12] 2017 BMT Team 12 → subject=Team, number=12 → difficulty = 6
+[BMT 2017 Team Round #13] common area of 4 equilaterals in a square 2017 BMT Team 13 → subject=Team, number=13 → difficulty = 6.5
+[BMT 2017 Team Round #14] 2017 BMT Team 14 → subject=Team, number=14 → difficulty = 7
+[BMT 2017 Team Round #15] computational geo, <ACB=30^o, ABP equilateral 2017 BMT Team 15 → subject=Team, number=15 → difficulty = 7.5
+[BMT 2017 Individual Round #1] 2017 BMT Individual 1 → subject=General, number=1 → difficulty = 1
+[BMT 2017 Individual Round #2] equilateral and square of equal perimeter  2017 BMT Individual 2 → subject=General, number=2 → difficulty = 1
+[BMT 2017 Individual Round #3] 2017 BMT Individual 3 → subject=General, number=3 → difficulty = 1
+[BMT 2017 Individual Round #4] 2017 BMT Individual 4 → subject=General, number=4 → difficulty = 1
+[BMT 2017 Individual Round #5] 2017 BMT Individual 5 → subject=General, number=5 → difficulty = 1
+[BMT 2017 Individual Round #6] 2017 BMT Individual 6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2017 Individual Round #7] 2017 BMT Individual 7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2017 Individual Round #8] 2017 BMT Individual 8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2017 Individual Round #9] 2017 BMT Individual 9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2017 Individual Round #10] area. vertices of # in coordinate system 2017 BMT Individual 10 → subject=General, number=10 → difficulty = 2
+[BMT 2017 Individual Round #11] 2017 BMT Individual 11 → subject=General, number=11 → difficulty = 2
+[BMT 2017 Individual Round #12] 2017 BMT Individual 12 → subject=General, number=12 → difficulty = 2
+[BMT 2017 Individual Round #13] max area of triangle, tangent line 2017 BMT Individual 13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2017 Individual Round #14] 2017 BMT Individual 14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2017 Individual Round #15] 2017 BMT Individual 15 → subject=General, number=15 → difficulty = 3
+[BMT 2017 Individual Round #16] max area of triangle of centroids of PBC, PAC,PAB 2017 BMT Individual 16 → subject=General, number=16 → difficulty = 3
+[BMT 2017 Individual Round #17] angle wanted, circumcenter, circle, 80-60-40 triangle 2017 BMT Individual 17 → subject=General, number=17 → difficulty = 3
+[BMT 2017 Individual Round #18] 2017 BMT Individual 18 → subject=General, number=18 → difficulty = 3.5
+[BMT 2017 Individual Round #19] center of ellipse through midpoints of triangle 2017 BMT Individual 19 → subject=General, number=19 → difficulty = 3.5
+[BMT 2017 Individual Round #20] 2017 BMT Individual 20 → subject=General, number=20 → difficulty = 4
+[BMT 2017 Discrete Round #1] 2017 BMT Discrete #1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2017 Discrete Round #2] 2017 BMT Discrete #2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2017 Discrete Round #3] 2017 BMT Discrete #3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2017 Discrete Round #4] 2017 BMT Discrete #4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2017 Discrete Round #5] 2017 BMT Discrete #5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2017 Discrete Round #6] 2017 BMT Discrete #6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2017 Discrete Round #7] 2017 BMT Discrete #7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2017 Discrete Round #8] 2017 BMT Discrete #8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2017 Discrete Round #9] 2017 BMT Discrete #9 → subject=Discrete, number=9 → difficulty = 6
+[BMT 2017 Discrete Round #10] 2017 BMT Discrete #10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2017 Analysis Round #1] 2017 BMT Analysis #1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2017 Analysis Round #2] 2017 BMT Analysis #2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2017 Analysis Round #3] 2017 BMT Analysis #3 → subject=Analysis, number=3 → difficulty = 2.5
+[BMT 2017 Analysis Round #4] 2017 BMT Analysis #4 → subject=Analysis, number=4 → difficulty = 3
+[BMT 2017 Analysis Round #5] 2017 BMT Analysis #5 → subject=Analysis, number=5 → difficulty = 3.5
+[BMT 2017 Analysis Round #6] 2017 BMT Analysis #6 → subject=Analysis, number=6 → difficulty = 4
+[BMT 2017 Analysis Round #7] 2017 BMT Analysis #7 → subject=Analysis, number=7 → difficulty = 5
+[BMT 2017 Analysis Round #8] 2017 BMT Analysis #8 → subject=Analysis, number=8 → difficulty = 5.5
+[BMT 2017 Analysis Round #9] 2017 BMT Analysis #9 → subject=Analysis, number=9 → difficulty = 6
+[BMT 2017 Analysis Round #10] 2017 BMT Analysis #10 → subject=Analysis, number=10 → difficulty = 7
+[BMT 2016 Geometry Round #1] BMT 2016 Spring - Geometry 1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2016 Geometry Round #2] BMT 2016 Spring - Geometry 2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2016 Geometry Round #3] BMT 2016 Spring - Geometry 3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2016 Geometry Round #4] BMT 2016 Spring - Geometry 4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2016 Geometry Round #5] BMT 2016 Spring - Geometry 5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2016 Geometry Round #6] BMT 2016 Spring - Geometry 6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2016 Geometry Round #7] BMT 2016 Spring - Geometry 7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2016 Geometry Round #8] BMT 2016 Spring - Geometry 8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2016 Geometry Round #9] BMT 2016 Spring - Geometry 9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2016 Geometry Round #10] BMT 2016 Spring - Geometry 10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2016 Team Round #1] 2016 BMT Team 1 → subject=Team, number=1 → difficulty = 1.5
+[BMT 2016 Team Round #2] regular octagon from a square  2016 BMT Team 2 → subject=Team, number=2 → difficulty = 2
+[BMT 2016 Team Round #3] 2016 BMT Team 3 → subject=Team, number=3 → difficulty = 2.5
+[BMT 2016 Team Round #4] 2016 BMT Team 4 → subject=Team, number=4 → difficulty = 3
+[BMT 2016 Team Round #5] area of ACD wanted, ABC right, <DAC=30^o, <DCA=60^o 2016 BMT Team 5 → subject=Team, number=5 → difficulty = 3
+[BMT 2016 Team Round #6] 2016 BMT Team 6 → subject=Team, number=6 → difficulty = 3.5
+[BMT 2016 Team Round #7] 2016 BMT Team 7 → subject=Team, number=7 → difficulty = 4
+[BMT 2016 Team Round #8] 2016 BMT Team 8 → subject=Team, number=8 → difficulty = 4.5
+[BMT 2016 Team Round #9] 2016 BMT Team 9 → subject=Team, number=9 → difficulty = 5
+[BMT 2016 Team Round #10] min perimeter of integer triangle and area 1/2 2016 BMT Team 10 → subject=Team, number=10 → difficulty = 5
+[BMT 2016 Team Round #11] \sqrt{1+BC/BD}=? 2016AB = BC, 2 intersecting circles 2016 BMT Team 11 → subject=Team, number=11 → difficulty = 5.5
+[BMT 2016 Team Round #12] center of mass of  solid hemisphere 2016 BMT Team 12 → subject=Team, number=12 → difficulty = 6
+[BMT 2016 Team Round #13] 2016 BMT Team 13 → subject=Team, number=13 → difficulty = 6.5
+[BMT 2016 Team Round #14] 2016 BMT Team 14 → subject=Team, number=14 → difficulty = 7
+[BMT 2016 Team Round #15] 2016 BMT Team 15 → subject=Team, number=15 → difficulty = 7.5
+[BMT 2016 Individual Round #1] BMT 2016 Spring - Individual 1 → subject=General, number=1 → difficulty = 1
+[BMT 2016 Individual Round #2] BMT 2016 Spring - Individual 2 → subject=General, number=2 → difficulty = 1
+[BMT 2016 Individual Round #3] equilateral, square  2016 BMT Individual 2 → subject=General, number=3 → difficulty = 1
+[BMT 2016 Individual Round #4] min sum of  distances, inside 3-4-5 triangle 2016 BMT Individual 4 → subject=General, number=4 → difficulty = 1
+[BMT 2016 Individual Round #5] BMT 2016 Spring - Individual 5 → subject=General, number=5 → difficulty = 1
+[BMT 2016 Individual Round #6] BMT 2016 Spring - Individual 6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2016 Individual Round #7] BMT 2016 Spring - Individual 7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2016 Individual Round #8] BMT 2016 Spring - Individual 8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2016 Individual Round #9] BMT 2016 Spring - Individual 9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2016 Individual Round #10] BMT 2016 Spring - Individual 10 → subject=General, number=10 → difficulty = 2
+[BMT 2016 Individual Round #11] BMT 2016 Spring - Individual 11 → subject=General, number=11 → difficulty = 2
+[BMT 2016 Individual Round #12] BMT 2016 Spring - Individual 12 → subject=General, number=12 → difficulty = 2
+[BMT 2016 Individual Round #13] BMT 2016 Spring - Individual 13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2016 Individual Round #14] 3 equal circles inscribed in a square 2016 BMT Individual 14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2016 Individual Round #15] BMT 2016 Spring - Individual 15 → subject=General, number=15 → difficulty = 3
+[BMT 2016 Individual Round #16] max sphere inscribed in tetrahedron, analytic geometry 2016 BMT Individual 16 → subject=General, number=16 → difficulty = 3
+[BMT 2016 Individual Round #17] area of ADBC, triangle ABC 30-60-90 on coordinate system 2016 BMT Individual 17 → subject=General, number=17 → difficulty = 3
+[BMT 2016 Individual Round #18] BMT 2016 Spring - Individual 18 → subject=General, number=18 → difficulty = 3.5
+[BMT 2016 Individual Round #19] sequence of tetrahedrons, limit, centroid 2016 BMT Individual 19 → subject=General, number=19 → difficulty = 3.5
+[BMT 2016 Individual Round #20] BMT 2016 Spring - Individual 20 → subject=General, number=20 → difficulty = 4
+[BMT 2016 Discrete Round #1] 2016 BMT Discrete #1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2016 Discrete Round #2] 2016 BMT Discrete #2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2016 Discrete Round #3] 2016 BMT Discrete #3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2016 Discrete Round #4] 2016 BMT Discrete #4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2016 Discrete Round #5] 2016 BMT Discrete #5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2016 Discrete Round #6] 2016 BMT Discrete #6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2016 Discrete Round #7] 2016 BMT Discrete #7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2016 Discrete Round #8] 2016 BMT Discrete #8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2016 Discrete Round #9] 2016 BMT Discrete #9 (\sqrt6 + \sqrt7)^{1000} → subject=Discrete, number=9 → difficulty = 6
+[BMT 2016 Discrete Round #10] 2016 BMT Discrete #10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2016 Analysis Round #1] 2016 BMT Analysis #1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2016 Analysis Round #2] 2016 BMT Analysis #2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2016 Analysis Round #3] 2016 BMT Analysis #3 → subject=Analysis, number=3 → difficulty = 2.5
+[BMT 2016 Analysis Round #4] 2016 BMT Analysis #4 → subject=Analysis, number=4 → difficulty = 3
+[BMT 2016 Analysis Round #5] 2016 BMT Analysis #5 → subject=Analysis, number=5 → difficulty = 3.5
+[BMT 2016 Analysis Round #6] 2016 BMT Analysis #6 → subject=Analysis, number=6 → difficulty = 4
+[BMT 2016 Analysis Round #7] 2016 BMT Analysis #7 → subject=Analysis, number=7 → difficulty = 5
+[BMT 2016 Analysis Round #8] 2016 BMT Analysis #8 → subject=Analysis, number=8 → difficulty = 5.5
+[BMT 2016 Analysis Round #9] 2016 BMT Analysis #9 → subject=Analysis, number=9 → difficulty = 6
+[BMT 2016 Analysis Round #10] 2016 BMT Analysis #10 → subject=Analysis, number=10 → difficulty = 7
+[BMT 2015 Geometry Round #1] BMT 2015 Spring - Geometry 1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2015 Geometry Round #2] BMT 2015 Spring - Geometry 2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2015 Geometry Round #3] BMT 2015 Spring - Geometry 3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2015 Geometry Round #4] BMT 2015 Spring - Geometry 4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2015 Geometry Round #5] BMT 2015 Spring - Geometry 5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2015 Geometry Round #6] BMT 2015 Spring - Geometry 6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2015 Geometry Round #7] BMT 2015 Spring - Geometry 7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2015 Geometry Round #8] BMT 2015 Spring - Geometry 8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2015 Geometry Round #9] BMT 2015 Spring - Geometry 9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2015 Geometry Round #10] BMT 2015 Spring - Geometry 10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2015 Geometry Round #P1] BMT 2015 Spring - Geometry P1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2015 Geometry Round #P2] BMT 2015 Spring - Geometry P2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2015 Geometry Round #Tie 1] BMT 2015 Geometry Tiebreaker #1 → subject=Geometry Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2015 Geometry Round #Tie 2] BMT 2015 Geometry Tiebreaker #2 → subject=Geometry Tiebreaker, number=2 → difficulty = 3
+[BMT 2015 Geometry Round #Tie 3] BMT 2015 Geometry Tiebreaker #3 → subject=Geometry Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2015 Team Round #1] 2015 BMT Team 1 → subject=Team-20, number=1 → difficulty = 2
+[BMT 2015 Team Round #2] 2015 BMT Team 2 → subject=Team-20, number=2 → difficulty = 2
+[BMT 2015 Team Round #3] 2015 BMT Team 3 → subject=Team-20, number=3 → difficulty = 2.5
+[BMT 2015 Team Round #4] lines // to sides of 3-4-5 triangle bisecting areas 2015 BMT Team 4 → subject=Team-20, number=4 → difficulty = 2.5
+[BMT 2015 Team Round #5] 2015 BMT Team 5 → subject=Team-20, number=5 → difficulty = 2.5
+[BMT 2015 Team Round #6] 2015 BMT Team 6 → subject=Team-20, number=6 → difficulty = 3
+[BMT 2015 Team Round #7] 2015 points, equal segments, equal angles 2015 BMT Team 7 → subject=Team-20, number=7 → difficulty = 3.5
+[BMT 2015 Team Round #8] 2015 BMT Team 8 → subject=Team-20, number=8 → difficulty = 4
+[BMT 2015 Team Round #9] largest square  inscribed in unit cube 2015 BMT Team 9 → subject=Team-20, number=9 → difficulty = 4
+[BMT 2015 Team Round #10] 2015 BMT Team 10 → subject=Team-20, number=10 → difficulty = 4.5
+[BMT 2015 Team Round #11] 2015 BMT Team 11 → subject=Team-20, number=11 → difficulty = 4.5
+[BMT 2015 Team Round #12] 2015 BMT Team 12 → subject=Team-20, number=12 → difficulty = 4.5
+[BMT 2015 Team Round #13] 2015 BMT Team 13 → subject=Team-20, number=13 → difficulty = 4.5
+[BMT 2015 Team Round #14] 2015 BMT Team 14 → subject=Team-20, number=14 → difficulty = 5
+[BMT 2015 Team Round #15] 2015 BMT Team 15 integral → subject=Team-20, number=15 → difficulty = 5
+[BMT 2015 Team Round #16] AB=BC=CD=DE=EA=1, <ABC=<BCD=<CDE=<DEA=90^o 2015 BMT Team 16 → subject=Team-20, number=16 → difficulty = 5.5
+[BMT 2015 Team Round #17] 2015 BMT Team 17 → subject=Team-20, number=17 → difficulty = 6
+[BMT 2015 Team Round #18] 2015 BMT Team 18 → subject=Team-20, number=18 → difficulty = 6.5
+[BMT 2015 Team Round #19] 2015 BMT Team 19 → subject=Team-20, number=19 → difficulty = 7
+[BMT 2015 Team Round #20] 2015 BMT Team 20 → subject=Team-20, number=20 → difficulty = 7.5
+[BMT 2015 Analysis Round #1] 2015 BMT Spring Analysis 1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2015 Analysis Round #2] 2015 BMT Spring Analysis 2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2015 Analysis Round #3] 2015 BMT Spring Analysis 3 → subject=Analysis, number=3 → difficulty = 2.5
+[BMT 2015 Analysis Round #4] 2015 BMT Spring Analysis 4 → subject=Analysis, number=4 → difficulty = 3
+[BMT 2015 Analysis Round #5] 2015 BMT Spring Analysis 5 → subject=Analysis, number=5 → difficulty = 3.5
+[BMT 2015 Analysis Round #6] 2015 BMT Spring Analysis 6 → subject=Analysis, number=6 → difficulty = 4
+[BMT 2015 Analysis Round #7] 2015 BMT Spring Analysis 7 → subject=Analysis, number=7 → difficulty = 5
+[BMT 2015 Analysis Round #8] 2015 BMT Spring Analysis 8 → subject=Analysis, number=8 → difficulty = 5.5
+[BMT 2015 Analysis Round #9] 2015 BMT Spring Analysis 9 → subject=Analysis, number=9 → difficulty = 6
+[BMT 2015 Analysis Round #10] 2015 BMT Spring Analysis 10 → subject=Analysis, number=10 → difficulty = 7
+[BMT 2015 Analysis Round #P1] 2015 BMT Spring Analysis P1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2015 Analysis Round #P2] 2015 BMT Spring Analysis P2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2015 Discrete Round #1] 2015 BMT Spring Discrete 1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2015 Discrete Round #2] 2015 BMT Spring Discrete 2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2015 Discrete Round #3] 2015 BMT Spring Discrete 3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2015 Discrete Round #4] 2015 BMT Spring Discrete 4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2015 Discrete Round #5] 2015 BMT Spring Discrete 5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2015 Discrete Round #6] 2015 BMT Spring Discrete 6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2015 Discrete Round #7] 2015 BMT Spring Discrete 7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2015 Discrete Round #8] 2015 BMT Spring Discrete 8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2015 Discrete Round #9] 2015 BMT Spring Discrete 9 → subject=Discrete, number=9 → difficulty = 6
+[BMT 2015 Discrete Round #10] 2015 BMT Spring Discrete 10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2015 Discrete Round #P1] 2015 BMT Spring Discrete P1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2015 Discrete Round #P2] 2015 BMT Spring Discrete P2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2015 Individual Round #1] BMT 2015 Spring - Individual 1 → subject=General, number=1 → difficulty = 1
+[BMT 2015 Individual Round #2] BMT 2015 Spring - Individual 2 → subject=General, number=2 → difficulty = 1
+[BMT 2015 Individual Round #3] BD^2=? <ABC=90^o,AB=12, BC=9,CD=20, DA=25, 2015 BMT Individual 3 → subject=General, number=3 → difficulty = 1
+[BMT 2015 Individual Round #4] BMT 2015 Spring - Individual 4 → subject=General, number=4 → difficulty = 1
+[BMT 2015 Individual Round #5] BMT 2015 Spring - Individual 5 → subject=General, number=5 → difficulty = 1
+[BMT 2015 Individual Round #6] BMT 2015 Spring - Individual 6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2015 Individual Round #7] max angle of triangle by touchpoints of incircle  2015 BMT Individual 7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2015 Individual Round #8] BMT 2015 Spring - Individual 8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2015 Individual Round #9] BMT 2015 Spring - Individual 9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2015 Individual Round #10] BMT 2015 Spring - Individual 10 → subject=General, number=10 → difficulty = 2
+[BMT 2015 Individual Round #11] BMT 2015 Spring - Individual 11 → subject=General, number=11 → difficulty = 2
+[BMT 2015 Individual Round #12] BMT 2015 Spring - Individual 12 → subject=General, number=12 → difficulty = 2
+[BMT 2015 Individual Round #13] BMT 2015 Spring - Individual 13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2015 Individual Round #14] BMT 2015 Spring - Individual 14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2015 Individual Round #15] BMT 2015 Spring - Individual 15 → subject=General, number=15 → difficulty = 3
+[BMT 2015 Individual Round #16] BMT 2015 Spring - Individual 16 → subject=General, number=16 → difficulty = 3
+[BMT 2015 Individual Round #17] area if union circle and square, AE + AF = 2(BE + DF) 2015 BMT Individual 17 → subject=General, number=17 → difficulty = 3
+[BMT 2015 Individual Round #18] BMT 2015 Spring - Individual 18 → subject=General, number=18 → difficulty = 3.5
+[BMT 2015 Individual Round #19] BMT 2015 Spring - Individual 19 → subject=General, number=19 → difficulty = 3.5
+[BMT 2015 Individual Round #20] BMT 2015 Spring - Individual 20 → subject=General, number=20 → difficulty = 4
+[BMT 2015 Individual Round #Tie 1] BMT 2015 Spring - Individual Tiebreaker #1 → subject=General Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2015 Individual Round #Tie 2] BMT 2015 Spring - Individual Tiebreaker #2 → subject=General Tiebreaker, number=2 → difficulty = 3
+[BMT 2015 Individual Round #Tie 3] BMT 2015 Spring - Individual Tiebreaker #3 → subject=General Tiebreaker, number=3 → difficulty = 3.5
+[BMT 2014 Geometry Round #1] BMT 2014 Spring - Geometry 1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2014 Geometry Round #2] BMT 2014 Spring - Geometry 2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2014 Geometry Round #3] BMT 2014 Spring - Geometry 3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2014 Geometry Round #4] BMT 2014 Spring - Geometry 4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2014 Geometry Round #5] BMT 2014 Spring - Geometry 5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2014 Geometry Round #6] BMT 2014 Spring - Geometry 6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2014 Geometry Round #7] BMT 2014 Spring - Geometry 7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2014 Geometry Round #8] BMT 2014 Spring - Geometry 8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2014 Geometry Round #9] BMT 2014 Spring - Geometry 9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2014 Geometry Round #10] BMT 2014 Spring - Geometry 10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2014 Geometry Round #P1] BMT 2014 Spring - Geometry P1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2014 Geometry Round #P2] BMT 2014 Spring - Geometry P2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2014 Team Round #1] 2014 BMT Team 1 → subject=Team-20, number=1 → difficulty = 2
+[BMT 2014 Team Round #2] 2014 BMT Team 2 → subject=Team-20, number=2 → difficulty = 2
+[BMT 2014 Team Round #3] 2014 BMT Team 3 → subject=Team-20, number=3 → difficulty = 2.5
+[BMT 2014 Team Round #4] right triangle inscribed in circle 2014 BMT Team 4 → subject=Team-20, number=4 → difficulty = 2.5
+[BMT 2014 Team Round #5] 2014 BMT Team 5 → subject=Team-20, number=5 → difficulty = 2.5
+[BMT 2014 Team Round #6] 2014 BMT Team 6 → subject=Team-20, number=6 → difficulty = 3
+[BMT 2014 Team Round #7] cube and a square pyramid 2014 BMT Team 7 → subject=Team-20, number=7 → difficulty = 3.5
+[BMT 2014 Team Round #8] 2014 BMT Team 8 → subject=Team-20, number=8 → difficulty = 4
+[BMT 2014 Team Round #9] 2014 BMT Team 9 limit → subject=Team-20, number=9 → difficulty = 4
+[BMT 2014 Team Round #10] 2014 BMT Team 10 → subject=Team-20, number=10 → difficulty = 4.5
+[BMT 2014 Team Round #11] 2014 BMT Team 11 → subject=Team-20, number=11 → difficulty = 4.5
+[BMT 2014 Team Round #12] 2014 BMT Team 12 → subject=Team-20, number=12 → difficulty = 4.5
+[BMT 2014 Team Round #13] area chasing with angle bisector 2014 BMT Team 13 → subject=Team-20, number=13 → difficulty = 4.5
+[BMT 2014 Team Round #14] 2014 BMT Team 14 → subject=Team-20, number=14 → difficulty = 5
+[BMT 2014 Team Round #15] 2014 BMT Team 15 → subject=Team-20, number=15 → difficulty = 5
+[BMT 2014 Team Round #16] 2014 BMT Team 16 → subject=Team-20, number=16 → difficulty = 5.5
+[BMT 2014 Team Round #17] 2014 BMT Team 17 → subject=Team-20, number=17 → difficulty = 6
+[BMT 2014 Team Round #18] 2014 BMT Team 18 → subject=Team-20, number=18 → difficulty = 6.5
+[BMT 2014 Team Round #19] 2014 BMT Team 19 → subject=Team-20, number=19 → difficulty = 7
+[BMT 2014 Team Round #20] 2014 BMT Team 20 integral → subject=Team-20, number=20 → difficulty = 7.5
+[BMT 2013 Discrete Round #2] BMT 2013 Spring - Discrete 2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2014 Analysis Round #1] BMT 2014 Spring - Analysis 1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2014 Analysis Round #2] BMT 2014 Spring - Analysis 2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2014 Analysis Round #3] BMT 2014 Spring - Analysis 3 → subject=Analysis, number=3 → difficulty = 2.5
+[BMT 2014 Analysis Round #4] BMT 2014 Spring - Analysis 4 → subject=Analysis, number=4 → difficulty = 3
+[BMT 2014 Analysis Round #5] BMT 2014 Spring - Analysis 5 → subject=Analysis, number=5 → difficulty = 3.5
+[BMT 2014 Analysis Round #6] BMT 2014 Spring - Analysis 6 → subject=Analysis, number=6 → difficulty = 4
+[BMT 2014 Analysis Round #7] BMT 2014 Spring - Analysis 7 → subject=Analysis, number=7 → difficulty = 5
+[BMT 2014 Analysis Round #8] BMT 2014 Spring - Analysis 8 → subject=Analysis, number=8 → difficulty = 5.5
+[BMT 2014 Analysis Round #9] BMT 2014 Spring - Analysis 9 → subject=Analysis, number=9 → difficulty = 6
+[BMT 2014 Analysis Round #10] BMT 2014 Spring - Analysis 10 → subject=Analysis, number=10 → difficulty = 7
+[BMT 2014 Analysis Round #P1] BMT 2014 Spring - Analysis P1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2014 Analysis Round #P2] BMT 2014 Spring - Analysis P2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2014 Discrete Round #1] BMT 2014 Spring - Discrete 1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2014 Discrete Round #2] BMT 2014 Spring - Discrete 2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2014 Discrete Round #3] BMT 2014 Spring - Discrete 3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2014 Discrete Round #4] BMT 2014 Spring - Discrete 4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2014 Discrete Round #5] BMT 2014 Spring - Discrete 5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2014 Discrete Round #6] BMT 2014 Spring - Discrete 6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2014 Discrete Round #7] BMT 2014 Spring - Discrete 7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2014 Discrete Round #8] BMT 2014 Spring - Discrete 8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2014 Discrete Round #9] BMT 2014 Spring - Discrete 9 → subject=Discrete, number=9 → difficulty = 6
+[BMT 2014 Discrete Round #10] BMT 2014 Spring - Discrete 10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2014 Discrete Round #P1] BMT 2014 Spring - Discrete P1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2014 Discrete Round #P2] BMT 2014 Spring - Discrete P2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2014 Individual Round #1] BMT 2014 Spring - Individual 1 → subject=General, number=1 → difficulty = 1
+[BMT 2014 Individual Round #2] area of ABC wanted AB=EF, BC=FD, CA=DE=2. 2014 BMT Individual 3 → subject=General, number=2 → difficulty = 1
+[BMT 2014 Individual Round #3] BMT 2014 Spring - Individual 3 → subject=General, number=3 → difficulty = 1
+[BMT 2014 Individual Round #4] BMT 2014 Spring - Individual 4 → subject=General, number=4 → difficulty = 1
+[BMT 2014 Individual Round #5] BMT 2014 Spring - Individual 5 → subject=General, number=5 → difficulty = 1
+[BMT 2014 Individual Round #6] BMT 2014 Spring - Individual 6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2014 Individual Round #7] BMT 2014 Spring - Individual 7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2014 Individual Round #8] area of AMN, circles with diameters AB,AM 2014 BMT Individual 8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2014 Individual Round #9] BMT 2014 Spring - Individual 9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2014 Individual Round #10] BMT 2014 Spring - Individual 10 → subject=General, number=10 → difficulty = 2
+[BMT 2014 Individual Round #11] BMT 2014 Spring - Individual 11 → subject=General, number=11 → difficulty = 2
+[BMT 2014 Individual Round #12] max area of triangle ACD, AB=3, BC=4, CA=5, BD=6 2014 BMT Individual 12 → subject=General, number=12 → difficulty = 2
+[BMT 2014 Individual Round #13] cylinder is inscribed within a sphere 2014 BMT Individual 13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2014 Individual Round #14] BMT 2014 Spring - Individual 14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2014 Individual Round #15] BMT 2014 Spring - Individual 15 → subject=General, number=15 → difficulty = 3
+[BMT 2014 Individual Round #16] BMT 2014 Spring - Individual 16 → subject=General, number=16 → difficulty = 3
+[BMT 2014 Individual Round #17] BMT 2014 Spring - Individual 17 → subject=General, number=17 → difficulty = 3
+[BMT 2014 Individual Round #18] BMT 2014 Spring - Individual 18 → subject=General, number=18 → difficulty = 3.5
+[BMT 2014 Individual Round #19] BMT 2014 Spring - Individual 19 → subject=General, number=19 → difficulty = 3.5
+[BMT 2014 Individual Round #20] min circle containing 3 concurrent equal circles 2014 BMT Individual 20 → subject=General, number=20 → difficulty = 4
+[BMT 2013 Geometry Round #1] BMT 2013 Spring - Geometry 1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2013 Geometry Round #2] BMT 2013 Spring - Geometry 2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2013 Geometry Round #3] BMT 2013 Spring - Geometry 3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2013 Geometry Round #4] BMT 2013 Spring - Geometry 4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2013 Geometry Round #5] BMT 2013 Spring - Geometry 5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2013 Geometry Round #6] BMT 2013 Spring - Geometry 6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2013 Geometry Round #7] BMT 2013 Spring - Geometry 7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2013 Geometry Round #8] BMT 2013 Spring - Geometry 8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2013 Geometry Round #9] BMT 2013 Spring - Geometry 9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2013 Geometry Round #10] BMT 2013 Spring - Geometry 10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2013 Geometry Round #P1] BMT 2013 Spring - Geometry  P1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2013 Geometry Round #P2] BMT 2013 Spring - Geometry P2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2013 Team Round #1] 2013 BMT Team 1 → subject=Team, number=1 → difficulty = 1.5
+[BMT 2013 Team Round #2] 2013 BMT Team 2 → subject=Team, number=2 → difficulty = 2
+[BMT 2013 Team Round #3] 2013 BMT Team 3 → subject=Team, number=3 → difficulty = 2.5
+[BMT 2013 Team Round #4] 2013 BMT Team 4 → subject=Team, number=4 → difficulty = 3
+[BMT 2013 Team Round #5] computational geo with intersecting circles 2013 BMT Team 5 → subject=Team, number=5 → difficulty = 3
+[BMT 2013 Team Round #6] 2013 BMT Team 6 → subject=Team, number=6 → difficulty = 3.5
+[BMT 2013 Team Round #7] 2013 BMT Team 7 → subject=Team, number=7 → difficulty = 4
+[BMT 2013 Team Round #8] area of triangle, parabola 2013 BMT Team 8 → subject=Team, number=8 → difficulty = 4.5
+[BMT 2013 Team Round #9] 2013 BMT Team 9 → subject=Team, number=9 → difficulty = 5
+[BMT 2013 Team Round #10] 2013 BMT Team 10 → subject=Team, number=10 → difficulty = 5
+[BMT 2013 Discrete Round #1] BMT 2013 Spring - Discrete 1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2013 Discrete Round #3] BMT 2013 Spring - Discrete 3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2013 Discrete Round #4] BMT 2013 Spring - Discrete 4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2013 Discrete Round #5] BMT 2013 Spring - Discrete 5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2013 Discrete Round #6] BMT 2013 Spring - Discrete 6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2013 Discrete Round #7] BMT 2013 Spring - Discrete 7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2013 Discrete Round #8] BMT 2013 Spring - Discrete 8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2013 Discrete Round #9] BMT 2013 Spring - Discrete 9 → subject=Discrete, number=9 → difficulty = 6
+[BMT 2013 Discrete Round #10] BMT 2013 Spring - Discrete 10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2013 Discrete Round #P1] BMT 2013 Spring - Discrete P1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2013 Discrete Round #P2] BMT 2013 Spring - Discrete P2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2013 Analysis Round #1] BMT 2013 Spring - Analysis 1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2013 Analysis Round #2] BMT 2013 Spring - Analysis 2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2013 Analysis Round #3] BMT 2013 Spring - Analysis 3 → subject=Analysis, number=3 → difficulty = 2.5
+[BMT 2013 Analysis Round #4] BMT 2013 Spring - Analysis 4 → subject=Analysis, number=4 → difficulty = 3
+[BMT 2013 Analysis Round #5] BMT 2013 Spring - Analysis 5 → subject=Analysis, number=5 → difficulty = 3.5
+[BMT 2013 Analysis Round #6] BMT 2013 Spring - Analysis 6 → subject=Analysis, number=6 → difficulty = 4
+[BMT 2013 Analysis Round #7] BMT 2013 Spring - Analysis 7 → subject=Analysis, number=7 → difficulty = 5
+[BMT 2013 Analysis Round #8] BMT 2013 Spring - Analysis 8 → subject=Analysis, number=8 → difficulty = 5.5
+[BMT 2013 Analysis Round #9] BMT 2013 Spring - Analysis 9 → subject=Analysis, number=9 → difficulty = 6
+[BMT 2013 Analysis Round #10] BMT 2013 Spring - Analysis 10 → subject=Analysis, number=10 → difficulty = 7
+[BMT 2013 Analysis Round #P1] BMT 2014 Spring - Analysis P1 → subject=Analysis, number=1 → difficulty = 1.5
+[BMT 2013 Analysis Round #P2] BMT 2014 Spring - Analysis P2 → subject=Analysis, number=2 → difficulty = 2
+[BMT 2013 Individual Round #1] 2013 BMT Individual 1 → subject=General, number=1 → difficulty = 1
+[BMT 2013 Individual Round #2] 4 semicircles in a circle 2013 BMT Individual 3 → subject=General, number=2 → difficulty = 1
+[BMT 2013 Individual Round #3] 2013 BMT Individual 3 → subject=General, number=3 → difficulty = 1
+[BMT 2013 Individual Round #4] circle inscribed between semicircle and square 2013 BMT Individual 4 → subject=General, number=4 → difficulty = 1
+[BMT 2013 Individual Round #5] 2013 BMT Individual 5 → subject=General, number=5 → difficulty = 1
+[BMT 2013 Individual Round #6] Bubble Boy <3 Bubble Girl shortest path through x-axis 2013 BMT Individual 6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2013 Individual Round #7] 2013 BMT Individual 7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2013 Individual Round #8] 2013 BMT Individual 8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2013 Individual Round #9] 2013 BMT Individual 9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2013 Individual Round #10] 2013 BMT Individual 10 → subject=General, number=10 → difficulty = 2
+[BMT 2013 Individual Round #11] 2013 BMT Individual 11 → subject=General, number=11 → difficulty = 2
+[BMT 2013 Individual Round #12] 2013 BMT Individual 12 → subject=General, number=12 → difficulty = 2
+[BMT 2013 Individual Round #13] 2013 BMT Individual 13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2013 Individual Round #14] computational geo with incircle 2013 BMT Individual 14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2013 Individual Round #15] computational geo <ABD=<BCD, <ABD=<ECD 2013 BMT Individual 15 → subject=General, number=15 → difficulty = 3
+[BMT 2013 Individual Round #16] 2013 BMT Individual 16 → subject=General, number=16 → difficulty = 3
+[BMT 2013 Individual Round #17] 2013 BMT Individual 17 → subject=General, number=17 → difficulty = 3
+[BMT 2013 Individual Round #18] 2013 BMT Individual 18 → subject=General, number=18 → difficulty = 3.5
+[BMT 2013 Individual Round #19] 2013 BMT Individual 19 → subject=General, number=19 → difficulty = 3.5
+[BMT 2013 Individual Round #20] 2013 BMT Individual 20 → subject=General, number=20 → difficulty = 4
+[BMT 2021 Discrete Round #1] BMT Discrete #1 - Angelic Debiru and Cards → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2021 Discrete Round #2] BMT Discrete #2 - Counting Up and Down → subject=Discrete, number=2 → difficulty = 2
+[BMT 2021 Discrete Round #3] BMT Discrete #3 - Making Sums from Specific Numbers → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2021 Discrete Round #4] BMT Discrete #4 - Basketball Teams Pick Captains → subject=Discrete, number=4 → difficulty = 3
+[BMT 2021 Discrete Round #5] BMT Discrete #5 - Adding Reverse Makes a Palindrome → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2021 Discrete Round #6] BMT Discrete #6 - Another Number of Divisors Problem → subject=Discrete, number=6 → difficulty = 4
+[BMT 2021 Discrete Round #7] BMT Discrete #7 - Not the Collatz Conjecture → subject=Discrete, number=7 → difficulty = 5
+[BMT 2021 Discrete Round #8] BMT Discrete #8 - EV of Randomly Generated Decimal → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2021 Discrete Round #9] BMT Discrete #9 - Reciprocals of Binomial Coefficients → subject=Discrete, number=9 → difficulty = 6
+[BMT 2021 Discrete Round #10] BMT Discrete #10 - Graphs Without Triangles → subject=Discrete, number=10 → difficulty = 7
+[BMT 2021 Discrete Round #T1] BMT 2021 Discrete Tiebreaker p1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2021 Discrete Round #T2] BMT 2021 Discrete Tiebreaker p2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2021 Discrete Round #T3] BMT 2021 Discrete Tiebreaker p3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2021 Guts Round #1] BMT 2021 Guts Round p1 → subject=Guts, number=1 → difficulty = 1.5
+[BMT 2021 Guts Round #2] BMT 2021 Guts Round p2 → subject=Guts, number=2 → difficulty = 2
+[BMT 2021 Guts Round #3] BMT 2021 Guts Round p3 → subject=Guts, number=3 → difficulty = 2.5
+[BMT 2021 Guts Round #4] BMT 2021 Guts Round p4 → subject=Guts, number=4 → difficulty = 2
+[BMT 2021 Guts Round #5] BMT 2021 Guts Round p5 → subject=Guts, number=5 → difficulty = 2.5
+[BMT 2021 Guts Round #6] BMT 2021 Guts Round p6 → subject=Guts, number=6 → difficulty = 3
+[BMT 2021 Guts Round #7] BMT 2021 Guts Round p7 → subject=Guts, number=7 → difficulty = 3
+[BMT 2021 Guts Round #8] BMT 2021 Guts Round p8 → subject=Guts, number=8 → difficulty = 3.5
+[BMT 2021 Guts Round #9] BMT 2021 Guts Round p9 → subject=Guts, number=9 → difficulty = 4
+[BMT 2021 Guts Round #10] BMT 2021 Guts Round p10 → subject=Guts, number=10 → difficulty = 3.5
+[BMT 2021 Guts Round #11] BMT 2021 Guts Round p11 → subject=Guts, number=11 → difficulty = 4
+[BMT 2021 Guts Round #12] BMT 2021 Guts Round p12 → subject=Guts, number=12 → difficulty = 4.5
+[BMT 2021 Guts Round #13] BMT 2021 Guts Round p13 → subject=Guts, number=13 → difficulty = 4
+[BMT 2021 Guts Round #14] BMT 2021 Guts Round p14 → subject=Guts, number=14 → difficulty = 4.5
+[BMT 2021 Guts Round #15] BMT 2021 Guts Round p15 → subject=Guts, number=15 → difficulty = 5
+[BMT 2021 Guts Round #16] BMT 2021 Guts Round p16 → subject=Guts, number=16 → difficulty = 5
+[BMT 2021 Guts Round #17] BMT 2021 Guts Round p17 → subject=Guts, number=17 → difficulty = 5.5
+[BMT 2021 Guts Round #18] BMT 2021 Guts Round p18 → subject=Guts, number=18 → difficulty = 6
+[BMT 2021 Guts Round #19-21] BMT 2021 Guts Round Set 7 p19-21 → subject=Guts, number=19 → difficulty = 5.5
+[BMT 2021 Guts Round #22] BMT 2021 Guts Round p22 → subject=Guts, number=22 → difficulty = 6
+[BMT 2021 Guts Round #23] BMT 2021 Guts Round p23 → subject=Guts, number=23 → difficulty = 6.5
+[BMT 2021 Guts Round #24] BMT 2021 Guts Round p24 → subject=Guts, number=24 → difficulty = 7
+[BMT 2021 Guts Round #25] BMT 2021 Guts Round p25 → subject=Guts, number=25 → difficulty = 6.5
+[BMT 2021 Guts Round #26] BMT 2021 Guts Round p26 → subject=Guts, number=26 → difficulty = 7
+[BMT 2021 Guts Round #27] BMT 2021 Guts Round p27 → subject=Guts, number=27 → difficulty = 7.5
+[BMT 2021 Geometry Round #1] BMT 2021 Geometry #1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2021 Geometry Round #2] BMT 2021 Geometry #2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2021 Geometry Round #3] BMT 2021 Geometry #3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2021 Geometry Round #4] BMT 2021 Geometry #4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2021 Geometry Round #5] BMT 2021 Geometry #5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2021 Geometry Round #6] BMT 2021 Geometry #6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2021 Geometry Round #7] BMT 2021 Geometry #7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2021 Geometry Round #8] BMT 2021 Geometry #8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2021 Geometry Round #9] BMT 2021 Geometry #9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2021 Geometry Round #10] BMT 2021 Geometry #10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2021 Geometry Round #Tie 1] BMT 2021 Geometry Tiebreaker #1 → subject=Geometry Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2021 Geometry Round #Tie 2] BMT 2021 Geometry Tiebreaker #2 → subject=Geometry Tiebreaker, number=2 → difficulty = 3
+[BMT 2021 Geometry Round #Tie 3] BMT 2021 Geometry Tiebreaker #3 → subject=Geometry Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2021 General Round #1] BMT 2021 General p1 → subject=General, number=1 → difficulty = 1
+[BMT 2021 same as Algebra #1 #3] BMT 2021 General p3 → subject=General, number=3 → difficulty = 1
+[BMT 2021 same as Algebra #1 #4] BMT 2021 General p4 → subject=General, number=4 → difficulty = 1
+[BMT 2021 same as Algebra #1 #5] BMT 2021 General p5 → subject=General, number=5 → difficulty = 1
+[BMT 2021 same as Algebra #1 #6] BMT 2021 General p6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2021 same as Algebra #1 #7] BMT 2021 General p7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2021 same as Algebra #1 #8] BMT 2021 General p8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2021 same as Algebra #1 #9] BMT 2021 General p9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2021 same as Algebra #1 #10] BMT 2021 General p10 → subject=General, number=10 → difficulty = 2
+[BMT 2021 same as Algebra #1 #11] BMT 2021 General p11 → subject=General, number=11 → difficulty = 2
+[BMT 2021 same as Algebra #1 #12] BMT 2021 General p12 → subject=General, number=12 → difficulty = 2
+[BMT 2021 same as Algebra #1 #13] BMT 2021 General p13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2021 same as Algebra #1 #14] BMT 2021 General p14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2021 same as Algebra #1 #15] BMT 2021 General p15 → subject=General, number=15 → difficulty = 3
+[BMT 2021 same as Algebra #1 #16] BMT 2021 General p16 → subject=General, number=16 → difficulty = 3
+[BMT 2021 same as Algebra #1 #17] BMT 2021 General p17 → subject=General, number=17 → difficulty = 3
+[BMT 2021 same as Discrete #5 #20] BMT 2021 General p20 → subject=General, number=20 → difficulty = 4
+[BMT 2021 same as Discrete #5 #21] BMT 2021 General p21 → subject=General, number=21 → difficulty = 4.5
+[BMT 2021 same as Discrete #5 #22] BMT 2021 General p22 → subject=General, number=22 → difficulty = 5
+[BMT 2021 same as Discrete #5 #23] BMT 2021 General p23 → subject=General, number=23 → difficulty = 5.5
+[BMT 2021 same as Discrete #5 #24] BMT 2021 General p24 → subject=General, number=24 → difficulty = 6
+[BMT 2021 same as Discrete #5 #25] BMT 2021 General p25 → subject=General, number=25 → difficulty = 6.5
+[BMT 2021 same as Discrete #5 #T1] BMT 2021 General Tiebreaker p1 → subject=General, number=1 → difficulty = 1
+[BMT 2021 same as Discrete #5 #T2] largest circle that fits entirely within a unit cube - BMT 2021 General Tie 2 → subject=Nt, number=2021 → ❌ No difficulty found
+[BMT 2021 same as Discrete #5 #T3] BMT 2021 General Tiebreaker p3 → subject=General, number=3 → difficulty = 1
+[BMT 2021 same as Discrete #5 #T4] BMT 2021 General Tiebreaker p4 → subject=General, number=4 → difficulty = 1
+[BMT 2021 same as Discrete #5 #T5] BMT 2021 General Tiebreaker p5 → subject=General, number=5 → difficulty = 1
+[BMT 2021 Algebra Round #1] BMT 2021 General p2  / Algebra 1 → subject=Algebra, number=1 → difficulty = 1.5
+[BMT 2021 Algebra Round #2] 2021 BMT Algebra #2 → subject=Algebra, number=2 → difficulty = 2
+[BMT 2021 Algebra Round #3] 2021 BMT Algebra #3 → subject=Algebra, number=3 → difficulty = 2.5
+[BMT 2021 Algebra Round #4] 2021 BMT Algebra #4 → subject=Algebra, number=4 → difficulty = 3
+[BMT 2021 Algebra Round #5] 2021 BMT Algebra #5 → subject=Algebra, number=5 → difficulty = 3.5
+[BMT 2021 Algebra Round #6] 2021 BMT Algebra #6 → subject=Algebra, number=6 → difficulty = 4
+[BMT 2021 Algebra Round #7] 2021 BMT Algebra #7 → subject=Algebra, number=7 → difficulty = 5
+[BMT 2021 Algebra Round #8] 2021 BMT Algebra #8 → subject=Algebra, number=8 → difficulty = 5.5
+[BMT 2021 Algebra Round #9] 2021 BMT Algebra #9 → subject=Algebra, number=9 → difficulty = 6
+[BMT 2021 Algebra Round #10] 2021 BMT Algebra #10 → subject=Algebra, number=10 → difficulty = 7
+[BMT 2021 Algebra Round #Tie 1] 2021 BMT Algebra Tiebreaker #1 → subject=Algebra Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2021 Algebra Round #Tie 2] 2021 BMT Algebra Tiebreaker #2 → subject=Algebra Tiebreaker, number=2 → difficulty = 3
+[BMT 2021 Algebra Round #Tie 3] 2021 BMT Algebra Tiebreaker #3 → subject=Algebra Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2020 Algebra Round #1] BMT Algebra #1 - Juggling Show → subject=Algebra, number=1 → difficulty = 1.5
+[BMT 2020 Algebra Round #2] BMT Algebra #2 - Symmetric Sum of Roots → subject=Algebra, number=2 → difficulty = 2
+[BMT 2020 Algebra Round #3] BMT Algebra #3 - Degree 2021 Polynomial → subject=Algebra, number=3 → difficulty = 2.5
+[BMT 2020 Algebra Round #4] BMT Algebra #4 - Sums with Golden Ratio → subject=Algebra, number=4 → difficulty = 3
+[BMT 2020 Algebra Round #5] BMT Algebra #5 - Functional Equation → subject=Algebra, number=5 → difficulty = 3.5
+[BMT 2020 Algebra Round #6] BMT Algebra #6 - Sum with Combinations → subject=Algebra, number=6 → difficulty = 4
+[BMT 2020 Algebra Round #7] BMT Algebra #7 - Symmetric Equations → subject=Algebra, number=7 → difficulty = 5
+[BMT 2020 Algebra Round #8] BMT Algebra #8 - Inequality → subject=Algebra, number=8 → difficulty = 5.5
+[BMT 2020 Algebra Round #9] BMT Algebra #9 - Diophantine Equation → subject=Algebra, number=9 → difficulty = 6
+[BMT 2020 Algebra Round #10] BMT Algebra #10 - Crazy Trigonometric Sum → subject=Algebra, number=10 → difficulty = 7
+[BMT 2020 Algebra Round #Tie 1] 2020 BMT Algebra Tiebreakers 1 → subject=Algebra Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2020 Algebra Round #Tie 2] 2020 BMT Algebra Tiebreakers 2 → subject=Algebra Tiebreaker, number=2 → difficulty = 3
+[BMT 2020 Algebra Round #Tie 3] 2020 BMT Algebra Tiebreakers 3 → subject=Algebra Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2020 Geometry Round #1] BMT 2020 Fall - Geometry 1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2020 Geometry Round #2] BMT 2020 Fall - Geometry 2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2020 Geometry Round #3] BMT 2020 Fall - Geometry 3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2020 Geometry Round #4] BMT 2020 Fall - Geometry 4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2020 Geometry Round #5] BMT 2020 Fall - Geometry 5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2020 Geometry Round #6] BMT 2020 Fall - Geometry 6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2020 Geometry Round #7] BMT 2020 Fall - Geometry 7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2020 Geometry Round #8] BMT 2020 Fall - Geometry 8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2020 Geometry Round #9] BMT 2020 Fall - Geometry 9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2020 Geometry Round #10] BMT 2020 Fall - Geometry 10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2020 Geometry Round #Tie 1] BMT 2020 Fall - Geometry Tiebreaker 1 → subject=Geometry Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2020 Geometry Round #Tie 2] BMT 2020 Fall - Geometry Tiebreaker 2 → subject=Geometry Tiebreaker, number=2 → difficulty = 3
+[BMT 2020 Geometry Round #Tie 3] BMT 2020 Fall - Geometry Tiebreaker 3 → subject=Geometry Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2020 Team Round #1] 2020 BMT Team 1 → subject=Guts, number=1 → difficulty = 1.5
+[BMT 2020 Team Round #2] 2020 BMT Team 2 → subject=Guts, number=2 → difficulty = 2
+[BMT 2020 Team Round #3] shortest path for an ant on surface of cube 2020 BMT Team 3 → subject=Guts, number=3 → difficulty = 2.5
+[BMT 2020 Team Round #4] 2020 BMT Team 4 → subject=Guts, number=4 → difficulty = 2
+[BMT 2020 Team Round #5] 2020 BMT Team 5 → subject=Guts, number=5 → difficulty = 2.5
+[BMT 2020 Team Round #6] 2020 BMT Team 6 → subject=Guts, number=6 → difficulty = 3
+[BMT 2020 Team Round #7] 2020 BMT Team 7 → subject=Guts, number=7 → difficulty = 3
+[BMT 2020 Team Round #8] [AEFB] = [DEFC] = 2[AED] = 2[BFC] unit square 2020 BMT Team 8 → subject=Guts, number=8 → difficulty = 3.5
+[BMT 2020 Team Round #9] 2020 BMT Team 9 → subject=Guts, number=9 → difficulty = 4
+[BMT 2020 Team Round #10] 2020 BMT Team 10 → subject=Guts, number=10 → difficulty = 3.5
+[BMT 2020 Team Round #11] 2020 BMT Team 11 → subject=Guts, number=11 → difficulty = 4
+[BMT 2020 Team Round #12] min sum of areas, open rectangular prism box 2020 BMT Team 12 → subject=Guts, number=12 → difficulty = 4.5
+[BMT 2020 Team Round #13] 2020 BMT Team 13 → subject=Guts, number=13 → difficulty = 4
+[BMT 2020 Team Round #14] area of star shaped figure, equal sides, 210^o 2020 BMT Team 14 → subject=Guts, number=14 → difficulty = 4.5
+[BMT 2020 Team Round #15] 2020 BMT Team 15 → subject=Guts, number=15 → difficulty = 5
+[BMT 2020 Team Round #16] None → subject=Guts, number=16 → difficulty = 5
+[BMT 2020 Team Round #17] 2020 BMT Team 17 → subject=Guts, number=17 → difficulty = 5.5
+[BMT 2020 Team Round #18] 2020 BMT Team 18 → subject=Guts, number=18 → difficulty = 6
+[BMT 2020 Team Round #19] 2020 BMT Team 19 → subject=Guts, number=19 → difficulty = 5.5
+[BMT 2020 Team Round #20] integer ABCD, AB=AD, BC=CD,  <ABC=<BCD=<CDA 2020 BMT Team 20 → subject=Guts, number=20 → difficulty = 6
+[BMT 2020 Team Round #21] AI x IX wanted, 6-8-10 triangle, incenter circumcircle 2020 BMT Team 21 → subject=Guts, number=21 → difficulty = 6.5
+[BMT 2020 Team Round #22] 2020 BMT Team 22 → subject=Guts, number=22 → difficulty = 6
+[BMT 2020 Team Round #23] 2020 BMT Team 23 → subject=Guts, number=23 → difficulty = 6.5
+[BMT 2020 Team Round #24] 2020 BMT Team 24 → subject=Guts, number=24 → difficulty = 7
+[BMT 2020 Team Round #25] 2020 BMT Team 25 → subject=Guts, number=25 → difficulty = 6.5
+[BMT 2020 Team Round #26] 2020 BMT Team 26 → subject=Guts, number=26 → difficulty = 7
+[BMT 2020 Team Round #27] 2020 BMT Team 27 → subject=Guts, number=27 → difficulty = 7.5
+[BMT 2020 Individual Round #1] 2020 BMT Individual 1 → subject=General, number=1 → difficulty = 1
+[BMT 2020 Individual Round #2] 2020 BMT Individual 2 → subject=General, number=2 → difficulty = 1
+[BMT 2020 Individual Round #3] 2020 BMT Individual 3 → subject=General, number=3 → difficulty = 1
+[BMT 2020 Individual Round #4] 2020 BMT Individual 4 → subject=General, number=4 → difficulty = 1
+[BMT 2020 Individual Round #5] cut a right cylinder // to its bases into 9 slices 2020 BMT Individual 5 → subject=General, number=5 → difficulty = 1
+[BMT 2020 Individual Round #6] 2020 BMT Individual 6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2020 Individual Round #7] 2020 BMT Individual 7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2020 Individual Round #8] 2020 BMT Individual 8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2020 Individual Round #9] 2 circles tangent to equilateral 2020 BMT Individual 9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2020 Individual Round #10] 2020 BMT Individual 10 → subject=General, number=10 → difficulty = 2
+[BMT 2020 Individual Round #11] area between 2 circles, equilateral  2020 BMT Individual 11 → subject=General, number=11 → difficulty = 2
+[BMT 2020 Individual Round #12] 2020 BMT Individual 12 → subject=General, number=12 → difficulty = 2
+[BMT 2020 Individual Round #13] areas in a regular-hexagon-shaped 2020 BMT Individual 13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2020 Individual Round #14] 2020 BMT Individual 14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2020 Individual Round #15] 2020 BMT Individual 15 → subject=General, number=15 → difficulty = 3
+[BMT 2020 Individual Round #16] triangle with side 3, 5,k  has area 6 2020 BMT Individual 16 → subject=General, number=16 → difficulty = 3
+[BMT 2020 Individual Round #17] 2020 BMT Individual 17 → subject=General, number=17 → difficulty = 3
+[BMT 2020 Individual Round #18] 2020 BMT Individual 18 → subject=General, number=18 → difficulty = 3.5
+[BMT 2020 Individual Round #19] circular pillar in a large circular room 2020 BMT Individual 19 → subject=General, number=19 → difficulty = 3.5
+[BMT 2020 Individual Round #20] 2020 BMT Individual 20 → subject=General, number=20 → difficulty = 4
+[BMT 2020 Individual Round #21] 2020 BMT Individual 21 → subject=General, number=21 → difficulty = 4.5
+[BMT 2020 Individual Round #22] 2020 BMT Individual 22 → subject=General, number=22 → difficulty = 5
+[BMT 2020 Individual Round #23] AP/AQ wanted,  diameter, circumcenter 2020 BMT Individual 23 → subject=General, number=23 → difficulty = 5.5
+[BMT 2020 Individual Round #24] 2020 BMT Individual 24 → subject=General, number=24 → difficulty = 6
+[BMT 2020 Individual Round #25] 2020 BMT Individual 25 → subject=General, number=25 → difficulty = 6.5
+[BMT 2020 Individual Round #Tie 1] sum of exterior angles of  triangle and 12-gon 2020 BMT Individual Tiebreakers 1 → subject=General Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2020 Individual Round #Tie 2] 2020 BMT Individual Tiebreaker 2 → subject=General Tiebreaker, number=2 → difficulty = 3
+[BMT 2020 Individual Round #Tie 3] segment tangent to incircle of 5-12-13 triangl 2020 BMT Individual Tiebreakers 3 → subject=General Tiebreaker, number=3 → difficulty = 3.5
+[BMT 2020 Individual Round #Tie 4] 2020 BMT Individual Tiebreaker 4 → subject=General Tiebreaker, number=4 → difficulty = 4
+[BMT 2020 Individual Round #Tie 5] 2020 BMT Individual Tiebreaker 5 → subject=General Tiebreaker, number=5 → difficulty = 4.5
+[BMT 2020 Discrete Round #1] 2020 BMT Discrete #1 → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2020 Discrete Round #2] 2020 BMT Discrete #2 → subject=Discrete, number=2 → difficulty = 2
+[BMT 2020 Discrete Round #3] 2020 BMT Discrete #3 → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2020 Discrete Round #4] 2020 BMT Discrete #4 → subject=Discrete, number=4 → difficulty = 3
+[BMT 2020 Discrete Round #5] 2020 BMT Discrete #5 → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2020 Discrete Round #6] 2020 BMT Discrete #6 → subject=Discrete, number=6 → difficulty = 4
+[BMT 2020 Discrete Round #7] 2020 BMT Discrete #7 → subject=Discrete, number=7 → difficulty = 5
+[BMT 2020 Discrete Round #8] 2020 BMT Discrete #8 → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2020 Discrete Round #9] 2020 BMT Discrete #9 → subject=Discrete, number=9 → difficulty = 6
+[BMT 2020 Discrete Round #10] 2020 BMT Discrete #10 → subject=Discrete, number=10 → difficulty = 7
+[BMT 2020 Discrete Round #Tie 1] 2020 BMT Discrete Tiebreaker #1 → subject=Discrete Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2020 Discrete Round #Tie 2] 2020 BMT Discrete Tiebreaker #2 → subject=Discrete Tiebreaker, number=2 → difficulty = 3
+[BMT 2020 Discrete Round #Tie 3] 2020 BMT Discrete Tiebreaker #3 → subject=Discrete Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2019 Algebra Round #1] diophantine x^2 - 9x + 18 < 0 → subject=Algebra, number=1 → difficulty = 1.5
+[BMT 2019 Algebra Round #2] Know thine reflections  -  analytic geometry → subject=Algebra, number=2 → difficulty = 2
+[BMT 2019 Algebra Round #3] Squares that sum to 50 (BMT 2019 Algebra #3) → subject=Algebra, number=3 → difficulty = 2.5
+[BMT 2019 Algebra Round #4] This could be good to introduce someone to geo probability (BMT 2019 Algebra #4) → subject=Algebra, number=4 → difficulty = 3
+[BMT 2019 Algebra Round #5] To Be-eta's or Not to Be-eta's (BMT 2019 Algebra #5) → subject=Algebra, number=5 → difficulty = 3.5
+[BMT 2019 Algebra Round #6] Return of the Circle (BMT 2019 Algebra #6) → subject=Algebra, number=6 → difficulty = 4
+[BMT 2019 Algebra Round #7] The sum of cubes is a multiple of three (BMT 2019 Algebra #7) → subject=Algebra, number=7 → difficulty = 5
+[BMT 2019 Algebra Round #8] The most complex coin ever (BMT 2019 Algebra #8) → subject=Algebra, number=8 → difficulty = 5.5
+[BMT 2019 Algebra Round #9] Product of products is a root of unity (BMT 2019 Algebra #9) → subject=Algebra, number=9 → difficulty = 6
+[BMT 2019 Algebra Round #10] Oh, casework bashable inequality, how I've missed you (BMT 2019 Algebra #10) → subject=Algebra, number=10 → difficulty = 7
+[BMT 2019 Algebra Round #Tie 1] 2019 BMT Algebra Tiebreakers 1 → subject=Algebra Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2019 Algebra Round #Tie 2] 2019 BMT Algebra Tiebreakers 2 → subject=Algebra Tiebreaker, number=2 → difficulty = 3
+[BMT 2019 Algebra Round #Tie 3] 2019 BMT Algebra Tiebreakers 3 → subject=Algebra Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2019 Geometry Round #1] Who's AEKS-ited for some geo?! (BMT 2019 Geo #1) → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2019 Geometry Round #2] I went into this test full of confidence...and got wrecked (BMT 2019 Geo #2) → subject=Geometry, number=2 → difficulty = 2
+[BMT 2019 Geometry Round #3] Think inside the quadrilateral parallelogram! (BMT 2019 Geo #3) → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2019 Geometry Round #4] Pythagoras would be proud (BMT 2019 Geo #4) → subject=Geometry, number=4 → difficulty = 3
+[BMT 2019 Geometry Round #5] | z - 3i t| + | z - 4 | <= 5\sqrt{2} → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2019 Geometry Round #6] The 3-4-5 homothety bisection (BMT 2019 Geo #6) → subject=Geometry, number=6 → difficulty = 4
+[BMT 2019 Geometry Round #7] Geo probability...with trapezoids? That's new. (BMT 2019 Geo #7) → subject=Geometry, number=7 → difficulty = 5
+[BMT 2019 Geometry Round #8] Coordbash? Call me crazy... (BMT 2019 Geo #8) → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2019 Geometry Round #9] The incircle-generating tetrahedron (BMT 2019 Geo #9) → subject=Geometry, number=9 → difficulty = 6
+[BMT 2019 Geometry Round #10] Coaxial Apollonius circles (BMT 2019 Geo #10) → subject=Geometry, number=10 → difficulty = 7
+[BMT 2019 Geometry Round #Tie1] BMT 2019 Spring - Geometry Tiebreaker 1 → subject=Geometry Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2019 Geometry Round #Tie 2] BMT 2019 Spring - Geometry Tiebreaker 2 → subject=Geometry Tiebreaker, number=2 → difficulty = 3
+[BMT 2019 Geometry Round #Tie 3] BMT 2019 Spring - Geometry Tiebreaker 3 → subject=Geometry Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2019 Discrete Round #1] fair coin is repeatedly flipped until 2019 consecutive coin flips are same → subject=Discrete, number=1 → difficulty = 1.5
+[BMT 2019 Discrete Round #2] Otherwise known as the much easier coin problem (BMT 2019 Discrete #2) → subject=Discrete, number=2 → difficulty = 2
+[BMT 2019 Discrete Round #3] This is a graph theory problem?! (BMT 2019 Discrete #3) → subject=Discrete, number=3 → difficulty = 2.5
+[BMT 2019 Discrete Round #4] In honor of the great Dr. Rubinstein-Salzedo... (BMT 2019 Discrete #4) → subject=Discrete, number=4 → difficulty = 3
+[BMT 2019 Discrete Round #5] Not Wiles' Theorem, the other one (BMT 2019 Discrete #5) → subject=Discrete, number=5 → difficulty = 3.5
+[BMT 2019 Discrete Round #6] One of the twins is a prime (BMT 2019 Discrete #6) → subject=Discrete, number=6 → difficulty = 4
+[BMT 2019 Discrete Round #7] I want to make a joke about flux here, but can't (BMT 2019 Discrete #7) → subject=Discrete, number=7 → difficulty = 5
+[BMT 2019 Discrete Round #8] [a phi function butterfly flies by] Is this brute force? (BMT 2019 Discrete #8) → subject=Discrete, number=8 → difficulty = 5.5
+[BMT 2019 Discrete Round #9] Mathlete's log: this is an awfully complex problem! (BMT 2019 Discrete #9) → subject=Discrete, number=9 → difficulty = 6
+[BMT 2019 Discrete Round #10] "I knew this was sum-of-squares bashable!" (BMT 2019 Discrete #10) → subject=Discrete, number=10 → difficulty = 7
+[BMT 2019 Discrete Round #Tie 1] 2019 BMT Discrete Tiebreakers 1 → subject=Discrete Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2019 Discrete Round #Tie 2] 2019 BMT Discrete Tiebreakers 2 → subject=Discrete Tiebreaker, number=2 → difficulty = 3
+[BMT 2019 Discrete Round #Tie 3] 2019 BMT Discrete Tiebreakers 3 → subject=Discrete Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2019 Team Round #1] 2019 BMT Team 1 → subject=Team, number=1 → difficulty = 1.5
+[BMT 2019 Team Round #2] 2019 BMT Team 2 → subject=Team, number=2 → difficulty = 2
+[BMT 2019 Team Round #3] cylinder rolling with water inside 2019 BMT Team 3 → subject=Team, number=3 → difficulty = 2.5
+[BMT 2019 Team Round #4] 2019 BMT Team 4 → subject=Team, number=4 → difficulty = 3
+[BMT 2019 Team Round #5] 2019 BMT Team 5 → subject=Team, number=5 → difficulty = 3
+[BMT 2019 Team Round #6] 2019 BMT Team 6 → subject=Team, number=6 → difficulty = 3.5
+[BMT 2019 Team Round #7] 2019 BMT Team 7 → subject=Team, number=7 → difficulty = 4
+[BMT 2019 Team Round #8] 2019 BMT Team 8 → subject=Team, number=8 → difficulty = 4.5
+[BMT 2019 Team Round #9] 2019 BMT Team 9 → subject=Team, number=9 → difficulty = 5
+[BMT 2019 Team Round #10] 2019 BMT Team 10 → subject=Team, number=10 → difficulty = 5
+[BMT 2019 Team Round #11] 2019 BMT Team 11 → subject=Team, number=11 → difficulty = 5.5
+[BMT 2019 Team Round #12] 2019 BMT Team 12 → subject=Team, number=12 → difficulty = 6
+[BMT 2019 Team Round #13] area of quadr. wanted, 13-14-15 triangle, incenter excenter 2019 BMT Team 13 → subject=Team, number=13 → difficulty = 6.5
+[BMT 2019 Team Round #14] laser beam inside a regular hexagon, min path  a>2019 2019 BMT Team 14 → subject=Team, number=14 → difficulty = 7
+[BMT 2019 Team Round #15] 2019 BMT Team 15 → subject=Team, number=15 → difficulty = 7.5
+[BMT 2019 Individual Round #1] 2019 BMT Individual 1 → subject=General, number=1 → difficulty = 1
+[BMT 2019 Individual Round #2] angle wanted, midpoint, 2 circles 2019 BMT Individual 2 → subject=General, number=2 → difficulty = 1
+[BMT 2019 Individual Round #3] 2019 BMT Individual 3 → subject=General, number=3 → difficulty = 1
+[BMT 2019 Individual Round #4] 2019 BMT Individual 4 → subject=General, number=4 → difficulty = 1
+[BMT 2019 Individual Round #5] max area of Q, angle between 30^o and 60^o 2019 BMT Individual 5 → subject=General, number=5 → difficulty = 1
+[BMT 2019 Individual Round #6] color used to paint a die  2019 BMT Individual 6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2019 Individual Round #7] ratio m/M wanted, hexagon inscribed in a equilateral  2019 BMT Individual 7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2019 Individual Round #8] 2019 BMT Individual 8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2019 Individual Round #9] 2019 BMT Individual 9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2019 Individual Round #10] area of BMT, MATH square, <MBT = 3.5 < BMT 2019 BMT Individual 10 → subject=General, number=10 → difficulty = 2
+[BMT 2019 Individual Round #11] chord rotates inside a 17-gon   2019 BMT Individual 11 → subject=General, number=11 → difficulty = 2
+[BMT 2019 Individual Round #12] 2019 BMT Individual 12 → subject=General, number=12 → difficulty = 2
+[BMT 2019 Individual Round #13] (CADB)=, 2 intersecting circles, AC_|_AB, BD_|_AB 2019 BMT Individual 13 → subject=General, number=13 → difficulty = 2.5
+[BMT 2019 Individual Round #14] 2019 BMT Individual 14 → subject=General, number=14 → difficulty = 2.5
+[BMT 2019 Individual Round #15] 2019 BMT Individual 15 → subject=General, number=15 → difficulty = 3
+[BMT 2019 Individual Round #16] min area of an hexagon, lines through O // sides ABC 2019 BMT Individual 16 → subject=General, number=16 → difficulty = 3
+[BMT 2019 Individual Round #17] area among 2 segments and an arc 2019 BMT Individual 17 → subject=General, number=17 → difficulty = 3
+[BMT 2019 Individual Round #18] 2019 BMT Individual 18 → subject=General, number=18 → difficulty = 3.5
+[BMT 2019 Individual Round #19] 2019 BMT Individual 19 → subject=General, number=19 → difficulty = 3.5
+[BMT 2019 Individual Round #20] 2019 BMT Individual 20 → subject=General, number=20 → difficulty = 4
+[BMT 2019 Individual Round #Tie 1] 2019 BMT Individual Tiebreaker 1 → subject=General Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2019 Individual Round #Tie 2] 2019 BMT Individual Tiebreaker 2 → subject=General Tiebreaker, number=2 → difficulty = 3
+[BMT 2019 Individual Round #Tie 3] 2019 BMT Individual Tiebreaker 3 → subject=General Tiebreaker, number=3 → difficulty = 3.5
+[BMT 2019 Individual Round #Tie 4] surface area of the circumsphere of the pyramid 2019 BMT Individual Tiebreaker 4 → subject=General Tiebreaker, number=4 → difficulty = 4
+[BMT 2019 Individual Round #Tie 5] 2019 BMT Individual Tiebreaker 5 → subject=General Tiebreaker, number=5 → difficulty = 4.5
+[BMT 2018 Team Round #1] BMT 2018 Team Round Problem 1 → subject=Team, number=1 → difficulty = 1.5
+[BMT 2018 Team Round #2] BMT 2018 Team Round Problem 2 → subject=Team, number=2 → difficulty = 2
+[BMT 2018 Team Round #3] BMT 2018 Team Round Problem 3 → subject=Team, number=3 → difficulty = 2.5
+[BMT 2018 Team Round #4] BMT 2018 Team Round Problem 4 → subject=Team, number=4 → difficulty = 3
+[BMT 2018 Team Round #5] BMT 2018 Team Round Problem 5 → subject=Team, number=5 → difficulty = 3
+[BMT 2018 Team Round #6] BMT 2018 Team Round Problem 6 → subject=Team, number=6 → difficulty = 3.5
+[BMT 2018 Team Round #7] BMT 2018 Team round problem 7 → subject=Team, number=7 → difficulty = 4
+[BMT 2018 Team Round #8] BMT 2018 Team Round Problem 8 → subject=Team, number=8 → difficulty = 4.5
+[BMT 2018 Team Round #9] BMT 2018 Team Round Problem 9 → subject=Team, number=9 → difficulty = 5
+[BMT 2018 Team Round #10] BMT 2018 Team Round Problem 10 → subject=Team, number=10 → difficulty = 5
+[BMT 2018 Team Round #11] BMT 2018 Team Round 11 → subject=Team, number=11 → difficulty = 5.5
+[BMT 2018 Team Round #12] BMT 2018 Team Round Problem 12 → subject=Team, number=12 → difficulty = 6
+[BMT 2018 Team Round #13] BMT 2018 Team Round Problem 13 → subject=Team, number=13 → difficulty = 6.5
+[BMT 2018 Team Round #14] BMT 2018 Team Round Problem 14 → subject=Team, number=14 → difficulty = 7
+[BMT 2018 Team Round #15] BMT 2018 Team Round Problem 15 → subject=Team, number=15 → difficulty = 7.5
+[BMT 2018 Algebra Round #1] BMT 2018 Algebra Round Problem 1 → subject=Algebra, number=1 → difficulty = 1.5
+[BMT 2018 Algebra Round #2] BMT 2018 Algebra Round Problem 2 → subject=Algebra, number=2 → difficulty = 2
+[BMT 2018 Algebra Round #3] BMT 2018 Algebra Round Problem 3 → subject=Algebra, number=3 → difficulty = 2.5
+[BMT 2018 Algebra Round #4] BMT 2018 Algebra Round Problem 4 → subject=Algebra, number=4 → difficulty = 3
+[BMT 2018 Algebra Round #5] BMT 2018 Algebra Round Problem 5 → subject=Algebra, number=5 → difficulty = 3.5
+[BMT 2018 Algebra Round #6] BMT 2018 Algebra Round Problem 6 → subject=Algebra, number=6 → difficulty = 4
+[BMT 2018 Algebra Round #7] BMT 2018 Algebra Round Problem 7 → subject=Algebra, number=7 → difficulty = 5
+[BMT 2018 Algebra Round #8] BMT 2018 Algebra Round Problem 8 → subject=Algebra, number=8 → difficulty = 5.5
+[BMT 2018 Algebra Round #9] BMT 2018 Algebra Round Problem 9 → subject=Algebra, number=9 → difficulty = 6
+[BMT 2018 Algebra Round #10] BMT 2018 Algebra Round Problem 10 → subject=Algebra, number=10 → difficulty = 7
+[BMT 2018 Algebra Round #Tie 1] 2018 BMT Algebra Tiebreakers 1 → subject=Algebra Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2018 Algebra Round #Tie 2] 2018 BMT Algebra Tiebreakers 2 → subject=Algebra Tiebreaker, number=2 → difficulty = 3
+[BMT 2018 Algebra Round #Tie 3] 2018 BMT Algebra Tiebreakers 3 → subject=Algebra Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2018 Geometry Round #1] BMT 2018 Spring - Geometry 1 → subject=Geometry, number=1 → difficulty = 1.5
+[BMT 2018 Geometry Round #2] BMT 2018 Spring - Geometry 2 → subject=Geometry, number=2 → difficulty = 2
+[BMT 2018 Geometry Round #3] BMT 2018 Spring - Geometry 3 → subject=Geometry, number=3 → difficulty = 2.5
+[BMT 2018 Geometry Round #4] BMT 2018 Spring - Geometry 4 → subject=Geometry, number=4 → difficulty = 3
+[BMT 2018 Geometry Round #5] BMT 2018 Spring - Geometry 5 → subject=Geometry, number=5 → difficulty = 3.5
+[BMT 2018 Geometry Round #6] BMT 2018 Spring - Geometry 6 → subject=Geometry, number=6 → difficulty = 4
+[BMT 2018 Geometry Round #7] BMT 2018 Spring - Geometry 7 → subject=Geometry, number=7 → difficulty = 5
+[BMT 2018 Geometry Round #8] BMT 2018 Spring - Geometry 8 → subject=Geometry, number=8 → difficulty = 5.5
+[BMT 2018 Geometry Round #9] BMT 2018 Spring - Geometry 9 → subject=Geometry, number=9 → difficulty = 6
+[BMT 2018 Geometry Round #10] BMT 2018 Spring - Geometry 10 → subject=Geometry, number=10 → difficulty = 7
+[BMT 2018 Geometry Round #Tie 1] BMT 2018 Spring - Geometry Tiebreaker 1 → subject=Geometry Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2018 Geometry Round #Tie 2] BMT 2018 Spring - Geometry Tiebreaker 2 → subject=Geometry Tiebreaker, number=2 → difficulty = 3
+[BMT 2018 Geometry Round #Tie 3] BMT 2018 Spring - Geometry Tiebreaker 3 → subject=Geometry Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2018 Combinatorics Round #1] 2018 BMT Combinatorics #1 → subject=Combinatorics, number=1 → difficulty = 1.5
+[BMT 2018 Combinatorics Round #2] 2018 BMT Combinatorics #2 → subject=Combinatorics, number=2 → difficulty = 2
+[BMT 2018 Combinatorics Round #3] 2018 BMT Combinatorics #3 → subject=Combinatorics, number=3 → difficulty = 2.5
+[BMT 2018 Combinatorics Round #4] 2018 BMT Combinatorics #4 → subject=Combinatorics, number=4 → difficulty = 3
+[BMT 2018 Combinatorics Round #5] 2018 BMT Combinatorics #5 → subject=Combinatorics, number=5 → difficulty = 3.5
+[BMT 2018 Combinatorics Round #6] 2018 BMT Combinatorics #6 → subject=Combinatorics, number=6 → difficulty = 4
+[BMT 2018 Combinatorics Round #7] 2018 BMT Combinatorics #7 → subject=Combinatorics, number=7 → difficulty = 5
+[BMT 2018 Combinatorics Round #8] 2018 BMT Combinatorics #8 → subject=Combinatorics, number=8 → difficulty = 5.5
+[BMT 2018 Combinatorics Round #9] 2018 BMT Combinatorics #9 → subject=Combinatorics, number=9 → difficulty = 6
+[BMT 2018 Combinatorics Round #10] Generating Functions → subject=Combinatorics, number=10 → difficulty = 7
+[BMT 2018 Combinatorics Round #Tie 1] 2018 BMT Combinatorics Tiebreaker #1 → subject=Combinatorics Tiebreaker, number=1 → difficulty = 1.5
+[BMT 2018 Combinatorics Round #Tie 2] 2018 BMT Combinatorics Tiebreaker #2 → subject=Combinatorics Tiebreaker, number=2 → difficulty = 3
+[BMT 2018 Combinatorics Round #Tie 3] 2018 BMT Combinatorics Tiebreaker #3 → subject=Combinatorics Tiebreaker, number=3 → difficulty = 4.5
+[BMT 2018 Number Theory #1] 2018 BMT Number Theory #1 → subject=Nt, number=1 → ❌ No difficulty found
+[BMT 2018 Number Theory #2] 2018 BMT Number Theory #2 → subject=Nt, number=2 → ❌ No difficulty found
+[BMT 2018 Number Theory #3] 2018 BMT Number Theory #3 → subject=Nt, number=3 → ❌ No difficulty found
+[BMT 2018 Number Theory #4] 2018 BMT Number Theory #4 → subject=Nt, number=4 → ❌ No difficulty found
+[BMT 2018 Number Theory #5] 2018 BMT Number Theory #5 → subject=Nt, number=5 → ❌ No difficulty found
+[BMT 2018 Number Theory #6] 2018 BMT Number Theory #6 → subject=Nt, number=6 → ❌ No difficulty found
+[BMT 2018 Number Theory #7] 2018 BMT Number Theory #7 → subject=Nt, number=7 → ❌ No difficulty found
+[BMT 2018 Number Theory #8] 2018 BMT Number Theory #8 → subject=Nt, number=8 → ❌ No difficulty found
+[BMT 2018 Number Theory #9] 2018 BMT Number Theory #9 → subject=Nt, number=9 → ❌ No difficulty found
+[BMT 2018 Number Theory #10] 2018 BMT Number Theory #10 → subject=Nt, number=10 → ❌ No difficulty found
+[BMT 2018 Number Theory #Tie 1] 2018 BMT Number Theory Tiebreaker #1 → subject=Nt Tiebreaker, number=1 → ❌ No difficulty found
+[BMT 2018 Number Theory #Tie 2] 2018 BMT Number Theory Tiebreaker #2 → subject=Nt Tiebreaker, number=2 → ❌ No difficulty found
+[BMT 2018 Number Theory #Tie 3] 2018 BMT Number Theory Tiebreaker #3 → subject=Nt Tiebreaker, number=3 → ❌ No difficulty found
+[BMT 2012 Individual Round #1] Sprind Round (2012) #1 → subject=General, number=1 → difficulty = 1
+[BMT 2012 Individual Round #2] Spring Round (2012) #2 → subject=General, number=2 → difficulty = 1
+[BMT 2012 Individual Round #3] Sprind Round (2012) #3 → subject=General, number=3 → difficulty = 1
+[BMT 2012 Individual Round #4] Spring Round (2012) #4 → subject=General, number=4 → difficulty = 1
+[BMT 2012 Individual Round #5] Spring Round (2012) #5 → subject=General, number=5 → difficulty = 1
+[BMT 2012 Individual Round #6] Spring Round (2012) #6 → subject=General, number=6 → difficulty = 1.5
+[BMT 2012 Individual Round #7] Spring Round (2012) #7 → subject=General, number=7 → difficulty = 1.5
+[BMT 2012 Individual Round #8] Spring Round (2012) #8 → subject=General, number=8 → difficulty = 1.5
+[BMT 2012 Individual Round #9] Spring Round (2012) #9 → subject=General, number=9 → difficulty = 1.5
+[BMT 2012 Individual Round #10] Spring Round (2012) #10 → subject=General, number=10 → difficulty = 2
+[BMT 2012 Team Round #1] 2012 BMT Team 1 → subject=Team, number=1 → difficulty = 1.5
+[BMT 2012 Team Round #2] 2012 BMT Team 2 → subject=Team, number=2 → difficulty = 2
+[BMT 2012 Team Round #3] ratio of sums of areas of squares  2012 BMT Team 3 → subject=Team, number=3 → difficulty = 2.5
+[BMT 2012 Team Round #4] 2012 BMT Team 4 → subject=Team, number=4 → difficulty = 3
+[BMT 2012 Team Round #5] 2012 BMT Team 5 → subject=Team, number=5 → difficulty = 3
+[BMT 2012 Team Round #6] (A(s)+A(t))/(A(a)+A(b)), areas of circles 2012 BMT Team 6 → subject=Team, number=6 → difficulty = 3.5
+[BMT 2012 Team Round #7] 2012 BMT Team 7 → subject=Team, number=7 → difficulty = 4
+[BMT 2012 Team Round #8] 2012 BMT Team 8 → subject=Team, number=8 → difficulty = 4.5
+[BMT 2012 Team Round #9] 2012 BMT Team 9 → subject=Team, number=9 → difficulty = 5
+[BMT 2012 Team Round #10] 2012 BMT Team 10 → subject=Team, number=10 → difficulty = 5
+[BMT 2012 Tournament Round #round 1] 2012 BMT Tournament Round 1 - Berkley Math Tournament → subject=Nt, number=1 → ❌ No difficulty found
+[BMT 2012 Tournament Round #round 2] 2012 BMT Tournament Round 2 - Berkley Math Tournament → subject=Nt, number=2 → ❌ No difficulty found
+[BMT 2012 Tournament Round #round 3] 2012 BMT Tournament Round 3 - Berkley Math Tournament → subject=Nt, number=3 → ❌ No difficulty found
+[BMT 2012 Tournament Round #round 4] 2012 BMT Tournament Round 4 - Berkley Math Tournament → subject=Nt, number=4 → ❌ No difficulty found
+[BMT 2012 Tournament Round #round 5] 2012 BMT Tournament Round 5 - Berkley Math Tournament → subject=Nt, number=5 → ❌ No difficulty found
+[BMT 2012 Tournament Round #Championship] 2012 BMT Tournament Round, Championship Round  - Berkley Math Tournament → ❌ Failed to parse subject/number
+[BMT 2012 Tournament Round #Consolation] 2012 BMT Tournament Round, Consolation Round - Berkley Math Tournament → ❌ Failed to parse subject/number

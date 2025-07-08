@@ -1,0 +1,102 @@
+Problem 1:
+Triangle $ABC$ is isosceles, and . If the sum of the possible measures of $\angle BAC$ is , find .
+
+Problem 2:
+Bassanio has three red coins, four yellow coins, and five blue coins. At any point, he may give Shylock any two coins of different colors in exchange for one coin of the other color; for example, he may give Shylock one red coin and one blue coin, and receive one yellow coin in return. Bassanio wishes to end with coins that are all the same color, and he wishes to do this while having as many coins as possible. How many coins will he end up with, and what color will they be?
+
+Problem 3:
+Let $\lfloor x \rfloor$ denote the largest integer less than or equal to , and let $\{x\}$ denote the fractional part of . For example, , and , while $\lfloor 100 \rfloor=100$ and . If $n$ is the largest solution to the equation , compute .
+
+Problem 4:
+Call a set of positive integers $\textit{good}$ if there is a partition of it into two sets $S$ and , such that there do not exist three elements $a, b, c \in S$ such that $a^b = c$ and such that there do not exist three elements $a, b, c \in T$ such that $a^b = c$  ( and $b$ need not be distinct). Find the smallest positive integer $n$ such that the set $\{2, 3, 4, \dots, n\}$ is \textit{not} good.
+
+Problem 5:
+Kelvin the Frog is trying to hop across a river. The river has $10$ lilypads on it, and he must hop on them in a specific order (the order is unknown to Kelvin). If Kelvin hops to the wrong lilypad at any point, he will be thrown back to the wrong side of the river and will have to start over. Assuming Kelvin is infinitely intelligent, what is the minimum number of hops he will need to guarantee reaching the other side?
+
+Problem 6:
+Marcus and four of his relatives are at a party. Each pair of the five people are either $\textit{friends}$ or . For any two enemies, there is no person that they are both friends with. In how many ways is this possible?
+
+Problem 7:
+Let $ABCD$ be a convex quadrilateral whose diagonals $AC$ and $BD$ meet at . Let the area of triangle $APB$ be $24$ and let the area of triangle $CPD$ be . What is the minimum possible area of quadrilateral ?
+
+Problem 8:
+Find $ \textbf{any} $ quadruple of positive integers $(a,b,c,d)$ satisfying $a^3+b^4+c^5=d^{11}$ and .
+
+Problem 9:
+A graph consists of 6 vertices. For each pair of vertices, a coin is flipped, and an edge connecting the two vertices is drawn if and only if the coin shows heads. Such a graph is $\it{good}$ if, starting from any vertex $V$ connected to at least one other vertex, it is possible to draw a path starting and ending at $V$ that traverses each edge exactly once. What is the probability that the graph is good?
+
+Problem 10:
+A number $n$ is $\it{bad}$ if there exists some integer $c$ for which $x^x \equiv c \pmod n$ has no integer solutions for . Find the number of bad integers between 2 and 42 inclusive.
+
+Problem 11:
+Find the number of triples $(a, b, c)$ of positive integers such that $a+ab+abc = 11.$
+
+Problem 12:
+Let $a$ and $b$ be real numbers randomly (and independently) chosen from the range . Find the probability that $a, b$ and $1$ form the side lengths of an obtuse triangle.
+
+Problem 13:
+Neo has an infinite supply of red pills and blue pills. When he takes a red pill, his weight will double, and when he takes a blue pill, he will lose one pound. If Neo originally weighs one pound, what is the minimum number of pills he must take to make his weight 2015 pounds?
+
+Problem 14:
+Chords $AB$ and $CD$ of a circle are perpendicular and intersect at a point . If , and , find the area of the circle.
+
+Problem 15:
+Let $S$ be a subset of the set $\{1, 2, 3, \dots, 2015\}$ such that for any two elements , the difference $a - b$ does not divide the sum . Find the maximum possible size of .
+
+Problem 16:
+Consider all functions $f: \mathbb{Z} \rightarrow \mathbb{Z}$ satisfying \[f(f(x) + 2x + 20) = 15. \]  Call an integer $n$  $\textit{good}$ if $f(n)$ can take any integer value. In other words, if we fix , for any integer , there exists a function $f$ such that $f(n) = m.$ Find the sum of all good integers $x.$
+
+Problem 17:
+Let $\triangle ABC$ be a right triangle with right angle . Let $I$ be the incenter of , and let $M$ lie on $AC$ and $N$ on , respectively, such that $M,I,N$ are collinear and $\overline{MN}$ is parallel to . If $AB=36$ and the perimeter of $CMN$ is , find the area of .
+
+Problem 18:
+Let $ABCD$ be a quadrilateral with an inscribed circle $\omega$ that has center . If , find the value of .
+
+Problem 19:
+Rosencrantz plays $n \leq 2015$ games of question, and ends up with a win rate $\left(\text{i.e.}\: \frac{\text{\# of games won}}{\text{\# of games played}}\right)$ of . Guildenstern has also played several games, and has a win rate less than . He realizes that if, after playing some more games, his win rate becomes higher than , then there must have been some point in time when Rosencrantz and Guildenstern had the exact same win-rate. Find the product of all possible values of .
+
+Problem 20:
+Let $N$ be the number of functions $f$ from $\{1, 2, \dots, 101 \} \rightarrow \{1, 2, \dots, 101 \}$ such that $f^{101}(1) = 2.$ Find the remainder when $N$ is divided by $103.$
+
+Problem 21:
+Consider a $1 \times 1$ grid of squares. Let $A,B,C,D$ be the vertices of this square, and let $E$ be the midpoint of segment . Furthermore, let $F$ be the point on segment $BC$ satisfying , and let $P$ be the intersection of lines $AF$ and . Find .
+
+Problem 22:
+Consider a $2 \times 2$ grid of squares. David writes a positive integer in each of the squares. Next to each row, he writes the product of the numbers in the row, and next to each column, he writes the product of the numbers in each column. If the sum of the eight numbers he writes down is 2015, what is the minimum possible sum of the four numbers he writes in the grid?
+
+Problem 23:
+Consider a $3 \times 3$ grid of squares. A circle is inscribed in the lower left corner, the middle square of the top row, and the rightmost square of the middle row, and a circle $O$ with radius $r$ is drawn such that $O$ is externally tangent to each of the three inscribed circles. If the side length of each square is 1, compute .
+
+Problem 24:
+Consider a $4 \times 4$ grid of squares. Aziraphale and Crowley play a game on this grid, alternating  turns, with Aziraphale going first. On Aziraphale's turn, he may color any uncolored square red, and  on Crowley's turn, he may color any uncolored square blue. The game ends when all the squares are  colored, and Aziraphale's score is the area of the largest closed region that is entirely red. If Aziraphale  wishes to maximize his score, Crowley wishes to minimize it, and both players play optimally, what  will Aziraphale's score be?
+
+Problem 25:
+Consider a $5 \times 5$ grid of squares. Vladimir colors some of these squares red, such that the centers of any four red squares do $\textbf{not}$ form an axis-parallel rectangle (i.e. a rectangle whose sides are parallel to those of the squares). What is the maximum number of squares he could have colored red?
+
+Problem 26:
+Consider a $6 \times 6$ grid of squares. Edmond chooses four of these squares uniformly at random. What is the probability that the centers of these four squares form a square?
+
+Problem 27:
+Consider a $7 \times 7$ grid of squares. Let $f:\{1,2,3,4,5,6,7\} \rightarrow \{1,2,3,4,5,6,7\}$ be a function; in other words, $f(1), f(2), \dots, f(7)$ are each (not necessarily distinct) integers from 1 to 7. In the top row of the grid, the numbers from 1 to 7 are written in order; in every other square, $f(x)$ is written where $x$ is the number above the square. How many functions have the property that the bottom row is identical to the top row, and no other row is identical to the top row?
+
+Problem 28:
+Consider an $8\times 8$ grid of squares. A rook is placed in the lower left corner, and every minute it moves to a square in the same row or column with equal probability (the rook must move; i.e. it cannot stay in the same square). What is the expected number of minutes until the rook reaches the upper right corner?
+
+Problem 29:
+Consider a $9 \times 9$ grid of squares. Haruki fills each square in this grid with an integer between 1 and 9, inclusive.  The grid is called a $\textit{super-sudoku}$ if each of the following three conditions hold:   Each column in the grid contains each of the numbersexactly once.Each row in the grid contains each of the numbersexactly once.Eachsubsquare in the grid contains each of the numbersexactly once. How many possible super-sudoku grids are there?
+
+Problem 30:
+Consider a $10 \times 10$ grid of squares. One day, Daniel drops a burrito in the top left square, where a wingless pigeon happens to be looking for food. Every minute, if the pigeon and the burrito are in the same square, the pigeon will eat $10\%$ of the burrito's original size and accidentally throw it into a random square (possibly the one it is already in). Otherwise, the pigeon will move to an adjacent square, decreasing the distance between it and the burrito.  What is the expected number of minutes before the pigeon has eaten the entire burrito?
+
+Problem 31:
+Since guts has 36 questions, they will be combined into posts.    1. [5] Farmer Yang has a $2015$ × $2015$ square grid of corn plants. One day, the plant in the very center  of the grid becomes diseased. Every day, every plant adjacent to a diseased plant becomes diseased.  After how many days will all of Yang's corn plants be diseased?    2. [5] The three sides of a right triangle form a geometric sequence. Determine the ratio of the length of  the hypotenuse to the length of the shorter leg.    3. [5] A parallelogram has $2$ sides of length $20$ and . Given that its area is a positive integer, ﬁnd the  minimum possible area of the parallelogram.    4. [6] Eric is taking a biology class. His problem sets are worth $100$ points in total, his three midterms are  worth $100$ points each, and his ﬁnal is worth $300$ points. If he gets a perfect score on his problem sets  and scores ,, and $80\%$ on his midterms respectively, what is the minimum possible percentage  he can get on his ﬁnal to ensure a passing grade? (Eric passes if and only if his overall percentage is  at least ) .    5. [6] James writes down three integers. Alex picks some two of those integers, takes the average of them,  and adds the result to the third integer. If the possible ﬁnal results Alex could get are ,  , and ,  what are the three integers James originally chose?    6. [6] Let $AB$ be a segment of length $2$ with midpoint . Consider the circle with center $O$ and radius   $r$ that is externally tangent to the circles with diameters $AM$ and $BM$ and internally tangent to the  circle with diameter . Determine the value of .    7. [7] Let n be the smallest positive integer with exactly $2015$ positive factors. What is the sum of  the (not necessarily distinct) prime factors of n? For example, the sum of the prime factors of $72$ is   .    8. [7] For how many pairs of nonzero integers $(c, d)$ with $-2015 \le c,d \le 2015$ do the equations $cx = d$  and $dx = c$ both have an integer solution?    9. [7] Find the smallest positive integer n such that there exists a complex number z, with positive real  and imaginary part, satisfying .
+
+Problem 32:
+10) Call a string of letters $S$ an almost-palindrome if $S$ and the reverse of $S$ differ in exactly $2$ places. Find the number of ways to order the letters in $HMMTTHEMETEAM$ to get an almost-palindrome.    11) Find all integers , not necessarily positive, for which there exist positive integers ${a,b,c}$ satisfying .    12) Let $a$ and $b$ be positive real numbers. Determine the minimum possible value of .    13) Consider a $4$ x $4$ grid of squares, each originally colored red. Every minute, Piet can jump on any of the squares, changing the color of it and any adjacent squares to blue (two squares are adjacent if they share a side). What is the minimum number of minutes it will take Piet to change the entire grid to blue?    14) Let $ABC$ be an acute triangle with orthocenter . Let ${D,E}$ be the feet of the - altitudes, respectively. Given that $\overline{AH} = 20$ and $\overline{HD} =16$ and , find the length of .    15) Find the smallest positive integer $b$ such that $1111 _b$  ( in base ) is a perfect square. If no such $b$ exists, write "No Solution"    16) For how many triples $( {x,y,z} )$ of integers between $-10$ and , inclusive, do there exist reals ${a,b,c}$ that satisfy   $ab = x$   $ac = y$   ?    17) Unit squares $ABCD$ and $EFGH$ have centers $O_1$ and , respectively, and are originally oriented so that $B$ and $E$ are at the same position and $C$ and $H$ are at the same position. The squares then rotate clockwise around their centers at a rate of one revolution per hour. After $5$ minutes, what is the area of the intersection of the two squares?    18) A function $f$ satisfies, for all  nonnegative integers $x$ and ,   $f(x,0) = f(0,x) = x$  If ,  $f(x,y)=f(x-y,y)+1$  If ,  $f(x,y) = f(x,y-x)+1$  Find the maximum value of $f$ over .
+
+Problem 33:
+19) Each cell of a $2$ × $5$ grid of unit squares is to be colored white or black. Compute the number of  such colorings for which no $2$ × $2$ square is a single color.    20) Let $n$ be a three-digit integer with nonzero digits, not all of which are the same. Define $f(n)$ to be  the greatest common divisor of the six integers formed by any permutation of s digits. For example,   , because . Let the maximum possible value of $f(n)$ be   . Find the sum of all $n$ for which .    21) Consider a $2$ × $2$ grid of squares. Each of the squares will be colored with one of $10$ colors, and  two colorings are considered equivalent if one can be rotated to form the other. How many distinct  colorings are there?    22) Find all the roots of the polynomial $x^5 - 5x^4 + 11x^3 -13x^2+9x-3$    23) Compute the smallest positive integer $n$ for which .    24) Three ants begin on three different vertices of a tetrahedron. Every second, they choose one of the  three edges connecting to the vertex they are on with equal probability and travel to the other vertex  on that edge. They all stop when any two ants reach the same vertex at the same time. What is the  probability that all three ants are at the same vertex when they stop?    25) Let $ABC$ be a triangle that satisfies ,  ,  . Given a point $P$ in the plane,  let ,  ,  $PC$ be the reflections of ,  ,  $C$ across . Call $P$  good if the circumcircle of $P_A P_B P_C$ intersects the circumcircle of $ABC$ at exactly 1 point. The locus of good points $P$ encloses a region .  Find the area of .    26. Let $f : \mathbb{R}^+ \rightarrow \mathbb{R}$ be a continuous function satisfying $f(xy) = f(x) + f(y) + 1$ for all positive reals . If , compute .    27) Let $ABCD$ be a quadrilateral with ,  ,  ,  . Let $P$  be a point in the plane (not necessarily inside the quadrilateral). Find the minimum possible value of   .
+
+Problem 34:
+28. [15] Find the shortest distance between the lines $\frac{x+2}{2}=\frac{y-1}{3}=\frac{z}{1}$ and $\frac{x-3}{-1}=\frac{y}{1}=\frac{z+1}{2}$    29. [15] Find the largest real number $k$ such that there exists a sequence of positive reals ${a_i}$ for which   $\sum_{n=1}^{\infty}a_n$ converges but $\sum_{n=1}^{\infty}\frac{\sqrt{a_n}}{n^k}$ does not.    30. [15] Find the largest integer $n$ such that the following holds: there exists a set of $n$ points in the plane such that, for any choice of three of them, some two are unit distance apart.    31. [17] Two random points are chosen on a segment and the segment is divided at each of these two points. Of the three segments obtained, find the probability that the largest segment is more than three times longer than the smallest segment.    32. [17] Find the sum of all positive integers $n\le 2015$ that can be expressed in the form , where $x$ and $y$ are positive integers.    33. [17] How many ways are there to place four points in the plane such that the set of pairwise distances between the points consists of exactly $2$ elements? (Two configurations are the same if one can be obtained from the other via rotation and scaling.)    34. [20] Let $n$ be the second smallest integer that can be written as the sum of two positive cubes in two  different ways. Compute . If your guess is , you will receive , rounded up.    35. [20] Let $n$ be the smallest positive integer such that any positive integer can be expressed as the sum  of $n$ integer 2015th powers. Find . If your answer is , your score will be , rounded up.    36. [20] Consider the following seven false conjectures with absurdly high counterexamples. Pick any subset of them, and list their labels in order of their smallest counterexample (the smallest $n$ for which the conjecture is false) from smallest to largest. For example, if you believe that the below list is already ordered by counterexample size, you should write ”PECRSGA”.  - P. (Polya’s conjecture) For any integer , at least half of the natural numbers below $n$ have an  odd number of prime factors.  - E. (Euler’s conjecture) There is no perfect cube $n$ that can be written as the sum of three  positive cubes.  - C. (Cyclotomic) The polynomial with minimal degree whose roots are the primitive t h roots  of unity has all coefficients equal to ,  , or .  - R. (Prime race) For any integer , there are more primes below $n$ equal to $2(\mod 3)$ than there  are equal to .  - S. (Seventeen conjecture) For any integer ,  $n^{17} + 9$ and $(n + 1)^{17} + 9$ are relatively prime.  - G. (Goldbach’s (other) conjecture) Any odd composite integer $n$ can be written as the sum  of a prime and twice a square.  - A. (Average square) Let $a_1 = 1$ and . Then $a_n$ is an integer for any n.  If your answer is a list of $4\le n\le 7$ labels in the correct order, your score will be . Otherwise, your score will be .
+

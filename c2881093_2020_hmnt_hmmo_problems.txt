@@ -1,0 +1,90 @@
+Problem 1:
+For how many positive integers $n \le 1000$ does the equation in real numbers $x^{\lfloor x \rfloor } = n$ have a positive solution for ?
+
+Problem 2:
+How many ways are there to arrange the numbers $\{ 1,2,3,4,5,6,7,8 \}$ in a circle so that every two adjacent elements are relatively prime? Consider rotations and reflections of the same arrangement to be indistinguishable.
+
+Problem 3:
+Let $A$ be the area of the largest semicircle that can be inscribed in a quarter-circle of radius . Comput e.  .
+
+Problem 4:
+Marisa has two identical cubical dice labeled with the numbers . However, the two dice are not fair, meaning that they can land on each face with different probability. Marisa rolls the two dice and calculates their sum. Given that the sum is $2$ with probability , and $12$ with probability , the maximum possible probability of the sum being $7$ is . Compute .
+
+Problem 5:
+For each positive integer , let an be the smallest nonnegative integer such that there is only one positive integer at most $n$ that is relatively prime to all of ,  , .. , . If , compute the largest possible value of .
+
+Problem 6:
+Regular hexagon $P_1P_2P_3P_4P_5P_6$ has side length . For , let $C_i$ be a unit circle centered at $P_i$ and $\ell_i$ be one of the internal common tangents of $C_i$ and , where $C_7 = C_1$ and . Assume that the lines $\{\ell_1, \ell_2, \ell_3, \ell_4, \ell_5,\ell_6\}$ bound a regular hexagon. The area of this hexagon can be expressed as , where $a$ and $b$ are relatively prime positive integers. Compute .
+
+Problem 7:
+Roger the ant is traveling on a coordinate plane, starting at . Every second, he moves from one lattice point to a different lattice point at distance , chosen with equal probability. He will continue to move until he reaches some point $P$ for which he could have reached  more quickly had he taken a different route. For example, if he goes from $(0,0)$ to $(1,0)$ to $(1,1)$ to $(1,2)$ to , he stops at  because he could have gone from $(0,0)$ to $(0,1)$ to $(0,2)$ in only $2$ seconds. The expected number of steps Roger takes before he stops can be expressed as , where $a$ and $b$ are relatively prime positive integers. Compute .
+
+Problem 8:
+Altitudes $BE$ and $CF$ of acute triangle $ABC$ intersect at . Suppose that the altitudes of triangle $EHF$ concur on line . If $AB=3$ and , then , where $a$ and $b$ are relatively prime positive integers. Compute .
+
+Problem 9:
+Alice and Bob take turns removing balls from a bag containing $10$ black balls and $10$ white balls, with Alice going first. Alice always removes a black ball if there is one, while Bob removes one of the remaining balls uniformly at random. Once all balls have been removed, the expected number of black balls which Bob has can be expressed as , where $a$ and $b$ are relatively prime positive integers. Compute .
+
+Problem 10:
+Let $x$ and $y$ be non-negative real numbers that sum to . Compute the number of ordered pairs $(a, b)$ with $a, b \in \{0, 1, 2, 3, 4\}$ such that the expression $x^ay^b + y^ax^b$ has maximum value $2^{1-a-b}$  .
+
+Problem 11:
+In the Cartesian plane, a line segment with midpoint $(2020,11)$ has one endpoint at $(a,0)$ and the other endpoint on the line . Compute .
+
+Problem 12:
+Let $T$ be a trapezoid with two right angles and side lengths $4, 4, 5,$ and . Two line segments are drawn, connecting the midpoints of opposite sides of $T$ and dividing $T$ into $4$ regions. If the difference between the areas of the largest and smallest of these regions is , compute .
+
+Problem 13:
+Jody has $6$ distinguishable balls and $6$ distinguishable sticks, all of the same length. How many ways are there to use the sticks to connect the balls so that two disjoint non-interlocking triangles are formed? Consider rotations and reflections of the same arrangement to be indistinguishable.
+
+Problem 14:
+Nine fair coins are flipped independently and placed in the cells of a $3$ by $3$ square grid. Let $p$ be the probability that no row has all its coins showing heads and no column has all its coins showing tails. If $p=\frac ab$ for relatively prime positive integers $a$ and , compute .
+
+Problem 15:
+Compute the sum of all positive integers $a\leq 26$ for which there exist integers $b$ and $c$ such that $a+23b+15c-2$ and $2a+5b+14c-8$ are both multiples of .
+
+Problem 16:
+A sphere is centered at a point with integer coordinates and passes through the three points $(2,0,0), (0,4,0), (0,0,6),$ but not the origin . If $r$ is the smallest possible radius of the sphere, compute .
+
+Problem 17:
+In triangle $ABC$ with $AB=8$ and , the incenter $I$ is reflected across side $AB$ to point $X$ and across side $AC$ to point . Given that segment $XY$ bisects , compute . (The incenter  is the center of the inscribed circle of triangle .)
+
+Problem 18:
+A bar of chocolate is made of $10$ distinguishable triangles as shown below:  How many ways are there to divide the bar, along the edges of the triangles, into two or more contiguous pieces?
+
+Problem 19:
+In the Cartesian plane, a perfectly reflective semicircular room is bounded by the upper half of the unit circle centered at $(0,0)$ and the line segment from $(-1,0)$ to . David stands at the point $(-1,0)$ and shines a flashlight into the room at an angle of $46^{\circ}$ above the horizontal. How many times does the light beam reflect off the walls before coming back to David at $(-1,0)$ for the first time?
+
+Problem 20:
+A sequence of positive integers $a_1,a_2,a_3,\ldots$ satisfies $$a_{n+1} = n\left \lfloor \frac{a_n}{n} \right \rfloor + 1$$ for all positive integers . If , how many possible values can $a_1$ take? (For a real number ,  $\lfloor x \rfloor$ denotes the largest integer that is not greater than . )
+
+Problem 21:
+Chelsea goes to La Verde's at MIT and buys $100$ coconuts, each weighing $4$ pounds, and $100$ honeydews, each weighing $5$ pounds. She wants to distribute them among $n$ bags, so that each bag contains at most $13$ pounds of fruit. What is the minimum $n$ for which this is possible?
+
+Problem 22:
+In the future, MIT has attracted so many students that its buildings have become skyscrapers. Ben and Jerry decide to go ziplining together. Ben starts at the top of the Green Building, and ziplines to the bottom of the Stata Center. After waiting $a$ seconds, Jerry starts at the top of the Stata Center, and ziplines to the bottom of the Green Building. The Green Building is $160$ meters tall, the Stata Center is $90$ meters tall, and the two buildings are $120$ meters apart. Furthermore, both zipline at $10$ meters per second. Given that Ben and Jerry meet at the point where the two ziplines cross, compute .
+
+Problem 23:
+Harvard has recently built a new house for its students consisting of $n$ levels, where the t h level from the top can be modeled as a - meter-tall cylinder with radius $k$ meters. Given that the area of all the lateral surfaces (i.e. the surfaces of the external vertical walls) of the building is $35$ percent of the total surface area of the building (including the bottom), compute .
+
+Problem 24:
+Points $G$ and $N$ are chosen on the interiors of sides $ED$ and $DO$ of unit square , so that pentagon $GNOME$ has only two distinct side lengths. The sum of all possible areas of quadrilateral $NOME$ can be expressed as , where $a,b,c,d$ are positive integers such that $\gcd(a,b,d) = 1$ and $c$ is square-free (i.e. no perfect square greater than $1$ divides ) . Compute .
+
+Problem 25:
+The classrooms at MIT are each identified with a positive integer (with no leading zeroes). One day, as President Reif walks down the Infinite Corridor, he notices that a digit zero on a room sign has fallen off. Let $N$ be the original number of the room, and let $M$ be the room number as shown on the sign. The smallest interval containing all possible values of $\frac{M}{N}$ can be expressed as $[\frac{a}{b}, \frac{c}{d} )$ where $a,b,c,d$ are positive integers with . Compute .
+
+Problem 26:
+The elevator buttons in Harvard's Science Center form a $3\times 2$ grid of identical buttons, and each button lights up when pressed. One day, a student is in the elevator when all the other lights in the elevator malfunction, so that only the buttons which are lit can be seen, but one cannot see which floors they correspond to. Given that at least one of the buttons is lit, how many distinct arrangements can the student observe? (For example, if only one button is lit, then the student will observe the same arrangement regardless of which button it is.)
+
+Problem 27:
+While waiting for their food at a restaurant in Harvard Square, Ana and Banana draw $3$ squares $\square_1, \square_2, \square_3$ on one of their napkins. Starting with Ana, they take turns filling in the squares with integers from the set $\{1,2,3,4,5\}$ such that no integer is used more than once. Ana's goal is to minimize the minimum value  that the polynomial $a_1x^2 + a_2x + a_3$ attains over all real , where $a_1, a_2, a_3$ are the integers written in $\square_1, \square_2, \square_3$ respectively. Banana aims to maximize . Assuming both play optimally, compute the final value of .
+
+Problem 28:
+After viewing the John Harvard statue, a group of tourists decides to estimate the distances of nearby locations on a map by drawing a circle, centered at the statue, of radius $\sqrt{n}$ inches for each integer , so that they draw $7981$ circles altogether. Given that, on the map, the Johnston Gate is - inch line segment which is entirely contained between the smallest and the largest circles, what is the minimum number of points on this line segment which lie on one of the drawn circles? (The endpoint of a segment is considered to be on the segment.)
+
+Problem 29:
+While waiting for their next class on Killian Court, Alesha and Belinda both write the same sequence $S$ on a piece of paper, where $S$ is a - term strictly increasing geometric sequence with an integer common ratio . Every second, Alesha erases the two smallest terms on her paper and replaces them with their geometric mean, while Belinda erases the two largest terms in her paper and replaces them with their geometric mean. They continue this process until Alesha is left with a single value $A$ and Belinda is left with a single value . Let $r_0$ be the minimal value of $r$ such that $\frac{A}{B}$ is an integer. If $d$ is the number of positive factors of , what is the closest integer to ?
+
+Problem 30:
+Sean enters a classroom in the Memorial Hall and sees a $1$ followed by $2020$  ' s on the blackboard. As he is early for class, he decides to go through the digits from right to left and independently erase the t h digit from the left with probability . (In particular, the $1$ is never erased.) Compute the expected value of the number formed from the remaining digits when viewed as a base - number. (For example, if the remaining number on the board is , then its value is . )
+

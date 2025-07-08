@@ -1,0 +1,90 @@
+Problem 1:
+Let $ABCD$ be a parallelogram. Let $E$ be the midpoint of $AB$ and $F$ be the midpoint of . Points $P$ and $Q$ are on segments $EF$ and , respectively, such that , and $Q$ are collinear. Given that ,  , and , find .
+
+Problem 2:
+Joey wrote a system of equations on a blackboard, where each of the equations was of the form $a + b = c$ or $a \cdot b = c$ for some variables or integers . Then Sean came to the board and erased all of the plus signs and multiplication signs, so that the board reads:   $x\,\,\,\, z = 15$   $x\,\,\,\, y = 12$   $x\,\,\,\, x = 36$  If $x, y, z$ are integer solutions to the original system, find the sum of all possible values of .
+
+Problem 3:
+Suppose $m$ and $n$ are positive integers for which     $\bullet$ the sum of the first $m$ multiples of $n$ is , and   $\bullet$ the sum of the first $m^3$ multiples o f is .    Determine the sum of the first $m^2$ multiples of $n^2$
+
+Problem 4:
+Find the number of - digit numbers $\overline{a_1a_2... a_{10}}$ which are multiples of $11$ such that the digits are non-increasing from left to right, i.e. $a_i \ge a_{i+1}$ for each .
+
+Problem 5:
+How many ways are there to place $31$ knights in the cells of an $8 \times  8$ unit grid so that no two attack one another?    (A knight attacks another knight if the distance between the centers of their cells is exactly . )
+
+Problem 6:
+The taxicab distance between points ) and $(x_2, y_2)$ is . A regular octagon is positioned in the $xy$ plane so that one of its sides has endpoints $(0, 0)$ and . Let $S$ be the set of all points inside the octagon whose taxicab distance from some octagon vertex is at most . The area of $S$ can be written as $m/n$ , where $m, n$ are positive integers and . Find .
+
+Problem 7:
+Let $f(x) = x^3 + 3x - 1$ have roots . Given that $\frac{1}{a^3 + b^3}+\frac{1}{b^3 + c^3}+\frac{1}{c^3 + a^3}$ can be written as , where $m, n$ are positive integers and , find .
+
+Problem 8:
+Paul and Sara are playing a game with integers on a whiteboard, with Paul going first. When it is Paul’s turn, he can pick any two integers on the board and replace them with their product; when it is Sara’s turn, she can pick any two integers on the board and replace them with their sum. Play continues until exactly one integer remains on the board. Paul wins if that integer is odd, and Sara wins if it is even.  Initially, there are $2021$ integers on the board, each one sampled uniformly at random from the set . Assuming both players play optimally, the probability that Paul wins is $m/n$ , where $m, n$ are positive integers and . Find the remainder when $m + n$ is divided by .
+
+Problem 9:
+Let $N$ be the smallest positive integer for which $x^2 + x + 1$ divides . Find the remainder when $N$ is divided by .
+
+Problem 10:
+Three faces $X , Y, Z$ of a unit cube share a common vertex. Suppose the projections of $X , Y, Z$ onto a fixed plane $P$ have areas , respectively. If , then $x + y + z$ can be written as $m/n$ , where $m, n$ are positive integers and . Find .
+
+Problem 11:
+A domino has a left end and a right end, each of a certain color. Alice has four dominos, colored red-red, red-blue, blue-red, and blue-blue. Find the number of ways to arrange the dominos in a row end-to-end such that adjacent ends have the same color. The dominos cannot be rotated.
+
+Problem 12:
+Suppose $a$ and $b$ are positive integers for which . Find .
+
+Problem 13:
+Let $ABCD$ be a unit square. A circle with radius $\frac{32}{49}$ passes through point $D$ and is tangent to side $AB$ at point . Then $DE = \frac{m}{n}$ , where ,  $n$ are positive integers and gcd . Find .
+
+Problem 14:
+The sum of the digits of the time $19$ minutes ago is two less than the sum of the digits of the time right now. Find the sum of the digits of the time in $19$ minutes. (Here, we use a standard - hour clock of the form . )
+
+Problem 15:
+A chord is drawn on a circle by choosing two points uniformly at random along its circumference. This is done two more times to obtain three total random chords. The circle is cut along these three lines, splitting it into pieces. The probability that one of the pieces is a triangle is $\frac{m}{n}$ , where ,  $n$ are positive integers and gcd . Find .
+
+Problem 16:
+Mario has a deck of seven pairs of matching number cards and two pairs of matching Jokers, for a total of $18$ cards. He shuffles the deck, then draws the cards from the top one by one until he holds a pair of matching Jokers. The expected number of complete pairs that Mario holds at the end (including the Jokers) is $\frac{m}{n}$ , where ,  $n$ are positive integers and gcd . Find .
+
+Problem 17:
+Dene the function $f : R \to R$ by $$f(x) =\begin{cases}  \dfrac{1}{x^2+\sqrt{x^4+2x}}\,\,\,  \text{if} \,\,\,x \notin  (- \sqrt[3]{2}, 0] \\  \,\,\, 0 \,\,\,, \,\,\, \text{otherwise}  \end{cases}$$ The sum of all real numbers $x$ for which $f^{10}(x) = 1$ can be written as $\frac{a+b\sqrt{c}}{d}$ , where $a, b,c, d$ are integers, $d$ is positive, $c$ is square-free, and gc d. Find $1000a + 100b + 10c + d.$  (Here, $f^n(x)$ is the function $f(x)$ iterated $n$ times. For example, . )
+
+Problem 18:
+Eight points are chosen on the circumference of a circle, labelled ,  , ..., $P_8$ in clockwise order. A route is a sequence of at least two points ,  ,  ,  $P_{a_n}$ such that if an ant were to visit these points in their given order, starting at $P_{a_1}$ and ending at , by following $n-1$ straight line segments (each connecting each $P_{a_i}$ and ) , it would never visit a point twice or cross its own path. Find the number of routes.
+
+Problem 19:
+$ABCDE$ is a cyclic convex pentagon, and .  $AC$ and $BD$ intersect at , and $BD$ and $CE$ intersect at $Y$ . If ,  , and , then the area of pentagon $ABCDE$ can be written as $\frac{a\sqrt{b}}{c}$ , where ,  ,  $c$ are integers, $c$ is positive, $b$ is square-free, and gc d. Find .
+
+Problem 20:
+Real numbers $x, y, z$ satisfy $$x + xy + xyz = 1,  y + yz + xyz = 2, z + xz + xyz = 4.$$ The largest possible value of $xyz$ is , where ,  ,  ,  $d$ are integers, $d$ is positive, $c$ is square-free, and gc d. Find .
+
+Problem 21:
+Let $n$ be the answer to this problem. In acute triangle , point $D$ is located on side $BC$ so that $\angle BAD = \angle DAC$ and point $E$ is located on $AC$ so that . Segments $BE$ and $AD$ intersect at $X$ such that : Given that , find the measure of .
+
+Problem 22:
+Let $n$ be the answer to this problem. An urn contains white and black balls. There are $n$ white balls and at least two balls of each color in the urn. Two balls are randomly drawn from the urn without replacement. Find the probability, in percent, that the rst ball drawn is white and the second is black.
+
+Problem 23:
+Let $n$ be the answer to this problem. Hexagon $ABCDEF$ is inscribed in a circle of radius . The area of $ABCDEF$ is ,  , and . Find the area of triangle :
+
+Problem 24:
+Let $n$ be the answer to this problem. We define the digit sum of a date as the sum of its $4$ digits when expressed in mmdd format (e.g. the digit sum of $13$ May is ) . Find the number of dates in the year $2021$ with digit sum equal to the positive integer .
+
+Problem 25:
+Let $n$ be the answer to this problem. The polynomial $x^n+ax^2+bx+c$ has real coefficients and exactly $k$ real roots. Find the sum of the possible values of .
+
+Problem 26:
+Let $n$ be the answer to this problem. $a$ and $b$ are positive integers satisfying   $$3a + 5b \equiv  19 \,\,\, (mod  \,\,\, n + 1)$$ $$4a + 2b \equiv 25  \,\,\, (mod  \,\,\, n + 1)$$ Find .
+
+Problem 27:
+Let $n$ be the answer to this problem. Box $B$ initially contains n balls, and Box $A$ contains half as many balls as Box . After $80$ balls are moved from Box $A$ to Box , the ratio of balls in Box $A$ to Box $B$ is now $\frac{p}{q}$ , where ,  $q$ are positive integers with gc d. Find .
+
+Problem 28:
+Let $n$ be the answer to this problem. Find the number of distinct (i.e. non-congruent), non-degenerate triangles with integer side lengths and perimeter .
+
+Problem 29:
+Let $n$ be the answer to this problem. Find the minimum number of colors needed to color the divisors of $(n - 24)!$ such that no two distinct divisors $s, t$ of the same color satisfy .
+
+Problem 30:
+Let $n$ be the answer to this problem. Suppose square $ABCD$ has side-length . Then, congruent non-overlapping squares $EHGF$ and $IHJK$ of side-length $\frac{n}{6}$ are drawn such that ,, and $H$ are collinear, $E$ lies on $BC$ and $I$ lies on . Given that $AJG$ is an equilateral triangle, then the area of $AJG$ is , where ,  ,  $c$ are positive integers and $c$ is not divisible by the square of any prime. Find .
+

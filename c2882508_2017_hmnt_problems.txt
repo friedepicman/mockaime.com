@@ -1,0 +1,90 @@
+Problem 1:
+A positive integer $k$ is called powerful if there are distinct positive integers $p, q, r, s, t$ such that ,  ,  ,  ,  $t^{11}$ all divide k. Find the smallest powerful integer.
+
+Problem 2:
+How many sequences of integers $(a_1, ... , a_7)$ are there for which $-1 \le a_i \le 1$ for every , and   $$a_1a_2 + a_2a_3 + a_3a_4 + a_4a_5 + a_5a_6 + a_6a_7 = 4 ?$$
+
+Problem 3:
+Michael writes down all the integers between $1$ and $N$ inclusive on a piece of paper and discovers that exactly $40\%$ of them have leftmost digit . Given that , find the smallest possible value of .
+
+Problem 4:
+An equiangular hexagon has side lengths $1, 1, a, 1, 1, a$ in that order. Given that there exists a circle that intersects the hexagon at $12$ distinct points, we have $M < a < N$ for some real numbers $M$ and . Determine the minimum possible value of the ratio $\frac{N}{M}$ .
+
+Problem 5:
+Ashwin the frog is traveling on the - plane in a series of $2^{2017} -1$ steps, starting at the origin. At the $n^{th}$ step, if $n$ is odd, then Ashwin jumps one unit to the right. If $n$ is even, then Ashwin jumps $m$ units up, where $m$ is the greatest integer such that $2^m$ divides . If Ashwin begins at the origin, what is the area of the polygon bounded by Ashwin’s path, the line , and the - axis?
+
+Problem 6:
+Consider five-dimensional Cartesian space , and consider the hyperplanes with the following equations:   $\bullet$  $x_i = x_j$ for every ,   $\bullet$  ,   $\bullet$  ,   $\bullet$  .  Into how many regions do these hyperplanes divide $R^5$ ?
+
+Problem 7:
+There are $ 12$ students in a classroom; $6$ of them are Democrats and 6 of them are Republicans. Every hour the students are randomly separated into four groups of three for political debates. If a group contains students from both parties, the minority in the group will change his/her political alignment to that of the majority at the end of the debate. What is the expected amount of time needed for all $ 12$ students to have the same political alignment, in hours?
+
+Problem 8:
+Find the number of quadruples $(a, b, c, d)$ of integers with absolute value at most $5$ such that $$(a^2 + b^2 + c^2 + d^2)^2 = (a + b + c + d)(a - b + c -d)((a - c)^2 + (b - d)^2).$$
+
+Problem 9:
+Let $A, B, C, D$ be points chosen on a circle, in that order. Line $BD$ is reflected over lines $AB$ and $DA$ to obtain lines $\ell_1$ and $\ell_2$ respectively. If lines ,  , and $AC$ meet at a common point and if ,  ,  , compute the length .
+
+Problem 10:
+Yannick has a bicycle lock with a - digit passcode whose digits are between $0$ and $9$ inclusive. (Leading zeroes are allowed.) The dials on the lock is currently set at . To unlock the lock, every second he picks a contiguous set of dials, and increases or decreases all of them by one, until the dials are set to the passcode. For example, after the first second the dials could be set to ,  , or , but not $0909$ or . (The digits on each dial are cyclic, so increasing $9$ gives , and decreasing $0$ gives . ) Let the complexity of a passcode be the minimum number of seconds he needs to unlock the lock. What is the maximum possible complexity of a passcode, and how many passcodes have this maximum complexity? Express the two answers as an ordered pair.
+
+Problem 11:
+T wo ordered pairs $(a,b)$ and , where $a,b,c,d$ are real numbers, form a basis of the coordinate plane if . Determine the number of ordered quadruples $(a,b,c)$ of integers between $1$ and $3$ inclusive for which $(a,b)$ and $(c,d)$ form a basis for the coordinate plane.
+
+Problem 12:
+H orizontal parallel segments $AB=10$ and $CD=15$ are the bases of trapezoid . Circle $\gamma$ of radius $6$ has center within the trapezoid and is tangent to sides ,  , and . If side $CD$ cuts out an arc of $\gamma$ measuring , find the area of .
+
+Problem 13:
+E milia wishes to create a basic solution with 7% hydroxide (OH) ions. She has three solutions of different bases available: 10% rubidium hydroxide (Rb(OH)), 8% cesium hydroxide (Cs(OH)), and 5% francium hydroxide (Fr(OH)). (The Rb(OH) solution has both 10% Rb ions and 10% OH ions, and similar for the other solutions.) Since francium is highly radioactive, its concentration in the final solution should not exceed 2%. What is the highest possible concentration of rubidium in her solution?
+
+Problem 14:
+M ary has a sequence $m_2,m_3,m_4,...$ , such that for each ,  $m_b$ is the least positive integer m for  which none of the base - logarithms $log_b(m),log_b(m+1),...,log_b(m+2017)$ are integers. Find the largest number in her sequence.
+
+Problem 15:
+E ach of the integers $1,2,...,729$ is written in its base - representation without leading zeroes. The numbers are then joined together in that order to form a continuous string of digits: $12101112202122...$ How many times in this string does the substring $012$ appear?
+
+Problem 16:
+R thea, a distant planet, is home to creatures whose DNA consists of two (distinguishable) strands of bases with a fixed orientation. Each base is one of the letters H, M, N, T, and each strand consists of a sequence of five bases, thus forming five pairs. Due to the chemical properties of the bases, each pair must consist of distinct bases. Also, the bases H and M cannot appear next to each other on the same strand; the same is true for N and T. How many possible DNA sequences are there on Rthea?
+
+Problem 17:
+O n a blackboard a stranger writes the values of $s_7(n)^2$ for , where $s_7(n)$ denotes the sum of digits of $n$ in base . Compute the average value of all the numbers on the board.
+
+Problem 18:
+U ndecillion years ago in a galaxy far, far away, there were four space stations in the three-dimensional space, each pair spaced 1 light year away from each other. Admiral Ackbar wanted to establish a base somewhere in space such that the sum of squares of the distances from the base to each of the stations does not exceed 15 square light years. (The sizes of the space stations and the base are negligible.) Determine the volume, in cubic light years, of the set of all possible locations for the Admiral’s base.
+
+Problem 19:
+N ew this year at HMNT: the exciting game of RNG baseball! In RNG baseball, a team of infinitely many people play on a square field, with a base at each vertex; in particular, one of the bases is called the home base. Every turn, a new player stands at home base and chooses a number n uniformly at random from . Then, the following occurs:  • If , then the player and everyone else currently on the field moves (counterclockwise) around  the square by n bases. However, if in doing so a player returns to or moves past the home base,  he/she leaves the field immediately and the team scores one point.  • If $n=0$ (a strikeout), then the game ends immediately; the team does not score any more points.  What is the expected number of points that a given team will score in this game?
+
+Problem 20:
+D enote $\phi=\frac{\sqrt{5}+1}{2}$ and consider the set of all finite binary strings without leading zeroes. Each string $S$ has a “base -” value . For example, . For any positive integer n, let $f(n)$ be the number of such strings S that satisfy . The sequence of fractions $\frac{f(n+1)}{f(n)}$ approaches a real number $c$ as $n$ goes to infinity. Determine the value of .
+
+Problem 21:
+Find the sum of all positive integers whose largest proper divisor is . (A proper divisor of $n$ is a divisor that is strictly less than . )
+
+Problem 22:
+Determine the sum of all distinct real values of $x$ such that $||| \cdots ||x|+x| \cdots |+x|+x|=1$ where there are $2017$  s in the equation.
+
+Problem 23:
+Find the number of integers $n$ with $1 \le n \le 2017$ so that $(n-2)(n-0)(n-1)(n-7)$ is an integer  multiple of .
+
+Problem 24:
+Triangle $ABC$ has ,  , and . Point $P$ lies on the circle with diameter . What is the greatest possible area of ?
+
+Problem 25:
+Given that $a,b,c$ are integers with , and that complex number $\omega \neq 1$ satisfies , find the minimum possible value of .
+
+Problem 26:
+A positive integer $n$ is magical if . Find the number of magical integers between $1$ and $10,000$ inclusive.
+
+Problem 27:
+Reimu has a wooden cube. In each step, she creates a new polyhedron from the previous one by cutting off a pyramid from each vertex of the polyhedron along a plane through the trisection point on each adjacent edge that is closer to the vertex. For example, the polyhedron after the first step has six octagonal faces and eight equilateral triangular faces. How many faces are on the polyhedron after the fifth step?
+
+Problem 28:
+Marisa has a collection of $2^8-1=255$ distinct nonempty subsets of . For each step she takes two subsets chosen uniformly at random from the collection, and replaces them with either their union or their intersection, chosen randomly with equal probability. (The collection is allowed to contain repeated sets.) She repeats this process $2^8-2=254$ times until there is only one set left in the collection. What is the expected size of this set?
+
+Problem 29:
+Find the minimum value of $\sqrt{58-42x}+\sqrt{149-140\sqrt{1-x^2}}$ where .
+
+Problem 30:
+Five equally skilled tennis players named Allen, Bob, Catheryn, David, and Evan play in a round robin tournament, such that each pair of people play exactly once, and there are no ties. In each of the ten games, the two players both have a 50% chance of winning, and the results of the games are independent. Compute the probability that there exist four distinct players ,  ,  ,  $P_4$ such that $P_i$ beats $P_{i+1}$ for . (We denote ) .
+

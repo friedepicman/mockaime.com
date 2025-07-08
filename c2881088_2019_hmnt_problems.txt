@@ -1,0 +1,90 @@
+Problem 1:
+Each person in Cambridge drinks a (possibly different) $12$ ounce mixture of water and apple juice,  where each drink has a positive amount of both liquids. Marc McGovern, the mayor of Cambridge, drinks $\frac{1}{6}$ of the total amount of water drunk and $\frac{1}{8}$ of the total amount of apple juice drunk. How many people are in Cambridge?
+
+Problem 2:
+$2019$ students are voting on the distribution of $N$ items. For each item, each student submits a vote on who should receive that item, and the person with the most votes receives the item (in case of a tie, no one gets the item). Suppose that no student votes for the same person twice. Compute the maximum possible number of items one student can receive, over all possible values of $N$ and all possible ways of voting.
+
+Problem 3:
+The coefficients of the polynomial $P(x)$ are nonnegative integers, each less than 100. Given that $P(10) = 331633$ and , compute .
+
+Problem 4:
+Two players play a game, starting with a pile of $N$ tokens. On each player’s turn, they must remove $2^n$ tokens from the pile for some nonnegative integer . If a player cannot make a move, they lose. For how many $N$ between $ 1$ and $2019$ (inclusive) does the first player have a winning strategy?
+
+Problem 5:
+Compute the sum of all positive real numbers $x \le 5$ satisfying $$x =\frac{ \lceil x^2 \rceil +   \lceil x \rceil   \cdot  \lfloor x \rfloor}{ \lceil x\rceil  + \lfloor x \rfloor}$$
+
+Problem 6:
+Let $ABCD$ be an isosceles trapezoid with ,  ,  . Let $P$ be the intersection of diagonals $AC$ and , and let $Q$ be the foot of the altitude from $D$ to . Let $PQ$ intersect $AB$ at . Compute $\sin \angle RP D$
+
+Problem 7:
+Consider sequences $a$ of the form $a = (a_1, a_2, ... , a_{20})$ such that each term $a_i$ is either $0$ or . For each such sequence , we can produce a sequence , where $$b_i\begin{cases} a_i + a_{i+1} & i = 1 \\ a_{i-1} + a_i + a_{i+1} & 1 < i < 20\\ a_{i-1} + a_i &i = 20 \end{cases}$$
+
+Problem 8:
+In , the external angle bisector of $\angle BAC$ intersects line $BC$ at .  $E$ is a point on ray $\overrightarrow{AC}$ such that . If ,  , and , compute $\frac{DB}{DE}$ .
+
+Problem 9:
+Will stands at a point $P$ on the edge of a circular room with perfectly reflective walls. He shines two laser pointers into the room, forming angles of $n^o$ and $(n + 1)^o$ with the tangent at , where $n$ is a positive integer less than . The lasers reflect off of the walls, illuminating the points they hit on the walls, until they reach $P$ again. ( is also illuminated at the end.) What is the minimum possible number of illuminated points on the walls of the room?
+
+Problem 10:
+A convex - gon $A_1A_2...A_{2019}$ is cut into smaller pieces along its $2019$ diagonals of the form $A_iA_{i+3}$ for , where ,  , and . What is the least possible number of resulting pieces?
+
+Problem 11:
+Dylan has a $100\times 100$ square, and wants to cut it into pieces of area at least . Each cut must be a straight line (not a line segment) and must intersect the interior of the square. What is the largest number of cuts he can make?
+
+Problem 12:
+Meghana writes two (not necessarily distinct) primes $q$ and $r$ in base $10$ next to each other on a blackboard, resulting in the concatenation of $q$ and $r$ (for example, if $q = 13$ and , the number on the blackboard is now ) . She notices that three more than the resulting number is the square of a prime . Find all possible values of .
+
+Problem 13:
+Katie has a fair - sided die with sides labeled . After each roll, she replaces her - sided die with an - sided die having the $n$ sides of her previous die and an additional side with the number she just rolled. What is the probability that Katie's $2019^{th}$ roll is a ?
+
+Problem 14:
+In ,  ,  , and . Yannick draws three regular - gons in the plane of $\vartriangle ABC$ so that each - gon shares a side with a distinct side of $\vartriangle ABC$ and no two of the - gons overlap. What is the maximum possible value of ?
+
+Problem 15:
+Let $a, b, c$ be positive real numbers such that . Find the maximum possible value of $$\frac{b}{a} +\frac{c}{b} +\frac{a}{c}.$$
+
+Problem 16:
+Find all ordered pairs $(a,b)$ of positive integers such that $2a + 1$ divides $3b - 1$ and $2b + 1$ divides .
+
+Problem 17:
+In Middle-Earth, nine cities form a $3$ by $3$ grid. The top left city is the capital of Gondor and the bottom right city is the capital of Mordor. How many ways can the remaining cities be divided among the two nations such that all cities in a country can be reached from its capital via the grid-lines without passing through a city of the other country?
+
+Problem 18:
+Compute the number of ordered pairs of integers $(x,y)$ such that $x^2 + y^2 < 2019$ and   $$x^2 + min(x,y) = y^2 + max(x, y) .$$
+
+Problem 19:
+Let $ABCD$ be an isosceles trapezoid with $AD = BC = 255$ and . Let $M$ be the midpoint of $CD$ and let $N$ be the foot of the perpendicular from $A$ to . If , compute .
+
+Problem 20:
+An up-right path between two lattice points $P$ and $Q$ is a path from $P$ to $Q$ that takes steps of $1$ unit either up or to the right. A lattice point $(x, y)$ with $0 \le x, y \le  5$ is chosen uniformly at random. Compute the expected number of up-right paths from $(0, 0)$ t o not passing through .
+
+Problem 21:
+For breakfast, Mihir always eats a bowl of Lucky Charms cereal, which consists of oat pieces and marshmallow pieces. He denes the luckiness of a bowl of cereal to be the ratio of the number of marshmallow pieces to the total number of pieces. One day, Mihir notices that his breakfast cereal has exactly $90$ oat pieces and $9$ marshmallow pieces, and exclaims, "This is such an unlucky bowl!" How many marshmallow pieces does Mihir need to add to his bowl to double its luckiness?
+
+Problem 22:
+Sandy likes to eat waffles for breakfast. To make them, she centers a circle of wafflebatter of radius $3$ cm at the origin of the coordinate plane and her waffle iron imprints non-overlapping unit-square holes centered at each lattice point. How many of these holes are contained entirely within the area of the waffle?
+
+Problem 23:
+For breakfast, Milan is eating a piece of toast shaped like an equilateral triangle. On the piece of toast rests a single sesame seed that is one inch away from one side, two inches away from another side, and four inches away from the third side. He places a circular piece of cheese on top of the toast that is tangent to each side of the triangle. What is the area of this piece of cheese?
+
+Problem 24:
+To celebrate , Faraz gets four sandwiches shaped in the digits ,  ,  , and $9$ at lunch. However, the four digits get reordered (but not  ipped or rotated) on his plate and he notices that they form a - digit multiple of . What is the greatest possible number that could have been formed?
+
+Problem 25:
+Alison is eating $2401$ grains of rice for lunch. She eats the rice in a very peculiar manner: every step, if she has only one grain of rice remaining, she eats it. Otherwise, she nds the smallest positive integer $d > 1$ for which she can group the rice into equal groups of size $d$ with none left over. She then groups the rice into groups of size , eats one grain from each group, and puts the rice back into a single pile. How many steps does it take her to finish all her rice?
+
+Problem 26:
+Wendy eats sushi for lunch. She wants to eat six pieces of sushi arranged in a $23$ rectangular grid, but sushi is sticky, and Wendy can only eat a piece if it is adjacent to (not counting diagonally) at most two other pieces. In how many orders can Wendy eat the six pieces of sushi, assuming that the pieces of sushi are distinguishable?
+
+Problem 27:
+Carl only eats food in the shape of equilateral pentagons. Unfortunately, for dinner he receives a piece of steak in the shape of an equilateral triangle. So that he can eat it, he cuts off two corners with straight cuts to form an equilateral pentagon. The set of possible perimeters of the pentagon he obtains is exactly the interval , where $a$ and $b$ are positive real numbers. Compute $\frac{a}{b}$ .
+
+Problem 28:
+Omkar, Krit1, Krit2, and Krit3 are sharing $x > 0$ pints of soup for dinner. Omkar always takes $1$ pint of soup (unless the amount left is less than one pint, in which case he simply takes all the remaining soup). Krit1 always takes $\frac16$ of what is left, Krit2 always takes $\frac15$ of what is left, and Krit3 always takes $\frac14$ of what is left. They take soup in the order of Omkar, Krit1, Krit2, Krit3, and then cycle through this order until no soup remains. Find all $x$ for which everyone gets the same amount of soup.
+
+Problem 29:
+For dinner, Priya is eating grilled pineapple spears. Each spear is in the shape of the quadrilateral , with $PI = 6$ cm, $IN = 15$ cm, $NE = 6$ cm, $EP = 25$ cm, and : What is the area of each spear, in c m?
+
+Problem 30:
+For dessert, Melinda eats a spherical scoop of ice cream with diameter $2$ inches. She prefers to eat her ice cream in cube-like shapes, however. She has a special machine which, given a sphere placed in space, cuts it through the planes ,  , and $z = n$ for every integer $n$ (not necessarily positive). Melinda centers the scoop of ice cream uniformly at random inside the cube , and then cuts it into pieces using her machine. What is the expected number of pieces she cuts the ice cream into?
+

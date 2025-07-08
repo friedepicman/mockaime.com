@@ -1,0 +1,126 @@
+Problem 1:
+1. If five fair coins are flipped simultaneously, what is the probability that at least three of them show heads?    2. How many perfect squares divide ?    3. Evaluate $\frac{2016!^2}{2015!2017!}$ . Here $n!$ denotes .
+
+Problem 2:
+4. A square can be divided into four congruent figures as shown:   For how many $n$ with $1 \le n \le 100$ can a unit square be divided into $n$ congruent figures?    5. If $x + 2y - 3z = 7$ and , determine .    6. Let $ABCD$ be a rectangle, and let $E$ and $F$ be points on segment $AB$ such that . If $CE$ intersects the line $AD$ at , and $PF$ intersects $BC$ at , determine the ratio of $BQ$ to .
+
+Problem 3:
+7. What is the minimum value of the product $$\prod_{i=1}^6\frac{a_i-a_{i+1}}{a_{i+2}-a_{i+3}}$$ given that $(a_1, a_2, a_3, a_4, a_5, a_6)$ is a permutation of ? (note )    8. Danielle picks a positive integer $1 \le n \le 2016$ uniformly at random. What is the probability that ?    9. How many - element subsets of the set $\{1, 2, 3, . . . , 19\}$ have sum of elements divisible by ?
+
+Problem 4:
+10. Michael is playing basketball. He makes $10\%$ of his shots, and gets the ball back after $90\%$ of his missed shots. If he does not get the ball back he stops playing. What is the probability that Michael eventually makes a shot?    11. How many subsets $S$ of the set $\{1, 2, \ldots , 10\}$ satisfy the property that, for all , either $i$ or $i + 1$ (or both) is in S?    12. A positive integer , where $A, B, C$ are digits, satisfies $$\overline{ABC} = B^C - A$$ Find .
+
+Problem 5:
+13. How many functions $f : \{0, 1\}^3 \to \{0, 1\}$ satisfy the property that, for all ordered triples $(a_1, a_2, a_3)$ and $(b_1, b_2, b_3)$ such that $a_i \ge b_i$ for all ,  ?    14. The very hungry caterpillar lives on the number line. For each non-zero integer , a fruit sits on the point with coordinate . The caterpillar moves back and forth; whenever he reaches a point with food, he eats the food, increasing his weight by one pound, and turns around. The caterpillar moves at a speed of $2^{-w}$ units per day, where $w$ is his weight. If the caterpillar starts off at the origin, weighing zero pounds, and initially moves in the positive $x$ direction, after how many days will he weigh $10$ pounds?    15. Let $ABCD$ be an isosceles trapezoid with parallel bases $AB = 1$ and $CD = 2$ and height . Find the area of the region containing all points inside $ABCD$ whose projections onto the four sides of the trapezoid lie on the segments formed by $AB,BC,CD$ and .
+
+Problem 6:
+16. Create a cube $C_1$ with edge length . Take the centers of the faces and connect them to form an octahedron . Take the centers of the octahedron’s faces and connect them to form a new cube . Continue this process infinitely. Find the sum of all the surface areas of the cubes and octahedrons.    17. Let . Let $\alpha$ be a root of . Find the value of   $$(p(\alpha) - 1)p(\alpha)p(p(\alpha))p(p(p(\alpha))$$  18. An $8$ by $8$ grid of numbers obeys the following pattern:    1) The first row and first column consist of all s .  2) The entry in the t h row and t h column equals the sum of the numbers in the $(i - 1)$ by $(j - 1)$ sub-grid with row less than i and column less than .    What is the number in the 8th row and 8th column?
+
+Problem 7:
+19. Let $S$ be the set of all positive integers whose prime factorizations only contain powers of the primes $2$ and $2017$  (, powers of , and powers of $2017$ are thus contained in ) . Compute .    20. Let $\mathcal{V}$ be the volume enclosed by the graph   $$x^ {2016} + y^{2016} + z^2 = 2016$$ Find $\mathcal{V}$ rounded to the nearest multiple of ten.    21. Zlatan has $2017$ socks of various colours. He wants to proudly display one sock of each of the  colours, and he counts that there are $N$ ways to select socks from his collection for display. Given this  information, what is the maximum value of ?
+
+Problem 8:
+22. Let the function $f : \mathbb{Z} \to \mathbb{Z}$ take only integer inputs and have integer outputs. For any integers $x$ and , f satisfies   $$f(x) + f(y) = f(x + 1) + f(y - 1)$$ If $f(2016) = 6102$ and , what is ?    23. Let $d$ be a randomly chosen divisor of . Find the expected value of   $$\frac{d^2}{d^2 + 2016}$$  24. Consider an infinite grid of equilateral triangles. Each edge (that is, each side of a small triangle) is colored one of $N$ colors. The coloring is done in such a way that any path between any two nonadjecent vertices consists of edges with at least two different colors. What is the smallest possible value of ?
+
+Problem 9:
+25. Chris and Paul each rent a different room of a hotel from rooms . However, the hotel manager mistakes them for one person and gives ”Chris Paul” a room with Chris’s and Paul’s room concatenated. For example, if Chris had $15$ and Paul had , ”Chris Paul” has . If there are $360$ rooms in the hotel, what is the probability that ”Chris Paul” has a valid room?    26. Find the number of ways to choose two nonempty subsets $X$ and $Y$ of , such that   $|Y| = 1001$ and the smallest element of $Y$ is equal to the largest element of .    27. Let $r_1, r_2, r_3, r_4$ be the four roots of the polynomial . Find the value of $$\frac{r_1^2}{r_2^2+r_3^2+r_4^2}+\frac{r_2^2}{r_1^2+r_3^2+r_4^2}+\frac{r_3^2}{r_1^2+r_2^2+r_4^2}+\frac{r_4^2}{r_1^2+r_2^2+r_3^2}$$
+
+Problem 10:
+28. The numbers $1-10$ are written in a circle randomly. Find the expected number of numbers which are at least $2$ larger than an adjacent number.    29. We want to design a new chess piece, the American, with the property that (i) the American can never attack itself, and (ii) if an American $A_1$ attacks another American , then $A_2$ also attacks . Let $m$ be the number of squares that an American attacks when placed in the top left corner of an 8 by 8 chessboard. Let $n$ be the maximal number of Americans that can be placed on the $8$ by $8$ chessboard such that no Americans attack each other, if one American must be in the top left corner. Find the largest possible value of .    30. On the blackboard, Amy writes $2017$ in base - to get . Betsy notices she can erase a digit from Amy’s number and change the base to base - such that the value of the the number remains the same. Catherine then notices she can erase a digit from Betsy’s number and change the base to base - such that the value still remains the same. Compute, in decimal, .
+
+Problem 11:
+31. Define a number to be an anti-palindrome if, when written in base $3$ as , then $a_i+a_{n-i} = 2$ for any . Find the number of anti-palindromes less than $3^{12}$ such that no two consecutive digits in base 3 are equal.    32. Let $C_{k,n}$ denote the number of paths on the Cartesian plane along which you can travel from $(0, 0)$ to , given the following rules: 1) You can only travel directly upward or directly rightward 2) You can only change direction at lattice points 3) Each horizontal segment in the path must be at most $99$ units long.  Find $$\sum_{j=0}^\infty C_{100j+19,17}$$  33. Camille the snail lives on the surface of a regular dodecahedron. Right now he is on vertex $P_1$ of the face with vertices . This face has a perimeter of . Camille wants to get to the point on the dodecahedron farthest away from . To do so, he must travel along the surface a distance at least . What is ?
+
+Problem 12:
+34. Find the sum of the ages of everyone who wrote a problem for this year’s HMMT November contest. If your answer is $X$ and the actual value is $Y$ , your score will be $\text{max}(0, 20 - |X - Y|)$    35. Find the total number of occurrences of the digits $0, 1 \ldots , 9$ in the entire guts round (the official copy). If your  answer is $X$ and the actual value is $Y$ , your score will be $\text{max}(0, 20 - \frac{|X-Y|}{2})$    36. Find the number of positive integers less than $1000000$ which are less than or equal to the sum of their proper divisors. If your answer is $X$ and the actual value is , your score will be $\text{max}(0, 20 - 80|1 - \frac{X}{Y}|)$ rounded to the nearest integer.
+
+Problem 13:
+Two circles centered at $O_1$ and $O_2$ have radii $2$ and $3$ and are externally tangent at . The common external tangent of the two circles intersects the line $O_1O_2$ at . What is the length of $PQ$ ?
+
+Problem 14:
+What is the smallest possible perimeter of a triangle whose side lengths are all squares of distinct positive integers?
+
+Problem 15:
+Complex number $\omega$ satisfies . Find the sum of all possible values of .
+
+Problem 16:
+Meghal is playing a game with $2016$ rounds 6 . In round , two rectangular double-sided mirrors are arranged such that they share a common edge and the angle between the faces is . Meghal shoots a laser at these mirrors and her score for the round is the number of points on the two mirrors at which the laser beam touches a mirror. What is the maximum possible score Meghal could have after she finishes the game?
+
+Problem 17:
+Allen and Brian are playing a game in which they roll a - sided die until one of them wins. Allen wins if two consecutive rolls are equal and at most 3. Brian wins if two consecutive rolls add up to $7$ and the latter is at most . What is the probability that Allen wins
+
+Problem 18:
+Let $ABC$ be a triangle with ,  , and . Let its orthocenter be $H$ and the feet of the altitudes from $A, B, C$ to the opposite sides be $D, E, F$ respectively. Let the line $DF$ intersect the circumcircle of $AHF$ again at . Find the length of .
+
+Problem 19:
+Rachel has two indistinguishable tokens, and places them on the first and second square of a $1 \times 6$ grid of squares, She can move the pieces in two ways:   $\bullet$ If a token has free square in front of it, then she can move this token one square to the right.   $\bullet$ If the square immediately to the right of a token is occupied by the other token, then she can “leapfrog” the first token; she moves the first token two squares to the right, over the other token, so that it is on the square immediately to the right of the other token.  If a token reaches the t h square, then it cannot move forward any more, and Rachel must move the other one until it reaches the t h square. How many different sequences of moves for the tokens can Rachel make so that the two tokens end up on the t h square and the 6th square?
+
+Problem 20:
+Alex has an $20 \times 16$ grid of lightbulbs, initially all off. He has $36$ switches, one for each row and column. Flipping the switch for the t h row will toggle the state of each lightbulb in the t h row (so that if it were on before, it would be off, and  vice versa). Similarly, the switch for the t h column will toggle the state of each bulb in the t h column. Alex makes some (possibly empty) sequence of switch flips, resulting in some configuration of the lightbulbs and their states. How many distinct possible configurations of lightbulbs can Alex achieve with such a sequence? Two configurations are distinct if there exists a lightbulb that is on in one configuration and off in another.
+
+Problem 21:
+A cylinder with radius $15$ and height $16$ is inscribed in a sphere. Three congruent smaller spheres of radius $x$ are externally tangent to the base of the cylinder, externally tangent to each other, and internally tangent to the large sphere. What is the value of ?
+
+Problem 22:
+Determine the largest integer $n$ such that there exist monic quadratic polynomials ,  ,  $p_3(x)$ with integer coefficients so that for all integers $ i  \in [1, n]$ there exists some $j  \in [1, 3]$ and $m \in Z$ such that .
+
+Problem 23:
+DeAndre Jordan shoots free throws that are worth $1$ point each. He makes $40\%$ of his shots. If he takes two shots find the probability that he scores at least $1$ point.
+
+Problem 24:
+Point $P_1$ is located $600$ miles West of point . At $7:00\text{AM}$ a car departs from $P_1$ and drives East at a speed of m ph. At $8:00\text{AM}$ another car departs from $P_2$ and drives West at a constant speed of $x$ miles per hour. If the cars meet each other exactly halfway between $P_1$ and , what is the value of ?
+
+Problem 25:
+The three points $A, B, C$ form a triangle. . Let the angle bisector of $\angle A$ intersect side $BC$ at . Let the foot of the perpendicular from $B$ to the angle bisector of $\angle A$ be . Let the line through $E$ parallel to $AC$ meet $BC$ at . Compute .
+
+Problem 26:
+A positive integer is written on each corner of a square such that numbers on opposite vertices are relatively prime while numbers on adjacent vertices are not relatively prime. What is the smallest possible value of the sum of these $4$ numbers?
+
+Problem 27:
+Steph Curry is playing the following game and he wins if he has exactly $5$ points at some time. Flip a fair coin. If heads, shoot a - point shot which is worth $3$ points. If tails, shoot a free throw which is worth $1$ point. He makes $\frac12$ of his - point shots and all of his free throws. Find the probability he will win the game. (Note he keeps ﬂipping the coin until he has exactly $5$ or goes over $5$ points)
+
+Problem 28:
+Let $P_1, P_2, \ldots, P_6$ be points in the complex plane, which are also roots of the equation . Given that $P_1P_2P_3P_4P_5P_6$ is a convex hexagon, determine the area of this hexagon.
+
+Problem 29:
+Seven lattice points form a convex heptagon with all sides having distinct lengths. Find the minimum possible value of the sum of the squares of the sides of the heptagon.
+
+Problem 30:
+Let $P_1P_2 \ldots P_8$ be a convex octagon. An integer $i$ is chosen uniformly at random from $1$ to , inclusive. For each vertex of the octagon, the line between that vertex and the vertex $i$ vertices to the right is painted red. What is the expected number times two red lines intersect at a point that is not one of the vertices, given that no three diagonals are concurrent?
+
+Problem 31:
+The vertices of a regular nonagon are colored such that $1)$ adjacent vertices are diﬀerent colors and $2)$ if $3$ vertices form an equilateral triangle, they are all diﬀerent colors. Let $m$ be the minimum number of colors needed for a valid coloring, and n be the total number of colorings using $m$ colors. Determine . (Assume each vertex is distinguishable.)
+
+Problem 32:
+We have $10$ points on a line $A_1,A_2\ldots A_{10}$ in that order. Initially there are $n$ chips on point . Now we are allowed to perform two types of moves. Take two chips on , remove them and place one chip on , or take two chips on , remove them, and place a chip on $A_{i+2}$ and $A_i$ . Find the minimum possible value of $n$ such that it is possible to get a chip on $A_{10}$ through a sequence of moves.
+
+Problem 33:
+If $a$ and $b$ satisfy the equations $a +\frac1b=4$ and , determine the product of all possible values of .
+
+Problem 34:
+I have five different pairs of socks. Every day for five days, I pick two socks at random without replacement to wear for the day. Find the probability that I wear matching socks on both the third day and the fifth day.
+
+Problem 35:
+Let $V$ be a rectangular prism with integer side lengths. The largest face has area $240$ and the smallest face has area . A third face has area , where $x$ is not equal to $48$ or . What is the sum of all possible values of ?
+
+Problem 36:
+A rectangular pool table has vertices at $(0, 0) (12, 0) (0, 10),$ and . There are pockets only in the four corners. A ball is hit from $(0, 0)$ along the line $y = x$ and bounces off several walls before eventually entering a pocket. Find the number of walls that the ball bounces off of before entering a pocket.
+
+Problem 37:
+Let the sequence $\{a_i\}^\infty_{i=0}$ be defined by $a_0 =\frac12$ and . Find the product $$\prod_{i=0}^\infty a_i=a_0a_1a_2\ldots$$
+
+Problem 38:
+The numbers $1, 2\ldots11$ are arranged in a line from left to right in a random order. It is observed that the middle number is larger than exactly one number to its left. Find the probability that it is larger than exactly one number to its right.
+
+Problem 39:
+Let ABC be a triangle with . The altitude from $A$ intersects $BC$ at .  Let $\omega_1$ and $\omega_2$ be the incircles of $ABD$ and , and let the common external tangent of $\omega_1$ and $\omega_2$ (other than ) intersect $AD$ at . Compute the length of .
+
+Problem 40:
+Let , and let $f$ be a randomly chosen bijection from $S$ to itself. Let $n$ be the smallest  positive integer such that , where . What is the expected value of ?
+
+Problem 41:
+Let the sequence $a_i$ be defined as . Find the number of integers $1 \le n \le 1000$ such that if , then $100$ divides .
+
+Problem 42:
+Quadrilateral $ABCD$ satisfies . Let $E$ be the intersection of $AC$ and . Suppose . Find the area of .
+
