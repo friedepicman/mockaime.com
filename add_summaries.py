@@ -3,7 +3,7 @@ import time
 from openai import OpenAI
 
 # === CONFIGURATION ===
-JSON_PATH = "all_problems_cleaned_with_source.json"
+JSON_PATH = "updated_bro_please.json"
 SAVE_INTERVAL = 10
 OPENAI_API_KEY = "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"  # Replace with your actual key
 

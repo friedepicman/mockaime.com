@@ -26,12 +26,40 @@ def count_contest_problems(problems, contest_names):
     
     return contest_counts
 
+def count_duplicates(problems):
+    """Count duplicate problems based on link tag"""
+    link_counts = Counter()
+    link_to_sources = {}
+    
+    for problem in problems:
+        link = problem.get("link", "")
+        if link:  # Only count problems that have a link
+            link_counts[link] += 1
+            source = problem.get("source", "")
+            if link not in link_to_sources:
+                link_to_sources[link] = []
+            link_to_sources[link].append(source)
+    
+    # Count how many links appear more than once
+    duplicates = sum(1 for count in link_counts.values() if count > 1)
+    
+    # Count total duplicate instances (e.g., if a link appears 3 times, that's 2 duplicates)
+    total_duplicate_instances = sum(count - 1 for count in link_counts.values() if count > 1)
+    
+    # Get duplicate links and their sources
+    duplicate_links = {link: sources for link, sources in link_to_sources.items() if link_counts[link] > 1}
+    
+    return duplicates, total_duplicate_instances, link_counts, duplicate_links
+
 def main():
-    filename = "all_problems_with_all_difficulties.json"
+    filename = "bro_please_please.json"
     with open(filename, "r") as f:
         problems = json.load(f)
 
     total_problems = len(problems)
+
+    # Count duplicates
+    unique_links_with_duplicates, total_duplicate_instances, link_counts, duplicate_links = count_duplicates(problems)
 
     # Problems with difficulty assigned (any answer)
     with_diff_all = [p for p in problems if "difficulty" in p]
@@ -54,6 +82,8 @@ def main():
     contest_counts = count_contest_problems(problems, contest_names)
 
     print(f"Total problems in dataset: {total_problems}")
+    print(f"Unique links with duplicates: {unique_links_with_duplicates}")
+    print(f"Total duplicate instances: {total_duplicate_instances}")
     print(f"Problems with difficulty assigned (all): {total_with_diff_all}")
     print("Difficulty distribution (all problems with difficulty):")
     for diff in sorted(distribution_all):
@@ -70,6 +100,14 @@ def main():
     print("Problems by contest source:")
     for contest in contest_names:
         print(f"  {contest}: {contest_counts[contest]}")
+
+    print()
+    print("Duplicate links and their sources:")
+    for link, sources in duplicate_links.items():
+        print(f"  {link}:")
+        for source in sources:
+            print(f"    - {source}")
+        print()
 
 if __name__ == "__main__":
     main()

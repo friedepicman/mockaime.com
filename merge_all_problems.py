@@ -41,11 +41,11 @@ def merge_difficulties(original_file, difficulty_files, output_file):
 if __name__ == "__main__":
     original_file = "all_problems_with_sources.json"
     difficulty_files = [
-        "cmimc_problems_with_difficulty.json",
-        "pumac_problems_with_difficulty.json",
-        "smt_problems_with_difficulty.json",
-        "bmt_problems_with_difficulty.json",
-        "hmmt_problems_with_difficulty.json",
+        "BMT_problems_with_solutions_and_sources.json",
+        "CMIMC_problems_with_solutions_and_sources.json",
+        "HMMT_problems_with_solutions_and_sources.json",
+        "PUMaC_problems_with_solutions_and_sources.json",
+        "SMT_problems_with_solutions_and_sources.json",
     ]
-    output_file = "all_problems_with_all_difficulties.json"
+    output_file = "bro_please.json"
     merge_difficulties(original_file, difficulty_files, output_file)

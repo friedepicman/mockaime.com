@@ -186,9 +186,10 @@ def get_latex_aware_text(element):
         if node.name == "img" and any(cls in node.get("class", []) for cls in ["latex", "latexcenter"]):
             alt = node.get("alt", "")
             if alt:
+                # Don't strip the alt text - preserve exactly as is, including punctuation
                 fragments.append(alt)
         elif node.name is None:
-            # Don't strip here - preserve the original spacing
+            # This is a text node - preserve it exactly as is
             text = str(node)
             if text:
                 fragments.append(text)
@@ -199,8 +200,22 @@ def get_latex_aware_text(element):
                 walk(child)
 
     walk(element)
-    cleaned = "".join(fragments)
-    return cleaned.strip()  # Only strip at the very end
+    
+    # Join all fragments and clean up whitespace while preserving punctuation
+    result = "".join(fragments)
+    
+    # Clean up excessive whitespace but preserve single spaces and punctuation
+    import re
+    # Replace multiple whitespace with single space, but preserve structure
+    result = re.sub(r'\s+', ' ', result)
+    
+    # Clean up spaces around punctuation - but be careful not to remove punctuation
+    # Fix spaces before punctuation
+    result = re.sub(r'\s+([,.!?;:])', r'\1', result)
+    # Fix spaces after punctuation (ensure single space)
+    result = re.sub(r'([,.!?;:])\s+', r'\1 ', result)
+    
+    return result.strip()
 
 # BMT's improved solution extraction
 def get_solution_from_topic(topic_url, driver):

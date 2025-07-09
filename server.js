@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 });
 
 app.post('/save', (req, res) => {
-  fs.writeFile('combined_with_answers.json', JSON.stringify(req.body, null, 2), err => {
+  fs.writeFile('with_aime_answers.json', JSON.stringify(req.body, null, 2), err => {
     if (err) {
       console.error(err);
       return res.status(500).send('Failed to save');

@@ -112,7 +112,7 @@
     let currentPage = 1;
 
     async function loadProblems() {
-      const response = await fetch('all_problems_with_all_difficulties.json');
+      const response = await fetch('with_aime_answers.json');
       problems = await response.json();
       renderTable();
       updatePageInfo();
