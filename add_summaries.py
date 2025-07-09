@@ -1,13 +1,16 @@
 import json
 import time
 from openai import OpenAI
-
+from dotenv import load_dotenv
+import os
 # === CONFIGURATION ===
 JSON_PATH = "all_problems_cleaned_with_source.json"
 SAVE_INTERVAL = 10
 START_INDEX = 1936  # Start processing from this problem index
-OPENAI_API_KEY = "***REMOVED***"
 
+
+load_dotenv()
+OPENAI_API_KEY= os.getenv("OPENAI_API_KEY")
 
 
 # === INITIALIZE CLIENT ===

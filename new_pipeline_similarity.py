@@ -3,14 +3,15 @@ import torch
 import time
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer, util
+from dotenv import load_dotenv
+import os
 
 # === CONFIGURATION ===
 JSON_PATH = "all_problems_cleaned_with_source.json"
 EMBED_FIELD = "solution_summary"  # We'll generate this from cleaned_solution
 TOP_K = 3
 MODEL_NAME = "all-MiniLM-L6-v2"
-OPENAI_API_KEY = "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"
-
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # === INITIALIZE MODELS ===
 client = OpenAI(api_key=OPENAI_API_KEY)
 embedder = SentenceTransformer(MODEL_NAME)
