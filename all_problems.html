@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Problem Editor with Answer, Solution Rendering & Verification</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+      word-wrap: break-word;
+    }
+    textarea {
+      width: 100%;
+      min-height: 60px;
+      font-family: monospace;
+      font-size: 14px;
+      resize: vertical;
+    }
+    select {
+      width: 100%;
+      font-size: 14px;
+    }
+    input[type=checkbox] {
+      width: 20px;
+      height: 20px;
+    }
+    #pagination {
+      margin-top: 15px;
+      text-align: center;
+    }
+    #pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+    th:nth-child(1), td:nth-child(1) { width: 30px; }
+    th:nth-child(2), td:nth-child(2) { width: 300px; }
+    th:nth-child(3), td:nth-child(3) { width: 300px; }
+    th:nth-child(4), td:nth-child(4) { width: 300px; }
+    th:nth-child(5), td:nth-child(5) { width: 300px; }
+    th:nth-child(6), td:nth-child(6) { width: 70px; }
+    th:nth-child(7), td:nth-child(7) { width: 90px; }
+    th:nth-child(8), td:nth-child(8) { width: 70px; }
+    th:nth-child(9), td:nth-child(9) { width: 120px; }
+    #saveStatus {
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+
+  <!-- MathJax + Auto-render -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        ignoreHtmlClass: 'no-mathjax',
+        processHtmlClass: 'mathjax-process'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <h1>Problem Editor with Answer, Solution Rendering & Verification</h1>
+
+  <table id="problemsTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Raw Text</th>
+        <th>Rendered Text</th>
+        <th>Solution</th>
+        <th>Rendered Solution</th>
+        <th>Answer</th>
+        <th>Difficulty</th>
+        <th>Verified</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="pagination">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageInfo"></span>
+    <button onclick="nextPage()">Next</button>
+  </div>
+
+  <button onclick="saveToBackend()">💾 Save</button>
+  <span id="saveStatus"></span>
+
+  <script>
+    let problems = [];
+    const rowsPerPage = 10;
+    let currentPage = 1;
+
+    async function loadProblems() {
+      const response = await fetch('with_aime_answers.json');
+      problems = await response.json();
+      renderTable();
+      updatePageInfo();
+    }
+
+    function renderTable() {
+      const tbody = document.querySelector("#problemsTable tbody");
+      tbody.innerHTML = "";
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = Math.min(start + rowsPerPage, problems.length);
+
+      for (let i = start; i < end; i++) {
+        const problem = problems[i];
+        const row = document.createElement("tr");
+
+        row.innerHTML += `<td>${i + 1}</td>`;
+        row.innerHTML += `<td><textarea onchange="updateField(${i}, 'text', this.value)">${problem.text || ""}</textarea></td>`;
+        row.innerHTML += `<td><div id="rendered-text-${i}" class="mathjax-process">${problem.text || ""}</div></td>`;
+        row.innerHTML += `<td><textarea onchange="updateField(${i}, 'solution', this.value)">${problem.solution || ""}</textarea></td>`;
+        row.innerHTML += `<td><div id="rendered-solution-${i}" class="mathjax-process">${problem.solution || ""}</div></td>`;
+        row.innerHTML += `<td><textarea onchange="updateField(${i}, 'answer', this.value)">${problem.answer || ""}</textarea></td>`;
+
+        let optionsHtml = `<option value="">Select</option>`;
+        for (let d = 1; d <= 10; d += 0.5) {
+          const selected = problem.difficulty == d ? "selected" : "";
+          optionsHtml += `<option value="${d}" ${selected}>${d}</option>`;
+        }
+        row.innerHTML += `<td><select onchange="updateField(${i}, 'difficulty', this.value)">${optionsHtml}</select></td>`;
+
+        const checked = problem.verified ? "checked" : "";
+        row.innerHTML += `<td style="text-align:center"><input type="checkbox" onchange="updateField(${i}, 'verified', this.checked)" ${checked}></td>`;
+
+        row.innerHTML += `<td><textarea onchange="updateField(${i}, 'source', this.value)">${problem.title || problem.source || ""}</textarea></td>`;
+
+        tbody.appendChild(row);
+      }
+
+      MathJax.typesetPromise();
+    }
+
+    function updateField(index, field, value) {
+      if (field === 'difficulty') {
+        problems[index][field] = value === "" ? null : parseFloat(value);
+      } else if (field === 'verified') {
+        problems[index][field] = Boolean(value);
+      } else {
+        problems[index][field] = value;
+      }
+
+      if ((field === 'text' || field === 'solution') &&
+          index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) {
+        const id = field === 'text' ? `rendered-text-${index}` : `rendered-solution-${index}`;
+        const el = document.getElementById(id);
+        if (el) {
+          el.innerHTML = problems[index][field];
+          MathJax.typesetPromise([el]);
+        }
+      }
+    }
+
+    function updatePageInfo() {
+      const totalPages = Math.ceil(problems.length / rowsPerPage);
+      document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderTable();
+        updatePageInfo();
+      }
+    }
+
+    function nextPage() {
+      const totalPages = Math.ceil(problems.length / rowsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderTable();
+        updatePageInfo();
+      }
+    }
+
+    async function saveToBackend() {
+      const res = await fetch('http://localhost:3001/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(problems)
+      });
+
+      if (res.ok) {
+        document.getElementById('saveStatus').textContent = '✔ Saved!';
+        setTimeout(() => document.getElementById('saveStatus').textContent = '', 2000);
+      } else {
+        document.getElementById('saveStatus').textContent = '❌ Save failed.';
+      }
+    }
+
+    loadProblems();
+  </script>
+</body>
+</html>

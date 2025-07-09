@@ -3,9 +3,12 @@ import time
 from openai import OpenAI
 
 # === CONFIGURATION ===
-JSON_PATH = "updated_bro_please.json"
+JSON_PATH = "all_problems_cleaned_with_source.json"
 SAVE_INTERVAL = 10
-OPENAI_API_KEY = "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"  # Replace with your actual key
+START_INDEX = 1936  # Start processing from this problem index
+OPENAI_API_KEY = "***REMOVED***"
+
+
 
 # === INITIALIZE CLIENT ===
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -27,35 +30,36 @@ def gpt_summarize(problem: str, solution: str) -> str:
 # === MAIN LOOP ===
 num_updated = 0
 for i, prob in enumerate(problems):
-    # Only process problems that do NOT already have a valid summary
-    summary = ''
-    if "summary" in prob:
-        summary = prob["summary"]
+    if i < START_INDEX:
+        continue  # skip problems before start index
+
+    # Skip if already summarized
+    if "solution_summary" in prob and prob["solution_summary"].strip():
         continue
-    else:
-        problem_text = prob.get("cleaned_problem", "").strip()
-        solution_text = prob.get("cleaned_solution", "").strip()
 
-        if not problem_text or not solution_text:
-            print(f"[{i}] ❌ Skipping problem {i} — missing 'problem' or 'cleaned_solution'.")
-            continue  # skip if either field is empty or missing
+    problem_text = prob.get("cleaned_problem", "").strip()
+    solution_text = prob.get("cleaned_solution", "").strip()
 
-        try:
-            summary = gpt_summarize(problem_text, solution_text)
-            problems[i]["solution_summary"] = summary
-            print(f"[{i}] ✅ Summary added.")
-            num_updated += 1
+    if not problem_text or not solution_text:
+        print(f"[{i}] ❌ Skipping problem {i} — missing 'cleaned_problem' or 'cleaned_solution'.")
+        continue
 
-            if num_updated % SAVE_INTERVAL == 0:
-                with open(JSON_PATH, "w", encoding="utf-8") as f:
-                    json.dump(problems, f, indent=2)
-                print(f"💾 Auto-saved after {num_updated} updates.")
+    try:
+        summary = gpt_summarize(problem_text, solution_text)
+        problems[i]["solution_summary"] = summary
+        print(f"[{i}] ✅ Summary added.")
+        num_updated += 1
 
-            time.sleep(1)
+        if num_updated % SAVE_INTERVAL == 0:
+            with open(JSON_PATH, "w", encoding="utf-8") as f:
+                json.dump(problems, f, indent=2)
+            print(f"💾 Auto-saved after {num_updated} updates.")
 
-        except Exception as e:
-            print(f"[{i}] ❌ Error: {e}")
-            continue
+        time.sleep(1)
+
+    except Exception as e:
+        print(f"[{i}] ❌ Error: {e}")
+        continue
 
 # === FINAL SAVE ===
 if num_updated > 0:
