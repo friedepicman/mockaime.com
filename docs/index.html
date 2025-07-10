@@ -4,6 +4,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mock AIME Generator</title>
+
+  <!-- Supabase JS library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.4/dist/umd/supabase.min.js"></script>
+
+  <script>
+    // Initialize Supabase client with your actual project URL and anon key
+    const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function loadProblemsFromSupabase() {
+      let allProblems = [];
+      let from = 0;
+      const chunkSize = 1000;
+      let done = false;
+
+      while (!done) {
+        const { data, error } = await supabaseClient
+          .from('problems')
+          .select('*')
+          .range(from, from + chunkSize - 1);
+
+        if (error) {
+          console.error('Error fetching problems:', error);
+          alert('Failed to load problems from database.');
+          return [];
+        }
+
+        if (data.length === 0) {
+          done = true;
+        } else {
+          allProblems.push(...data);
+          from += chunkSize;
+        }
+      }
+
+      console.log('Loaded', allProblems.length, 'problems from Supabase');
+      return allProblems;
+    }
+
+    let allProblems = [];
+    let chosenProblems = [];
+
+    window.onload = async () => {
+      allProblems = await loadProblemsFromSupabase();
+    };
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -89,7 +138,8 @@
       }
     };
   </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <!-- Use a CDN polyfill alternative because polyfill.io was not resolving -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.32.1/minified.js"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -153,24 +203,12 @@
       "10": { "2.5": 0, "3.0": 0, "3.5": 1, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 2, "6.0": 2, "6.5": 1, "7.0": 1, "7.5": 2, "8.0": 1 }
     };
 
-    let allProblems = [];
-    let chosenProblems = [];
-
-    // Load your JSON with aime_answer keys included
-    fetch('with_aime_answers.json')
-      .then(res => res.json())
-      .then(data => {
-        allProblems = data;
-        console.log("Loaded", allProblems.length, "problems.");
-      });
-
     function bucketizeFine() {
       const buckets = {};
       for (let d = 2.5; d <= 8; d += 0.5) {
         buckets[d.toFixed(1)] = [];
       }
 
-      // Filter by answer_type positive integer <= 1000 for normal and expanded DB modes
       const useExpanded = expandedCheckbox.checked;
 
       for (const p of allProblems) {
@@ -179,7 +217,6 @@
 
         if (isNaN(d)) continue;
 
-        // For expanded mode, allow problems with aime_answer key
         if (useExpanded) {
           if (!("aime_answer" in p)) continue;
         } else {
@@ -206,30 +243,31 @@
     }
 
     async function generateMock() {
+      if (allProblems.length === 0) {
+        alert("Problems are still loading, please wait a moment.");
+        return;
+      }
+
       const useExpanded = expandedCheckbox.checked;
       const useFull = fullCheckbox.checked;
       const level = document.getElementById("difficulty").value;
 
-      // Clear instructions and summary
       document.getElementById("instructions").textContent = "";
       document.getElementById("summary").textContent = "";
 
       if (useExpanded) {
         document.getElementById("instructions").textContent =
 `Note: Problems in the expanded database may include answers not limited to positive integers from 0 to 999.
-Examples of such answers include fractions (e.g., \\( \\frac{3}{5} \\)), powers (e.g., \\( 2^{10} \\)), or expressions involving sums of components.
-Please enter your answer as the sum of the components modulo 1000.
-For example:
-- \\( \\frac{3}{5} \\) → enter 8
-- \\( 2^{10} / 3 \\) → enter 2 + 10 + 3 = 15
-- \\( 7 \\) → enter 7
+Examples include fractions (e.g., \\( \\frac{3}{5} \\)), powers (e.g., \\( 2^{10} \\)), or sums.
+Enter your answer as the sum of components mod 1000.
+Examples:
+- \\( \\frac{3}{5} \\) → 8
+- \\( 2^{10} / 3 \\) → 15
+- \\( 7 \\) → 7
 `;
       }
 
       if (useFull) {
-        // In full DB mode, no difficulty filtering
-        // So bucketizeFine is not needed for problem selection
-        // Just pick 15 random problems from full database
         chosenProblems = [];
         const copyAll = [...allProblems];
         while (chosenProblems.length < 15 && copyAll.length > 0) {
@@ -237,11 +275,9 @@ For example:
           chosenProblems.push(copyAll.splice(idx, 1)[0]);
         }
       } else {
-        // Normal and expanded mode: bucketize and sample
         const plan = difficultyTemplate[level];
         const buckets = bucketizeFine();
 
-        // Show stats
         let statText = "Available / Needed problems:\n";
         for (const [diff, countNeeded] of Object.entries(plan)) {
           const available = buckets[diff]?.length || 0;
@@ -249,7 +285,6 @@ For example:
         }
         document.getElementById("stats").textContent = statText;
 
-        // Check for shortage
         for (const [diff, countNeeded] of Object.entries(plan)) {
           if ((buckets[diff]?.length || 0) < countNeeded) {
             document.getElementById("problems").innerHTML =
@@ -272,7 +307,6 @@ For example:
         div.className = "problem mathjax-process";
 
         if (useFull) {
-          // Full DB mode: checkbox "I was correct" and no answer inputs
           div.innerHTML = `
             <strong>Problem ${i + 1}:</strong>
             <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
@@ -285,7 +319,6 @@ For example:
             <span class="result" id="result-${i}"></span>
           `;
         } else {
-          // Normal or expanded mode: text input answer box
           div.innerHTML = `
             <strong>Problem ${i + 1}:</strong>
             <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
@@ -299,7 +332,6 @@ For example:
         container.appendChild(div);
       });
 
-      // Typeset MathJax for rendered problems
       if (window.MathJax) {
         try {
           await MathJax.typesetPromise();
@@ -319,7 +351,6 @@ For example:
         const resultSpan = document.getElementById(`result-${i}`);
 
         if (userOverride) {
-          // User says they were correct (override)
           resultSpan.textContent = "✔️ (overridden)";
           resultSpan.className = "result correct";
           correctCount++;
@@ -350,14 +381,12 @@ For example:
             summaryLines.push(`Problem ${i + 1}: No answer available`);
           }
         } else {
-          // Full DB mode and no override — mark as unchecked
           resultSpan.textContent = "";
-          summaryLines.push(`Problem ${i + 1}: No answer checked`);
+          summaryLines.push(`Problem ${i + 1}: No answer input`);
         }
       });
 
-      const summaryText = `Score: ${correctCount} / ${chosenProblems.length}\n` + summaryLines.join("  ");
-      document.getElementById("summary").textContent = summaryText;
+      document.getElementById("summary").textContent = `Correct: ${correctCount} / ${chosenProblems.length}\n` + summaryLines.join("\n");
     }
   </script>
 </body>
