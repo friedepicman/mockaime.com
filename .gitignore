@@ -1,2 +1,11 @@
 .env
 secrets.py
+old/**
+node_modules/
+node_modules/once/package.json
+numina_splits/
+numinamath_split_10pct/
+mlm_trained_model/
+masked-summary-embedder/
+numinamath_test.jsonl
+numinamath_train.jsonl
