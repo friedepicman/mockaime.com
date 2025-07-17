@@ -5,7 +5,7 @@ from tqdm import tqdm
 from torch.cuda.amp import autocast
 
 # === CONFIGURATION ===
-DATASET_PATH = "numina_splits"  # folder where your dataset is saved
+DATASET_PATH = "numinamath_split_10pct"  # folder where your dataset is saved
 OUTPUT_PATH = "numinamath_with_embeddings"  # folder to save dataset with embeddings
 TEXT_FIELD = "solution"  # field to embed
 BATCH_SIZE = 64  # increased batch size for better GPU utilization
