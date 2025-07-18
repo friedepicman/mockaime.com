@@ -1,31 +1,57 @@
 import torch
 from transformers import (
     AutoTokenizer,
-    AutoModelForCausalLM,
+    AutoModelForSequenceClassification,
     Trainer,
     TrainingArguments,
 )
-from datasets import load_from_disk
+from datasets import load_from_disk, ClassLabel
+from sklearn.metrics import accuracy_score
 from tqdm import tqdm
-import re
 
 # === Config ===
-DATASET_PATH = "numinamath_integer_split_10pct"  # Your local dataset path
+DATASET_PATH = "numinamath_split_10pct"
 MODEL_NAME = "Qwen/Qwen1.5-0.5B"
 BATCH_SIZE = 8
 MAX_LENGTH = 512
-OUTPUT_DIR = "./qwen-numinamath-test"
+OUTPUT_DIR = "./qwen-problemtype-classification"
 
 # === Load dataset ===
 ds = load_from_disk(DATASET_PATH)
 print(f"Dataset splits: {list(ds.keys())}")
 print(f"Train size: {len(ds['train'])}")
 
+# === Define labels ===
+problem_types = [
+    "Algebra", "Geometry", "Number Theory", "Combinatorics",
+    "Calculus", "Inequalities", "Logic and Puzzles", "Other"
+]
+label2id = {label: i for i, label in enumerate(problem_types)}
+id2label = {i: label for label, i in label2id.items()}
+
+# === Convert labels to integers ===
+def convert_labels(example):
+    example["labels"] = label2id.get(example["problem_type"], label2id["Other"])
+    return example
+
+for split in ds.keys():
+    ds[split] = ds[split].map(convert_labels)
+
+# === Error if too many "Other" labels ===
+num_other = sum(1 for x in ds["train"]["labels"] if x == label2id["Other"])
+total = len(ds["train"])
+if num_other > total // 2:
+    raise ValueError(f"🚨 More than 50% of training examples are labeled 'Other' ({num_other}/{total}). Check problem_type formatting.")
+
+
 # === Load tokenizer and model ===
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-torch_dtype = torch.float32
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL_NAME, torch_dtype=torch_dtype
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
+model = AutoModelForSequenceClassification.from_pretrained(
+    MODEL_NAME,
+    num_labels=len(problem_types),
+    id2label=id2label,
+    label2id=label2id,
+    torch_dtype=torch.float32
 )
 
 # Device setup
@@ -37,23 +63,18 @@ device = (
 model.to(device)
 print("Using device:", device)
 
-# === Tokenization function ===
+# === Tokenize input ===
 def tokenize_function(example):
-    full_text = example["problem"] + "\n" + example["solution"]
+    text = example["problem"]
     tokens = tokenizer(
-        full_text,
+        text,
         truncation=True,
         max_length=MAX_LENGTH,
-        padding="max_length",
+        padding="max_length"
     )
-    # Mask padding tokens in labels
-    tokens["labels"] = [
-        (tok if tok != tokenizer.pad_token_id else -100)
-        for tok in tokens["input_ids"]
-    ]
+    tokens["labels"] = example["labels"]
     return tokens
 
-# Tokenize datasets
 tokenized_datasets = {}
 for split in ds.keys():
     print(f"Tokenizing {split} split...")
@@ -66,20 +87,28 @@ for split in ds.keys():
 # === Training arguments ===
 training_args = TrainingArguments(
     output_dir=OUTPUT_DIR,
-    eval_strategy="epoch",
+    evaluation_strategy="epoch",
     save_strategy="epoch",
     learning_rate=2e-5,
     per_device_train_batch_size=BATCH_SIZE,
     per_device_eval_batch_size=BATCH_SIZE,
-    num_train_epochs=1,
+    num_train_epochs=3,
     weight_decay=0.01,
     logging_steps=10,
     report_to="none",
     push_to_hub=False,
     load_best_model_at_end=True,
-    fp16=False,  # No mixed precision on MPS
+    metric_for_best_model="accuracy",
+    fp16=False,
     bf16=False,
 )
+
+# === Compute metrics ===
+def compute_metrics(eval_pred):
+    logits, labels = eval_pred
+    predictions = torch.argmax(torch.tensor(logits), dim=-1).numpy()
+    acc = accuracy_score(labels, predictions)
+    return {"accuracy": acc}
 
 # === Trainer ===
 trainer = Trainer(
@@ -87,52 +116,14 @@ trainer = Trainer(
     args=training_args,
     train_dataset=tokenized_datasets["train"],
     eval_dataset=tokenized_datasets.get("validation"),
+    compute_metrics=compute_metrics,
 )
 
 # === Train ===
 print("Starting training with batch size =", BATCH_SIZE)
 trainer.train()
 
-# === Evaluation: exact integer match ===
-def extract_first_integer(text):
-    """Extract the first integer (including negative) from text, or None if none found."""
-    match = re.search(r"[-]?\d+", text)
-    return int(match.group()) if match else None
-
-def evaluate_model_accuracy(model, tokenizer, dataset, max_new_tokens=32):
-    model.eval()
-    correct = 0
-    total = 0
-
-    for example in tqdm(dataset, desc="Evaluating"):
-        prompt = example["problem"] + "\n"
-        expected = example["answer"]
-
-        inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-
-        with torch.no_grad():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=max_new_tokens,
-                do_sample=False,
-                pad_token_id=tokenizer.pad_token_id,
-            )
-
-        decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        generated_text = decoded[len(prompt):].strip()
-
-        predicted = extract_first_integer(generated_text)
-        try:
-            gold = int(expected)
-            if predicted == gold:
-                correct += 1
-        except:
-            pass
-        total += 1
-
-    accuracy = correct / total if total > 0 else 0.0
-    print(f"\n✅ Exact Integer Match Accuracy: {accuracy:.4f} ({correct}/{total})")
-    return accuracy
-
-print("🔍 Running exact integer match evaluation on test set...")
-evaluate_model_accuracy(model, tokenizer, ds["test"])
+# === Evaluate on test set ===
+print("🔍 Final evaluation on test set...")
+metrics = trainer.evaluate(tokenized_datasets["test"])
+print("Test set metrics:", metrics)
