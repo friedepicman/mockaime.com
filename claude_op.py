@@ -12,14 +12,48 @@ from tqdm import tqdm
 # === Config ===
 DATASET_PATH = "numinamath_1.5_split_10pct"
 MODEL_NAME = "Qwen/Qwen1.5-0.5B"
-BATCH_SIZE = 2
-MAX_LENGTH = 512
+
+# === Quick test mode (comment out for full training) ===
+QUICK_TEST = True  # Set to False for full training
+
+# === GPU-specific settings ===
+# For NVIDIA GPUs, your dad should modify these:
+if torch.cuda.is_available():
+    BATCH_SIZE = 16  # Can probably go higher on modern GPUs
+    MAX_LENGTH = 512  # Full length for better accuracy
+    USE_FP16 = True  # Enable mixed precision for speed
+    print("🚀 CUDA detected - using GPU-optimized settings")
+else:
+    BATCH_SIZE = 2  # Small for Mac testing
+    MAX_LENGTH = 256  # Shorter for faster testing
+    USE_FP16 = False  # Mac compatibility
+    print("🍎 Using CPU/MPS settings")
+
 OUTPUT_DIR = "./qwen-problemtype-classification"
 
 # === Load dataset ===
 ds = load_from_disk(DATASET_PATH)
 print(f"Dataset splits: {list(ds.keys())}")
 print(f"Train size: {len(ds['train'])}")
+print(f"Validation size: {len(ds['validation'])}")
+print(f"Test size: {len(ds['test'])}")
+
+# Quick test mode - use smaller subset
+if QUICK_TEST:
+    print("🚀 QUICK TEST MODE - Using smaller dataset")
+    
+    # Use smaller subsets but don't exceed actual dataset sizes
+    train_size = min(1000, len(ds['train']))
+    val_size = min(200, len(ds['validation']))
+    test_size = min(200, len(ds['test']))
+    
+    ds['train'] = ds['train'].select(range(train_size))
+    ds['validation'] = ds['validation'].select(range(val_size))
+    ds['test'] = ds['test'].select(range(test_size))
+    
+    print(f"Reduced train size: {len(ds['train'])}")
+    print(f"Reduced validation size: {len(ds['validation'])}")
+    print(f"Reduced test size: {len(ds['test'])}")
 
 # Print problem types of first 10 problems in train split
 print("\nFirst 10 problem types in train split:")
@@ -113,23 +147,23 @@ for split in ds.keys():
 # === Training arguments ===
 training_args = TrainingArguments(
     output_dir=OUTPUT_DIR,
-    eval_strategy="steps",     # eval every N steps
-    eval_steps=5000,
-    save_strategy="steps",     # save every N steps (must match eval)
-    save_steps=5000,
+    eval_strategy="steps",
+    eval_steps=500 if QUICK_TEST else 5000,  # More frequent eval in test mode
+    save_strategy="steps",
+    save_steps=500 if QUICK_TEST else 5000,
     learning_rate=2e-5,
     per_device_train_batch_size=BATCH_SIZE,
     per_device_eval_batch_size=BATCH_SIZE,
-    num_train_epochs=3,
+    num_train_epochs=1 if QUICK_TEST else 3,  # Just 1 epoch for testing
     weight_decay=0.01,
     logging_steps=10,
     report_to="none",
     push_to_hub=False,
     load_best_model_at_end=True,
     metric_for_best_model="accuracy",
-    fp16=False,
+    fp16=USE_FP16,  # Enable mixed precision on GPU
     bf16=False,
-    dataloader_pin_memory=False,  # FIX: Disable pin_memory for MPS
+    dataloader_pin_memory=False,
 )
 
 # === Compute metrics ===
