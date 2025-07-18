@@ -5,7 +5,7 @@ SEED = 42
 random.seed(SEED)
 
 # Load previously split dataset from disk
-full_ds = load_from_disk("numina_splits")  # change if your folder is named differently
+full_ds = load_from_disk("numina_integer_splits")  # change if your folder is named differently
 
 # Get existing test and validation sets
 test_set = full_ds["test"]
@@ -24,7 +24,7 @@ new_ds = DatasetDict({
 })
 
 # Save to disk
-new_ds.save_to_disk("numinamath_split_1pct")
+new_ds.save_to_disk("numinamath_integer_split_1pct")
 
 print("✅ Created 1% dataset.")
 print(f"Train: {len(train_10pct)} | Val: {len(val_set)} | Test: {len(test_set)}")
