@@ -24,7 +24,7 @@ new_ds = DatasetDict({
 })
 
 # Save to disk
-new_ds.save_to_disk("numinamath_integer_split_10pct")
+new_ds.save_to_disk("numinamath_1.5_split_10pct")
 
 print("✅ Created 10% dataset.")
 print(f"Train: {len(train_10pct)} | Val: {len(val_set)} | Test: {len(test_set)}")

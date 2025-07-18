@@ -10,9 +10,9 @@ from sklearn.metrics import accuracy_score
 from tqdm import tqdm
 
 # === Config ===
-DATASET_PATH = "numinamath_split_10pct"
+DATASET_PATH = "numinamath_1.5_split_10pct"
 MODEL_NAME = "Qwen/Qwen1.5-0.5B"
-BATCH_SIZE = 8
+BATCH_SIZE = 1
 MAX_LENGTH = 512
 OUTPUT_DIR = "./qwen-problemtype-classification"
 
@@ -35,6 +35,8 @@ def convert_labels(example):
     return example
 
 for split in ds.keys():
+    print(ds["train"].column_names)
+
     ds[split] = ds[split].map(convert_labels)
 
 # === Error if too many "Other" labels ===
@@ -87,7 +89,8 @@ for split in ds.keys():
 # === Training arguments ===
 training_args = TrainingArguments(
     output_dir=OUTPUT_DIR,
-    evaluation_strategy="epoch",
+    eval_strategy="steps",     # eval every N steps
+    eval_steps=5000, 
     save_strategy="epoch",
     learning_rate=2e-5,
     per_device_train_batch_size=BATCH_SIZE,
