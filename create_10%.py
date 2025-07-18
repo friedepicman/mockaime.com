@@ -4,27 +4,37 @@ import random
 SEED = 42
 random.seed(SEED)
 
-# Load previously split dataset from disk
-full_ds = load_from_disk("numina_integer_splits")  # change if your folder is named differently
+# Load full dataset with only one split "train"
+full_ds = load_from_disk("numina_1.5_full")  # change if needed
 
-# Get existing test and validation sets
-test_set = full_ds["test"]
-val_set = full_ds["validation"]
+train_full = full_ds
 
-# Take 10% of training data
-train_full = full_ds["train"]
-train_10pct_size = int(0.10 * len(train_full))
-train_10pct = train_full.shuffle(seed=SEED).select(range(train_10pct_size))
+# Shuffle full dataset
+train_shuffled = train_full.shuffle(seed=SEED)
 
-# Create new 10% dataset
+# Define sizes for splits
+test_size = 1000
+val_size = 100
+train_size = len(train_shuffled) - test_size - val_size
+
+# Create splits
+train_split = train_shuffled.select(range(0, train_size))
+val_split = train_shuffled.select(range(train_size, train_size + val_size))
+test_split = train_shuffled.select(range(train_size + val_size, train_size + val_size + test_size))
+
+# Optional: take 1% of train for a smaller training set
+train_1pct_size = int(0.10 * len(train_split))
+train_1pct = train_split.select(range(train_1pct_size))
+
+# Create DatasetDict with splits
 new_ds = DatasetDict({
-    "train": train_10pct,
-    "validation": val_set,
-    "test": test_set
+    "train": train_1pct,     # or use train_split if you want full training set
+    "validation": val_split,
+    "test": test_split,
 })
 
-# Save to disk
+# Save new splits to disk
 new_ds.save_to_disk("numinamath_1.5_split_10pct")
 
-print("✅ Created 10% dataset.")
-print(f"Train: {len(train_10pct)} | Val: {len(val_set)} | Test: {len(test_set)}")
+print("✅ Created 1% dataset with new splits.")
+print(f"Train: {len(train_1pct)} | Val: {len(val_split)} | Test: {len(test_split)}")

@@ -21,6 +21,11 @@ ds = load_from_disk(DATASET_PATH)
 print(f"Dataset splits: {list(ds.keys())}")
 print(f"Train size: {len(ds['train'])}")
 
+# Print problem types of first 10 problems in train split
+print("\nFirst 10 problem types in train split:")
+for i in range(10):
+    print(f"{i+1}: {ds['train'][i]['problem_type']}")
+
 # === Define labels ===
 problem_types = [
     "Algebra", "Geometry", "Number Theory", "Combinatorics",
@@ -36,7 +41,6 @@ def convert_labels(example):
 
 for split in ds.keys():
     print(ds["train"].column_names)
-
     ds[split] = ds[split].map(convert_labels)
 
 # === Error if too many "Other" labels ===
@@ -44,7 +48,6 @@ num_other = sum(1 for x in ds["train"]["labels"] if x == label2id["Other"])
 total = len(ds["train"])
 if num_other > total // 2:
     raise ValueError(f"🚨 More than 50% of training examples are labeled 'Other' ({num_other}/{total}). Check problem_type formatting.")
-
 
 # === Load tokenizer and model ===
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
@@ -89,9 +92,10 @@ for split in ds.keys():
 # === Training arguments ===
 training_args = TrainingArguments(
     output_dir=OUTPUT_DIR,
-    eval_strategy="steps",     # eval every N steps
-    eval_steps=5000, 
-    save_strategy="epoch",
+    eval_strategy="steps",      # eval every N steps
+    eval_steps=5000,
+    save_strategy="steps",      # save every N steps (must match eval)
+    save_steps=5000,
     learning_rate=2e-5,
     per_device_train_batch_size=BATCH_SIZE,
     per_device_eval_batch_size=BATCH_SIZE,
