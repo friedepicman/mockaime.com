@@ -198,6 +198,92 @@
     .replace-button:hover {
       background: #5a6268;
     }
+    .report-button {
+      display: inline-block;
+      margin-top: 5px;
+      margin-left: 10px;
+      padding: 5px 12px;
+      background: #ffc107;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .report-button:hover {
+      background: #e0a800;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .modal-header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #004488;
+    }
+    .modal-close {
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #aaa;
+    }
+    .modal-close:hover {
+      color: #000;
+    }
+    .modal-label {
+      display: block;
+      margin: 15px 0 5px 0;
+      font-weight: bold;
+    }
+    .modal-select, .modal-textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    .modal-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .modal-submit {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #004488;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+    .modal-submit:hover {
+      background: #003366;
+    }
+    .modal-submit:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
     label {
       cursor: pointer;
     }
@@ -258,6 +344,27 @@
   <div class="stats" id="stats"></div>
   <div id="summary"></div>
   <div id="problems"></div>
+
+  <!-- Report Modal -->
+  <div id="reportModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeReportModal()">&times;</span>
+      <div class="modal-header">Report Problem Issue</div>
+      
+      <label class="modal-label">Issue Type:</label>
+      <select id="reportType" class="modal-select">
+        <option value="wrong_answer">Wrong Answer</option>
+        <option value="wrong_latex">Wrong LaTeX / Formatting</option>
+        <option value="unclear_problem">Unclear Problem Statement</option>
+        <option value="other">Other</option>
+      </select>
+      
+      <label class="modal-label">Additional Details (Optional):</label>
+      <textarea id="reportDetails" class="modal-textarea" placeholder="Please provide any additional information about the issue..."></textarea>
+      
+      <button class="modal-submit" id="submitReport">Submit Report</button>
+    </div>
+  </div>
 
   <script>
     // Ensure only one checkbox can be selected at a time
@@ -334,6 +441,66 @@
       return result;
     }
 
+    let currentReportProblemId = null;
+
+    function openReportModal(problemId) {
+      currentReportProblemId = problemId;
+      document.getElementById('reportModal').style.display = 'block';
+      document.getElementById('reportDetails').value = '';
+      document.getElementById('reportType').value = 'wrong_answer';
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').style.display = 'none';
+      currentReportProblemId = null;
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('reportModal');
+      if (event.target === modal) {
+        closeReportModal();
+      }
+    }
+
+    document.getElementById('submitReport').addEventListener('click', async () => {
+      if (!currentReportProblemId) return;
+
+      const submitButton = document.getElementById('submitReport');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+
+      const reportType = document.getElementById('reportType').value;
+      const details = document.getElementById('reportDetails').value.trim();
+
+      try {
+        const { error } = await supabaseClient
+          .from('problem_reports')
+          .insert([
+            {
+              problem_id: currentReportProblemId,
+              report_type: reportType,
+              details: details || null,
+              created_at: new Date().toISOString()
+            }
+          ]);
+
+        if (error) {
+          console.error('Error submitting report:', error);
+          alert('Failed to submit report. Please try again.');
+        } else {
+          alert('Thank you! Your report has been submitted.');
+          closeReportModal();
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Failed to submit report. Please try again.');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit Report';
+      }
+    });
+
     async function replaceProblem(index) {
       const currentProblem = chosenProblems[index];
       const currentDifficulty = (Math.round(parseFloat(currentProblem.difficulty) * 2) / 2).toFixed(1);
@@ -397,6 +564,7 @@
           <div><strong>Source:</strong> ${newProblem.source || "Unknown"}</div>
           <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
           <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
+          <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
         `;
       } else {
         problemDiv.innerHTML = `
@@ -406,6 +574,7 @@
           <div class="answer">Answer: <input type="text" maxlength="3" data-index="${index}" /></div>
           <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
           <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
+          <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
         `;
       }
       
@@ -494,6 +663,7 @@
             <div><strong>Source:</strong> ${p.source || "Unknown"}</div>
             <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
             <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
+            <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
           `;
         } else {
           div.innerHTML = `
@@ -503,6 +673,7 @@
             <div class="answer">Answer: <input type="text" maxlength="3" data-index="${i}" /></div>
             <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
             <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
+            <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
           `;
         }
 
