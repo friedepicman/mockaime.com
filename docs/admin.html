@@ -288,12 +288,20 @@
         <div class="problem-card ${p.manually_reviewed ? 'reviewed' : ''}" id="problem-${p.id}">
           <div class="problem-header">
             <span class="problem-id">Problem ID: ${p.id}</span>
-            <label class="checkbox-label">
-              <input type="checkbox" 
-                     ${p.manually_reviewed ? 'checked' : ''} 
-                     onchange="updateReviewStatus(${p.id}, this.checked)">
-              Manually Reviewed
-            </label>
+            <div style="display: flex; gap: 20px;">
+              <label class="checkbox-label">
+                <input type="checkbox" 
+                       ${p.manually_reviewed ? 'checked' : ''} 
+                       onchange="updateReviewStatus(${p.id}, this.checked)">
+                Manually Reviewed
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" 
+                       ${p.bad_problem ? 'checked' : ''} 
+                       onchange="updateBadProblemStatus(${p.id}, this.checked)">
+                Bad Problem
+              </label>
+            </div>
           </div>
           
           <span class="field-label">Problem Statement:</span>
@@ -354,6 +362,23 @@
         statusEl.textContent = '✓ Saved';
         statusEl.style.color = '#28a745';
         setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+    }
+
+    async function updateBadProblemStatus(problemId, isBad) {
+      const { error } = await supabaseClient
+        .from('problems')
+        .update({ bad_problem: isBad })
+        .eq('id', problemId);
+      
+      if (error) {
+        console.error('Error updating bad problem status:', error);
+        alert('Failed to update bad problem status');
+      } else {
+        // Update the problem in memory
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) problem.bad_problem = isBad;
+        updateStats();
       }
     }
 
