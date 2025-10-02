@@ -338,6 +338,14 @@
       const source = document.getElementById(`source-${problemId}`).value;
       const statusEl = document.getElementById(`status-${problemId}`);
       
+      console.log('=== SAVE ATTEMPT ===');
+      console.log('Problem ID:', problemId);
+      console.log('Text:', text);
+      console.log('Answer:', answer);
+      console.log('AIME Answer:', aimeAnswer);
+      console.log('Difficulty:', difficulty);
+      console.log('Source:', source);
+      
       statusEl.textContent = 'Saving...';
       statusEl.style.color = '#666';
       
@@ -349,18 +357,37 @@
         difficulty: difficulty ? parseFloat(difficulty) : null
       };
       
-      const { error } = await supabaseClient
+      console.log('Update data being sent:', updateData);
+      
+      const { data, error } = await supabaseClient
         .from('problems')
         .update(updateData)
-        .eq('id', problemId);
+        .eq('id', problemId)
+        .select();
+      
+      console.log('Supabase response data:', data);
+      console.log('Supabase error:', error);
       
       if (error) {
-        console.error('Error saving:', error);
-        statusEl.textContent = 'Error saving!';
+        console.error('ERROR DETAILS:', error);
+        statusEl.textContent = `Error: ${error.message}`;
         statusEl.style.color = '#dc3545';
       } else {
+        console.log('✓ Save successful');
         statusEl.textContent = '✓ Saved';
         statusEl.style.color = '#28a745';
+        
+        // Update in memory
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.text = text;
+          problem.answer = answer;
+          problem.aime_answer = aimeAnswer ? parseInt(aimeAnswer) : null;
+          problem.difficulty = difficulty ? parseFloat(difficulty) : null;
+          problem.source = source;
+          console.log('Updated problem in memory:', problem);
+        }
+        
         setTimeout(() => { statusEl.textContent = ''; }, 2000);
       }
     }
