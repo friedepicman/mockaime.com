@@ -153,26 +153,45 @@
     async function loadProblems() {
       document.getElementById('problems').innerHTML = '<p>Loading problems...</p>';
       
-      let query = supabaseClient.from('problems').select('*').order('id', { ascending: true });
-      
       const showUnreviewed = document.getElementById('showUnreviewedOnly').checked;
       const showReviewed = document.getElementById('showReviewedOnly').checked;
       
-      if (showUnreviewed) {
-        query = query.or('manually_reviewed.is.null,manually_reviewed.eq.false');
-      } else if (showReviewed) {
-        query = query.eq('manually_reviewed', true);
+      let allData = [];
+      let from = 0;
+      const chunkSize = 1000;
+      let hasMore = true;
+      
+      while (hasMore) {
+        let query = supabaseClient
+          .from('problems')
+          .select('*')
+          .order('id', { ascending: true })
+          .range(from, from + chunkSize - 1);
+        
+        if (showUnreviewed) {
+          query = query.or('manually_reviewed.is.null,manually_reviewed.eq.false');
+        } else if (showReviewed) {
+          query = query.eq('manually_reviewed', true);
+        }
+        
+        const { data, error } = await query;
+        
+        if (error) {
+          console.error('Error loading problems:', error);
+          alert('Failed to load problems');
+          return;
+        }
+        
+        if (data.length === 0) {
+          hasMore = false;
+        } else {
+          allData.push(...data);
+          from += chunkSize;
+          document.getElementById('problems').innerHTML = `<p>Loading problems... (${allData.length} loaded)</p>`;
+        }
       }
       
-      const { data, error } = await query;
-      
-      if (error) {
-        console.error('Error loading problems:', error);
-        alert('Failed to load problems');
-        return;
-      }
-      
-      allProblems = data;
+      allProblems = allData;
       updateStats();
       renderProblems();
     }
