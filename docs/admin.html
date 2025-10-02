@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Problem Admin - Mock AIME</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.4/dist/umd/supabase.min.js"></script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1400px;
+      margin: auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #004488;
+    }
+    .controls {
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+    }
+    .problem-card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      border-left: 4px solid #ccc;
+    }
+    .problem-card.reviewed {
+      border-left-color: #28a745;
+    }
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .problem-id {
+      font-weight: bold;
+      color: #666;
+    }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 200px;
+    }
+    .field-label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+    }
+    .checkbox-label input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    button {
+      padding: 8px 16px;
+      background: #004488;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #003366;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .save-status {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 14px;
+      color: #28a745;
+    }
+    .link {
+      color: #004488;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+    .filter-controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .stats {
+      margin: 20px 0;
+      padding: 15px;
+      background: #e3f2fd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Problem Admin Panel</h1>
+
+  <div class="stats" id="stats">Loading...</div>
+
+  <div class="controls">
+    <div class="filter-controls">
+      <label>
+        <input type="checkbox" id="showUnreviewedOnly" />
+        Show only unreviewed problems
+      </label>
+      <label>
+        <input type="checkbox" id="showReviewedOnly" />
+        Show only reviewed problems
+      </label>
+      <button onclick="loadProblems()">Refresh</button>
+    </div>
+  </div>
+
+  <div id="problems"></div>
+
+  <script>
+    const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let allProblems = [];
+
+    async function loadProblems() {
+      document.getElementById('problems').innerHTML = '<p>Loading problems...</p>';
+      
+      let query = supabaseClient.from('problems').select('*').order('id', { ascending: true });
+      
+      const showUnreviewed = document.getElementById('showUnreviewedOnly').checked;
+      const showReviewed = document.getElementById('showReviewedOnly').checked;
+      
+      if (showUnreviewed) {
+        query = query.or('manually_reviewed.is.null,manually_reviewed.eq.false');
+      } else if (showReviewed) {
+        query = query.eq('manually_reviewed', true);
+      }
+      
+      const { data, error } = await query;
+      
+      if (error) {
+        console.error('Error loading problems:', error);
+        alert('Failed to load problems');
+        return;
+      }
+      
+      allProblems = data;
+      updateStats();
+      renderProblems();
+    }
+
+    function updateStats() {
+      const total = allProblems.length;
+      const reviewed = allProblems.filter(p => p.manually_reviewed).length;
+      const unreviewed = total - reviewed;
+      
+      document.getElementById('stats').innerHTML = `
+        <strong>Total problems:</strong> ${total} | 
+        <strong>Reviewed:</strong> ${reviewed} (${Math.round(reviewed/total*100)}%) | 
+        <strong>Unreviewed:</strong> ${unreviewed}
+      `;
+    }
+
+    function renderProblems() {
+      const container = document.getElementById('problems');
+      
+      if (allProblems.length === 0) {
+        container.innerHTML = '<p>No problems found.</p>';
+        return;
+      }
+      
+      container.innerHTML = allProblems.map((p, idx) => `
+        <div class="problem-card ${p.manually_reviewed ? 'reviewed' : ''}" id="problem-${p.id}">
+          <div class="problem-header">
+            <span class="problem-id">Problem ID: ${p.id}</span>
+            <label class="checkbox-label">
+              <input type="checkbox" 
+                     ${p.manually_reviewed ? 'checked' : ''} 
+                     onchange="updateReviewStatus(${p.id}, this.checked)">
+              Manually Reviewed
+            </label>
+          </div>
+          
+          <span class="field-label">Problem Statement:</span>
+          <textarea id="text-${p.id}">${p.text || ''}</textarea>
+          
+          <span class="field-label">Answer:</span>
+          <input type="text" id="answer-${p.id}" value="${p.answer || ''}" />
+          
+          <span class="field-label">Link:</span>
+          <a href="${p.link}" target="_blank" class="link">${p.link}</a>
+          
+          <div style="margin-top: 15px;">
+            <button onclick="saveProblem(${p.id})">Save Changes</button>
+            <span class="save-status" id="status-${p.id}"></span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function saveProblem(problemId) {
+      const text = document.getElementById(`text-${problemId}`).value;
+      const answer = document.getElementById(`answer-${problemId}`).value;
+      const statusEl = document.getElementById(`status-${problemId}`);
+      
+      statusEl.textContent = 'Saving...';
+      statusEl.style.color = '#666';
+      
+      const { error } = await supabaseClient
+        .from('problems')
+        .update({ text, answer })
+        .eq('id', problemId);
+      
+      if (error) {
+        console.error('Error saving:', error);
+        statusEl.textContent = 'Error saving!';
+        statusEl.style.color = '#dc3545';
+      } else {
+        statusEl.textContent = '✓ Saved';
+        statusEl.style.color = '#28a745';
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+    }
+
+    async function updateReviewStatus(problemId, isReviewed) {
+      const { error } = await supabaseClient
+        .from('problems')
+        .update({ manually_reviewed: isReviewed })
+        .eq('id', problemId);
+      
+      if (error) {
+        console.error('Error updating review status:', error);
+        alert('Failed to update review status');
+      } else {
+        const card = document.getElementById(`problem-${problemId}`);
+        if (isReviewed) {
+          card.classList.add('reviewed');
+        } else {
+          card.classList.remove('reviewed');
+        }
+        
+        // Update the problem in memory
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) problem.manually_reviewed = isReviewed;
+        updateStats();
+      }
+    }
+
+    // Auto-load on page load
+    window.onload = loadProblems;
+    
+    // Handle filter checkboxes
+    document.getElementById('showUnreviewedOnly').addEventListener('change', function() {
+      if (this.checked) document.getElementById('showReviewedOnly').checked = false;
+      loadProblems();
+    });
+    document.getElementById('showReviewedOnly').addEventListener('change', function() {
+      if (this.checked) document.getElementById('showUnreviewedOnly').checked = false;
+      loadProblems();
+    });
+  </script>
+</body>
+</html>
