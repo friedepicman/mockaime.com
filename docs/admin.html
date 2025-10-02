@@ -215,6 +215,12 @@
           <span class="field-label">Answer:</span>
           <input type="text" id="answer-${p.id}" value="${p.answer || ''}" />
           
+          <span class="field-label">AIME Answer (mod 1000):</span>
+          <input type="text" id="aime-answer-${p.id}" value="${p.aime_answer || ''}" />
+          
+          <span class="field-label">Source:</span>
+          <input type="text" id="source-${p.id}" value="${p.source || ''}" style="width: 300px;" />
+          
           <span class="field-label">Link:</span>
           <a href="${p.link}" target="_blank" class="link">${p.link}</a>
           
@@ -229,14 +235,23 @@
     async function saveProblem(problemId) {
       const text = document.getElementById(`text-${problemId}`).value;
       const answer = document.getElementById(`answer-${problemId}`).value;
+      const aimeAnswer = document.getElementById(`aime-answer-${problemId}`).value;
+      const source = document.getElementById(`source-${problemId}`).value;
       const statusEl = document.getElementById(`status-${problemId}`);
       
       statusEl.textContent = 'Saving...';
       statusEl.style.color = '#666';
       
+      const updateData = {
+        text,
+        answer,
+        source,
+        aime_answer: aimeAnswer ? parseInt(aimeAnswer) : null
+      };
+      
       const { error } = await supabaseClient
         .from('problems')
-        .update({ text, answer })
+        .update(updateData)
         .eq('id', problemId);
       
       if (error) {
