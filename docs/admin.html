@@ -120,6 +120,23 @@
       border-radius: 8px;
       font-size: 16px;
     }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+    }
+    .pagination button {
+      padding: 8px 16px;
+    }
+    .pagination span {
+      font-size: 16px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -141,7 +158,23 @@
     </div>
   </div>
 
+  <div class="pagination">
+    <button onclick="goToPage(1)">First</button>
+    <button onclick="goToPage(currentPage - 1)" id="prevBtn">Previous</button>
+    <span id="pageInfo">Page 1 of 1</span>
+    <button onclick="goToPage(currentPage + 1)" id="nextBtn">Next</button>
+    <button onclick="goToPage(totalPages)" id="lastBtn">Last</button>
+  </div>
+
   <div id="problems"></div>
+
+  <div class="pagination">
+    <button onclick="goToPage(1)">First</button>
+    <button onclick="goToPage(currentPage - 1)">Previous</button>
+    <span id="pageInfo2">Page 1 of 1</span>
+    <button onclick="goToPage(currentPage + 1)">Next</button>
+    <button onclick="goToPage(totalPages)">Last</button>
+  </div>
 
   <script>
     const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
@@ -149,32 +182,25 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let allProblems = [];
+    let currentPage = 1;
+    let totalPages = 1;
+    const problemsPerPage = 100;
 
     async function loadProblems() {
       document.getElementById('problems').innerHTML = '<p>Loading problems...</p>';
       
-      const showUnreviewed = document.getElementById('showUnreviewedOnly').checked;
-      const showReviewed = document.getElementById('showReviewedOnly').checked;
-      
+      // First, load ALL problems without filters
       let allData = [];
       let from = 0;
       const chunkSize = 1000;
       let hasMore = true;
       
       while (hasMore) {
-        let query = supabaseClient
+        const { data, error } = await supabaseClient
           .from('problems')
           .select('*')
           .order('id', { ascending: true })
           .range(from, from + chunkSize - 1);
-        
-        if (showUnreviewed) {
-          query = query.or('manually_reviewed.is.null,manually_reviewed.eq.false');
-        } else if (showReviewed) {
-          query = query.eq('manually_reviewed', true);
-        }
-        
-        const { data, error } = await query;
         
         if (error) {
           console.error('Error loading problems:', error);
@@ -191,7 +217,19 @@
         }
       }
       
-      allProblems = allData;
+      // Apply filters client-side
+      const showUnreviewed = document.getElementById('showUnreviewedOnly').checked;
+      const showReviewed = document.getElementById('showReviewedOnly').checked;
+      
+      if (showUnreviewed) {
+        allProblems = allData.filter(p => !p.manually_reviewed);
+      } else if (showReviewed) {
+        allProblems = allData.filter(p => p.manually_reviewed);
+      } else {
+        allProblems = allData;
+      }
+      
+      currentPage = 1; // Reset to first page when filtering
       updateStats();
       renderProblems();
     }
@@ -203,9 +241,32 @@
       
       document.getElementById('stats').innerHTML = `
         <strong>Total problems:</strong> ${total} | 
-        <strong>Reviewed:</strong> ${reviewed} (${Math.round(reviewed/total*100)}%) | 
+        <strong>Reviewed:</strong> ${reviewed} (${total > 0 ? Math.round(reviewed/total*100) : 0}%) | 
         <strong>Unreviewed:</strong> ${unreviewed}
       `;
+    }
+
+    function goToPage(page) {
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderProblems();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updatePaginationControls() {
+      const pageInfo = `Page ${currentPage} of ${totalPages}`;
+      document.getElementById('pageInfo').textContent = pageInfo;
+      document.getElementById('pageInfo2').textContent = pageInfo;
+      
+      document.getElementById('prevBtn').disabled = currentPage === 1;
+      document.querySelectorAll('button').forEach(btn => {
+        if (btn.textContent === 'Previous' || btn.textContent === 'First') {
+          btn.disabled = currentPage === 1;
+        }
+        if (btn.textContent === 'Next' || btn.textContent === 'Last') {
+          btn.disabled = currentPage === totalPages;
+        }
+      });
     }
 
     function renderProblems() {
@@ -216,7 +277,14 @@
         return;
       }
       
-      container.innerHTML = allProblems.map((p, idx) => `
+      totalPages = Math.ceil(allProblems.length / problemsPerPage);
+      const startIdx = (currentPage - 1) * problemsPerPage;
+      const endIdx = Math.min(startIdx + problemsPerPage, allProblems.length);
+      const pageProblems = allProblems.slice(startIdx, endIdx);
+      
+      updatePaginationControls();
+      
+      container.innerHTML = pageProblems.map((p) => `
         <div class="problem-card ${p.manually_reviewed ? 'reviewed' : ''}" id="problem-${p.id}">
           <div class="problem-header">
             <span class="problem-id">Problem ID: ${p.id}</span>
@@ -237,6 +305,9 @@
           <span class="field-label">AIME Answer (mod 1000):</span>
           <input type="text" id="aime-answer-${p.id}" value="${p.aime_answer || ''}" />
           
+          <span class="field-label">Difficulty:</span>
+          <input type="text" id="difficulty-${p.id}" value="${p.difficulty || ''}" />
+          
           <span class="field-label">Source:</span>
           <input type="text" id="source-${p.id}" value="${p.source || ''}" style="width: 300px;" />
           
@@ -255,6 +326,7 @@
       const text = document.getElementById(`text-${problemId}`).value;
       const answer = document.getElementById(`answer-${problemId}`).value;
       const aimeAnswer = document.getElementById(`aime-answer-${problemId}`).value;
+      const difficulty = document.getElementById(`difficulty-${problemId}`).value;
       const source = document.getElementById(`source-${problemId}`).value;
       const statusEl = document.getElementById(`status-${problemId}`);
       
@@ -265,7 +337,8 @@
         text,
         answer,
         source,
-        aime_answer: aimeAnswer ? parseInt(aimeAnswer) : null
+        aime_answer: aimeAnswer ? parseInt(aimeAnswer) : null,
+        difficulty: difficulty ? parseFloat(difficulty) : null
       };
       
       const { error } = await supabaseClient
