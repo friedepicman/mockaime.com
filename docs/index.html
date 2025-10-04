@@ -423,7 +423,7 @@
 
         if (useExpanded) {
           // In "Use Expanded Problem Database" mode, include only problems with "aime_answer"
-          if (!("aime_answer" in p)) continue;
+          if (p.aime_answer === null || p.aime_answer === undefined) continue;
         } else {
           // Default mode: Only include problems with "positive integer <= 1000" answers
           const answerType = p.answer_type?.toLowerCase().trim();
