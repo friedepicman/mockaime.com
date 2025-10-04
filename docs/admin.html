@@ -305,19 +305,19 @@
           </div>
           
           <span class="field-label">Problem Statement:</span>
-          <textarea id="text-${p.id}">${p.text || ''}</textarea>
+          <textarea id="text-${p.id}" onblur="saveProblem(${p.id})">${p.text || ''}</textarea>
           
           <span class="field-label">Answer:</span>
-          <input type="text" id="answer-${p.id}" value="${p.answer || ''}" />
+          <input type="text" id="answer-${p.id}" value="${p.answer || ''}" onblur="saveProblem(${p.id})" />
           
           <span class="field-label">AIME Answer (mod 1000):</span>
-          <input type="text" id="aime-answer-${p.id}" value="${p.aime_answer || ''}" />
+          <input type="text" id="aime-answer-${p.id}" value="${p.aime_answer || ''}" onblur="saveProblem(${p.id})" />
           
           <span class="field-label">Difficulty:</span>
-          <input type="text" id="difficulty-${p.id}" value="${p.difficulty || ''}" />
+          <input type="text" id="difficulty-${p.id}" value="${p.difficulty || ''}" onblur="saveProblem(${p.id})" />
           
           <span class="field-label">Source:</span>
-          <input type="text" id="source-${p.id}" value="${p.source || ''}" style="width: 300px;" />
+          <input type="text" id="source-${p.id}" value="${p.source || ''}" style="width: 300px;" onblur="saveProblem(${p.id})" />
           
           <span class="field-label">Link:</span>
           <a href="${p.link}" target="_blank" class="link">${p.link}</a>
@@ -393,18 +393,30 @@
     }
 
     async function updateBadProblemStatus(problemId, isBad) {
-      const { error } = await supabaseClient
+      console.log('=== BAD PROBLEM UPDATE ===');
+      console.log('Problem ID:', problemId);
+      console.log('Setting bad_problem to:', isBad);
+      
+      const { data, error } = await supabaseClient
         .from('problems')
         .update({ bad_problem: isBad })
-        .eq('id', problemId);
+        .eq('id', problemId)
+        .select();
+      
+      console.log('Supabase response:', data);
+      console.log('Supabase error:', error);
       
       if (error) {
         console.error('Error updating bad problem status:', error);
         alert('Failed to update bad problem status');
       } else {
+        console.log('✓ Bad problem status updated successfully');
         // Update the problem in memory
         const problem = allProblems.find(p => p.id === problemId);
-        if (problem) problem.bad_problem = isBad;
+        if (problem) {
+          problem.bad_problem = isBad;
+          console.log('Updated in memory:', problem);
+        }
         updateStats();
       }
     }
