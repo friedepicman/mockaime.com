@@ -333,6 +333,16 @@
       <input type="checkbox" id="fullDbCheckbox" />
       Use Full Database (No Automatic Answer Check)
     </label>
+    <br><br>
+    <label>
+      <input type="checkbox" id="onlyReviewedCheckbox" />
+      Only Use Manually Reviewed Problems
+    </label>
+    &nbsp;&nbsp;&nbsp;
+    <label>
+      <input type="checkbox" id="excludeBadCheckbox" />
+      Exclude Bad Problems
+    </label>
   </div>
 
   <label for="difficulty">Select Difficulty Level:</label>
@@ -410,11 +420,16 @@
 
       const useExpanded = expandedCheckbox.checked;
       const useFull = fullCheckbox.checked;
+      const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
+      const excludeBad = document.getElementById('excludeBadCheckbox').checked;
 
       for (const p of allProblems) {
         let d = parseFloat(p.difficulty);
 
         if (isNaN(d)) continue;
+        // Apply review filters
+        if (onlyReviewed && !p.manually_reviewed) continue;
+        if (excludeBad && p.bad_problem) continue;
 
         if (useFull) {
           // In "Use Full Database" mode, include all problems regardless of answer type or aime_answer
@@ -519,6 +534,8 @@
       
       const useExpanded = expandedCheckbox.checked;
       const useFull = fullCheckbox.checked;
+      const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
+      const excludeBad = document.getElementById('excludeBadCheckbox').checked;
       
       // Get all problems of the same difficulty bucket
       let availableProblems = [];
@@ -529,12 +546,14 @@
         
         const bucketDiff = (Math.round(d * 2) / 2).toFixed(1);
         if (bucketDiff !== currentDifficulty) continue;
-        
+        // Apply review filters (same as in bucketizeFine)
+        if (onlyReviewed && !p.manually_reviewed) continue;
+        if (excludeBad && p.bad_problem) continue;
         // Apply same filtering logic as bucketizeFine
         if (useFull) {
           availableProblems.push(p);
         } else if (useExpanded) {
-          if ("aime_answer" in p) {
+          if (p.aime_answer !== null && p.aime_answer !== undefined) {
             availableProblems.push(p);
           }
         } else {
