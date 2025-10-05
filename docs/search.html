@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Problem Search - Mock AIME</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.4/dist/umd/supabase.min.js"></script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #004488;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .nav-buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background: #004488;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .nav-buttons a:hover {
+      background: #003366;
+    }
+    .filters {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+    .filter-row {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      font-weight: bold;
+      min-width: 120px;
+    }
+    select, input[type="number"] {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #004488;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #003366;
+    }
+    .results-info {
+      margin: 20px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #004488;
+    }
+    .problem-card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      border-left: 4px solid #004488;
+    }
+    .problem-card.reviewed {
+      border-left-color: #28a745;
+    }
+    .problem-card.bad {
+      border-left-color: #dc3545;
+    }
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .problem-id {
+      font-weight: bold;
+      color: #666;
+    }
+    .difficulty-badge {
+      display: inline-block;
+      background: #e0e0e0;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+    .problem-text {
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+    .problem-meta {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    .problem-meta > div {
+      margin: 5px 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    .badge-success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .badge-danger {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    label {
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1>Problem Search</h1>
+
+  <div class="nav-buttons">
+    <a href="index.html">Mock Generator</a>
+    <a href="admin.html">Admin Panel</a>
+  </div>
+
+  <div class="filters">
+    <div class="filter-row">
+      <span class="filter-label">Difficulty Range:</span>
+      <input type="number" id="minDifficulty" min="1" max="8" step="0.5" value="1" />
+      <span>to</span>
+      <input type="number" id="maxDifficulty" min="1" max="8" step="0.5" value="8" />
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Answer Type:</span>
+      <select id="answerType">
+        <option value="all">All</option>
+        <option value="standard">Standard (positive integer ≤ 1000)</option>
+        <option value="expanded">Expanded (has aime_answer)</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Answer Match:</span>
+      <select id="answerMatch">
+        <option value="all">All</option>
+        <option value="match">answer = aime_answer</option>
+        <option value="mismatch">answer ≠ aime_answer</option>
+      </select>
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Review Status:</span>
+      <label>
+        <input type="checkbox" id="onlyReviewed" />
+        Only Manually Reviewed
+      </label>
+      <label style="margin-left: 20px;">
+        <input type="checkbox" id="excludeBad" />
+        Exclude Bad Problems
+      </label>
+    </div>
+
+    <div class="filter-row">
+      <button onclick="searchProblems()">Search</button>
+      <button onclick="resetFilters()">Reset Filters</button>
+    </div>
+  </div>
+
+  <div class="results-info" id="resultsInfo"></div>
+
+  <div class="pagination" id="topPagination"></div>
+
+  <div id="results"></div>
+
+  <div class="pagination" id="bottomPagination"></div>
+
+  <script>
+    const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let allProblems = [];
+    let filteredProblems = [];
+    let currentPage = 1;
+    const problemsPerPage = 20;
+
+    async function loadProblems() {
+      let from = 0;
+      const chunkSize = 1000;
+      let done = false;
+
+      while (!done) {
+        const { data, error } = await supabaseClient
+          .from('problems')
+          .select('*')
+          .range(from, from + chunkSize - 1);
+
+        if (error) {
+          console.error('Error loading problems:', error);
+          alert('Failed to load problems');
+          return;
+        }
+
+        if (data.length === 0) {
+          done = true;
+        } else {
+          allProblems.push(...data);
+          from += chunkSize;
+        }
+      }
+
+      console.log('Loaded', allProblems.length, 'problems');
+    }
+
+    function searchProblems() {
+      const minDiff = parseFloat(document.getElementById('minDifficulty').value);
+      const maxDiff = parseFloat(document.getElementById('maxDifficulty').value);
+      const answerType = document.getElementById('answerType').value;
+      const answerMatch = document.getElementById('answerMatch').value;
+      const onlyReviewed = document.getElementById('onlyReviewed').checked;
+      const excludeBad = document.getElementById('excludeBad').checked;
+
+      filteredProblems = allProblems.filter(p => {
+        // Difficulty filter
+        const diff = parseFloat(p.difficulty);
+        if (isNaN(diff) || diff < minDiff || diff > maxDiff) return false;
+
+        // Review filters
+        if (onlyReviewed && !p.manually_reviewed) return false;
+        if (excludeBad && p.bad_problem) return false;
+
+        // Answer type filter
+        if (answerType === 'standard') {
+          const type = p.answer_type?.toLowerCase().trim();
+          if (type !== 'positive integer <= 1000') return false;
+        } else if (answerType === 'expanded') {
+          if (p.aime_answer === null || p.aime_answer === undefined) return false;
+        } else if (answerType === 'other') {
+          const type = p.answer_type?.toLowerCase().trim();
+          if (type === 'positive integer <= 1000') return false;
+          if (p.aime_answer !== null && p.aime_answer !== undefined) return false;
+        }
+
+        // Answer match filter
+        if (answerMatch === 'match') {
+          if (!p.answer || !p.aime_answer) return false;
+          if (String(p.answer) !== String(p.aime_answer % 1000)) return false;
+        } else if (answerMatch === 'mismatch') {
+          if (!p.answer || !p.aime_answer) return false;
+          if (String(p.answer) === String(p.aime_answer % 1000)) return false;
+        }
+
+        return true;
+      });
+
+      currentPage = 1;
+      displayResults();
+    }
+
+    function displayResults() {
+      const totalPages = Math.ceil(filteredProblems.length / problemsPerPage);
+      const startIdx = (currentPage - 1) * problemsPerPage;
+      const endIdx = Math.min(startIdx + problemsPerPage, filteredProblems.length);
+      const pageProblems = filteredProblems.slice(startIdx, endIdx);
+
+      document.getElementById('resultsInfo').textContent = 
+        `Found ${filteredProblems.length} problems | Showing ${startIdx + 1}-${endIdx}`;
+
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+
+      if (pageProblems.length === 0) {
+        resultsDiv.innerHTML = '<p style="text-align: center; color: #666;">No problems found matching your criteria.</p>';
+        document.getElementById('topPagination').innerHTML = '';
+        document.getElementById('bottomPagination').innerHTML = '';
+        return;
+      }
+
+      pageProblems.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'problem-card';
+        if (p.manually_reviewed) card.classList.add('reviewed');
+        if (p.bad_problem) card.classList.add('bad');
+
+        const answerMatch = p.answer && p.aime_answer && 
+          String(p.answer) === String(p.aime_answer % 1000);
+
+        card.innerHTML = `
+          <div class="problem-header">
+            <div>
+              <span class="problem-id">ID: ${p.id}</span>
+              <span class="difficulty-badge">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
+              ${p.manually_reviewed ? '<span class="badge badge-success">Reviewed</span>' : ''}
+              ${p.bad_problem ? '<span class="badge badge-danger">Bad Problem</span>' : ''}
+            </div>
+          </div>
+          <div class="problem-text">${p.text || '<em>No text</em>'}</div>
+          <div class="problem-meta">
+            <div><strong>Answer:</strong> ${p.answer || 'N/A'}</div>
+            <div><strong>AIME Answer:</strong> ${p.aime_answer !== null ? p.aime_answer : 'N/A'}</div>
+            <div><strong>Answer Type:</strong> ${p.answer_type || 'N/A'}</div>
+            <div><strong>Source:</strong> ${p.source || 'N/A'}</div>
+            <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
+            ${answerMatch ? '<div style="color: green; font-weight: bold;">✓ Answers match</div>' : ''}
+            ${p.answer && p.aime_answer && !answerMatch ? '<div style="color: red; font-weight: bold;">✗ Answers mismatch</div>' : ''}
+          </div>
+        `;
+
+        resultsDiv.appendChild(card);
+      });
+
+      renderPagination(totalPages);
+
+      if (window.MathJax) {
+        MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
+      }
+    }
+
+    function renderPagination(totalPages) {
+      const paginationHTML = `
+        <button onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''}>First</button>
+        <button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
+        <span>Page ${currentPage} of ${totalPages}</span>
+        <button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+        <button onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''}>Last</button>
+      `;
+
+      document.getElementById('topPagination').innerHTML = paginationHTML;
+      document.getElementById('bottomPagination').innerHTML = paginationHTML;
+    }
+
+    function goToPage(page) {
+      const totalPages = Math.ceil(filteredProblems.length / problemsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      displayResults();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetFilters() {
+      document.getElementById('minDifficulty').value = 1;
+      document.getElementById('maxDifficulty').value = 8;
+      document.getElementById('answerType').value = 'all';
+      document.getElementById('answerMatch').value = 'all';
+      document.getElementById('onlyReviewed').checked = false;
+      document.getElementById('excludeBad').checked = false;
+      filteredProblems = [];
+      currentPage = 1;
+      document.getElementById('results').innerHTML = '';
+      document.getElementById('resultsInfo').textContent = '';
+      document.getElementById('topPagination').innerHTML = '';
+      document.getElementById('bottomPagination').innerHTML = '';
+    }
+
+    window.onload = async () => {
+      await loadProblems();
+    };
+  </script>
+</body>
+</html>
