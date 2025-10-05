@@ -94,11 +94,11 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       display: inline-block;
       font-weight: 500;
+      border-radius: 4px;
     }
     
     nav a:hover {
       background: rgba(255,255,255,0.15);
-      transform: translateY(-1px);
     }
     
     /* Improved buttons with better hover states */
@@ -171,7 +171,7 @@
       border: 2px solid #dee2e6;
       border-radius: 8px;
       transition: all 0.2s;
-      font-weight: 600;
+      font-weight: 500;
       text-align: center;
     }
     
@@ -183,9 +183,13 @@
     
     /* Improved stats section */
     .stats {
-      margin: 16px 0;
+      margin: 0 0 16px 0;
       font-size: 15px;
       color: #495057;
+    }
+    
+    .stats:empty {
+      display: none;
     }
     
     /* Better result indicators */
@@ -338,12 +342,12 @@
     }
     
     .report-button {
-      background: #ffc107;
+      background: #ffe69c;
       color: #000;
     }
     
     .report-button:hover {
-      background: #e0a800;
+      background: #ffd43b;
       transform: translateY(-1px);
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
@@ -491,7 +495,40 @@
       line-height: 1.7;
     }
     
-    /* Mobile responsiveness */
+    #instructions:empty {
+      display: none;
+    }
+    
+    /* Link styling */
+    a {
+      color: #004488;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    
+    a:hover {
+      color: #0066cc;
+    }
+    
+    .aops-link {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 14px;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      color: #004488;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .aops-link:hover {
+      background: #e9ecef;
+      border-color: #004488;
+      transform: translateY(-1px);
+    }
     @media (max-width: 768px) {
       h1 {
         font-size: 1.8rem;
@@ -865,10 +902,10 @@
           statText += `  (${diff}): ${available} / ${countNeeded}\n`;
         }
         document.getElementById("stats").innerHTML = `
-          <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 30px; border: 1px solid #e9ecef;">
+          <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 32px; border: 1px solid #e9ecef;">
             <details>
-              <summary style="cursor: pointer; font-weight: 600; color: #004488;">Available problems by difficulty (click to expand)</summary>
-              <pre style="margin-top: 15px; font-size: 13px; line-height: 1.8;">${statText}</pre>
+              <summary style="cursor: pointer; font-weight: 600; color: #004488; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;">Available problems by difficulty (click to expand)</summary>
+              <pre style="margin-top: 15px; font-size: 14px; line-height: 1.8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;">${statText}</pre>
             </details>
           </div>
         `;
@@ -903,19 +940,23 @@
                 <label><input type="checkbox" class="override" data-index="${i}" /> I was correct</label>
               </div>
               <div><strong>Source:</strong> ${p.source || "Unknown"}</div>
-              <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
-              <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
-              <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
+              <a href="${p.link}" target="_blank" class="aops-link">View Discussion on AoPS</a>
+              <div style="margin-top: 12px;">
+                <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
+                <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
+              </div>
             `;
           } else {
             div.innerHTML = `
               <strong>Problem ${i + 1}:</strong>
               <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
               <p>${p.text}</p>
-              <div class="answer">Answer: <input type="text" maxlength="3" data-index="${i}" /></div>
-              <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
-              <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
-              <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
+              <div class="answer"><input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
+              <a href="${p.link}" target="_blank" class="aops-link">View Discussion on AoPS</a>
+              <div style="margin-top: 12px;">
+                <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
+                <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
+              </div>
             `;
           }
 
