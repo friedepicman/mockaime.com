@@ -317,17 +317,21 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-  <h1>Mock AIME Generator</h1>
-  <div style="text-align: center; margin: 20px 0;">
-    <a href="admin.html" style="display: inline-block; padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
-      Admin Panel
-    </a>
-  </div>
-  <div style="text-align: center; margin: 20px 0;">
-    <a href="search.html" style="display: inline-block; padding: 10px 20px; background: #45b6fe; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
-      Problem Search
-    </a>
-  </div>
+  <!-- Navbar -->
+  <nav style="background: #004488; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 40px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+      <a href="index.html" style="color: white; font-size: 20px; font-weight: 600; padding: 16px 0; text-decoration: none;">Mock AIME</a>
+      <div style="display: flex; gap: 0;">
+        <a href="search.html" style="color: white; text-decoration: none; padding: 20px; transition: background 0.2s;">Search</a>
+        <a href="admin.html" style="color: white; text-decoration: none; padding: 20px; transition: background 0.2s;">Admin</a>
+        <a href="login.html" style="color: white; text-decoration: none; padding: 20px; transition: background 0.2s;">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
+    <h1>Mock AIME Generator</h1>
+
   <div class="mode-toggle">
     <label>
       <input type="checkbox" id="expandedDbCheckbox" />
