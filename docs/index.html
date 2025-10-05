@@ -7,17 +7,14 @@
   <meta name="keywords" content="AIME, AIME practice, mock AIME, AIME problems, math competition, AMC preparation">
   <meta name="author" content="Mock AIME Generator">
   <title>Mock AIME Generator - Practice Tests for AIME</title>
-  <!-- Open Graph for social sharing -->
   <meta property="og:title" content="Mock AIME Generator">
   <meta property="og:description" content="Generate realistic AIME mock tests with customizable difficulty levels">
   <meta property="og:url" content="https://mockaime.com">
   <meta property="og:type" content="website">
 
-  <!-- Supabase JS library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.4/dist/umd/supabase.min.js"></script>
 
   <script>
-    // Initialize Supabase client with your actual project URL and anon key
     const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
 
@@ -62,165 +59,296 @@
   </script>
 
   <style>
+    /* ===== IMPROVED STYLES START HERE ===== */
+    
+    /* Base styles with better typography */
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5f5f5;
+      background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+      font-size: 16px;
+      line-height: 1.6;
+      color: #212529;
     }
+    
     h1 {
       text-align: center;
       color: #004488;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
     }
+    
+    /* Improved navbar with gradient */
+    nav {
+      background: linear-gradient(135deg, #004488 0%, #0066cc 100%);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 48px;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 20px 24px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-block;
+      font-weight: 500;
+    }
+    
+    nav a:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-1px);
+    }
+    
+    /* Improved buttons with better hover states */
     select, button {
       font-size: 16px;
-      padding: 8px;
-      margin: 10px 5px;
+      padding: 12px 20px;
+      margin: 8px 5px;
+      border-radius: 8px;
+      border: 1px solid #dee2e6;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
     }
+    
+    button {
+      background: linear-gradient(135deg, #004488 0%, #0066cc 100%);
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,68,136,0.2);
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,68,136,0.3);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    select {
+      background: white;
+      cursor: pointer;
+    }
+    
+    select:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+    }
+    
+    /* Improved problem cards with hover effect */
     .problem {
       background: white;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      padding: 24px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid #e9ecef;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
     }
+    
+    .problem:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+      border-color: #0066cc;
+    }
+    
+    /* Better answer input styling */
     .answer {
-      margin-top: 10px;
+      margin-top: 16px;
+      margin-bottom: 12px;
     }
+    
     input[type="text"] {
-      padding: 6px;
-      font-size: 16px;
-      width: 100px;
+      padding: 12px 16px;
+      font-size: 18px;
+      width: 120px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      transition: all 0.2s;
+      font-weight: 600;
+      text-align: center;
     }
+    
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 4px rgba(0,102,204,0.1);
+    }
+    
+    /* Improved stats section */
     .stats {
-      margin: 10px 0;
+      margin: 16px 0;
       font-size: 15px;
-      color: #333;
-      white-space: pre-wrap;
+      color: #495057;
     }
+    
+    /* Better result indicators */
     .result {
       display: inline-block;
-      margin-left: 10px;
-      font-size: 18px;
+      margin-left: 12px;
+      font-size: 20px;
+      font-weight: 700;
     }
+    
     .correct {
-      color: green;
+      color: #28a745;
     }
+    
     .incorrect {
-      color: red;
+      color: #dc3545;
     }
+    
+    /* Improved difficulty badge */
     .difficulty-indicator {
       display: inline-block;
-      background: #e0e0e0;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      margin-left: 10px;
-      color: #666;
+      background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-left: 12px;
+      color: #495057;
+      font-weight: 600;
     }
+    
+    /* Enhanced summary section */
     #summary {
-      margin: 20px 0;
-      padding: 15px;
+      margin: 24px 0;
+      padding: 24px;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid #e9ecef;
     }
+    
     .summary-header {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 24px;
+      font-weight: 700;
       color: #004488;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
+    
+    /* Improved problem grid */
     .problem-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
-      gap: 8px;
-      max-width: 600px;
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      gap: 12px;
+      max-width: 650px;
     }
+    
     .problem-indicator {
-      width: 45px;
-      height: 45px;
-      border-radius: 8px;
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      font-size: 16px;
-      transition: all 0.2s;
+      font-weight: 700;
+      font-size: 18px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border: 2px solid transparent;
+      cursor: default;
     }
+    
+    .problem-indicator:hover {
+      transform: scale(1.1);
+    }
+    
     .problem-indicator.unanswered {
-      background: #f0f0f0;
-      color: #999;
+      background: #f8f9fa;
+      color: #adb5bd;
+      border-color: #dee2e6;
     }
+    
     .problem-indicator.correct {
-      background: #d4edda;
+      background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
       color: #155724;
       border-color: #28a745;
+      box-shadow: 0 2px 4px rgba(40,167,69,0.2);
     }
+    
     .problem-indicator.incorrect {
-      background: #f8d7da;
+      background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
       color: #721c24;
       border-color: #dc3545;
+      box-shadow: 0 2px 4px rgba(220,53,69,0.2);
     }
+    
     .problem-indicator.override {
-      background: #d1ecf1;
+      background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
       color: #0c5460;
       border-color: #17a2b8;
+      box-shadow: 0 2px 4px rgba(23,162,184,0.2);
     }
+    
+    /* Improved status icons */
     .status-icon {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 28px;
-      font-weight: bold;
+      top: 16px;
+      right: 16px;
+      font-size: 32px;
+      font-weight: 700;
+      opacity: 0.9;
     }
+    
     .status-icon.correct {
       color: #28a745;
     }
+    
     .status-icon.incorrect {
       color: #dc3545;
     }
+    
     .status-icon.override {
       color: #17a2b8;
     }
+    
     .status-icon.unanswered {
-      color: #999;
+      color: #adb5bd;
     }
-    .problem {
-      position: relative;
-    }
-    .replace-button {
+    
+    /* Better button styling */
+    .replace-button, .report-button {
       display: inline-block;
-      margin-top: 10px;
-      padding: 5px 12px;
+      margin-top: 12px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .replace-button {
       background: #6c757d;
       color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s;
+      margin-right: 8px;
     }
+    
     .replace-button:hover {
       background: #5a6268;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+    
     .report-button {
-      display: inline-block;
-      margin-top: 5px;
-      margin-left: 10px;
-      padding: 5px 12px;
       background: #ffc107;
       color: #000;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s;
     }
+    
     .report-button:hover {
       background: #e0a800;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+    
+    /* Improved modal */
     .modal {
       display: none;
       position: fixed;
@@ -229,76 +357,158 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.4);
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
     }
+    
     .modal-content {
       background-color: white;
       margin: 10% auto;
-      padding: 30px;
-      border-radius: 8px;
+      padding: 32px;
+      border-radius: 12px;
       width: 90%;
       max-width: 500px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    
+    @keyframes modalSlideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
     .modal-header {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 24px;
       color: #004488;
     }
+    
     .modal-close {
       float: right;
       font-size: 28px;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
-      color: #aaa;
+      color: #adb5bd;
+      transition: color 0.2s;
     }
+    
     .modal-close:hover {
-      color: #000;
+      color: #495057;
     }
+    
     .modal-label {
       display: block;
-      margin: 15px 0 5px 0;
-      font-weight: bold;
+      margin: 16px 0 8px 0;
+      font-weight: 600;
+      color: #495057;
     }
+    
     .modal-select, .modal-textarea {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
+      padding: 10px 12px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      transition: border-color 0.2s;
     }
+    
+    .modal-select:focus, .modal-textarea:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+    }
+    
     .modal-textarea {
       min-height: 100px;
       resize: vertical;
     }
+    
     .modal-submit {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #004488;
+      margin-top: 24px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #004488 0%, #0066cc 100%);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
+      font-weight: 600;
       width: 100%;
+      transition: all 0.2s;
     }
+    
     .modal-submit:hover {
-      background: #003366;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,68,136,0.3);
     }
+    
     .modal-submit:disabled {
-      background: #ccc;
+      background: #adb5bd;
       cursor: not-allowed;
+      transform: none;
     }
-    nav a:hover {
-      background: rgba(255,255,255,0.1);
-    }
+    
+    /* Improved checkbox styling */
     label {
       cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
     }
+    
+    input[type="checkbox"] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+    
     .mode-toggle {
-      margin: 10px 0 20px 0;
+      margin: 16px 0 24px 0;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    
+    /* Improved instructions box */
+    #instructions {
+      margin: 20px 0;
+      padding: 16px 20px;
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #856404;
+      line-height: 1.7;
+    }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .problem-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      
+      nav a {
+        padding: 16px 12px;
+        font-size: 14px;
+      }
+      
+      .problem {
+        padding: 16px;
+      }
     }
   </style>
 
@@ -314,511 +524,489 @@
       }
     };
   </script>
-  <!-- Use a CDN polyfill alternative because polyfill.io was not resolving -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.32.1/minified.js"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav style="background: #004488; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 40px;">
+  <nav>
     <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
-      <a href="index.html" style="color: white; font-size: 20px; font-weight: 600; padding: 16px 0; text-decoration: none;">Mock AIME</a>
+      <a href="index.html" style="font-size: 20px; font-weight: 600; padding: 16px 0;">Mock AIME</a>
       <div style="display: flex; gap: 0;">
-        <a href="search.html" style="color: white; text-decoration: none; padding: 20px; transition: background 0.2s;">Search</a>
-        <a href="admin.html" style="color: white; text-decoration: none; padding: 20px; transition: background 0.2s;">Admin</a>
-        <a href="login.html" style="color: white; text-decoration: none; padding: 20px; transition: background 0.2s;">Login</a>
+        <a href="search.html">Search</a>
+        <a href="admin.html">Admin</a>
+        <a href="login.html">Login</a>
       </div>
     </div>
   </nav>
 
   <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
     <h1>Mock AIME Generator</h1>
-  <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 30px;">
-    <div class="mode-toggle">
-      <label>
-        <input type="checkbox" id="expandedDbCheckbox" />
-        Use Expanded Problem Database
-      </label>
-      &nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="checkbox" id="fullDbCheckbox" />
-        Use Full Database (No Automatic Answer Check)
-      </label>
-      <br><br>
-      <label>
-        <input type="checkbox" id="onlyReviewedCheckbox" />
-        Only Use Manually Reviewed Problems
-      </label>
-      &nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="checkbox" id="excludeBadCheckbox" />
-        Exclude Bad Problems
-      </label>
-    </div>
-    <label for="difficulty" style="font-weight: 600; color: #004488; font-size: 14px;">Select Difficulty Level:</label>
-    <select id="difficulty">
-      <option value="1">1 - Easiest</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5" selected>5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10 - Hardest</option>
-  </select>
-
-  <div style="margin-top: 20px;">
-    <button onclick="generateMock()">Generate Mock</button>
-    <button onclick="checkAnswers()">Check Answers</button>
-  </div>
-</div> <!-- Close the controls card -->
-
-  <div id="instructions" style="margin: 20px 0; font-size: 15px; color: #333; white-space: pre-wrap;"></div>
-  <div class="stats" id="stats"></div>
-  <div id="summary"></div>
-  <div id="problems"></div>
-
-  <!-- Report Modal -->
-  <div id="reportModal" class="modal">
-    <div class="modal-content">
-      <span class="modal-close" onclick="closeReportModal()">&times;</span>
-      <div class="modal-header">Report Problem Issue</div>
-      
-      <label class="modal-label">Issue Type:</label>
-      <select id="reportType" class="modal-select">
-        <option value="wrong_answer">Wrong Answer</option>
-        <option value="wrong_latex">Wrong LaTeX / Formatting</option>
-        <option value="unclear_problem">Unclear Problem Statement</option>
-        <option value="other">Other</option>
+    <div style="background: white; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 32px; border: 1px solid #e9ecef;">
+      <div class="mode-toggle">
+        <label>
+          <input type="checkbox" id="expandedDbCheckbox" />
+          Use Expanded Problem Database
+        </label>
+        &nbsp;&nbsp;&nbsp;
+        <label>
+          <input type="checkbox" id="fullDbCheckbox" />
+          Use Full Database (No Automatic Answer Check)
+        </label>
+        <br><br>
+        <label>
+          <input type="checkbox" id="onlyReviewedCheckbox" />
+          Only Use Manually Reviewed Problems
+        </label>
+        &nbsp;&nbsp;&nbsp;
+        <label>
+          <input type="checkbox" id="excludeBadCheckbox" />
+          Exclude Bad Problems
+        </label>
+      </div>
+      <label for="difficulty" style="font-weight: 600; color: #004488; font-size: 15px;">Select Difficulty Level:</label>
+      <select id="difficulty">
+        <option value="1">1 - Easiest</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5" selected>5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10 - Hardest</option>
       </select>
-      
-      <label class="modal-label">Additional Details (Optional):</label>
-      <textarea id="reportDetails" class="modal-textarea" placeholder="Please provide any additional information about the issue..."></textarea>
-      
-      <button class="modal-submit" id="submitReport">Submit Report</button>
+
+      <div style="margin-top: 24px;">
+        <button onclick="generateMock()">Generate Mock</button>
+        <button onclick="checkAnswers()">Check Answers</button>
+      </div>
     </div>
-  </div>
 
-  <script>
-    // Ensure only one checkbox can be selected at a time
-    const expandedCheckbox = document.getElementById('expandedDbCheckbox');
-    const fullCheckbox = document.getElementById('fullDbCheckbox');
-    expandedCheckbox.addEventListener('change', () => {
-      if (expandedCheckbox.checked) fullCheckbox.checked = false;
-    });
-    fullCheckbox.addEventListener('change', () => {
-      if (fullCheckbox.checked) expandedCheckbox.checked = false;
-    });
+    <div id="instructions"></div>
+    <div class="stats" id="stats"></div>
+    <div id="summary"></div>
+    <div id="problems"></div>
 
-    const difficultyTemplate = {
-      "1": { "2.5": 1, "3.0": 3, "3.5": 3, "4.0": 3, "4.5": 2, "5.0": 2, "5.5": 1, "6.0": 0, "6.5": 0, "7.0": 0, "7.5": 0, "8.0": 0 },
-      "2": { "2.5": 1, "3.0": 3, "3.5": 3, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 1, "6.0": 1, "6.5": 1, "7.0": 0, "7.5": 0, "8.0": 0 },
-      "3": { "2.5": 0, "3.0": 3, "3.5": 2, "4.0": 3, "4.5": 2, "5.0": 1, "5.5": 1, "6.0": 1, "6.5": 2, "7.0": 0, "7.5": 0, "8.0": 0 },
-      "4": { "2.5": 0, "3.0": 3, "3.5": 2, "4.0": 2, "4.5": 2, "5.0": 2, "5.5": 1, "6.0": 1, "6.5": 1, "7.0": 1, "7.5": 0, "8.0": 0 },
-      "5": { "2.5": 0, "3.0": 2, "3.5": 3, "4.0": 2, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 1, "6.5": 1, "7.0": 1, "7.5": 0, "8.0": 0 },
-      "6": { "2.5": 0, "3.0": 2, "3.5": 2, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 2, "6.0": 2, "6.5": 1, "7.0": 1, "7.5": 0, "8.0": 0 },
-      "7": { "2.5": 0, "3.0": 2, "3.5": 2, "4.0": 1, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 1, "6.5": 1, "7.0": 2, "7.5": 1, "8.0": 0 },
-      "8": { "2.5": 0, "3.0": 1, "3.5": 2, "4.0": 2, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 2, "6.5": 1, "7.0": 1, "7.5": 1, "8.0": 0 },
-      "9": { "2.5": 0, "3.0": 1, "3.5": 1, "4.0": 2, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 1, "6.5": 2, "7.0": 1, "7.5": 2, "8.0": 0 },
-      "10": { "2.5": 0, "3.0": 0, "3.5": 1, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 2, "6.0": 2, "6.5": 1, "7.0": 1, "7.5": 2, "8.0": 1 }
-    };
+    <div id="reportModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeReportModal()">&times;</span>
+        <div class="modal-header">Report Problem Issue</div>
+        
+        <label class="modal-label">Issue Type:</label>
+        <select id="reportType" class="modal-select">
+          <option value="wrong_answer">Wrong Answer</option>
+          <option value="wrong_latex">Wrong LaTeX / Formatting</option>
+          <option value="unclear_problem">Unclear Problem Statement</option>
+          <option value="other">Other</option>
+        </select>
+        
+        <label class="modal-label">Additional Details (Optional):</label>
+        <textarea id="reportDetails" class="modal-textarea" placeholder="Please provide any additional information about the issue..."></textarea>
+        
+        <button class="modal-submit" id="submitReport">Submit Report</button>
+      </div>
+    </div>
 
-    function bucketizeFine() {
-      const buckets = {};
-      for (let d = 2.5; d <= 8; d += 0.5) {
-        buckets[d.toFixed(1)] = [];
-      }
+    <script>
+      const expandedCheckbox = document.getElementById('expandedDbCheckbox');
+      const fullCheckbox = document.getElementById('fullDbCheckbox');
+      expandedCheckbox.addEventListener('change', () => {
+        if (expandedCheckbox.checked) fullCheckbox.checked = false;
+      });
+      fullCheckbox.addEventListener('change', () => {
+        if (fullCheckbox.checked) expandedCheckbox.checked = false;
+      });
 
-      const useExpanded = expandedCheckbox.checked;
-      const useFull = fullCheckbox.checked;
-      const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
-      const excludeBad = document.getElementById('excludeBadCheckbox').checked;
+      const difficultyTemplate = {
+        "1": { "2.5": 1, "3.0": 3, "3.5": 3, "4.0": 3, "4.5": 2, "5.0": 2, "5.5": 1, "6.0": 0, "6.5": 0, "7.0": 0, "7.5": 0, "8.0": 0 },
+        "2": { "2.5": 1, "3.0": 3, "3.5": 3, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 1, "6.0": 1, "6.5": 1, "7.0": 0, "7.5": 0, "8.0": 0 },
+        "3": { "2.5": 0, "3.0": 3, "3.5": 2, "4.0": 3, "4.5": 2, "5.0": 1, "5.5": 1, "6.0": 1, "6.5": 2, "7.0": 0, "7.5": 0, "8.0": 0 },
+        "4": { "2.5": 0, "3.0": 3, "3.5": 2, "4.0": 2, "4.5": 2, "5.0": 2, "5.5": 1, "6.0": 1, "6.5": 1, "7.0": 1, "7.5": 0, "8.0": 0 },
+        "5": { "2.5": 0, "3.0": 2, "3.5": 3, "4.0": 2, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 1, "6.5": 1, "7.0": 1, "7.5": 0, "8.0": 0 },
+        "6": { "2.5": 0, "3.0": 2, "3.5": 2, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 2, "6.0": 2, "6.5": 1, "7.0": 1, "7.5": 0, "8.0": 0 },
+        "7": { "2.5": 0, "3.0": 2, "3.5": 2, "4.0": 1, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 1, "6.5": 1, "7.0": 2, "7.5": 1, "8.0": 0 },
+        "8": { "2.5": 0, "3.0": 1, "3.5": 2, "4.0": 2, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 2, "6.5": 1, "7.0": 1, "7.5": 1, "8.0": 0 },
+        "9": { "2.5": 0, "3.0": 1, "3.5": 1, "4.0": 2, "4.5": 1, "5.0": 2, "5.5": 2, "6.0": 1, "6.5": 2, "7.0": 1, "7.5": 2, "8.0": 0 },
+        "10": { "2.5": 0, "3.0": 0, "3.5": 1, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 2, "6.0": 2, "6.5": 1, "7.0": 1, "7.5": 2, "8.0": 1 }
+      };
 
-      for (const p of allProblems) {
-        let d = parseFloat(p.difficulty);
+      function bucketizeFine() {
+        const buckets = {};
+        for (let d = 2.5; d <= 8; d += 0.5) {
+          buckets[d.toFixed(1)] = [];
+        }
 
-        if (isNaN(d)) continue;
-        // Apply review filters
-        if (onlyReviewed && !p.manually_reviewed) continue;
-        if (excludeBad && p.bad_problem) continue;
+        const useExpanded = expandedCheckbox.checked;
+        const useFull = fullCheckbox.checked;
+        const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
+        const excludeBad = document.getElementById('excludeBadCheckbox').checked;
 
-        if (useFull) {
-          // In "Use Full Database" mode, include all problems regardless of answer type or aime_answer
+        for (const p of allProblems) {
+          let d = parseFloat(p.difficulty);
+          if (isNaN(d)) continue;
+          if (onlyReviewed && !p.manually_reviewed) continue;
+          if (excludeBad && p.bad_problem) continue;
+
+          if (useFull) {
+            const key = (Math.round(d * 2) / 2).toFixed(1);
+            if (buckets[key]) {
+              buckets[key].push(p);
+            }
+            continue;
+          }
+
+          if (useExpanded) {
+            if (p.aime_answer === null || p.aime_answer === undefined) continue;
+          } else {
+            const answerNum = parseInt(p.answer);
+            if (isNaN(answerNum) || answerNum < 0 || answerNum > 999) continue;
+          }
+
           const key = (Math.round(d * 2) / 2).toFixed(1);
           if (buckets[key]) {
             buckets[key].push(p);
           }
-          continue; // Skip further filtering
         }
 
-        if (useExpanded) {
-          // In "Use Expanded Problem Database" mode, include only problems with "aime_answer"
-          if (p.aime_answer === null || p.aime_answer === undefined) continue;
-        } else {
-          // Default mode: Only include problems with answer between 0-999
-          const answerNum = parseInt(p.answer);
-          if (isNaN(answerNum) || answerNum < 0 || answerNum > 999) continue;
+        return buckets;
+      }
+
+      function sample(arr, n) {
+        const copy = [...arr];
+        const result = [];
+        while (result.length < n && copy.length > 0) {
+          const idx = Math.floor(Math.random() * copy.length);
+          result.push(copy.splice(idx, 1)[0]);
         }
-
-        const key = (Math.round(d * 2) / 2).toFixed(1);
-        if (buckets[key]) {
-          buckets[key].push(p);
-        }
+        return result;
       }
 
-      return buckets;
-    }
+      let currentReportProblemId = null;
 
-    function sample(arr, n) {
-      const copy = [...arr];
-      const result = [];
-      while (result.length < n && copy.length > 0) {
-        const idx = Math.floor(Math.random() * copy.length);
-        result.push(copy.splice(idx, 1)[0]);
+      function openReportModal(problemId) {
+        currentReportProblemId = problemId;
+        document.getElementById('reportModal').style.display = 'block';
+        document.getElementById('reportDetails').value = '';
+        document.getElementById('reportType').value = 'wrong_answer';
       }
-      return result;
-    }
 
-    let currentReportProblemId = null;
-
-    function openReportModal(problemId) {
-      currentReportProblemId = problemId;
-      document.getElementById('reportModal').style.display = 'block';
-      document.getElementById('reportDetails').value = '';
-      document.getElementById('reportType').value = 'wrong_answer';
-    }
-
-    function closeReportModal() {
-      document.getElementById('reportModal').style.display = 'none';
-      currentReportProblemId = null;
-    }
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-      const modal = document.getElementById('reportModal');
-      if (event.target === modal) {
-        closeReportModal();
+      function closeReportModal() {
+        document.getElementById('reportModal').style.display = 'none';
+        currentReportProblemId = null;
       }
-    }
 
-    document.getElementById('submitReport').addEventListener('click', async () => {
-      if (!currentReportProblemId) return;
-
-      const submitButton = document.getElementById('submitReport');
-      submitButton.disabled = true;
-      submitButton.textContent = 'Submitting...';
-
-      const reportType = document.getElementById('reportType').value;
-      const details = document.getElementById('reportDetails').value.trim();
-
-      try {
-        const { error } = await supabaseClient
-          .from('problem_reports')
-          .insert([
-            {
-              problem_id: currentReportProblemId,
-              report_type: reportType,
-              details: details || null,
-              created_at: new Date().toISOString()
-            }
-          ]);
-
-        if (error) {
-          console.error('Error submitting report:', error);
-          alert('Failed to submit report. Please try again.');
-        } else {
-          alert('Thank you! Your report has been submitted.');
+      window.onclick = function(event) {
+        const modal = document.getElementById('reportModal');
+        if (event.target === modal) {
           closeReportModal();
         }
-      } catch (err) {
-        console.error('Error:', err);
-        alert('Failed to submit report. Please try again.');
-      } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Submit Report';
       }
-    });
 
-    async function replaceProblem(index) {
-      const currentProblem = chosenProblems[index];
-      const currentDifficulty = (Math.round(parseFloat(currentProblem.difficulty) * 2) / 2).toFixed(1);
-      
-      const useExpanded = expandedCheckbox.checked;
-      const useFull = fullCheckbox.checked;
-      const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
-      const excludeBad = document.getElementById('excludeBadCheckbox').checked;
-      
-      // Get all problems of the same difficulty bucket
-      let availableProblems = [];
-      
-      for (const p of allProblems) {
-        const d = parseFloat(p.difficulty);
-        if (isNaN(d)) continue;
-        
-        const bucketDiff = (Math.round(d * 2) / 2).toFixed(1);
-        if (bucketDiff !== currentDifficulty) continue;
-        // Apply review filters (same as in bucketizeFine)
-        if (onlyReviewed && !p.manually_reviewed) continue;
-        if (excludeBad && p.bad_problem) continue;
-        // Apply same filtering logic as bucketizeFine
-        if (useFull) {
-          availableProblems.push(p);
-        } else if (useExpanded) {
-          if (p.aime_answer !== null && p.aime_answer !== undefined) {
-            availableProblems.push(p);
-          }
-        } else {
-          const answerNum = parseInt(p.answer);
-          if (!isNaN(answerNum) && answerNum >= 0 && answerNum <= 999) {
-            availableProblems.push(p);
-          }
-        }
-      }
-      
-      // Remove problems already in the current mock
-      const usedIds = new Set(chosenProblems.map(p => p.id));
-      availableProblems = availableProblems.filter(p => !usedIds.has(p.id));
-      
-      if (availableProblems.length === 0) {
-        alert(`No more problems available at difficulty ${currentDifficulty}`);
-        return;
-      }
-      
-      // Pick a random replacement
-      const newProblem = availableProblems[Math.floor(Math.random() * availableProblems.length)];
-      chosenProblems[index] = newProblem;
-      
-      // Re-render that specific problem
-      const problemDiv = document.querySelector(`.problem[data-problem-index="${index}"]`);
-      if (!problemDiv) return;
-      
-      problemDiv.className = "problem mathjax-process";
-      problemDiv.setAttribute("data-problem-index", index);
-      
-      if (useFull) {
-        problemDiv.innerHTML = `
-          <strong>Problem ${index + 1}:</strong>
-          <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
-          <p>${newProblem.text}</p>
-          <div>
-            <label><input type="checkbox" class="override" data-index="${index}" /> I was correct</label>
-          </div>
-          <div><strong>Source:</strong> ${newProblem.source || "Unknown"}</div>
-          <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
-          <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
-          <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
-        `;
-      } else {
-        problemDiv.innerHTML = `
-          <strong>Problem ${index + 1}:</strong>
-          <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
-          <p>${newProblem.text}</p>
-          <div class="answer">Answer: <input type="text" maxlength="3" data-index="${index}" /></div>
-          <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
-          <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
-          <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
-        `;
-      }
-      
-      // Re-render MathJax for the new problem
-      if (window.MathJax) {
+      document.getElementById('submitReport').addEventListener('click', async () => {
+        if (!currentReportProblemId) return;
+
+        const submitButton = document.getElementById('submitReport');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        const reportType = document.getElementById('reportType').value;
+        const details = document.getElementById('reportDetails').value.trim();
+
         try {
-          await MathJax.typesetPromise([problemDiv]);
+          const { error } = await supabaseClient
+            .from('problem_reports')
+            .insert([
+              {
+                problem_id: currentReportProblemId,
+                report_type: reportType,
+                details: details || null,
+                created_at: new Date().toISOString()
+              }
+            ]);
+
+          if (error) {
+            console.error('Error submitting report:', error);
+            alert('Failed to submit report. Please try again.');
+          } else {
+            alert('Thank you! Your report has been submitted.');
+            closeReportModal();
+          }
         } catch (err) {
-          console.error('MathJax typeset failed: ', err);
+          console.error('Error:', err);
+          alert('Failed to submit report. Please try again.');
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Submit Report';
         }
-      }
-    }
-
-    async function generateMock() {
-      if (allProblems.length === 0) {
-        alert("Problems are still loading, please wait a moment.");
-        return;
-      }
-
-      const useExpanded = expandedCheckbox.checked;
-      const useFull = fullCheckbox.checked;
-      const level = document.getElementById("difficulty").value;
-
-      document.getElementById("instructions").textContent = "";
-      document.getElementById("summary").textContent = "";
-
-      if (useExpanded) {
-        document.getElementById("instructions").textContent =
-  `Note: Problems in the expanded database may include answers not limited to positive integers from 0 to 999.
-  Examples include fractions (e.g., \\( \\frac{3}{5} \\)), powers (e.g., \\( 2^{10} \\)), or sums.
-  Enter your answer as the sum of components mod 1000.
-  Examples:
-  - \\( \\frac{3}{5} \\) → 8
-  - \\( 2^{10} / 3 \\) → 15
-  - \\( 7 \\) → 7
-  `;
-      }
-
-      if (useFull) {
-        document.getElementById("instructions").textContent =
-  `Note: Problems in the full database may not have answers available for automatic checking.
-  You will need to manually check the answers for these problems.`;
-      }
-
-      const buckets = bucketizeFine();
-      const plan = difficultyTemplate[level];
-
-      let statText = "Available / Needed problems:\n";
-      for (const [diff, countNeeded] of Object.entries(plan)) {
-        const available = buckets[diff]?.length || 0;
-        statText += `  (${diff}): ${available} / ${countNeeded}\n`;
-      }
-      document.getElementById("stats").innerHTML = `
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 30px;">
-          <details>
-            <summary style="cursor: pointer; font-weight: 600; color: #004488;">Available problems by difficulty (click to expand)</summary>
-            <pre style="margin-top: 15px; font-size: 13px; line-height: 1.8;">${statText}</pre>
-          </details>
-        </div>
-      `;
-
-      // Check if we have enough problems in each bucket
-      for (const [diff, countNeeded] of Object.entries(plan)) {
-        if ((buckets[diff]?.length || 0) < countNeeded) {
-          document.getElementById("problems").innerHTML =
-            `<p style="color:red;"><strong>Not enough problems in bucket ${diff} to generate mock.</strong></p>`;
-          return;
-        }
-      }
-
-      // Sample problems according to the difficulty template
-      chosenProblems = [];
-      for (const [diff, count] of Object.entries(plan)) {
-        chosenProblems.push(...sample(buckets[diff], count));
-      }
-
-      const container = document.getElementById("problems");
-      container.innerHTML = "";
-
-      chosenProblems.forEach((p, i) => {
-        const div = document.createElement("div");
-        div.className = "problem mathjax-process";
-        div.setAttribute("data-problem-index", i);
-
-        if (useFull) {
-          div.innerHTML = `
-            <strong>Problem ${i + 1}:</strong>
-            <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
-            <p>${p.text}</p>
-            <div>
-              <label><input type="checkbox" class="override" data-index="${i}" /> I was correct</label>
-            </div>
-            <div><strong>Source:</strong> ${p.source || "Unknown"}</div>
-            <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
-            <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
-            <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
-          `;
-        } else {
-          div.innerHTML = `
-            <strong>Problem ${i + 1}:</strong>
-            <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
-            <p>${p.text}</p>
-            <div class="answer">Answer: <input type="text" maxlength="3" data-index="${i}" /></div>
-            <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
-            <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
-            <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
-          `;
-        }
-
-        container.appendChild(div);
       });
 
-      if (window.MathJax) {
-        try {
-          await MathJax.typesetPromise();
-        } catch (err) {
-          console.error('MathJax typeset failed: ', err);
+      async function replaceProblem(index) {
+        const currentProblem = chosenProblems[index];
+        const currentDifficulty = (Math.round(parseFloat(currentProblem.difficulty) * 2) / 2).toFixed(1);
+        
+        const useExpanded = expandedCheckbox.checked;
+        const useFull = fullCheckbox.checked;
+        const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
+        const excludeBad = document.getElementById('excludeBadCheckbox').checked;
+        
+        let availableProblems = [];
+        
+        for (const p of allProblems) {
+          const d = parseFloat(p.difficulty);
+          if (isNaN(d)) continue;
+          
+          const bucketDiff = (Math.round(d * 2) / 2).toFixed(1);
+          if (bucketDiff !== currentDifficulty) continue;
+          if (onlyReviewed && !p.manually_reviewed) continue;
+          if (excludeBad && p.bad_problem) continue;
+          if (useFull) {
+            availableProblems.push(p);
+          } else if (useExpanded) {
+            if (p.aime_answer !== null && p.aime_answer !== undefined) {
+              availableProblems.push(p);
+            }
+          } else {
+            const answerNum = parseInt(p.answer);
+            if (!isNaN(answerNum) && answerNum >= 0 && answerNum <= 999) {
+              availableProblems.push(p);
+            }
+          }
+        }
+        
+        const usedIds = new Set(chosenProblems.map(p => p.id));
+        availableProblems = availableProblems.filter(p => !usedIds.has(p.id));
+        
+        if (availableProblems.length === 0) {
+          alert(`No more problems available at difficulty ${currentDifficulty}`);
+          return;
+        }
+        
+        const newProblem = availableProblems[Math.floor(Math.random() * availableProblems.length)];
+        chosenProblems[index] = newProblem;
+        
+        const problemDiv = document.querySelector(`.problem[data-problem-index="${index}"]`);
+        if (!problemDiv) return;
+        
+        problemDiv.className = "problem mathjax-process";
+        problemDiv.setAttribute("data-problem-index", index);
+        
+        if (useFull) {
+          problemDiv.innerHTML = `
+            <strong>Problem ${index + 1}:</strong>
+            <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
+            <p>${newProblem.text}</p>
+            <div>
+              <label><input type="checkbox" class="override" data-index="${index}" /> I was correct</label>
+            </div>
+            <div><strong>Source:</strong> ${newProblem.source || "Unknown"}</div>
+            <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
+            <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
+            <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
+          `;
+        } else {
+          problemDiv.innerHTML = `
+            <strong>Problem ${index + 1}:</strong>
+            <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
+            <p>${newProblem.text}</p>
+            <div class="answer">Answer: <input type="text" maxlength="3" data-index="${index}" /></div>
+            <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
+            <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
+            <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
+          `;
+        }
+        
+        if (window.MathJax) {
+          try {
+            await MathJax.typesetPromise([problemDiv]);
+          } catch (err) {
+            console.error('MathJax typeset failed: ', err);
+          }
         }
       }
-    }
 
-    function checkAnswers() {
-      let correctCount = 0;
-      let results = [];
-
-      chosenProblems.forEach((p, i) => {
-        const overrideCheckbox = document.querySelector(`input.override[data-index="${i}"]`);
-        const userOverride = overrideCheckbox?.checked || false;
-        const problemDiv = document.querySelector(`.problem[data-problem-index="${i}"]`);
-        
-        // Remove any existing status icon
-        const existingIcon = problemDiv?.querySelector('.status-icon');
-        if (existingIcon) existingIcon.remove();
-
-        if (userOverride) {
-          correctCount++;
-          results.push({ index: i, status: 'override' });
-          if (problemDiv) {
-            const icon = document.createElement('div');
-            icon.className = 'status-icon override';
-            icon.textContent = '✓';
-            problemDiv.appendChild(icon);
-          }
+      async function generateMock() {
+        if (allProblems.length === 0) {
+          alert("Problems are still loading, please wait a moment.");
           return;
         }
 
-        const answerInput = document.querySelector(`input[data-index="${i}"]:not(.override)`);
+        const useExpanded = expandedCheckbox.checked;
+        const useFull = fullCheckbox.checked;
+        const level = document.getElementById("difficulty").value;
 
-        if (answerInput) {
-          const userAnswer = answerInput.value.trim();
+        document.getElementById("instructions").textContent = "";
+        document.getElementById("summary").textContent = "";
+
+        if (useExpanded) {
+          document.getElementById("instructions").textContent =
+    `Note: Problems in the expanded database may include answers not limited to positive integers from 0 to 999.
+    Examples include fractions (e.g., \\( \\frac{3}{5} \\)), powers (e.g., \\( 2^{10} \\)), or sums.
+    Enter your answer as the sum of components mod 1000.
+    Examples:
+    - \\( \\frac{3}{5} \\) → 8
+    - \\( 2^{10} / 3 \\) → 15
+    - \\( 7 \\) → 7
+    `;
+        }
+
+        if (useFull) {
+          document.getElementById("instructions").textContent =
+    `Note: Problems in the full database may not have answers available for automatic checking.
+    You will need to manually check the answers for these problems.`;
+        }
+
+        const buckets = bucketizeFine();
+        const plan = difficultyTemplate[level];
+
+        let statText = "Available / Needed problems:\n";
+        for (const [diff, countNeeded] of Object.entries(plan)) {
+          const available = buckets[diff]?.length || 0;
+          statText += `  (${diff}): ${available} / ${countNeeded}\n`;
+        }
+        document.getElementById("stats").innerHTML = `
+          <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 30px; border: 1px solid #e9ecef;">
+            <details>
+              <summary style="cursor: pointer; font-weight: 600; color: #004488;">Available problems by difficulty (click to expand)</summary>
+              <pre style="margin-top: 15px; font-size: 13px; line-height: 1.8;">${statText}</pre>
+            </details>
+          </div>
+        `;
+
+        for (const [diff, countNeeded] of Object.entries(plan)) {
+          if ((buckets[diff]?.length || 0) < countNeeded) {
+            document.getElementById("problems").innerHTML =
+              `<p style="color:red;"><strong>Not enough problems in bucket ${diff} to generate mock.</strong></p>`;
+            return;
+          }
+        }
+
+        chosenProblems = [];
+        for (const [diff, count] of Object.entries(plan)) {
+          chosenProblems.push(...sample(buckets[diff], count));
+        }
+
+        const container = document.getElementById("problems");
+        container.innerHTML = "";
+
+        chosenProblems.forEach((p, i) => {
+          const div = document.createElement("div");
+          div.className = "problem mathjax-process";
+          div.setAttribute("data-problem-index", i);
+
+          if (useFull) {
+            div.innerHTML = `
+              <strong>Problem ${i + 1}:</strong>
+              <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
+              <p>${p.text}</p>
+              <div>
+                <label><input type="checkbox" class="override" data-index="${i}" /> I was correct</label>
+              </div>
+              <div><strong>Source:</strong> ${p.source || "Unknown"}</div>
+              <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
+              <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
+              <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
+            `;
+          } else {
+            div.innerHTML = `
+              <strong>Problem ${i + 1}:</strong>
+              <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
+              <p>${p.text}</p>
+              <div class="answer">Answer: <input type="text" maxlength="3" data-index="${i}" /></div>
+              <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
+              <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
+              <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
+            `;
+          }
+
+          container.appendChild(div);
+        });
+
+        if (window.MathJax) {
+          try {
+            await MathJax.typesetPromise();
+          } catch (err) {
+            console.error('MathJax typeset failed: ', err);
+          }
+        }
+      }
+
+      function checkAnswers() {
+        let correctCount = 0;
+        let results = [];
+
+        chosenProblems.forEach((p, i) => {
+          const overrideCheckbox = document.querySelector(`input.override[data-index="${i}"]`);
+          const userOverride = overrideCheckbox?.checked || false;
+          const problemDiv = document.querySelector(`.problem[data-problem-index="${i}"]`);
           
-          // Check if user provided an answer
-          if (userAnswer === '') {
-            results.push({ index: i, status: 'unanswered' });
+          const existingIcon = problemDiv?.querySelector('.status-icon');
+          if (existingIcon) existingIcon.remove();
+
+          if (userOverride) {
+            correctCount++;
+            results.push({ index: i, status: 'override' });
             if (problemDiv) {
               const icon = document.createElement('div');
-              icon.className = 'status-icon unanswered';
-              icon.textContent = '–';
+              icon.className = 'status-icon override';
+              icon.textContent = '✓';
               problemDiv.appendChild(icon);
             }
             return;
           }
-          
-          let correct = false;
 
-          if ("aime_answer" in p) {
-            const expected = String(p.aime_answer % 1000);
-            correct = userAnswer === expected;
-          } else if ("answer" in p) {
-            correct = userAnswer === String(p.answer);
+          const answerInput = document.querySelector(`input[data-index="${i}"]:not(.override)`);
+
+          if (answerInput) {
+            const userAnswer = answerInput.value.trim();
+            
+            if (userAnswer === '') {
+              results.push({ index: i, status: 'unanswered' });
+              if (problemDiv) {
+                const icon = document.createElement('div');
+                icon.className = 'status-icon unanswered';
+                icon.textContent = '–';
+                problemDiv.appendChild(icon);
+              }
+              return;
+            }
+            
+            let correct = false;
+
+            if ("aime_answer" in p) {
+              const expected = String(p.aime_answer % 1000);
+              correct = userAnswer === expected;
+            } else if ("answer" in p) {
+              correct = userAnswer === String(p.answer);
+            }
+
+            if (correct) correctCount++;
+            results.push({ index: i, status: correct ? 'correct' : 'incorrect' });
+            
+            if (problemDiv) {
+              const icon = document.createElement('div');
+              icon.className = `status-icon ${correct ? 'correct' : 'incorrect'}`;
+              icon.textContent = correct ? '✓' : '✗';
+              problemDiv.appendChild(icon);
+            }
+          } else {
+            results.push({ index: i, status: 'unanswered' });
           }
+        });
 
-          if (correct) correctCount++;
-          results.push({ index: i, status: correct ? 'correct' : 'incorrect' });
-          
-          if (problemDiv) {
-            const icon = document.createElement('div');
-            icon.className = `status-icon ${correct ? 'correct' : 'incorrect'}`;
-            icon.textContent = correct ? '✓' : '✗';
-            problemDiv.appendChild(icon);
-          }
-        } else {
-          results.push({ index: i, status: 'unanswered' });
-        }
-      });
-
-      // Update summary with visual grid
-      const summaryDiv = document.getElementById("summary");
-      summaryDiv.innerHTML = `
-        <div class="summary-header">Score: ${correctCount} / ${chosenProblems.length}</div>
-        <div class="problem-grid">
-          ${results.map(r => `
-            <div class="problem-indicator ${r.status}" title="Problem ${r.index + 1}: ${r.status}">
-              ${r.index + 1}
-            </div>
-          `).join('')}
-        </div>
-      `;
-    }
-  </script>
-  </div> <!-- Close the max-width wrapper -->
+        const summaryDiv = document.getElementById("summary");
+        summaryDiv.innerHTML = `
+          <div class="summary-header">Score: ${correctCount} / ${chosenProblems.length}</div>
+          <div class="problem-grid">
+            ${results.map(r => `
+              <div class="problem-indicator ${r.status}" title="Problem ${r.index + 1}: ${r.status}">
+                ${r.index + 1}
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    </script>
+  </div>
 </body>
 </html>
