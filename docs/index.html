@@ -444,9 +444,9 @@
           // In "Use Expanded Problem Database" mode, include only problems with "aime_answer"
           if (p.aime_answer === null || p.aime_answer === undefined) continue;
         } else {
-          // Default mode: Only include problems with "positive integer <= 1000" answers
-          const answerType = p.answer_type?.toLowerCase().trim();
-          if (answerType !== "positive integer <= 1000") continue;
+          // Default mode: Only include problems with answer between 0-999
+          const answerNum = parseInt(p.answer);
+          if (isNaN(answerNum) || answerNum < 0 || answerNum > 999) continue;
         }
 
         const key = (Math.round(d * 2) / 2).toFixed(1);
@@ -557,8 +557,8 @@
             availableProblems.push(p);
           }
         } else {
-          const answerType = p.answer_type?.toLowerCase().trim();
-          if (answerType === "positive integer <= 1000") {
+          const answerNum = parseInt(p.answer);
+          if (!isNaN(answerNum) && answerNum >= 0 && answerNum <= 999) {
             availableProblems.push(p);
           }
         }
