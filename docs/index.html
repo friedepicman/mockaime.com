@@ -52,10 +52,35 @@
 
     let allProblems = [];
     let chosenProblems = [];
+    let problemsLoaded = false;
 
     window.onload = async () => {
+      updateButtonStates();
       allProblems = await loadProblemsFromSupabase();
+      problemsLoaded = true;
+      updateButtonStates();
     };
+
+    function updateButtonStates() {
+      const generateBtn = document.getElementById('generateBtn');
+      const checkBtn = document.getElementById('checkBtn');
+      
+      if (problemsLoaded) {
+        generateBtn.disabled = false;
+        checkBtn.disabled = false;
+        generateBtn.style.opacity = '1';
+        checkBtn.style.opacity = '1';
+        generateBtn.style.cursor = 'pointer';
+        checkBtn.style.cursor = 'pointer';
+      } else {
+        generateBtn.disabled = true;
+        checkBtn.disabled = true;
+        generateBtn.style.opacity = '0.5';
+        checkBtn.style.opacity = '0.5';
+        generateBtn.style.cursor = 'not-allowed';
+        checkBtn.style.cursor = 'not-allowed';
+      }
+    }
   </script>
 
   <style>
@@ -120,13 +145,18 @@
       box-shadow: 0 2px 4px rgba(0,68,136,0.2);
     }
     
-    button:hover {
+    button:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0,68,136,0.3);
     }
     
-    button:active {
+    button:active:not(:disabled) {
       transform: translateY(0);
+    }
+    
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
     }
     
     select {
@@ -144,6 +174,7 @@
     .problem {
       background: white;
       padding: 24px;
+      padding-top: 48px;
       margin: 20px 0;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -158,16 +189,16 @@
       border-color: #0066cc;
     }
     
-    /* Better answer input styling */
+    /* Better answer input styling - MADE SMALLER */
     .answer {
       margin-top: 16px;
       margin-bottom: 12px;
     }
     
     input[type="text"] {
-      padding: 12px 16px;
-      font-size: 18px;
-      width: 120px;
+      padding: 8px 12px;
+      font-size: 16px;
+      width: 80px;
       border: 2px solid #dee2e6;
       border-radius: 8px;
       transition: all 0.2s;
@@ -351,6 +382,26 @@
       transform: translateY(-1px);
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+
+    /* NEW: Invisible AoPS link button in top right */
+    .aops-link-top {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      color: #004488;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      background: transparent;
+    }
+    
+    .aops-link-top:hover {
+      background: #f8f9fa;
+      color: #0066cc;
+    }
     
     /* Improved modal */
     .modal {
@@ -509,26 +560,7 @@
     a:hover {
       color: #0066cc;
     }
-    
-    .aops-link {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 6px 14px;
-      background: #f8f9fa;
-      border: 1px solid #dee2e6;
-      border-radius: 6px;
-      color: #004488;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-    
-    .aops-link:hover {
-      background: #e9ecef;
-      border-color: #004488;
-      transform: translateY(-1px);
-    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 1.8rem;
@@ -545,6 +577,7 @@
       
       .problem {
         padding: 16px;
+        padding-top: 48px;
       }
     }
   </style>
@@ -615,8 +648,8 @@
       </select>
 
       <div style="margin-top: 24px;">
-        <button onclick="generateMock()">Generate Mock</button>
-        <button onclick="checkAnswers()">Check Answers</button>
+        <button id="generateBtn" onclick="generateMock()">Generate Mock</button>
+        <button id="checkBtn" onclick="checkAnswers()">Check Answers</button>
       </div>
     </div>
 
@@ -830,6 +863,7 @@
         
         if (useFull) {
           problemDiv.innerHTML = `
+            <a href="${newProblem.link}" target="_blank" class="aops-link-top">View Discussion</a>
             <strong>Problem ${index + 1}:</strong>
             <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
             <p>${newProblem.text}</p>
@@ -837,19 +871,22 @@
               <label><input type="checkbox" class="override" data-index="${index}" /> I was correct</label>
             </div>
             <div><strong>Source:</strong> ${newProblem.source || "Unknown"}</div>
-            <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
-            <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
-            <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
+            <div style="margin-top: 12px;">
+              <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
+              <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
+            </div>
           `;
         } else {
           problemDiv.innerHTML = `
+            <a href="${newProblem.link}" target="_blank" class="aops-link-top">View Discussion</a>
             <strong>Problem ${index + 1}:</strong>
             <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
             <p>${newProblem.text}</p>
-            <div class="answer">Answer: <input type="text" maxlength="3" data-index="${index}" /></div>
-            <div><a href="${newProblem.link}" target="_blank">[View Discussion]</a></div>
-            <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
-            <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
+            <div class="answer">Answer: <input type="text" maxlength="3" data-index="${index}" placeholder="000" /></div>
+            <div style="margin-top: 12px;">
+              <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
+              <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
+            </div>
           `;
         }
         
@@ -933,6 +970,7 @@
 
           if (useFull) {
             div.innerHTML = `
+              <a href="${p.link}" target="_blank" class="aops-link-top">View Discussion</a>
               <strong>Problem ${i + 1}:</strong>
               <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
               <p>${p.text}</p>
@@ -940,7 +978,6 @@
                 <label><input type="checkbox" class="override" data-index="${i}" /> I was correct</label>
               </div>
               <div><strong>Source:</strong> ${p.source || "Unknown"}</div>
-              <a href="${p.link}" target="_blank" class="aops-link">View Discussion on AoPS</a>
               <div style="margin-top: 12px;">
                 <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
                 <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
@@ -948,11 +985,11 @@
             `;
           } else {
             div.innerHTML = `
+              <a href="${p.link}" target="_blank" class="aops-link-top">View Discussion</a>
               <strong>Problem ${i + 1}:</strong>
               <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
               <p>${p.text}</p>
-              <div class="answer"><input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
-              <a href="${p.link}" target="_blank" class="aops-link">View Discussion on AoPS</a>
+              <div class="answer">Answer: <input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
               <div style="margin-top: 12px;">
                 <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
                 <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
