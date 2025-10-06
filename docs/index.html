@@ -94,11 +94,12 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       display: inline-block;
       font-weight: 500;
+      margin: 0 4px;
     }
     
     nav a:hover {
-      background: rgba(255,255,255,0.15);
-      border-radius: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 6px;
     }
     
     /* Improved buttons with better hover states */
@@ -165,9 +166,9 @@
     }
     
     input[type="text"] {
-      padding: 10px 14px;
-      font-size: 18px;
-      width: 80px;
+      padding: 8px 12px;
+      font-size: 16px;
+      width: 60px;
       border: 2px solid #dee2e6;
       border-radius: 8px;
       transition: all 0.2s;
@@ -517,7 +518,7 @@
       padding: 6px 12px;
       background: transparent;
       border: none;
-      color: #6c757d;
+      color: #495057;
       text-decoration: none;
       font-size: 13px;
       font-weight: 500;
@@ -526,7 +527,7 @@
     }
     
     .aops-link:hover {
-      background: rgba(0,68,136,0.08);
+      background: rgba(0,68,136,0.1);
       color: #004488;
     }
     @media (max-width: 768px) {
@@ -935,12 +936,10 @@
             div.innerHTML = `
               <strong>Problem ${i + 1}:</strong>
               <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
-              <p>${p.text}</p>
               <div>
                 <label><input type="checkbox" class="override" data-index="${i}" /> I was correct</label>
               </div>
               <div><strong>Source:</strong> ${p.source || "Unknown"}</div>
-              <a href="${p.link}" target="_blank" class="aops-link">View Discussion on AoPS</a>
               <div style="margin-top: 12px;">
                 <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
                 <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
