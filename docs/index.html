@@ -43,6 +43,12 @@
         } else {
           allProblems.push(...data);
           from += chunkSize;
+          
+          // Update loading progress
+          const loadingEl = document.getElementById('loadingProgress');
+          if (loadingEl) {
+            loadingEl.textContent = `Loading problems... ${allProblems.length}`;
+          }
         }
       }
 
@@ -59,6 +65,11 @@
       allProblems = await loadProblemsFromSupabase();
       problemsLoaded = true;
       updateButtonStates();
+      
+      const loadingEl = document.getElementById('loadingProgress');
+      if (loadingEl) {
+        loadingEl.style.display = 'none';
+      }
     };
 
     function updateButtonStates() {
@@ -84,30 +95,63 @@
   </script>
 
   <style>
-    /* ===== IMPROVED STYLES START HERE ===== */
+    :root {
+      --bg-primary: #f8f9fa;
+      --bg-secondary: #e9ecef;
+      --bg-card: white;
+      --text-primary: #212529;
+      --text-secondary: #495057;
+      --text-tertiary: #6c757d;
+      --border-color: #e9ecef;
+      --border-strong: #dee2e6;
+      --primary-blue: #004488;
+      --primary-blue-light: #0066cc;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --instruction-bg: #fff3cd;
+      --instruction-border: #ffc107;
+      --instruction-text: #856404;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #2d2d2d;
+      --bg-card: #2d2d2d;
+      --text-primary: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --text-tertiary: #888888;
+      --border-color: #404040;
+      --border-strong: #555555;
+      --primary-blue: #4a9eff;
+      --primary-blue-light: #6bb3ff;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+      --instruction-bg: #3d3520;
+      --instruction-border: #d4a50a;
+      --instruction-text: #f0d98d;
+    }
     
-    /* Base styles with better typography */
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+      background: linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 100%);
       font-size: 16px;
       line-height: 1.6;
-      color: #212529;
+      color: var(--text-primary);
+      transition: background 0.3s, color 0.3s;
     }
     
     h1 {
       text-align: center;
-      color: #004488;
+      color: var(--primary-blue);
       font-weight: 700;
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
     }
     
-    /* Improved navbar with gradient */
     nav {
-      background: linear-gradient(135deg, #004488 0%, #0066cc 100%);
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       margin-bottom: 48px;
     }
@@ -125,20 +169,36 @@
       background: rgba(255,255,255,0.15);
       border-radius: 4px;
     }
+
+    .dark-mode-toggle {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .dark-mode-toggle:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.5);
+      transform: none;
+    }
     
-    /* Improved buttons with better hover states */
     select, button {
       font-size: 16px;
       padding: 12px 20px;
       margin: 8px 5px;
       border-radius: 8px;
-      border: 1px solid #dee2e6;
+      border: 1px solid var(--border-strong);
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       font-weight: 500;
     }
     
     button {
-      background: linear-gradient(135deg, #004488 0%, #0066cc 100%);
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
       color: white;
       border: none;
       cursor: pointer;
@@ -160,70 +220,168 @@
     }
     
     select {
-      background: white;
+      background: var(--bg-card);
+      color: var(--text-primary);
       cursor: pointer;
     }
     
     select:focus {
       outline: none;
-      border-color: #0066cc;
+      border-color: var(--primary-blue-light);
       box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
     }
+
+    .loading-indicator {
+      text-align: center;
+      padding: 20px;
+      background: var(--bg-card);
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--border-color);
+      border-top: 4px solid var(--primary-blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .problem-nav {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      margin: 20px 0;
+      border: 1px solid var(--border-color);
+    }
+
+    .problem-nav-title {
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .problem-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(15, 1fr);
+      gap: 8px;
+    }
+
+    .problem-nav-item {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s;
+      color: var(--text-primary);
+    }
+
+    .problem-nav-item:hover {
+      transform: scale(1.1);
+      border-color: var(--primary-blue);
+    }
+
+    .problem-nav-item.answered {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      border-color: #4caf50;
+    }
+
+    [data-theme="dark"] .problem-nav-item.answered {
+      background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+      border-color: #66bb6a;
+      color: #e0e0e0;
+    }
     
-    /* Improved problem cards with hover effect */
     .problem {
-      background: white;
+      background: var(--bg-card);
       padding: 24px;
       padding-top: 48px;
       margin: 20px 0;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      border: 1px solid #e9ecef;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
+      scroll-margin-top: 120px;
     }
     
     .problem:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-      border-color: #0066cc;
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-blue);
+    }
+
+    @keyframes problemPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    .problem.pulse {
+      animation: problemPulse 0.3s ease-in-out;
     }
     
-    /* Better answer input styling - MADE SMALLER */
     .answer {
       margin-top: 16px;
       margin-bottom: 12px;
+    }
+
+    .answer-label {
+      color: var(--text-secondary);
+      font-weight: 500;
     }
     
     input[type="text"] {
       padding: 8px 12px;
       font-size: 16px;
       width: 80px;
-      border: 2px solid #dee2e6;
+      border: 2px solid var(--border-strong);
       border-radius: 8px;
       transition: all 0.2s;
       font-weight: 500;
       text-align: center;
+      background: var(--bg-card);
+      color: var(--text-primary);
     }
     
     input[type="text"]:focus {
       outline: none;
-      border-color: #0066cc;
-      box-shadow: 0 0 0 4px rgba(0,102,204,0.1);
+      border-color: var(--primary-blue-light);
+      box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.1);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--text-tertiary);
+      opacity: 0.5;
     }
     
-    /* Improved stats section */
     .stats {
       margin: 0 0 16px 0;
       font-size: 15px;
-      color: #495057;
+      color: var(--text-secondary);
     }
     
     .stats:empty {
       display: none;
     }
     
-    /* Better result indicators */
     .result {
       display: inline-block;
       margin-left: 12px;
@@ -239,36 +397,75 @@
       color: #dc3545;
     }
     
-    /* Improved difficulty badge */
     .difficulty-indicator {
       display: inline-block;
-      background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%);
       padding: 4px 12px;
       border-radius: 6px;
       font-size: 13px;
       margin-left: 12px;
-      color: #495057;
+      color: var(--text-secondary);
       font-weight: 600;
     }
     
-    /* Enhanced summary section */
     #summary {
       margin: 24px 0;
       padding: 24px;
-      background: white;
+      background: var(--bg-card);
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      border: 1px solid #e9ecef;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    @keyframes summarySlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #summary.show {
+      animation: summarySlideIn 0.5s ease-out;
     }
     
     .summary-header {
       font-size: 24px;
       font-weight: 700;
-      color: #004488;
+      color: var(--primary-blue);
       margin-bottom: 20px;
     }
+
+    .show-answers-btn {
+      margin-top: 16px;
+      background: #6c757d;
+    }
+
+    .show-answers-btn:hover:not(:disabled) {
+      background: #5a6268;
+    }
+
+    .answer-reveal {
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      border-left: 4px solid var(--primary-blue);
+      display: none;
+    }
+
+    .answer-reveal.show {
+      display: block;
+      animation: summarySlideIn 0.3s ease-out;
+    }
+
+    .answer-reveal strong {
+      color: var(--primary-blue);
+    }
     
-    /* Improved problem grid */
     .problem-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
@@ -295,9 +492,9 @@
     }
     
     .problem-indicator.unanswered {
-      background: #f8f9fa;
-      color: #adb5bd;
-      border-color: #dee2e6;
+      background: var(--bg-secondary);
+      color: var(--text-tertiary);
+      border-color: var(--border-strong);
     }
     
     .problem-indicator.correct {
@@ -306,12 +503,22 @@
       border-color: #28a745;
       box-shadow: 0 2px 4px rgba(40,167,69,0.2);
     }
+
+    [data-theme="dark"] .problem-indicator.correct {
+      background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+      color: #a5d6a7;
+    }
     
     .problem-indicator.incorrect {
       background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
       color: #721c24;
       border-color: #dc3545;
       box-shadow: 0 2px 4px rgba(220,53,69,0.2);
+    }
+
+    [data-theme="dark"] .problem-indicator.incorrect {
+      background: linear-gradient(135deg, #b71c1c 0%, #c62828 100%);
+      color: #ef9a9a;
     }
     
     .problem-indicator.override {
@@ -320,14 +527,23 @@
       border-color: #17a2b8;
       box-shadow: 0 2px 4px rgba(23,162,184,0.2);
     }
+
+    [data-theme="dark"] .problem-indicator.override {
+      background: linear-gradient(135deg, #006064 0%, #00838f 100%);
+      color: #80deea;
+    }
     
-    /* Improved status icons */
     .status-icon {
       position: absolute;
       top: 16px;
       right: 16px;
       font-size: 32px;
       font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .status-icon.show {
       opacity: 0.9;
     }
     
@@ -344,10 +560,9 @@
     }
     
     .status-icon.unanswered {
-      color: #adb5bd;
+      color: var(--text-tertiary);
     }
     
-    /* Better button styling */
     .replace-button, .report-button {
       display: inline-block;
       margin-top: 12px;
@@ -383,12 +598,11 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
-    /* NEW: Invisible AoPS link button in top right */
     .aops-link-top {
       position: absolute;
       top: 16px;
       right: 16px;
-      color: #004488;
+      color: var(--primary-blue);
       text-decoration: none;
       font-size: 14px;
       font-weight: 500;
@@ -399,11 +613,10 @@
     }
     
     .aops-link-top:hover {
-      background: #f8f9fa;
-      color: #0066cc;
+      background: var(--bg-secondary);
+      color: var(--primary-blue-light);
     }
     
-    /* Improved modal */
     .modal {
       display: none;
       position: fixed;
@@ -417,7 +630,7 @@
     }
     
     .modal-content {
-      background-color: white;
+      background-color: var(--bg-card);
       margin: 10% auto;
       padding: 32px;
       border-radius: 12px;
@@ -442,7 +655,7 @@
       font-size: 22px;
       font-weight: 700;
       margin-bottom: 24px;
-      color: #004488;
+      color: var(--primary-blue);
     }
     
     .modal-close {
@@ -450,35 +663,37 @@
       font-size: 28px;
       font-weight: 700;
       cursor: pointer;
-      color: #adb5bd;
+      color: var(--text-tertiary);
       transition: color 0.2s;
     }
     
     .modal-close:hover {
-      color: #495057;
+      color: var(--text-secondary);
     }
     
     .modal-label {
       display: block;
       margin: 16px 0 8px 0;
       font-weight: 600;
-      color: #495057;
+      color: var(--text-secondary);
     }
     
     .modal-select, .modal-textarea {
       width: 100%;
       padding: 10px 12px;
-      border: 2px solid #dee2e6;
+      border: 2px solid var(--border-strong);
       border-radius: 8px;
       font-family: inherit;
       font-size: 15px;
       transition: border-color 0.2s;
+      background: var(--bg-card);
+      color: var(--text-primary);
     }
     
     .modal-select:focus, .modal-textarea:focus {
       outline: none;
-      border-color: #0066cc;
-      box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+      border-color: var(--primary-blue-light);
+      box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
     }
     
     .modal-textarea {
@@ -489,7 +704,7 @@
     .modal-submit {
       margin-top: 24px;
       padding: 12px 24px;
-      background: linear-gradient(135deg, #004488 0%, #0066cc 100%);
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
       color: white;
       border: none;
       border-radius: 8px;
@@ -506,12 +721,11 @@
     }
     
     .modal-submit:disabled {
-      background: #adb5bd;
+      background: var(--text-tertiary);
       cursor: not-allowed;
       transform: none;
     }
     
-    /* Improved checkbox styling */
     label {
       cursor: pointer;
       user-select: none;
@@ -530,19 +744,18 @@
     .mode-toggle {
       margin: 16px 0 24px 0;
       padding: 16px;
-      background: #f8f9fa;
+      background: var(--bg-secondary);
       border-radius: 8px;
     }
     
-    /* Improved instructions box */
     #instructions {
       margin: 20px 0;
       padding: 16px 20px;
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
+      background: var(--instruction-bg);
+      border-left: 4px solid var(--instruction-border);
       border-radius: 8px;
       font-size: 15px;
-      color: #856404;
+      color: var(--instruction-text);
       line-height: 1.7;
     }
     
@@ -550,15 +763,14 @@
       display: none;
     }
     
-    /* Link styling */
     a {
-      color: #004488;
+      color: var(--primary-blue);
       text-decoration: none;
       transition: all 0.2s;
     }
     
     a:hover {
-      color: #0066cc;
+      color: var(--primary-blue-light);
     }
 
     @media (max-width: 768px) {
@@ -567,6 +779,10 @@
       }
       
       .problem-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .problem-nav-grid {
         grid-template-columns: repeat(5, 1fr);
       }
       
@@ -601,17 +817,24 @@
   <nav>
     <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
       <a href="index.html" style="font-size: 20px; font-weight: 600; padding: 16px 0;">Mock AIME</a>
-      <div style="display: flex; gap: 0;">
+      <div style="display: flex; gap: 0; align-items: center;">
         <a href="search.html">Search</a>
         <a href="admin.html">Admin</a>
         <a href="login.html">Login</a>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark</button>
       </div>
     </div>
   </nav>
 
   <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
     <h1>Mock AIME Generator</h1>
-    <div style="background: white; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 32px; border: 1px solid #e9ecef;">
+    
+    <div id="loadingProgress" class="loading-indicator">
+      <div class="loading-spinner"></div>
+      <p style="margin-top: 16px; font-weight: 500;">Loading problems...</p>
+    </div>
+
+    <div style="background: var(--bg-card); padding: 32px; border-radius: 12px; box-shadow: var(--shadow-sm); margin-bottom: 32px; border: 1px solid var(--border-color);">
       <div class="mode-toggle">
         <label>
           <input type="checkbox" id="expandedDbCheckbox" />
@@ -633,7 +856,7 @@
           Exclude Bad Problems
         </label>
       </div>
-      <label for="difficulty" style="font-weight: 600; color: #004488; font-size: 15px;">Select Difficulty Level:</label>
+      <label for="difficulty" style="font-weight: 600; color: var(--primary-blue); font-size: 15px;">Select Difficulty Level:</label>
       <select id="difficulty">
         <option value="1">1 - Easiest</option>
         <option value="2">2</option>
@@ -655,6 +878,12 @@
 
     <div id="instructions"></div>
     <div class="stats" id="stats"></div>
+    
+    <div id="problemNav" style="display: none;" class="problem-nav">
+      <div class="problem-nav-title">Jump to Problem:</div>
+      <div class="problem-nav-grid" id="problemNavGrid"></div>
+    </div>
+
     <div id="summary"></div>
     <div id="problems"></div>
 
@@ -679,6 +908,26 @@
     </div>
 
     <script>
+      // Dark mode toggle
+      function toggleDarkMode() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        const btn = document.querySelector('.dark-mode-toggle');
+        btn.textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      }
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (savedTheme === 'dark') {
+        const btn = document.querySelector('.dark-mode-toggle');
+        if (btn) btn.textContent = '☀️ Light';
+      }
+
       const expandedCheckbox = document.getElementById('expandedDbCheckbox');
       const fullCheckbox = document.getElementById('fullDbCheckbox');
       expandedCheckbox.addEventListener('change', () => {
@@ -751,6 +1000,59 @@
         }
         return result;
       }
+
+      function updateProblemNav() {
+        const navGrid = document.getElementById('problemNavGrid');
+        navGrid.innerHTML = '';
+        
+        for (let i = 0; i < chosenProblems.length; i++) {
+          const item = document.createElement('div');
+          item.className = 'problem-nav-item';
+          item.textContent = i + 1;
+          item.onclick = () => scrollToProblem(i);
+          
+          const input = document.querySelector(`input[data-index="${i}"]:not(.override)`);
+          if (input && input.value.trim()) {
+            item.classList.add('answered');
+          }
+          
+          navGrid.appendChild(item);
+        }
+        
+        document.getElementById('problemNav').style.display = chosenProblems.length > 0 ? 'block' : 'none';
+      }
+
+      function scrollToProblem(index) {
+        const problemDiv = document.querySelector(`.problem[data-problem-index="${index}"]`);
+        if (problemDiv) {
+          problemDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          problemDiv.classList.add('pulse');
+          setTimeout(() => problemDiv.classList.remove('pulse'), 300);
+          
+          const input = problemDiv.querySelector('input[type="text"]');
+          if (input) {
+            setTimeout(() => input.focus(), 500);
+          }
+        }
+      }
+
+      // Handle Enter key to jump to next problem
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type === 'text') {
+          const currentIndex = parseInt(e.target.getAttribute('data-index'));
+          if (!isNaN(currentIndex) && currentIndex < chosenProblems.length - 1) {
+            e.preventDefault();
+            scrollToProblem(currentIndex + 1);
+          }
+        }
+      });
+
+      // Update nav when answers change
+      document.addEventListener('input', (e) => {
+        if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
+          updateProblemNav();
+        }
+      });
 
       let currentReportProblemId = null;
 
@@ -882,7 +1184,7 @@
             <strong>Problem ${index + 1}:</strong>
             <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
             <p>${newProblem.text}</p>
-            <div class="answer">Answer: <input type="text" maxlength="3" data-index="${index}" placeholder="000" /></div>
+            <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${index}" placeholder="000" /></div>
             <div style="margin-top: 12px;">
               <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
               <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
@@ -897,6 +1199,8 @@
             console.error('MathJax typeset failed: ', err);
           }
         }
+        
+        updateProblemNav();
       }
 
       async function generateMock() {
@@ -939,10 +1243,10 @@
           statText += `  (${diff}): ${available} / ${countNeeded}\n`;
         }
         document.getElementById("stats").innerHTML = `
-          <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 32px; border: 1px solid #e9ecef;">
+          <div style="background: var(--bg-card); padding: 20px; border-radius: 12px; box-shadow: var(--shadow-sm); margin-bottom: 32px; border: 1px solid var(--border-color);">
             <details>
-              <summary style="cursor: pointer; font-weight: 600; color: #004488; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;">Available problems by difficulty (click to expand)</summary>
-              <pre style="margin-top: 15px; font-size: 14px; line-height: 1.8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;">${statText}</pre>
+              <summary style="cursor: pointer; font-weight: 600; color: var(--primary-blue); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;">Available problems by difficulty (click to expand)</summary>
+              <pre style="margin-top: 15px; font-size: 14px; line-height: 1.8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; color: var(--text-primary);">${statText}</pre>
             </details>
           </div>
         `;
@@ -967,6 +1271,7 @@
           const div = document.createElement("div");
           div.className = "problem mathjax-process";
           div.setAttribute("data-problem-index", i);
+          div.id = `problem-${i}`;
 
           if (useFull) {
             div.innerHTML = `
@@ -989,7 +1294,7 @@
               <strong>Problem ${i + 1}:</strong>
               <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
               <p>${p.text}</p>
-              <div class="answer">Answer: <input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
+              <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
               <div style="margin-top: 12px;">
                 <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
                 <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
@@ -1007,6 +1312,38 @@
             console.error('MathJax typeset failed: ', err);
           }
         }
+        
+        updateProblemNav();
+      }
+
+      let answersRevealed = false;
+
+      function showAnswers() {
+        answersRevealed = true;
+        chosenProblems.forEach((p, i) => {
+          const problemDiv = document.querySelector(`.problem[data-problem-index="${i}"]`);
+          if (!problemDiv) return;
+          
+          let existingReveal = problemDiv.querySelector('.answer-reveal');
+          if (existingReveal) {
+            existingReveal.remove();
+          }
+          
+          const revealDiv = document.createElement('div');
+          revealDiv.className = 'answer-reveal show';
+          
+          let answerText = '';
+          if (p.aime_answer !== null && p.aime_answer !== undefined) {
+            answerText = String(p.aime_answer % 1000);
+          } else if (p.answer) {
+            answerText = String(p.answer);
+          } else {
+            answerText = 'Not available';
+          }
+          
+          revealDiv.innerHTML = `<strong>Correct Answer:</strong> ${answerText}`;
+          problemDiv.appendChild(revealDiv);
+        });
       }
 
       function checkAnswers() {
@@ -1029,6 +1366,7 @@
               icon.className = 'status-icon override';
               icon.textContent = '✓';
               problemDiv.appendChild(icon);
+              setTimeout(() => icon.classList.add('show'), 50);
             }
             return;
           }
@@ -1045,6 +1383,7 @@
                 icon.className = 'status-icon unanswered';
                 icon.textContent = '–';
                 problemDiv.appendChild(icon);
+                setTimeout(() => icon.classList.add('show'), 50);
               }
               return;
             }
@@ -1066,6 +1405,7 @@
               icon.className = `status-icon ${correct ? 'correct' : 'incorrect'}`;
               icon.textContent = correct ? '✓' : '✗';
               problemDiv.appendChild(icon);
+              setTimeout(() => icon.classList.add('show'), 50);
             }
           } else {
             results.push({ index: i, status: 'unanswered' });
@@ -1082,7 +1422,9 @@
               </div>
             `).join('')}
           </div>
+          <button class="show-answers-btn" onclick="showAnswers()">Show Answers</button>
         `;
+        summaryDiv.classList.add('show');
       }
     </script>
   </div>
