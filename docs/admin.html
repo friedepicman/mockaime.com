@@ -52,6 +52,51 @@
       font-weight: bold;
       color: #666;
     }
+    
+    .rendered-problem {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+    
+    .raw-text-container {
+      margin: 10px 0;
+    }
+    
+    .toggle-raw-btn {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    
+    .toggle-raw-btn:hover {
+      background: #5a6268;
+    }
+    
+    .raw-textarea {
+      display: none;
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+    
+    .raw-textarea.show {
+      display: block;
+    }
+    
     textarea {
       width: 100%;
       min-height: 100px;
@@ -85,6 +130,40 @@
       height: 20px;
       cursor: pointer;
     }
+    
+    .quality-rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .quality-label {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .stars {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .star {
+      font-size: 28px;
+      cursor: pointer;
+      color: #ddd;
+      transition: color 0.2s;
+      user-select: none;
+    }
+    
+    .star:hover {
+      color: #ffc107;
+    }
+    
+    .star.filled {
+      color: #ffc107;
+    }
+    
     button {
       padding: 8px 16px;
       background: #004488;
@@ -145,6 +224,20 @@
       font-weight: bold;
     }
   </style>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        ignoreHtmlClass: 'no-mathjax',
+        processHtmlClass: 'mathjax-render'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <h1>Problem Admin Panel</h1>
@@ -155,7 +248,7 @@
     </a>
   </div>
   <div style="text-align: center; margin: 20px 0;">
-    <a href="index.html" style="display: inline-block; padding: 10px 20px; background: #45b6fe; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
+    <a href="search.html" style="display: inline-block; padding: 10px 20px; background: #45b6fe; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
       Problem Search
     </a>
   </div>
@@ -246,7 +339,7 @@
         allProblems = allData;
       }
       
-      currentPage = 1; // Reset to first page when filtering
+      currentPage = 1;
       updateStats();
       renderProblems();
     }
@@ -286,6 +379,70 @@
       });
     }
 
+    function toggleRawText(problemId) {
+      const textarea = document.getElementById(`raw-text-${problemId}`);
+      const btn = document.getElementById(`toggle-btn-${problemId}`);
+      
+      if (textarea.classList.contains('show')) {
+        textarea.classList.remove('show');
+        btn.textContent = 'Show Raw Text';
+      } else {
+        textarea.classList.add('show');
+        btn.textContent = 'Hide Raw Text';
+      }
+    }
+
+    function renderStars(problemId, currentQuality) {
+      const quality = currentQuality || 0;
+      let starsHTML = '';
+      
+      for (let i = 1; i <= 5; i++) {
+        const filled = i <= quality ? 'filled' : '';
+        starsHTML += `<span class="star ${filled}" onclick="setQuality(${problemId}, ${i})">★</span>`;
+      }
+      
+      return starsHTML;
+    }
+
+    async function setQuality(problemId, quality) {
+      console.log('Setting quality for problem', problemId, 'to', quality);
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update({ quality: quality })
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('Error updating quality:', error);
+        alert('Failed to update quality');
+      } else {
+        console.log('Quality updated successfully');
+        
+        // Update in memory
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.quality = quality;
+        }
+        
+        // Update the stars visually
+        const starsContainer = document.getElementById(`stars-${problemId}`);
+        if (starsContainer) {
+          starsContainer.innerHTML = renderStars(problemId, quality);
+        }
+      }
+    }
+
+    async function migrateBadProblem(problemId) {
+      // When bad_problem checkbox is clicked, set quality to 1
+      const checkbox = document.getElementById(`bad-problem-${problemId}`);
+      const isBad = checkbox.checked;
+      
+      if (isBad) {
+        await setQuality(problemId, 1);
+      }
+    }
+
     function renderProblems() {
       const container = document.getElementById('problems');
       
@@ -305,7 +462,7 @@
         <div class="problem-card ${p.manually_reviewed ? 'reviewed' : ''}" id="problem-${p.id}">
           <div class="problem-header">
             <span class="problem-id">Problem ID: ${p.id}</span>
-            <div style="display: flex; gap: 20px;">
+            <div style="display: flex; gap: 20px; align-items: center;">
               <label class="checkbox-label">
                 <input type="checkbox" 
                        ${p.manually_reviewed ? 'checked' : ''} 
@@ -314,15 +471,31 @@
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" 
+                       id="bad-problem-${p.id}"
                        ${p.bad_problem ? 'checked' : ''} 
-                       onchange="updateBadProblemStatus(${p.id}, this.checked)">
-                Bad Problem
+                       onchange="migrateBadProblem(${p.id})">
+                Bad Problem (sets quality to 1)
               </label>
             </div>
           </div>
           
-          <span class="field-label">Problem Statement:</span>
-          <textarea id="text-${p.id}" onblur="saveProblem(${p.id})">${p.text || ''}</textarea>
+          <div class="quality-rating">
+            <span class="quality-label">Quality:</span>
+            <div class="stars" id="stars-${p.id}">
+              ${renderStars(p.id, p.quality)}
+            </div>
+            <span style="color: #666; font-size: 14px;">(${p.quality || 0}/5)</span>
+          </div>
+          
+          <span class="field-label">Problem Statement (Rendered):</span>
+          <div class="rendered-problem mathjax-render">
+            ${p.text || '<em>No text</em>'}
+          </div>
+          
+          <div class="raw-text-container">
+            <button class="toggle-raw-btn" id="toggle-btn-${p.id}" onclick="toggleRawText(${p.id})">Show Raw Text</button>
+            <textarea class="raw-textarea" id="raw-text-${p.id}" onblur="saveProblemText(${p.id})">${p.text || ''}</textarea>
+          </div>
           
           <span class="field-label">Answer:</span>
           <input type="text" id="answer-${p.id}" value="${p.answer || ''}" onblur="saveProblem(${p.id})" />
@@ -345,45 +518,76 @@
           </div>
         </div>
       `).join('');
+      
+      // Render MathJax
+      if (window.MathJax) {
+        MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
+      }
+    }
+
+    async function saveProblemText(problemId) {
+      const text = document.getElementById(`raw-text-${problemId}`).value;
+      const statusEl = document.getElementById(`status-${problemId}`);
+      
+      statusEl.textContent = 'Saving text...';
+      statusEl.style.color = '#666';
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update({ text })
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('ERROR saving text:', error);
+        statusEl.textContent = `Error: ${error.message}`;
+        statusEl.style.color = '#dc3545';
+      } else {
+        console.log('✓ Text saved');
+        statusEl.textContent = '✓ Saved';
+        statusEl.style.color = '#28a745';
+        
+        // Update in memory and re-render
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.text = text;
+        }
+        
+        // Update rendered version
+        const renderedDiv = document.querySelector(`#problem-${problemId} .rendered-problem`);
+        if (renderedDiv) {
+          renderedDiv.innerHTML = text;
+          if (window.MathJax) {
+            MathJax.typesetPromise([renderedDiv]).catch(err => console.error('MathJax error:', err));
+          }
+        }
+        
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
     }
 
     async function saveProblem(problemId) {
-      const text = document.getElementById(`text-${problemId}`).value;
       const answer = document.getElementById(`answer-${problemId}`).value;
       const aimeAnswer = document.getElementById(`aime-answer-${problemId}`).value;
       const difficulty = document.getElementById(`difficulty-${problemId}`).value;
       const source = document.getElementById(`source-${problemId}`).value;
       const statusEl = document.getElementById(`status-${problemId}`);
       
-      console.log('=== SAVE ATTEMPT ===');
-      console.log('Problem ID:', problemId);
-      console.log('Text:', text);
-      console.log('Answer:', answer);
-      console.log('AIME Answer:', aimeAnswer);
-      console.log('Difficulty:', difficulty);
-      console.log('Source:', source);
-      
       statusEl.textContent = 'Saving...';
       statusEl.style.color = '#666';
       
       const updateData = {
-        text,
         answer,
         source,
         aime_answer: aimeAnswer ? parseInt(aimeAnswer) : null,
         difficulty: difficulty ? parseFloat(difficulty) : null
       };
       
-      console.log('Update data being sent:', updateData);
-      
       const { data, error } = await supabaseClient
         .from('problems')
         .update(updateData)
         .eq('id', problemId)
         .select();
-      
-      console.log('Supabase response data:', data);
-      console.log('Supabase error:', error);
       
       if (error) {
         console.error('ERROR DETAILS:', error);
@@ -397,44 +601,13 @@
         // Update in memory
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) {
-          problem.text = text;
           problem.answer = answer;
           problem.aime_answer = aimeAnswer ? parseInt(aimeAnswer) : null;
           problem.difficulty = difficulty ? parseFloat(difficulty) : null;
           problem.source = source;
-          console.log('Updated problem in memory:', problem);
         }
         
         setTimeout(() => { statusEl.textContent = ''; }, 2000);
-      }
-    }
-
-    async function updateBadProblemStatus(problemId, isBad) {
-      console.log('=== BAD PROBLEM UPDATE ===');
-      console.log('Problem ID:', problemId);
-      console.log('Setting bad_problem to:', isBad);
-      
-      const { data, error } = await supabaseClient
-        .from('problems')
-        .update({ bad_problem: isBad })
-        .eq('id', problemId)
-        .select();
-      
-      console.log('Supabase response:', data);
-      console.log('Supabase error:', error);
-      
-      if (error) {
-        console.error('Error updating bad problem status:', error);
-        alert('Failed to update bad problem status');
-      } else {
-        console.log('✓ Bad problem status updated successfully');
-        // Update the problem in memory
-        const problem = allProblems.find(p => p.id === problemId);
-        if (problem) {
-          problem.bad_problem = isBad;
-          console.log('Updated in memory:', problem);
-        }
-        updateStats();
       }
     }
 
