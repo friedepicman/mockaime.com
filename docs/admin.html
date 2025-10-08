@@ -39,9 +39,27 @@
       box-shadow: 0 0 8px rgba(0,0,0,0.05);
       border-left: 4px solid #ccc;
     }
-    .problem-card.reviewed {
-      border-left-color: #28a745;
+    
+    /* Quality-based sidebar colors */
+    .problem-card.quality-0 {
+      border-left-color: #6c757d; /* Gray - Unset */
     }
+    .problem-card.quality-1 {
+      border-left-color: #dc3545; /* Red - Poor */
+    }
+    .problem-card.quality-2 {
+      border-left-color: #fd7e14; /* Orange - Below Average */
+    }
+    .problem-card.quality-3 {
+      border-left-color: #ffc107; /* Yellow - Average */
+    }
+    .problem-card.quality-4 {
+      border-left-color: #28a745; /* Green - Good */
+    }
+    .problem-card.quality-5 {
+      border-left-color: #0066cc; /* Blue - Excellent */
+    }
+    
     .problem-header {
       display: flex;
       justify-content: space-between;
@@ -60,6 +78,21 @@
       border: 1px solid #dee2e6;
       margin: 10px 0;
       line-height: 1.6;
+    }
+    
+    .rewritten-section {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 4px;
+      border: 2px solid #0066cc;
+      margin: 15px 0;
+    }
+    
+    .rewritten-label {
+      font-weight: bold;
+      color: #0066cc;
+      font-size: 15px;
+      margin-bottom: 10px;
     }
     
     .raw-text-container {
@@ -264,6 +297,10 @@
         <input type="checkbox" id="showReviewedOnly" />
         Show only reviewed problems
       </label>
+      <label>
+        <input type="checkbox" id="showFinalizedOnly" />
+        Show only finalized problems
+      </label>
       <button onclick="loadProblems()">Refresh</button>
     </div>
   </div>
@@ -299,7 +336,6 @@
     async function loadProblems() {
       document.getElementById('problems').innerHTML = '<p>Loading problems...</p>';
       
-      // First, load ALL problems without filters
       let allData = [];
       let from = 0;
       const chunkSize = 1000;
@@ -327,14 +363,16 @@
         }
       }
       
-      // Apply filters client-side
       const showUnreviewed = document.getElementById('showUnreviewedOnly').checked;
       const showReviewed = document.getElementById('showReviewedOnly').checked;
+      const showFinalized = document.getElementById('showFinalizedOnly').checked;
       
       if (showUnreviewed) {
         allProblems = allData.filter(p => !p.manually_reviewed);
       } else if (showReviewed) {
         allProblems = allData.filter(p => p.manually_reviewed);
+      } else if (showFinalized) {
+        allProblems = allData.filter(p => p.finalized);
       } else {
         allProblems = allData;
       }
@@ -348,10 +386,12 @@
       const total = allProblems.length;
       const reviewed = allProblems.filter(p => p.manually_reviewed).length;
       const unreviewed = total - reviewed;
+      const finalized = allProblems.filter(p => p.finalized).length;
       
       document.getElementById('stats').innerHTML = `
         <strong>Total problems:</strong> ${total} | 
         <strong>Reviewed:</strong> ${reviewed} (${total > 0 ? Math.round(reviewed/total*100) : 0}%) | 
+        <strong>Finalized:</strong> ${finalized} (${total > 0 ? Math.round(finalized/total*100) : 0}%) | 
         <strong>Unreviewed:</strong> ${unreviewed}
       `;
     }
@@ -379,9 +419,9 @@
       });
     }
 
-    function toggleRawText(problemId) {
-      const textarea = document.getElementById(`raw-text-${problemId}`);
-      const btn = document.getElementById(`toggle-btn-${problemId}`);
+    function toggleRawText(problemId, type) {
+      const textarea = document.getElementById(`raw-${type}-${problemId}`);
+      const btn = document.getElementById(`toggle-${type}-btn-${problemId}`);
       
       if (textarea.classList.contains('show')) {
         textarea.classList.remove('show');
@@ -419,27 +459,24 @@
       } else {
         console.log('Quality updated successfully');
         
-        // Update in memory
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) {
           problem.quality = quality;
         }
         
-        // Update the stars visually
         const starsContainer = document.getElementById(`stars-${problemId}`);
         if (starsContainer) {
           starsContainer.innerHTML = renderStars(problemId, quality);
         }
-      }
-    }
-
-    async function migrateBadProblem(problemId) {
-      // When bad_problem checkbox is clicked, set quality to 1
-      const checkbox = document.getElementById(`bad-problem-${problemId}`);
-      const isBad = checkbox.checked;
-      
-      if (isBad) {
-        await setQuality(problemId, 1);
+        
+        // Update sidebar color
+        const card = document.getElementById(`problem-${problemId}`);
+        if (card) {
+          card.className = `problem-card quality-${quality}`;
+          if (problem && problem.manually_reviewed) {
+            card.classList.add('reviewed');
+          }
+        }
       }
     }
 
@@ -458,8 +495,10 @@
       
       updatePaginationControls();
       
-      container.innerHTML = pageProblems.map((p) => `
-        <div class="problem-card ${p.manually_reviewed ? 'reviewed' : ''}" id="problem-${p.id}">
+      container.innerHTML = pageProblems.map((p) => {
+        const qualityClass = `quality-${p.quality || 0}`;
+        return `
+        <div class="problem-card ${qualityClass}" id="problem-${p.id}">
           <div class="problem-header">
             <span class="problem-id">Problem ID: ${p.id}</span>
             <div style="display: flex; gap: 20px; align-items: center;">
@@ -471,10 +510,9 @@
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" 
-                       id="bad-problem-${p.id}"
-                       ${p.bad_problem ? 'checked' : ''} 
-                       onchange="migrateBadProblem(${p.id})">
-                Bad Problem (sets quality to 1)
+                       ${p.finalized ? 'checked' : ''} 
+                       onchange="updateFinalizedStatus(${p.id}, this.checked)">
+                Finalized (Rewritten & Verified)
               </label>
             </div>
           </div>
@@ -487,15 +525,33 @@
             <span style="color: #666; font-size: 14px;">(${p.quality || 0}/5)</span>
           </div>
           
-          <span class="field-label">Problem Statement (Rendered):</span>
+          <span class="field-label">Original Problem Statement (Rendered):</span>
           <div class="rendered-problem mathjax-render">
             ${p.text || '<em>No text</em>'}
           </div>
           
           <div class="raw-text-container">
-            <button class="toggle-raw-btn" id="toggle-btn-${p.id}" onclick="toggleRawText(${p.id})">Show Raw Text</button>
-            <textarea class="raw-textarea" id="raw-text-${p.id}" onblur="saveProblemText(${p.id})">${p.text || ''}</textarea>
+            <button class="toggle-raw-btn" id="toggle-original-btn-${p.id}" onclick="toggleRawText(${p.id}, 'original')">Show Raw Text</button>
+            <textarea class="raw-textarea" id="raw-original-${p.id}" onblur="saveProblemText(${p.id})">${p.text || ''}</textarea>
           </div>
+          
+          ${p.rewritten_problem || p.finalized ? `
+          <div class="rewritten-section">
+            <div class="rewritten-label">Rewritten Problem (AIME Format):</div>
+            <div class="rendered-problem mathjax-render">
+              ${p.rewritten_problem || '<em>No rewritten problem yet</em>'}
+            </div>
+            
+            <div class="raw-text-container">
+              <button class="toggle-raw-btn" id="toggle-rewritten-btn-${p.id}" onclick="toggleRawText(${p.id}, 'rewritten')">Show Raw Text</button>
+              <textarea class="raw-textarea" id="raw-rewritten-${p.id}" onblur="saveRewrittenProblem(${p.id})">${p.rewritten_problem || ''}</textarea>
+            </div>
+          </div>
+          ` : `
+          <div style="margin: 15px 0;">
+            <button onclick="enableRewriteSection(${p.id})" style="background: #0066cc;">+ Add Rewritten Problem</button>
+          </div>
+          `}
           
           <span class="field-label">Answer:</span>
           <input type="text" id="answer-${p.id}" value="${p.answer || ''}" onblur="saveProblem(${p.id})" />
@@ -517,16 +573,63 @@
             <span class="save-status" id="status-${p.id}"></span>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
       
-      // Render MathJax
       if (window.MathJax) {
         MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
       }
     }
 
+    async function enableRewriteSection(problemId) {
+      const problem = allProblems.find(p => p.id === problemId);
+      if (problem) {
+        problem.rewritten_problem = '';
+        renderProblems();
+      }
+    }
+
+    async function saveRewrittenProblem(problemId) {
+      const text = document.getElementById(`raw-rewritten-${problemId}`).value;
+      const statusEl = document.getElementById(`status-${problemId}`);
+      
+      statusEl.textContent = 'Saving rewritten problem...';
+      statusEl.style.color = '#666';
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update({ rewritten_problem: text })
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('ERROR saving rewritten problem:', error);
+        statusEl.textContent = `Error: ${error.message}`;
+        statusEl.style.color = '#dc3545';
+      } else {
+        console.log('✓ Rewritten problem saved');
+        statusEl.textContent = '✓ Saved';
+        statusEl.style.color = '#28a745';
+        
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.rewritten_problem = text;
+        }
+        
+        const renderedDivs = document.querySelectorAll(`#problem-${problemId} .rewritten-section .rendered-problem`);
+        if (renderedDivs.length > 0) {
+          renderedDivs[0].innerHTML = text || '<em>No rewritten problem yet</em>';
+          if (window.MathJax) {
+            MathJax.typesetPromise([renderedDivs[0]]).catch(err => console.error('MathJax error:', err));
+          }
+        }
+        
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+    }
+
     async function saveProblemText(problemId) {
-      const text = document.getElementById(`raw-text-${problemId}`).value;
+      const text = document.getElementById(`raw-original-${problemId}`).value;
       const statusEl = document.getElementById(`status-${problemId}`);
       
       statusEl.textContent = 'Saving text...';
@@ -547,18 +650,16 @@
         statusEl.textContent = '✓ Saved';
         statusEl.style.color = '#28a745';
         
-        // Update in memory and re-render
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) {
           problem.text = text;
         }
         
-        // Update rendered version
-        const renderedDiv = document.querySelector(`#problem-${problemId} .rendered-problem`);
-        if (renderedDiv) {
-          renderedDiv.innerHTML = text;
+        const renderedDivs = document.querySelectorAll(`#problem-${problemId} .rendered-problem`);
+        if (renderedDivs.length > 0) {
+          renderedDivs[0].innerHTML = text;
           if (window.MathJax) {
-            MathJax.typesetPromise([renderedDiv]).catch(err => console.error('MathJax error:', err));
+            MathJax.typesetPromise([renderedDivs[0]]).catch(err => console.error('MathJax error:', err));
           }
         }
         
@@ -598,7 +699,6 @@
         statusEl.textContent = '✓ Saved';
         statusEl.style.color = '#28a745';
         
-        // Update in memory
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) {
           problem.answer = answer;
@@ -621,30 +721,49 @@
         console.error('Error updating review status:', error);
         alert('Failed to update review status');
       } else {
-        const card = document.getElementById(`problem-${problemId}`);
-        if (isReviewed) {
-          card.classList.add('reviewed');
-        } else {
-          card.classList.remove('reviewed');
-        }
-        
-        // Update the problem in memory
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) problem.manually_reviewed = isReviewed;
         updateStats();
       }
     }
 
-    // Auto-load on page load
+    async function updateFinalizedStatus(problemId, isFinalized) {
+      const { error } = await supabaseClient
+        .from('problems')
+        .update({ finalized: isFinalized })
+        .eq('id', problemId);
+      
+      if (error) {
+        console.error('Error updating finalized status:', error);
+        alert('Failed to update finalized status');
+      } else {
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) problem.finalized = isFinalized;
+        updateStats();
+      }
+    }
+
     window.onload = loadProblems;
     
-    // Handle filter checkboxes
     document.getElementById('showUnreviewedOnly').addEventListener('change', function() {
-      if (this.checked) document.getElementById('showReviewedOnly').checked = false;
+      if (this.checked) {
+        document.getElementById('showReviewedOnly').checked = false;
+        document.getElementById('showFinalizedOnly').checked = false;
+      }
       loadProblems();
     });
     document.getElementById('showReviewedOnly').addEventListener('change', function() {
-      if (this.checked) document.getElementById('showUnreviewedOnly').checked = false;
+      if (this.checked) {
+        document.getElementById('showUnreviewedOnly').checked = false;
+        document.getElementById('showFinalizedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showFinalizedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showUnreviewedOnly').checked = false;
+        document.getElementById('showReviewedOnly').checked = false;
+      }
       loadProblems();
     });
   </script>
