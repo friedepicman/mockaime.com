@@ -439,10 +439,36 @@
       
       for (let i = 1; i <= 5; i++) {
         const filled = i <= quality ? 'filled' : '';
-        starsHTML += `<span class="star ${filled}" onclick="setQuality(${problemId}, ${i})">★</span>`;
+        starsHTML += `<span class="star ${filled}" 
+                           onclick="setQuality(${problemId}, ${i})"
+                           onmouseenter="previewStars(${problemId}, ${i})"
+                           onmouseleave="clearStarPreview(${problemId}, ${quality})">★</span>`;
       }
       
       return starsHTML;
+    }
+
+    function previewStars(problemId, hoverRating) {
+      const starsContainer = document.getElementById(`stars-${problemId}`);
+      if (!starsContainer) return;
+      
+      const stars = starsContainer.querySelectorAll('.star');
+      stars.forEach((star, index) => {
+        star.classList.remove('hover-preview');
+        if (index < hoverRating) {
+          star.classList.add('hover-preview');
+        }
+      });
+    }
+
+    function clearStarPreview(problemId, currentQuality) {
+      const starsContainer = document.getElementById(`stars-${problemId}`);
+      if (!starsContainer) return;
+      
+      const stars = starsContainer.querySelectorAll('.star');
+      stars.forEach((star, index) => {
+        star.classList.remove('hover-preview');
+      });
     }
 
     async function setQuality(problemId, quality) {
@@ -584,9 +610,36 @@
 
     async function enableRewriteSection(problemId) {
       const problem = allProblems.find(p => p.id === problemId);
-      if (problem) {
-        problem.rewritten_problem = '';
+      if (!problem) return;
+      
+      // Set rewritten_problem to the same as original text by default
+      const originalText = problem.text || '';
+      
+      const statusEl = document.getElementById(`status-${problemId}`);
+      statusEl.textContent = 'Creating rewritten problem...';
+      statusEl.style.color = '#666';
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update({ rewritten_problem: originalText })
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('ERROR creating rewritten problem:', error);
+        statusEl.textContent = `Error: ${error.message}`;
+        statusEl.style.color = '#dc3545';
+        alert('Failed to create rewritten problem section');
+      } else {
+        console.log('✓ Rewritten problem section created');
+        problem.rewritten_problem = originalText;
+        
+        // Re-render the entire problems list to show the new section
         renderProblems();
+        
+        statusEl.textContent = '✓ Rewritten section created';
+        statusEl.style.color = '#28a745';
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
       }
     }
 
