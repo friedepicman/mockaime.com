@@ -556,13 +556,15 @@
           starsContainer.innerHTML = renderStars(problemId, quality);
         }
         
-        // Update sidebar color
+        // Update sidebar color by updating all quality classes
         const card = document.getElementById(`problem-${problemId}`);
         if (card) {
-          card.className = `problem-card quality-${quality}`;
-          if (problem && problem.manually_reviewed) {
-            card.classList.add('reviewed');
+          // Remove all quality classes
+          for (let i = 0; i <= 5; i++) {
+            card.classList.remove(`quality-${i}`);
           }
+          // Add the new quality class
+          card.classList.add(`quality-${quality}`);
         }
       }
     }
@@ -837,6 +839,17 @@
       } else {
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) problem.manually_reviewed = isReviewed;
+        
+        // Update the card class to show/hide quality colors
+        const card = document.getElementById(`problem-${problemId}`);
+        if (card) {
+          if (isReviewed) {
+            card.classList.add('reviewed');
+          } else {
+            card.classList.remove('reviewed');
+          }
+        }
+        
         updateStats();
       }
     }
