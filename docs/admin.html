@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <!-- 
-    LATEST VERSION - Updated: Star hover fix + Always-visible rewritten problem textbox
-    Version: 2024-01-07-v3
+    LATEST VERSION - Updated: Compact layout with rewritten preview by default
+    Version: 2024-01-07-v4
   -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -41,26 +41,26 @@
       margin: 15px 0;
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0,0,0,0.05);
-      border-left: 4px solid #ccc;
+      border-left: 4px solid white;
     }
     
-    /* Quality-based sidebar colors */
-    .problem-card.quality-0 {
+    /* Quality-based sidebar colors - only when manually reviewed */
+    .problem-card.reviewed.quality-0 {
       border-left-color: #6c757d; /* Gray - Unset */
     }
-    .problem-card.quality-1 {
+    .problem-card.reviewed.quality-1 {
       border-left-color: #dc3545; /* Red - Poor */
     }
-    .problem-card.quality-2 {
+    .problem-card.reviewed.quality-2 {
       border-left-color: #fd7e14; /* Orange - Below Average */
     }
-    .problem-card.quality-3 {
+    .problem-card.reviewed.quality-3 {
       border-left-color: #ffc107; /* Yellow - Average */
     }
-    .problem-card.quality-4 {
+    .problem-card.reviewed.quality-4 {
       border-left-color: #28a745; /* Green - Good */
     }
-    .problem-card.quality-5 {
+    .problem-card.reviewed.quality-5 {
       border-left-color: #0066cc; /* Blue - Excellent */
     }
     
@@ -68,11 +68,47 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
     .problem-id {
       font-weight: bold;
       color: #666;
+    }
+    
+    .fields-row {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .field-group label {
+      font-weight: bold;
+      font-size: 13px;
+    }
+    
+    .field-group input {
+      margin: 0;
     }
     
     .rendered-problem {
@@ -89,13 +125,26 @@
       padding: 15px;
       border-radius: 4px;
       border: 2px solid #0066cc;
-      margin: 15px 0;
+      margin: 10px 0;
     }
     
-    .rewritten-label {
+    .original-section {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      margin: 10px 0;
+      display: none;
+    }
+    
+    .original-section.show {
+      display: block;
+    }
+    
+    .section-label {
       font-weight: bold;
       color: #0066cc;
-      font-size: 15px;
+      font-size: 14px;
       margin-bottom: 10px;
     }
     
@@ -535,11 +584,21 @@
       
       container.innerHTML = pageProblems.map((p) => {
         const qualityClass = `quality-${p.quality || 0}`;
+        const reviewedClass = p.manually_reviewed ? 'reviewed' : '';
         return `
-        <div class="problem-card ${qualityClass}" id="problem-${p.id}">
+        <div class="problem-card ${qualityClass} ${reviewedClass}" id="problem-${p.id}">
           <div class="problem-header">
-            <span class="problem-id">Problem ID: ${p.id}</span>
-            <div style="display: flex; gap: 20px; align-items: center;">
+            <div class="header-left">
+              <span class="problem-id">Problem ID: ${p.id}</span>
+              <div class="quality-rating">
+                <span class="quality-label">Quality:</span>
+                <div class="stars" id="stars-${p.id}">
+                  ${renderStars(p.id, p.quality)}
+                </div>
+                <span style="color: #666; font-size: 14px;">(${p.quality || 0}/5)</span>
+              </div>
+            </div>
+            <div class="header-right">
               <label class="checkbox-label">
                 <input type="checkbox" 
                        ${p.manually_reviewed ? 'checked' : ''} 
@@ -550,59 +609,59 @@
                 <input type="checkbox" 
                        ${p.finalized ? 'checked' : ''} 
                        onchange="updateFinalizedStatus(${p.id}, this.checked)">
-                Finalized (Rewritten & Verified)
+                Finalized
               </label>
             </div>
           </div>
           
-          <div class="quality-rating">
-            <span class="quality-label">Quality:</span>
-            <div class="stars" id="stars-${p.id}">
-              ${renderStars(p.id, p.quality)}
+          <button class="toggle-raw-btn" id="toggle-original-btn-${p.id}" onclick="toggleOriginalSection(${p.id})">Show Original Problem</button>
+          
+          <div class="original-section" id="original-section-${p.id}">
+            <div class="section-label">Original Problem Statement:</div>
+            <div class="rendered-problem mathjax-render">
+              ${p.text || '<em>No text</em>'}
             </div>
-            <span style="color: #666; font-size: 14px;">(${p.quality || 0}/5)</span>
-          </div>
-          
-          <span class="field-label">Original Problem Statement (Rendered):</span>
-          <div class="rendered-problem mathjax-render">
-            ${p.text || '<em>No text</em>'}
-          </div>
-          
-          <div class="raw-text-container">
-            <button class="toggle-raw-btn" id="toggle-original-btn-${p.id}" onclick="toggleRawText(${p.id}, 'original')">Show Raw Text</button>
+            <button class="toggle-raw-btn" style="margin-top: 10px;" id="toggle-original-raw-btn-${p.id}" onclick="toggleRawText(${p.id}, 'original')">Show Raw Text</button>
             <textarea class="raw-textarea" id="raw-original-${p.id}" onblur="saveProblemText(${p.id})">${p.text || ''}</textarea>
           </div>
           
           <div class="rewritten-section">
-            <div class="rewritten-label">Rewritten Problem (AIME Format):</div>
+            <div class="section-label">Rewritten Problem (AIME Format):</div>
+            <div class="rendered-problem mathjax-render" id="rewritten-render-${p.id}">
+              ${p.rewritten_problem || '<em>No rewritten problem yet</em>'}
+            </div>
+            <button class="toggle-raw-btn" style="margin-top: 10px;" id="toggle-rewritten-btn-${p.id}" onclick="toggleRawText(${p.id}, 'rewritten')">Show Raw Text</button>
+            <textarea class="raw-textarea" id="raw-rewritten-${p.id}" onblur="saveRewrittenProblem(${p.id})">${p.rewritten_problem || ''}</textarea>
+          </div>
+          
+          <div class="fields-row">
+            <div class="field-group">
+              <label>Answer:</label>
+              <input type="text" id="answer-${p.id}" value="${p.answer || ''}" onblur="saveProblem(${p.id})" style="width: 100px;" />
+            </div>
             
-            <div class="raw-text-container">
-              <span class="field-label">Edit Rewritten Problem:</span>
-              <textarea id="rewritten-textarea-${p.id}" onblur="saveRewrittenProblem(${p.id})" style="min-height: 120px; font-family: 'Courier New', monospace;">${p.rewritten_problem || ''}</textarea>
-              
-              <button class="toggle-raw-btn" id="toggle-rewritten-render-btn-${p.id}" onclick="toggleRewrittenRender(${p.id})">Show Rendered Preview</button>
-              <div class="rendered-problem mathjax-render" id="rewritten-render-${p.id}" style="display: none;">
-                ${p.rewritten_problem || '<em>No rewritten problem yet</em>'}
-              </div>
+            <div class="field-group">
+              <label>AIME Answer (mod 1000):</label>
+              <input type="text" id="aime-answer-${p.id}" value="${p.aime_answer || ''}" onblur="saveProblem(${p.id})" style="width: 100px;" />
+            </div>
+            
+            <div class="field-group">
+              <label>Difficulty:</label>
+              <input type="text" id="difficulty-${p.id}" value="${p.difficulty || ''}" onblur="saveProblem(${p.id})" style="width: 80px;" />
+            </div>
+            
+            <div class="field-group">
+              <label>Source:</label>
+              <input type="text" id="source-${p.id}" value="${p.source || ''}" onblur="saveProblem(${p.id})" style="width: 250px;" />
             </div>
           </div>
           
-          <span class="field-label">Answer:</span>
-          <input type="text" id="answer-${p.id}" value="${p.answer || ''}" onblur="saveProblem(${p.id})" />
+          <div style="margin-top: 5px;">
+            <span class="field-label" style="font-size: 13px;">Link:</span>
+            <a href="${p.link}" target="_blank" class="link">${p.link}</a>
+          </div>
           
-          <span class="field-label">AIME Answer (mod 1000):</span>
-          <input type="text" id="aime-answer-${p.id}" value="${p.aime_answer || ''}" onblur="saveProblem(${p.id})" />
-          
-          <span class="field-label">Difficulty:</span>
-          <input type="text" id="difficulty-${p.id}" value="${p.difficulty || ''}" onblur="saveProblem(${p.id})" />
-          
-          <span class="field-label">Source:</span>
-          <input type="text" id="source-${p.id}" value="${p.source || ''}" style="width: 300px;" onblur="saveProblem(${p.id})" />
-          
-          <span class="field-label">Link:</span>
-          <a href="${p.link}" target="_blank" class="link">${p.link}</a>
-          
-          <div style="margin-top: 15px;">
+          <div style="margin-top: 10px;">
             <button onclick="saveProblem(${p.id})">Save Changes</button>
             <span class="save-status" id="status-${p.id}"></span>
           </div>
@@ -615,22 +674,27 @@
       }
     }
 
-    function toggleRewrittenRender(problemId) {
-      const renderDiv = document.getElementById(`rewritten-render-${problemId}`);
-      const btn = document.getElementById(`toggle-rewritten-render-btn-${problemId}`);
+    function toggleOriginalSection(problemId) {
+      const section = document.getElementById(`original-section-${problemId}`);
+      const btn = document.getElementById(`toggle-original-btn-${problemId}`);
       
-      if (renderDiv.style.display === 'none') {
-        renderDiv.style.display = 'block';
-        btn.textContent = 'Hide Rendered Preview';
-        
-        // Re-render MathJax for this element
-        if (window.MathJax) {
-          MathJax.typesetPromise([renderDiv]).catch(err => console.error('MathJax error:', err));
-        }
+      if (section.classList.contains('show')) {
+        section.classList.remove('show');
+        btn.textContent = 'Show Original Problem';
       } else {
-        renderDiv.style.display = 'none';
-        btn.textContent = 'Show Rendered Preview';
+        section.classList.add('show');
+        btn.textContent = 'Hide Original Problem';
+        
+        // Re-render MathJax for this section
+        if (window.MathJax) {
+          MathJax.typesetPromise([section]).catch(err => console.error('MathJax error:', err));
+        }
       }
+    }
+
+    function toggleRewrittenRender(problemId) {
+      // This function is no longer needed but kept for compatibility
+      return;
     }
 
     async function enableRewriteSection(problemId) {
@@ -639,7 +703,7 @@
     }
 
     async function saveRewrittenProblem(problemId) {
-      const text = document.getElementById(`rewritten-textarea-${problemId}`).value;
+      const text = document.getElementById(`raw-rewritten-${problemId}`).value;
       const statusEl = document.getElementById(`status-${problemId}`);
       
       statusEl.textContent = 'Saving rewritten problem...';
@@ -665,9 +729,9 @@
           problem.rewritten_problem = text;
         }
         
-        // Update the rendered preview if it's visible
+        // Update the rendered preview
         const renderDiv = document.getElementById(`rewritten-render-${problemId}`);
-        if (renderDiv && renderDiv.style.display !== 'none') {
+        if (renderDiv) {
           renderDiv.innerHTML = text || '<em>No rewritten problem yet</em>';
           if (window.MathJax) {
             MathJax.typesetPromise([renderDiv]).catch(err => console.error('MathJax error:', err));
