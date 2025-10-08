@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- 
+    LATEST VERSION - Updated: Star hover fix + Always-visible rewritten problem textbox
+    Version: 2024-01-07-v3
+  -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Problem Admin - Mock AIME</title>
@@ -193,7 +197,7 @@
       color: #ffc107;
     }
     
-    .star.hover-preview {
+    .star.hover {
       color: #ffc107;
       opacity: 0.7;
     }
@@ -439,37 +443,44 @@
       
       for (let i = 1; i <= 5; i++) {
         const filled = i <= quality ? 'filled' : '';
-        starsHTML += `<span class="star ${filled}" 
-                           onclick="setQuality(${problemId}, ${i})"
-                           onmouseenter="previewStars(${problemId}, ${i})"
-                           onmouseleave="clearStarPreview(${problemId}, ${quality})">★</span>`;
+        starsHTML += `<span class="star ${filled}" data-rating="${i}">★</span>`;
       }
       
       return starsHTML;
     }
 
-    function previewStars(problemId, hoverRating) {
-      const starsContainer = document.getElementById(`stars-${problemId}`);
-      if (!starsContainer) return;
-      
-      const stars = starsContainer.querySelectorAll('.star');
-      stars.forEach((star, index) => {
-        star.classList.remove('hover-preview');
-        if (index < hoverRating) {
-          star.classList.add('hover-preview');
-        }
-      });
-    }
+    // Add event delegation for star clicks and hovers
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('star')) {
+        const starsContainer = e.target.parentElement;
+        const problemId = starsContainer.id.replace('stars-', '');
+        const rating = parseInt(e.target.getAttribute('data-rating'));
+        setQuality(problemId, rating);
+      }
+    });
 
-    function clearStarPreview(problemId, currentQuality) {
-      const starsContainer = document.getElementById(`stars-${problemId}`);
-      if (!starsContainer) return;
-      
-      const stars = starsContainer.querySelectorAll('.star');
-      stars.forEach((star, index) => {
-        star.classList.remove('hover-preview');
-      });
-    }
+    document.addEventListener('mouseenter', function(e) {
+      if (e.target.classList.contains('star')) {
+        const rating = parseInt(e.target.getAttribute('data-rating'));
+        const starsContainer = e.target.parentElement;
+        const allStars = starsContainer.querySelectorAll('.star');
+        
+        allStars.forEach((star, index) => {
+          star.classList.remove('hover');
+          if (index < rating) {
+            star.classList.add('hover');
+          }
+        });
+      }
+    }, true);
+
+    document.addEventListener('mouseleave', function(e) {
+      if (e.target.classList.contains('star')) {
+        const starsContainer = e.target.parentElement;
+        const allStars = starsContainer.querySelectorAll('.star');
+        allStars.forEach(star => star.classList.remove('hover'));
+      }
+    }, true);
 
     async function setQuality(problemId, quality) {
       console.log('Setting quality for problem', problemId, 'to', quality);
@@ -562,23 +573,19 @@
             <textarea class="raw-textarea" id="raw-original-${p.id}" onblur="saveProblemText(${p.id})">${p.text || ''}</textarea>
           </div>
           
-          ${p.rewritten_problem || p.finalized ? `
           <div class="rewritten-section">
             <div class="rewritten-label">Rewritten Problem (AIME Format):</div>
-            <div class="rendered-problem mathjax-render">
-              ${p.rewritten_problem || '<em>No rewritten problem yet</em>'}
-            </div>
             
             <div class="raw-text-container">
-              <button class="toggle-raw-btn" id="toggle-rewritten-btn-${p.id}" onclick="toggleRawText(${p.id}, 'rewritten')">Show Raw Text</button>
-              <textarea class="raw-textarea" id="raw-rewritten-${p.id}" onblur="saveRewrittenProblem(${p.id})">${p.rewritten_problem || ''}</textarea>
+              <span class="field-label">Edit Rewritten Problem:</span>
+              <textarea id="rewritten-textarea-${p.id}" onblur="saveRewrittenProblem(${p.id})" style="min-height: 120px; font-family: 'Courier New', monospace;">${p.rewritten_problem || ''}</textarea>
+              
+              <button class="toggle-raw-btn" id="toggle-rewritten-render-btn-${p.id}" onclick="toggleRewrittenRender(${p.id})">Show Rendered Preview</button>
+              <div class="rendered-problem mathjax-render" id="rewritten-render-${p.id}" style="display: none;">
+                ${p.rewritten_problem || '<em>No rewritten problem yet</em>'}
+              </div>
             </div>
           </div>
-          ` : `
-          <div style="margin: 15px 0;">
-            <button onclick="enableRewriteSection(${p.id})" style="background: #0066cc;">+ Add Rewritten Problem</button>
-          </div>
-          `}
           
           <span class="field-label">Answer:</span>
           <input type="text" id="answer-${p.id}" value="${p.answer || ''}" onblur="saveProblem(${p.id})" />
@@ -608,43 +615,31 @@
       }
     }
 
-    async function enableRewriteSection(problemId) {
-      const problem = allProblems.find(p => p.id === problemId);
-      if (!problem) return;
+    function toggleRewrittenRender(problemId) {
+      const renderDiv = document.getElementById(`rewritten-render-${problemId}`);
+      const btn = document.getElementById(`toggle-rewritten-render-btn-${problemId}`);
       
-      // Set rewritten_problem to the same as original text by default
-      const originalText = problem.text || '';
-      
-      const statusEl = document.getElementById(`status-${problemId}`);
-      statusEl.textContent = 'Creating rewritten problem...';
-      statusEl.style.color = '#666';
-      
-      const { data, error } = await supabaseClient
-        .from('problems')
-        .update({ rewritten_problem: originalText })
-        .eq('id', problemId)
-        .select();
-      
-      if (error) {
-        console.error('ERROR creating rewritten problem:', error);
-        statusEl.textContent = `Error: ${error.message}`;
-        statusEl.style.color = '#dc3545';
-        alert('Failed to create rewritten problem section');
+      if (renderDiv.style.display === 'none') {
+        renderDiv.style.display = 'block';
+        btn.textContent = 'Hide Rendered Preview';
+        
+        // Re-render MathJax for this element
+        if (window.MathJax) {
+          MathJax.typesetPromise([renderDiv]).catch(err => console.error('MathJax error:', err));
+        }
       } else {
-        console.log('✓ Rewritten problem section created');
-        problem.rewritten_problem = originalText;
-        
-        // Re-render the entire problems list to show the new section
-        renderProblems();
-        
-        statusEl.textContent = '✓ Rewritten section created';
-        statusEl.style.color = '#28a745';
-        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+        renderDiv.style.display = 'none';
+        btn.textContent = 'Show Rendered Preview';
       }
     }
 
+    async function enableRewriteSection(problemId) {
+      // This function is no longer needed but kept for compatibility
+      return;
+    }
+
     async function saveRewrittenProblem(problemId) {
-      const text = document.getElementById(`raw-rewritten-${problemId}`).value;
+      const text = document.getElementById(`rewritten-textarea-${problemId}`).value;
       const statusEl = document.getElementById(`status-${problemId}`);
       
       statusEl.textContent = 'Saving rewritten problem...';
@@ -670,11 +665,12 @@
           problem.rewritten_problem = text;
         }
         
-        const renderedDivs = document.querySelectorAll(`#problem-${problemId} .rewritten-section .rendered-problem`);
-        if (renderedDivs.length > 0) {
-          renderedDivs[0].innerHTML = text || '<em>No rewritten problem yet</em>';
+        // Update the rendered preview if it's visible
+        const renderDiv = document.getElementById(`rewritten-render-${problemId}`);
+        if (renderDiv && renderDiv.style.display !== 'none') {
+          renderDiv.innerHTML = text || '<em>No rewritten problem yet</em>';
           if (window.MathJax) {
-            MathJax.typesetPromise([renderedDivs[0]]).catch(err => console.error('MathJax error:', err));
+            MathJax.typesetPromise([renderDiv]).catch(err => console.error('MathJax error:', err));
           }
         }
         
