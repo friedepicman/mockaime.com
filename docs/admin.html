@@ -595,6 +595,16 @@
       const endIdx = Math.min(startIdx + problemsPerPage, allProblems.length);
       const pageProblems = allProblems.slice(startIdx, endIdx);
       
+      console.log('=== RENDER DEBUG ===');
+      console.log('Total problems:', allProblems.length);
+      console.log('Current page:', currentPage);
+      console.log('Problems per page:', problemsPerPage);
+      console.log('Start index:', startIdx);
+      console.log('End index:', endIdx);
+      console.log('Page problems count:', pageProblems.length);
+      console.log('First problem ID:', pageProblems[0]?.id);
+      console.log('Last problem ID:', pageProblems[pageProblems.length - 1]?.id);
+      
       updatePaginationControls();
       
       container.innerHTML = pageProblems.map((p) => {
