@@ -225,6 +225,28 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // SECURITY FIX: HTML escaping function
+    function escapeHtml(text) {
+      if (!text) return text;
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // SECURITY FIX: Safe content insertion function
+    function setMathContent(element, content) {
+      if (!content) {
+        element.innerHTML = '<em>No content</em>';
+        return;
+      }
+      // Use textContent to safely insert the content, then let MathJax process it
+      element.textContent = content;
+      // Re-render MathJax for this element
+      if (window.MathJax) {
+        MathJax.typesetPromise([element]).catch(err => console.error('MathJax error:', err));
+      }
+    }
+
     let allProblems = [];
     let filteredProblems = [];
     let currentPage = 1;
@@ -322,7 +344,7 @@
         return;
       }
 
-      pageProblems.forEach(p => {
+      pageProblems.forEach((p, index) => {
         const card = document.createElement('div');
         card.className = 'problem-card';
         if (p.manually_reviewed) card.classList.add('reviewed');
@@ -331,6 +353,7 @@
         const answerMatch = p.answer && p.aime_answer && 
           String(p.answer) === String(p.aime_answer % 1000);
 
+        // SECURITY FIX: Safe content insertion
         card.innerHTML = `
           <div class="problem-header">
             <div>
@@ -340,23 +363,46 @@
               ${p.bad_problem ? '<span class="badge badge-danger">Bad Problem</span>' : ''}
             </div>
           </div>
-          <div class="problem-text">${p.text || '<em>No text</em>'}</div>
+          <div class="problem-text" id="problem-text-${index}"></div>
           <div class="problem-meta">
-            <div><strong>Answer:</strong> ${p.answer || 'N/A'}</div>
-            <div><strong>AIME Answer:</strong> ${p.aime_answer !== null ? p.aime_answer : 'N/A'}</div>
-            <div><strong>Answer Type:</strong> ${p.answer_type || 'N/A'}</div>
-            <div><strong>Source:</strong> ${p.source || 'N/A'}</div>
-            <div><a href="${p.link}" target="_blank">[View Discussion]</a></div>
+            <div><strong>Answer:</strong> <span id="answer-${index}"></span></div>
+            <div><strong>AIME Answer:</strong> <span id="aime-answer-${index}"></span></div>
+            <div><strong>Answer Type:</strong> <span id="answer-type-${index}"></span></div>
+            <div><strong>Source:</strong> <span id="source-${index}"></span></div>
+            <div><a href="" target="_blank" id="link-${index}">[View Discussion]</a></div>
             ${answerMatch ? '<div style="color: green; font-weight: bold;">✓ Answers match</div>' : ''}
             ${p.answer && p.aime_answer && !answerMatch ? '<div style="color: red; font-weight: bold;">✗ Answers mismatch</div>' : ''}
           </div>
         `;
 
         resultsDiv.appendChild(card);
+
+        // SECURITY FIX: Safely set content after DOM insertion
+        const problemTextEl = document.getElementById(`problem-text-${index}`);
+        const answerEl = document.getElementById(`answer-${index}`);
+        const aimeAnswerEl = document.getElementById(`aime-answer-${index}`);
+        const answerTypeEl = document.getElementById(`answer-type-${index}`);
+        const sourceEl = document.getElementById(`source-${index}`);
+        const linkEl = document.getElementById(`link-${index}`);
+
+        setMathContent(problemTextEl, p.text || '');
+        answerEl.textContent = p.answer || 'N/A';
+        aimeAnswerEl.textContent = p.aime_answer !== null ? p.aime_answer : 'N/A';
+        answerTypeEl.textContent = p.answer_type || 'N/A';
+        sourceEl.textContent = p.source || 'N/A';
+        
+        if (p.link) {
+          linkEl.href = escapeHtml(p.link);
+          linkEl.textContent = '[View Discussion]';
+        } else {
+          linkEl.href = '#';
+          linkEl.textContent = '[No Link]';
+        }
       });
 
       renderPagination(totalPages);
 
+      // Re-render MathJax for all new content
       if (window.MathJax) {
         MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
       }
