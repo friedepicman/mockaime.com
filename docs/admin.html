@@ -477,8 +477,6 @@
       const textarea = document.getElementById(`raw-${type}-${problemId}`);
       const btn = document.getElementById(`toggle-${type}-btn-${problemId}`);
       
-      if (!textarea || !btn) return;
-      
       if (textarea.classList.contains('show')) {
         textarea.classList.remove('show');
         btn.textContent = 'Show Raw Text';
@@ -504,43 +502,32 @@
     document.addEventListener('click', function(e) {
       if (e.target.classList.contains('star')) {
         const starsContainer = e.target.parentElement;
-        if (!starsContainer) return;
         const problemId = starsContainer.id.replace('stars-', '');
         const rating = parseInt(e.target.getAttribute('data-rating'));
-        if (!isNaN(rating)) {
-          setQuality(problemId, rating);
-        }
+        setQuality(problemId, rating);
       }
     });
 
     document.addEventListener('mouseenter', function(e) {
-      if (e.target && e.target.classList && e.target.classList.contains('star')) {
+      if (e.target.classList.contains('star')) {
         const rating = parseInt(e.target.getAttribute('data-rating'));
         const starsContainer = e.target.parentElement;
-        if (!starsContainer) return;
         const allStars = starsContainer.querySelectorAll('.star');
         
         allStars.forEach((star, index) => {
-          if (star.classList) {
-            star.classList.remove('hover');
-            if (index < rating) {
-              star.classList.add('hover');
-            }
+          star.classList.remove('hover');
+          if (index < rating) {
+            star.classList.add('hover');
           }
         });
       }
     }, true);
 
     document.addEventListener('mouseleave', function(e) {
-      if (e.target && e.target.classList && e.target.classList.contains('star')) {
+      if (e.target.classList.contains('star')) {
         const starsContainer = e.target.parentElement;
-        if (!starsContainer) return;
         const allStars = starsContainer.querySelectorAll('.star');
-        allStars.forEach(star => {
-          if (star.classList) {
-            star.classList.remove('hover');
-          }
-        });
+        allStars.forEach(star => star.classList.remove('hover'));
       }
     }, true);
 
@@ -594,17 +581,6 @@
       const startIdx = (currentPage - 1) * problemsPerPage;
       const endIdx = Math.min(startIdx + problemsPerPage, allProblems.length);
       const pageProblems = allProblems.slice(startIdx, endIdx);
-      
-      console.log('=== RENDER DEBUG ===');
-      console.log('Total problems:', allProblems.length);
-      console.log('Current page:', currentPage);
-      console.log('Problems per page:', problemsPerPage);
-      console.log('Start index:', startIdx);
-      console.log('End index:', endIdx);
-      console.log('Page problems count:', pageProblems.length);
-      console.log('First problem ID:', pageProblems[0]?.id);
-      console.log('Last problem ID:', pageProblems[pageProblems.length - 1]?.id);
-      console.log('All problem IDs on this page:', pageProblems.map(p => p.id).join(', '));
       
       updatePaginationControls();
       
@@ -695,23 +671,14 @@
       `;
       }).join('');
       
-      console.log('Generated HTML length:', container.innerHTML.length);
-      console.log('Number of problem cards in HTML:', (container.innerHTML.match(/class="problem-card/g) || []).length);
-      
       if (window.MathJax) {
-        console.log('Starting MathJax typeset...');
-        MathJax.typesetPromise().then(() => {
-          console.log('MathJax typeset complete');
-          console.log('Number of problem cards in DOM:', document.querySelectorAll('.problem-card').length);
-        }).catch(err => console.error('MathJax error:', err));
+        MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
       }
     }
 
     function toggleOriginalSection(problemId) {
       const section = document.getElementById(`original-section-${problemId}`);
       const btn = document.getElementById(`toggle-original-btn-${problemId}`);
-      
-      if (!section || !btn) return;
       
       if (section.classList.contains('show')) {
         section.classList.remove('show');
