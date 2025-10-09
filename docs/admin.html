@@ -3,7 +3,7 @@
 <head>
   <!-- 
     LATEST VERSION - Updated: Compact layout with rewritten preview by default
-    Version: 2024-01-07-v4
+    Version: 2024-01-07-v4 - SECURITY FIXED
   -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -387,6 +387,28 @@
     let totalPages = 1;
     const problemsPerPage = 100;
 
+    // SECURITY FIX: HTML escaping function
+    function escapeHtml(text) {
+      if (!text) return text;
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // SECURITY FIX: Safe HTML insertion function
+    function setMathContent(element, content) {
+      if (!content) {
+        element.innerHTML = '<em>No content</em>';
+        return;
+      }
+      // Use textContent to safely insert the content, then let MathJax process it
+      element.textContent = content;
+      // Re-render MathJax for this element
+      if (window.MathJax) {
+        MathJax.typesetPromise([element]).catch(err => console.error('MathJax error:', err));
+      }
+    }
+
     async function loadProblems() {
       document.getElementById('problems').innerHTML = '<p>Loading problems...</p>';
       
@@ -584,11 +606,19 @@
       
       updatePaginationControls();
       
-      container.innerHTML = pageProblems.map((p) => {
+      // SECURITY FIX: Build elements safely instead of using template literals
+      container.innerHTML = '';
+      
+      pageProblems.forEach((p) => {
         const qualityClass = `quality-${p.quality || 0}`;
         const reviewedClass = p.manually_reviewed ? 'reviewed' : '';
-        return `
-        <div class="problem-card ${qualityClass} ${reviewedClass}" id="problem-${p.id}">
+        
+        const problemCard = document.createElement('div');
+        problemCard.className = `problem-card ${qualityClass} ${reviewedClass}`;
+        problemCard.id = `problem-${p.id}`;
+        
+        // Build the HTML structure safely
+        problemCard.innerHTML = `
           <div class="problem-header">
             <div class="header-left">
               <span class="problem-id">Problem ID: ${p.id}</span>
@@ -620,57 +650,87 @@
           
           <div class="original-section" id="original-section-${p.id}">
             <div class="section-label">Original Problem Statement:</div>
-            <div class="rendered-problem mathjax-render">
-              ${p.text || '<em>No text</em>'}
+            <div class="rendered-problem mathjax-render" id="original-render-${p.id}">
             </div>
             <button class="toggle-raw-btn" style="margin-top: 10px;" id="toggle-original-raw-btn-${p.id}" onclick="toggleRawText(${p.id}, 'original')">Show Raw Text</button>
-            <textarea class="raw-textarea" id="raw-original-${p.id}" onblur="saveProblemText(${p.id})">${p.text || ''}</textarea>
+            <textarea class="raw-textarea" id="raw-original-${p.id}" onblur="saveProblemText(${p.id})"></textarea>
           </div>
           
           <div class="rewritten-section">
             <div class="section-label">Rewritten Problem (AIME Format):</div>
             <div class="rendered-problem mathjax-render" id="rewritten-render-${p.id}">
-              ${p.rewritten_problem || '<em>No rewritten problem yet</em>'}
             </div>
             <button class="toggle-raw-btn" style="margin-top: 10px;" id="toggle-rewritten-btn-${p.id}" onclick="toggleRawText(${p.id}, 'rewritten')">Show Raw Text</button>
-            <textarea class="raw-textarea" id="raw-rewritten-${p.id}" onblur="saveRewrittenProblem(${p.id})">${p.rewritten_problem || ''}</textarea>
+            <textarea class="raw-textarea" id="raw-rewritten-${p.id}" onblur="saveRewrittenProblem(${p.id})"></textarea>
           </div>
           
           <div class="fields-row">
             <div class="field-group">
               <label>Answer:</label>
-              <input type="text" id="answer-${p.id}" value="${p.answer || ''}" onblur="saveProblem(${p.id})" style="width: 100px;" />
+              <input type="text" id="answer-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 100px;" />
             </div>
             
             <div class="field-group">
               <label>AIME Answer (mod 1000):</label>
-              <input type="text" id="aime-answer-${p.id}" value="${p.aime_answer || ''}" onblur="saveProblem(${p.id})" style="width: 100px;" />
+              <input type="text" id="aime-answer-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 100px;" />
             </div>
             
             <div class="field-group">
               <label>Difficulty:</label>
-              <input type="text" id="difficulty-${p.id}" value="${p.difficulty || ''}" onblur="saveProblem(${p.id})" style="width: 80px;" />
+              <input type="text" id="difficulty-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 80px;" />
             </div>
             
             <div class="field-group">
               <label>Source:</label>
-              <input type="text" id="source-${p.id}" value="${p.source || ''}" onblur="saveProblem(${p.id})" style="width: 250px;" />
+              <input type="text" id="source-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 250px;" />
             </div>
           </div>
           
           <div style="margin-top: 5px;">
             <span class="field-label" style="font-size: 13px;">Link:</span>
-            <a href="${p.link}" target="_blank" class="link">${p.link}</a>
+            <a href="" target="_blank" class="link" id="link-${p.id}"></a>
           </div>
           
           <div style="margin-top: 10px;">
             <button onclick="saveProblem(${p.id})">Save Changes</button>
             <span class="save-status" id="status-${p.id}"></span>
           </div>
-        </div>
-      `;
-      }).join('');
+        `;
+        
+        container.appendChild(problemCard);
+        
+        // SECURITY FIX: Safely set content using textContent and populate form fields
+        const originalRender = document.getElementById(`original-render-${p.id}`);
+        const rewrittenRender = document.getElementById(`rewritten-render-${p.id}`);
+        const originalTextarea = document.getElementById(`raw-original-${p.id}`);
+        const rewrittenTextarea = document.getElementById(`raw-rewritten-${p.id}`);
+        const linkElement = document.getElementById(`link-${p.id}`);
+        
+        // Safely set math content
+        setMathContent(originalRender, p.text || '');
+        setMathContent(rewrittenRender, p.rewritten_problem || '');
+        
+        // Safely set textarea values
+        originalTextarea.value = p.text || '';
+        rewrittenTextarea.value = p.rewritten_problem || '';
+        
+        // Safely set form field values
+        document.getElementById(`answer-${p.id}`).value = p.answer || '';
+        document.getElementById(`aime-answer-${p.id}`).value = p.aime_answer || '';
+        document.getElementById(`difficulty-${p.id}`).value = p.difficulty || '';
+        document.getElementById(`source-${p.id}`).value = p.source || '';
+        
+        // Safely set link
+        if (p.link) {
+          linkElement.href = escapeHtml(p.link);
+          linkElement.textContent = p.link;
+        } else {
+          linkElement.href = '#';
+          linkElement.textContent = 'No link';
+        }
+      });
       
+      // Re-render MathJax for all new content
       if (window.MathJax) {
         MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
       }
@@ -731,13 +791,10 @@
           problem.rewritten_problem = text;
         }
         
-        // Update the rendered preview
+        // SECURITY FIX: Update the rendered preview safely
         const renderDiv = document.getElementById(`rewritten-render-${problemId}`);
         if (renderDiv) {
-          renderDiv.innerHTML = text || '<em>No rewritten problem yet</em>';
-          if (window.MathJax) {
-            MathJax.typesetPromise([renderDiv]).catch(err => console.error('MathJax error:', err));
-          }
+          setMathContent(renderDiv, text);
         }
         
         setTimeout(() => { statusEl.textContent = ''; }, 2000);
@@ -771,12 +828,10 @@
           problem.text = text;
         }
         
-        const renderedDivs = document.querySelectorAll(`#problem-${problemId} .rendered-problem`);
-        if (renderedDivs.length > 0) {
-          renderedDivs[0].innerHTML = text;
-          if (window.MathJax) {
-            MathJax.typesetPromise([renderedDivs[0]]).catch(err => console.error('MathJax error:', err));
-          }
+        // SECURITY FIX: Update the rendered preview safely
+        const renderDiv = document.getElementById(`original-render-${problemId}`);
+        if (renderDiv) {
+          setMathContent(renderDiv, text);
         }
         
         setTimeout(() => { statusEl.textContent = ''; }, 2000);
