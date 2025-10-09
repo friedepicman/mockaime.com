@@ -477,6 +477,8 @@
       const textarea = document.getElementById(`raw-${type}-${problemId}`);
       const btn = document.getElementById(`toggle-${type}-btn-${problemId}`);
       
+      if (!textarea || !btn) return;
+      
       if (textarea.classList.contains('show')) {
         textarea.classList.remove('show');
         btn.textContent = 'Show Raw Text';
@@ -502,32 +504,43 @@
     document.addEventListener('click', function(e) {
       if (e.target.classList.contains('star')) {
         const starsContainer = e.target.parentElement;
+        if (!starsContainer) return;
         const problemId = starsContainer.id.replace('stars-', '');
         const rating = parseInt(e.target.getAttribute('data-rating'));
-        setQuality(problemId, rating);
+        if (!isNaN(rating)) {
+          setQuality(problemId, rating);
+        }
       }
     });
 
     document.addEventListener('mouseenter', function(e) {
-      if (e.target.classList.contains('star')) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
         const rating = parseInt(e.target.getAttribute('data-rating'));
         const starsContainer = e.target.parentElement;
+        if (!starsContainer) return;
         const allStars = starsContainer.querySelectorAll('.star');
         
         allStars.forEach((star, index) => {
-          star.classList.remove('hover');
-          if (index < rating) {
-            star.classList.add('hover');
+          if (star.classList) {
+            star.classList.remove('hover');
+            if (index < rating) {
+              star.classList.add('hover');
+            }
           }
         });
       }
     }, true);
 
     document.addEventListener('mouseleave', function(e) {
-      if (e.target.classList.contains('star')) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
         const starsContainer = e.target.parentElement;
+        if (!starsContainer) return;
         const allStars = starsContainer.querySelectorAll('.star');
-        allStars.forEach(star => star.classList.remove('hover'));
+        allStars.forEach(star => {
+          if (star.classList) {
+            star.classList.remove('hover');
+          }
+        });
       }
     }, true);
 
@@ -679,6 +692,8 @@
     function toggleOriginalSection(problemId) {
       const section = document.getElementById(`original-section-${problemId}`);
       const btn = document.getElementById(`toggle-original-btn-${problemId}`);
+      
+      if (!section || !btn) return;
       
       if (section.classList.contains('show')) {
         section.classList.remove('show');
