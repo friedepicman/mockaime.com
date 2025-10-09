@@ -604,6 +604,7 @@
       console.log('Page problems count:', pageProblems.length);
       console.log('First problem ID:', pageProblems[0]?.id);
       console.log('Last problem ID:', pageProblems[pageProblems.length - 1]?.id);
+      console.log('All problem IDs on this page:', pageProblems.map(p => p.id).join(', '));
       
       updatePaginationControls();
       
