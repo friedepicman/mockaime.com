@@ -500,7 +500,7 @@
 
     // Add event delegation for star clicks and hovers
     document.addEventListener('click', function(e) {
-      if (e.target.classList.contains('star')) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
         const starsContainer = e.target.parentElement;
         const problemId = starsContainer.id.replace('stars-', '');
         const rating = parseInt(e.target.getAttribute('data-rating'));
@@ -509,7 +509,7 @@
     });
 
     document.addEventListener('mouseenter', function(e) {
-      if (e.target.classList.contains('star')) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
         const rating = parseInt(e.target.getAttribute('data-rating'));
         const starsContainer = e.target.parentElement;
         const allStars = starsContainer.querySelectorAll('.star');
@@ -524,7 +524,7 @@
     }, true);
 
     document.addEventListener('mouseleave', function(e) {
-      if (e.target.classList.contains('star')) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
         const starsContainer = e.target.parentElement;
         const allStars = starsContainer.querySelectorAll('.star');
         allStars.forEach(star => star.classList.remove('hover'));
