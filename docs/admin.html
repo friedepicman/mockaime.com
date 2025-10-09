@@ -694,8 +694,15 @@
       `;
       }).join('');
       
+      console.log('Generated HTML length:', container.innerHTML.length);
+      console.log('Number of problem cards in HTML:', (container.innerHTML.match(/class="problem-card/g) || []).length);
+      
       if (window.MathJax) {
-        MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
+        console.log('Starting MathJax typeset...');
+        MathJax.typesetPromise().then(() => {
+          console.log('MathJax typeset complete');
+          console.log('Number of problem cards in DOM:', document.querySelectorAll('.problem-card').length);
+        }).catch(err => console.error('MathJax error:', err));
       }
     }
 
