@@ -144,37 +144,6 @@
       transform: none;
     }
 
-    .btn-google {
-      background: #4285f4;
-      margin-bottom: 20px;
-    }
-
-    .btn-google:hover:not(:disabled) {
-      background: #3367d6;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 20px 0;
-      position: relative;
-      color: var(--text-secondary);
-    }
-
-    .divider::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--border-color);
-    }
-
-    .divider span {
-      background: var(--bg-card);
-      padding: 0 15px;
-    }
-
     .error-message {
       color: var(--error-color);
       background: rgba(220, 53, 69, 0.1);
@@ -250,15 +219,6 @@
 
     <!-- Sign In Form -->
     <form id="signin-form" class="auth-form active">
-      <button type="button" class="btn btn-google" onclick="signInWithGoogle()">
-        <span id="google-loading" style="display: none;" class="loading"></span>
-        Continue with Google
-      </button>
-
-      <div class="divider">
-        <span>or</span>
-      </div>
-
       <div class="form-group">
         <label for="signin-email">Email</label>
         <input type="email" id="signin-email" required>
@@ -459,26 +419,6 @@
         setLoading('signup', false);
       }
     });
-
-    // Google Sign In
-    async function signInWithGoogle() {
-      document.getElementById('google-loading').style.display = 'inline-block';
-      hideMessages();
-
-      try {
-        const { data, error } = await supabaseClient.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: `${window.location.origin}/profile.html`
-          }
-        });
-
-        if (error) throw error;
-      } catch (error) {
-        showError(error.message);
-        document.getElementById('google-loading').style.display = 'none';
-      }
-    }
 
     // Forgot Password
     document.getElementById('forgot-form').addEventListener('submit', async (e) => {
