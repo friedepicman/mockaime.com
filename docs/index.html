@@ -81,8 +81,77 @@
     let allProblems = [];
     let chosenProblems = [];
     let problemsLoaded = false;
+    let currentUser = null;
+
+    // Authentication functions
+    async function updateAuthUI() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      currentUser = session?.user || null;
+      
+      const authButton = document.querySelector('.auth-button');
+      const userInfo = document.querySelector('.user-info');
+      
+      if (currentUser) {
+        // User is logged in
+        if (authButton) {
+          authButton.textContent = 'Profile';
+          authButton.href = 'profile.html';
+        }
+        
+        // Add user info and sign out button
+        if (userInfo) {
+          const displayName = currentUser.user_metadata?.display_name || currentUser.email;
+          userInfo.innerHTML = `
+            <span style="color: white; margin-right: 15px;">Welcome, ${escapeHtml(displayName)}!</span>
+            <button onclick="signOut()" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Sign Out</button>
+          `;
+        }
+      } else {
+        // User is not logged in
+        if (authButton) {
+          authButton.textContent = 'Login';
+          authButton.href = 'login.html';
+        }
+        if (userInfo) {
+          userInfo.innerHTML = '';
+        }
+      }
+    }
+
+    async function signOut() {
+      await supabaseClient.auth.signOut();
+      await updateAuthUI();
+    }
+
+    async function saveMockAttempt(score, totalProblems, difficulty, problemsData) {
+      if (!currentUser) return; // User not logged in
+      
+      try {
+        const { error } = await supabaseClient
+          .from('mock_attempts')
+          .insert([
+            {
+              user_id: currentUser.id,
+              difficulty_level: parseInt(difficulty),
+              score: score,
+              total_problems: totalProblems,
+              problems_data: problemsData,
+              completed_at: new Date().toISOString()
+            }
+          ]);
+        
+        if (error) {
+          console.error('Error saving attempt:', error);
+        } else {
+          console.log('Mock attempt saved successfully');
+        }
+      } catch (err) {
+        console.error('Error saving mock attempt:', err);
+      }
+    }
 
     window.onload = async () => {
+      await updateAuthUI();
       updateButtonStates();
       allProblems = await loadProblemsFromSupabase();
       problemsLoaded = true;
@@ -842,7 +911,8 @@
       <div style="display: flex; gap: 0; align-items: center;">
         <a href="search.html">Search</a>
         <a href="admin.html">Admin</a>
-        <a href="login.html">Login</a>
+        <a href="login.html" class="auth-button">Login</a>
+        <div class="user-info"></div>
         <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark</button>
       </div>
     </div>
@@ -1378,7 +1448,7 @@
         });
       }
 
-      function checkAnswers() {
+      async function checkAnswers() {
         let correctCount = 0;
         let results = [];
 
@@ -1457,6 +1527,11 @@
           <button class="show-answers-btn" onclick="showAnswers()">Show Answers</button>
         `;
         summaryDiv.classList.add('show');
+
+        // Save the mock attempt if user is logged in
+        if (currentUser) {
+          await saveMockAttempt(correctCount, chosenProblems.length, document.getElementById("difficulty").value, chosenProblems);
+        }
       }
     </script>
   </div>

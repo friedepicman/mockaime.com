@@ -29,6 +29,30 @@
       text-align: center;
       color: #004488;
     }
+    .nav-links {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .nav-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background: #004488;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .nav-links a:hover {
+      background: #003366;
+    }
+    .auth-info {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #e3f2fd;
+      border-radius: 8px;
+    }
     .controls {
       margin: 20px 0;
       padding: 15px;
@@ -310,6 +334,18 @@
       font-size: 16px;
       font-weight: bold;
     }
+    .sign-out-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .sign-out-btn:hover {
+      background: #c82333;
+    }
   </style>
 
   <script>
@@ -329,16 +365,17 @@
 <body>
   <h1>Problem Admin Panel</h1>
 
-  <div style="text-align: center; margin: 20px 0;">
-    <a href="index.html" style="display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
-      Mock AIME
-    </a>
+  <div class="nav-links">
+    <a href="index.html">Mock AIME</a>
+    <a href="search.html">Problem Search</a>
+    <a href="login.html" class="auth-button">Login</a>
   </div>
-  <div style="text-align: center; margin: 20px 0;">
-    <a href="search.html" style="display: inline-block; padding: 10px 20px; background: #45b6fe; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
-      Problem Search
-    </a>
+
+  <div class="auth-info" id="authInfo">
+    <span id="authStatus">Checking authentication...</span>
+    <button class="sign-out-btn" id="signOutBtn" onclick="signOut()" style="display: none;">Sign Out</button>
   </div>
+  
   <div class="stats" id="stats">Loading...</div>
 
   <div class="controls">
@@ -386,6 +423,43 @@
     let currentPage = 1;
     let totalPages = 1;
     const problemsPerPage = 100;
+    let currentUser = null;
+
+    // Authentication functions
+    async function updateAuthUI() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      currentUser = session?.user || null;
+      
+      const authStatusEl = document.getElementById('authStatus');
+      const signOutBtn = document.getElementById('signOutBtn');
+      const authButton = document.querySelector('.auth-button');
+      
+      if (currentUser) {
+        // User is logged in
+        const displayName = currentUser.user_metadata?.display_name || currentUser.email;
+        authStatusEl.textContent = `Logged in as: ${displayName}`;
+        signOutBtn.style.display = 'inline-block';
+        
+        if (authButton) {
+          authButton.textContent = 'Profile';
+          authButton.href = 'profile.html';
+        }
+      } else {
+        // User is not logged in
+        authStatusEl.textContent = 'Not logged in (admin functionality limited)';
+        signOutBtn.style.display = 'none';
+        
+        if (authButton) {
+          authButton.textContent = 'Login';
+          authButton.href = 'login.html';
+        }
+      }
+    }
+
+    async function signOut() {
+      await supabaseClient.auth.signOut();
+      await updateAuthUI();
+    }
 
     // SECURITY FIX: HTML escaping function
     function escapeHtml(text) {
@@ -925,7 +999,10 @@
       }
     }
 
-    window.onload = loadProblems;
+    window.onload = async () => {
+      await updateAuthUI();
+      loadProblems();
+    };
     
     document.getElementById('showUnreviewedOnly').addEventListener('change', function() {
       if (this.checked) {

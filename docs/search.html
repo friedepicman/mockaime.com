@@ -35,6 +35,25 @@
     .nav-buttons a:hover {
       background: #003366;
     }
+    .auth-info {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #e3f2fd;
+      border-radius: 8px;
+    }
+    .sign-out-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .sign-out-btn:hover {
+      background: #c82333;
+    }
     .filters {
       background: white;
       padding: 20px;
@@ -85,6 +104,7 @@
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0,0,0,0.05);
       border-left: 4px solid #004488;
+      position: relative;
     }
     .problem-card.reviewed {
       border-left-color: #28a745;
@@ -137,6 +157,31 @@
       background: #f8d7da;
       color: #721c24;
     }
+    .bookmark-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #ffc107;
+      color: #212529;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .bookmark-btn:hover {
+      background: #e0a800;
+    }
+    .bookmark-btn.bookmarked {
+      background: #28a745;
+      color: white;
+    }
+    .bookmark-btn:disabled {
+      background: #6c757d;
+      color: white;
+      cursor: not-allowed;
+    }
     .pagination {
       display: flex;
       justify-content: center;
@@ -165,6 +210,12 @@
   <div class="nav-buttons">
     <a href="index.html">Mock Generator</a>
     <a href="admin.html">Admin Panel</a>
+    <a href="login.html" class="auth-button">Login</a>
+  </div>
+
+  <div class="auth-info" id="authInfo">
+    <span id="authStatus">Checking authentication...</span>
+    <button class="sign-out-btn" id="signOutBtn" onclick="signOut()" style="display: none;">Sign Out</button>
   </div>
 
   <div class="filters">
@@ -204,6 +255,10 @@
         <input type="checkbox" id="excludeBad" />
         Exclude Bad Problems
       </label>
+      <label style="margin-left: 20px;">
+        <input type="checkbox" id="showBookmarked" />
+        Show Only Bookmarked
+      </label>
     </div>
 
     <div class="filter-row">
@@ -224,6 +279,133 @@
     const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let allProblems = [];
+    let filteredProblems = [];
+    let currentPage = 1;
+    const problemsPerPage = 20;
+    let currentUser = null;
+    let userBookmarks = [];
+
+    // Authentication functions
+    async function updateAuthUI() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      currentUser = session?.user || null;
+      
+      const authStatusEl = document.getElementById('authStatus');
+      const signOutBtn = document.getElementById('signOutBtn');
+      const authButton = document.querySelector('.auth-button');
+      const showBookmarkedCheckbox = document.getElementById('showBookmarked');
+      
+      if (currentUser) {
+        // User is logged in
+        const displayName = currentUser.user_metadata?.display_name || currentUser.email;
+        authStatusEl.textContent = `Logged in as: ${displayName}`;
+        signOutBtn.style.display = 'inline-block';
+        showBookmarkedCheckbox.parentElement.style.display = 'inline-block';
+        
+        if (authButton) {
+          authButton.textContent = 'Profile';
+          authButton.href = 'profile.html';
+        }
+
+        // Load user bookmarks
+        await loadUserBookmarks();
+      } else {
+        // User is not logged in
+        authStatusEl.textContent = 'Not logged in (bookmarking disabled)';
+        signOutBtn.style.display = 'none';
+        showBookmarkedCheckbox.parentElement.style.display = 'none';
+        showBookmarkedCheckbox.checked = false;
+        
+        if (authButton) {
+          authButton.textContent = 'Login';
+          authButton.href = 'login.html';
+        }
+      }
+    }
+
+    async function signOut() {
+      await supabaseClient.auth.signOut();
+      userBookmarks = [];
+      await updateAuthUI();
+      // Refresh search to hide bookmarked filter
+      if (filteredProblems.length > 0) {
+        searchProblems();
+      }
+    }
+
+    async function loadUserBookmarks() {
+      if (!currentUser) {
+        userBookmarks = [];
+        return;
+      }
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('user_bookmarks')
+          .select('problem_id')
+          .eq('user_id', currentUser.id);
+
+        if (error) {
+          console.error('Error loading bookmarks:', error);
+          userBookmarks = [];
+        } else {
+          userBookmarks = data.map(b => b.problem_id);
+        }
+      } catch (err) {
+        console.error('Error loading bookmarks:', err);
+        userBookmarks = [];
+      }
+    }
+
+    async function toggleBookmark(problemId, button) {
+      if (!currentUser) {
+        alert('Please log in to bookmark problems');
+        return;
+      }
+
+      const isBookmarked = userBookmarks.includes(problemId);
+      button.disabled = true;
+      button.textContent = isBookmarked ? 'Removing...' : 'Adding...';
+
+      try {
+        if (isBookmarked) {
+          // Remove bookmark
+          const { error } = await supabaseClient
+            .from('user_bookmarks')
+            .delete()
+            .eq('user_id', currentUser.id)
+            .eq('problem_id', problemId);
+
+          if (error) throw error;
+
+          userBookmarks = userBookmarks.filter(id => id !== problemId);
+          button.textContent = 'Bookmark';
+          button.classList.remove('bookmarked');
+        } else {
+          // Add bookmark
+          const { error } = await supabaseClient
+            .from('user_bookmarks')
+            .insert([{
+              user_id: currentUser.id,
+              problem_id: problemId
+            }]);
+
+          if (error) throw error;
+
+          userBookmarks.push(problemId);
+          button.textContent = 'Bookmarked';
+          button.classList.add('bookmarked');
+        }
+      } catch (error) {
+        console.error('Error toggling bookmark:', error);
+        alert('Failed to update bookmark');
+        button.textContent = isBookmarked ? 'Bookmarked' : 'Bookmark';
+      } finally {
+        button.disabled = false;
+      }
+    }
 
     // SECURITY FIX: HTML escaping function
     function escapeHtml(text) {
@@ -246,11 +428,6 @@
         MathJax.typesetPromise([element]).catch(err => console.error('MathJax error:', err));
       }
     }
-
-    let allProblems = [];
-    let filteredProblems = [];
-    let currentPage = 1;
-    const problemsPerPage = 20;
 
     async function loadProblems() {
       let from = 0;
@@ -287,6 +464,7 @@
       const answerMatch = document.getElementById('answerMatch').value;
       const onlyReviewed = document.getElementById('onlyReviewed').checked;
       const excludeBad = document.getElementById('excludeBad').checked;
+      const showBookmarked = document.getElementById('showBookmarked').checked;
 
       filteredProblems = allProblems.filter(p => {
         // Difficulty filter
@@ -296,6 +474,9 @@
         // Review filters
         if (onlyReviewed && !p.manually_reviewed) return false;
         if (excludeBad && p.bad_problem) return false;
+
+        // Bookmark filter
+        if (showBookmarked && !userBookmarks.includes(p.id)) return false;
 
         // Answer type filter
         if (answerType === 'standard') {
@@ -353,8 +534,13 @@
         const answerMatch = p.answer && p.aime_answer && 
           String(p.answer) === String(p.aime_answer % 1000);
 
+        const isBookmarked = userBookmarks.includes(p.id);
+
         // SECURITY FIX: Safe content insertion
         card.innerHTML = `
+          ${currentUser ? `<button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark(${p.id}, this)">
+            ${isBookmarked ? 'Bookmarked' : 'Bookmark'}
+          </button>` : ''}
           <div class="problem-header">
             <div>
               <span class="problem-id">ID: ${p.id}</span>
@@ -436,6 +622,7 @@
       document.getElementById('answerMatch').value = 'all';
       document.getElementById('onlyReviewed').checked = false;
       document.getElementById('excludeBad').checked = false;
+      document.getElementById('showBookmarked').checked = false;
       filteredProblems = [];
       currentPage = 1;
       document.getElementById('results').innerHTML = '';
@@ -445,6 +632,7 @@
     }
 
     window.onload = async () => {
+      await updateAuthUI();
       await loadProblems();
     };
   </script>
