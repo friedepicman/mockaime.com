@@ -864,6 +864,46 @@
       color: var(--primary-blue-light);
     }
 
+    /* Star rating styles */
+    .quality-selector {
+      display: none;
+      margin-top: 10px;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quality-selector.show {
+      display: flex;
+    }
+
+    .quality-label {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 5px;
+    }
+
+    .star {
+      font-size: 24px;
+      cursor: pointer;
+      color: #ddd;
+      transition: color 0.2s;
+      user-select: none;
+    }
+
+    .star.filled {
+      color: #ffc107;
+    }
+
+    .star.hover {
+      color: #ffc107;
+      opacity: 0.7;
+    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 1.8rem;
@@ -929,22 +969,28 @@
     <div style="background: var(--bg-card); padding: 32px; border-radius: 12px; box-shadow: var(--shadow-sm); margin-bottom: 32px; border: 1px solid var(--border-color);">
       <div class="mode-toggle">
         <label>
-          <input type="checkbox" id="expandedDbCheckbox" />
-          Use Expanded Problem Database
+          <input type="checkbox" id="useFinalizedOnly" />
+          Use Finalized Problems Only
         </label>
-        &nbsp;&nbsp;&nbsp;
-        <label>
-          <input type="checkbox" id="fullDbCheckbox" />
-          Use Full Database (No Automatic Answer Check)
-        </label>
+        <div class="quality-selector" id="qualitySelector">
+          <span class="quality-label">Minimum Quality:</span>
+          <div class="stars" id="qualityStars">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+          </div>
+          <span style="color: var(--text-tertiary); font-size: 14px;">(3/5)</span>
+        </div>
         <br><br>
         <label>
-          <input type="checkbox" id="onlyReviewedCheckbox" />
-          Only Use Manually Reviewed Problems
+          <input type="checkbox" id="useExpandedDb" />
+          Use Expanded Database
         </label>
         &nbsp;&nbsp;&nbsp;
-        <label>
-          <input type="checkbox" id="excludeBadCheckbox" />
+        <label id="excludeBadLabel">
+          <input type="checkbox" id="excludeBad" checked />
           Exclude Bad Problems
         </label>
       </div>
@@ -1020,14 +1066,67 @@
         if (btn) btn.textContent = '☀️ Light';
       }
 
-      const expandedCheckbox = document.getElementById('expandedDbCheckbox');
-      const fullCheckbox = document.getElementById('fullDbCheckbox');
-      expandedCheckbox.addEventListener('change', () => {
-        if (expandedCheckbox.checked) fullCheckbox.checked = false;
+      // Quality selector logic
+      let selectedQuality = 3; // Default to 3 stars
+
+      function updateQualityStars() {
+        const stars = document.querySelectorAll('#qualityStars .star');
+        stars.forEach((star, index) => {
+          if (index < selectedQuality) {
+            star.classList.add('filled');
+          } else {
+            star.classList.remove('filled');
+          }
+        });
+        document.querySelector('.quality-selector span:last-child').textContent = `(${selectedQuality}/5)`;
+      }
+
+      // Star click handlers
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('star') && e.target.closest('#qualityStars')) {
+          selectedQuality = parseInt(e.target.getAttribute('data-rating'));
+          updateQualityStars();
+        }
       });
-      fullCheckbox.addEventListener('change', () => {
-        if (fullCheckbox.checked) expandedCheckbox.checked = false;
+
+      // Star hover handlers
+      document.addEventListener('mouseenter', function(e) {
+        if (e.target.classList.contains('star') && e.target.closest('#qualityStars')) {
+          const rating = parseInt(e.target.getAttribute('data-rating'));
+          const stars = document.querySelectorAll('#qualityStars .star');
+          stars.forEach((star, index) => {
+            star.classList.remove('hover');
+            if (index < rating) {
+              star.classList.add('hover');
+            }
+          });
+        }
+      }, true);
+
+      document.addEventListener('mouseleave', function(e) {
+        if (e.target.classList.contains('star') && e.target.closest('#qualityStars')) {
+          const stars = document.querySelectorAll('#qualityStars .star');
+          stars.forEach(star => star.classList.remove('hover'));
+        }
+      }, true);
+
+      // Filter logic
+      const useFinalizedOnlyCheckbox = document.getElementById('useFinalizedOnly');
+      const qualitySelector = document.getElementById('qualitySelector');
+      const excludeBadLabel = document.getElementById('excludeBadLabel');
+
+      useFinalizedOnlyCheckbox.addEventListener('change', () => {
+        if (useFinalizedOnlyCheckbox.checked) {
+          qualitySelector.classList.add('show');
+          excludeBadLabel.style.display = 'none';
+        } else {
+          qualitySelector.classList.remove('show');
+          excludeBadLabel.style.display = 'inline-flex';
+        }
       });
+
+      // Initialize quality stars
+      updateQualityStars();
 
       const difficultyTemplate = {
         "1": { "2.5": 1, "3.0": 3, "3.5": 3, "4.0": 3, "4.5": 2, "5.0": 2, "5.5": 1, "6.0": 0, "6.5": 0, "7.0": 0, "7.5": 0, "8.0": 0 },
@@ -1048,35 +1147,51 @@
           buckets[d.toFixed(1)] = [];
         }
 
-        const useExpanded = expandedCheckbox.checked;
-        const useFull = fullCheckbox.checked;
-        const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
-        const excludeBad = document.getElementById('excludeBadCheckbox').checked;
+        const useFinalizedOnly = document.getElementById('useFinalizedOnly').checked;
+        const useExpanded = document.getElementById('useExpandedDb').checked;
+        const excludeBad = document.getElementById('excludeBad').checked;
 
         for (const p of allProblems) {
           let d = parseFloat(p.difficulty);
           if (isNaN(d)) continue;
-          if (onlyReviewed && !p.manually_reviewed) continue;
-          if (excludeBad && p.bad_problem) continue;
+          
+          // Base rule: Only manually reviewed problems
+          if (!p.manually_reviewed) continue;
 
-          if (useFull) {
+          // Apply filtering logic
+          let includeProb = false;
+
+          if (useFinalizedOnly) {
+            // Use finalized problems with minimum quality
+            if (p.finalized && p.quality >= selectedQuality) {
+              includeProb = true;
+            }
+          } else {
+            // Broader criteria based on expanded checkbox
+            if (useExpanded) {
+              // Use all finalized + manually reviewed problems
+              if (p.finalized || p.manually_reviewed) {
+                includeProb = true;
+              }
+            } else {
+              // Use problems that are (finalized OR aime_answer = answer)
+              if (p.finalized || (p.aime_answer !== null && p.answer !== null && 
+                  String(p.aime_answer % 1000) === String(p.answer))) {
+                includeProb = true;
+              }
+            }
+
+            // Apply exclude bad problems filter if enabled
+            if (excludeBad && p.quality === 1 && !p.finalized) {
+              includeProb = false;
+            }
+          }
+
+          if (includeProb) {
             const key = (Math.round(d * 2) / 2).toFixed(1);
             if (buckets[key]) {
               buckets[key].push(p);
             }
-            continue;
-          }
-
-          if (useExpanded) {
-            if (p.aime_answer === null || p.aime_answer === undefined) continue;
-          } else {
-            const answerNum = parseInt(p.answer);
-            if (isNaN(answerNum) || answerNum < 0 || answerNum > 999) continue;
-          }
-
-          const key = (Math.round(d * 2) / 2).toFixed(1);
-          if (buckets[key]) {
-            buckets[key].push(p);
           }
         }
 
@@ -1209,44 +1324,18 @@
         const currentProblem = chosenProblems[index];
         const currentDifficulty = (Math.round(parseFloat(currentProblem.difficulty) * 2) / 2).toFixed(1);
         
-        const useExpanded = expandedCheckbox.checked;
-        const useFull = fullCheckbox.checked;
-        const onlyReviewed = document.getElementById('onlyReviewedCheckbox').checked;
-        const excludeBad = document.getElementById('excludeBadCheckbox').checked;
-        
-        let availableProblems = [];
-        
-        for (const p of allProblems) {
-          const d = parseFloat(p.difficulty);
-          if (isNaN(d)) continue;
-          
-          const bucketDiff = (Math.round(d * 2) / 2).toFixed(1);
-          if (bucketDiff !== currentDifficulty) continue;
-          if (onlyReviewed && !p.manually_reviewed) continue;
-          if (excludeBad && p.bad_problem) continue;
-          if (useFull) {
-            availableProblems.push(p);
-          } else if (useExpanded) {
-            if (p.aime_answer !== null && p.aime_answer !== undefined) {
-              availableProblems.push(p);
-            }
-          } else {
-            const answerNum = parseInt(p.answer);
-            if (!isNaN(answerNum) && answerNum >= 0 && answerNum <= 999) {
-              availableProblems.push(p);
-            }
-          }
-        }
+        const buckets = bucketizeFine();
+        const availableProblems = buckets[currentDifficulty] || [];
         
         const usedIds = new Set(chosenProblems.map(p => p.id));
-        availableProblems = availableProblems.filter(p => !usedIds.has(p.id));
+        const filteredProblems = availableProblems.filter(p => !usedIds.has(p.id));
         
-        if (availableProblems.length === 0) {
+        if (filteredProblems.length === 0) {
           alert(`No more problems available at difficulty ${currentDifficulty}`);
           return;
         }
         
-        const newProblem = availableProblems[Math.floor(Math.random() * availableProblems.length)];
+        const newProblem = filteredProblems[Math.floor(Math.random() * filteredProblems.length)];
         chosenProblems[index] = newProblem;
         
         const problemDiv = document.querySelector(`.problem[data-problem-index="${index}"]`);
@@ -1255,47 +1344,26 @@
         problemDiv.className = "problem mathjax-process";
         problemDiv.setAttribute("data-problem-index", index);
         
-        // SECURITY FIX: Safe content insertion
-        if (useFull) {
-          problemDiv.innerHTML = `
-            <a href="" target="_blank" class="aops-link-top" id="aops-link-${index}">View Discussion</a>
-            <strong>Problem ${index + 1}:</strong>
-            <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
-            <p class="problem-text" id="problem-text-${index}"></p>
-            <div>
-              <label><input type="checkbox" class="override" data-index="${index}" /> I was correct</label>
-            </div>
-            <div><strong>Source:</strong> <span id="source-${index}"></span></div>
-            <div style="margin-top: 12px;">
-              <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
-              <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
-            </div>
-          `;
-        } else {
-          problemDiv.innerHTML = `
-            <a href="" target="_blank" class="aops-link-top" id="aops-link-${index}">View Discussion</a>
-            <strong>Problem ${index + 1}:</strong>
-            <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
-            <p class="problem-text" id="problem-text-${index}"></p>
-            <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${index}" placeholder="000" /></div>
-            <div style="margin-top: 12px;">
-              <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
-              <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
-            </div>
-          `;
-        }
+        // Always use normal mode (not full database mode anymore)
+        problemDiv.innerHTML = `
+          <a href="" target="_blank" class="aops-link-top" id="aops-link-${index}">View Discussion</a>
+          <strong>Problem ${index + 1}:</strong>
+          <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
+          <p class="problem-text" id="problem-text-${index}"></p>
+          <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${index}" placeholder="000" /></div>
+          <div style="margin-top: 12px;">
+            <button class="replace-button" onclick="replaceProblem(${index})">Replace Problem</button>
+            <button class="report-button" onclick="openReportModal(${newProblem.id})">Report Issue</button>
+          </div>
+        `;
         
         // SECURITY FIX: Safely set content
         const problemTextEl = document.getElementById(`problem-text-${index}`);
         const aopsLinkEl = document.getElementById(`aops-link-${index}`);
-        const sourceEl = document.getElementById(`source-${index}`);
         
-        setMathContent(problemTextEl, newProblem.text || '');
+        setMathContent(problemTextEl, newProblem.rewritten_problem || newProblem.text || '');
         aopsLinkEl.href = escapeHtml(newProblem.link || '');
         aopsLinkEl.textContent = 'View Discussion';
-        if (sourceEl) {
-          sourceEl.textContent = newProblem.source || "Unknown";
-        }
         
         updateProblemNav();
       }
@@ -1306,8 +1374,7 @@
           return;
         }
 
-        const useExpanded = expandedCheckbox.checked;
-        const useFull = fullCheckbox.checked;
+        const useExpanded = document.getElementById('useExpandedDb').checked;
         const level = document.getElementById("difficulty").value;
 
         document.getElementById("instructions").textContent = "";
@@ -1315,20 +1382,7 @@
 
         if (useExpanded) {
           document.getElementById("instructions").textContent =
-    `Note: Problems in the expanded database may include answers not limited to positive integers from 0 to 999.
-    Examples include fractions (e.g., \\( \\frac{3}{5} \\)), powers (e.g., \\( 2^{10} \\)), or sums.
-    Enter your answer as the sum of components mod 1000.
-    Examples:
-    - \\( \\frac{3}{5} \\) → 8
-    - \\( 2^{10} / 3 \\) → 15
-    - \\( 7 \\) → 7
-    `;
-        }
-
-        if (useFull) {
-          document.getElementById("instructions").textContent =
-    `Note: Problems in the full database may not have answers available for automatic checking.
-    You will need to manually check the answers for these problems.`;
+    `Note: Using expanded database may include some problems with answers requiring modular arithmetic (mod 1000 format). Most problems will still have standard 0-999 answers.`;
         }
 
         const buckets = bucketizeFine();
@@ -1370,49 +1424,28 @@
           div.setAttribute("data-problem-index", i);
           div.id = `problem-${i}`;
 
-          // SECURITY FIX: Safe content insertion
-          if (useFull) {
-            div.innerHTML = `
-              <a href="" target="_blank" class="aops-link-top" id="aops-link-${i}">View Discussion</a>
-              <strong>Problem ${i + 1}:</strong>
-              <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
-              <p class="problem-text" id="problem-text-${i}"></p>
-              <div>
-                <label><input type="checkbox" class="override" data-index="${i}" /> I was correct</label>
-              </div>
-              <div><strong>Source:</strong> <span id="source-${i}"></span></div>
-              <div style="margin-top: 12px;">
-                <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
-                <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
-              </div>
-            `;
-          } else {
-            div.innerHTML = `
-              <a href="" target="_blank" class="aops-link-top" id="aops-link-${i}">View Discussion</a>
-              <strong>Problem ${i + 1}:</strong>
-              <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
-              <p class="problem-text" id="problem-text-${i}"></p>
-              <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
-              <div style="margin-top: 12px;">
-                <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
-                <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
-              </div>
-            `;
-          }
+          // Always use normal mode (not full database mode anymore)
+          div.innerHTML = `
+            <a href="" target="_blank" class="aops-link-top" id="aops-link-${i}">View Discussion</a>
+            <strong>Problem ${i + 1}:</strong>
+            <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
+            <p class="problem-text" id="problem-text-${i}"></p>
+            <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
+            <div style="margin-top: 12px;">
+              <button class="replace-button" onclick="replaceProblem(${i})">Replace Problem</button>
+              <button class="report-button" onclick="openReportModal(${p.id})">Report Issue</button>
+            </div>
+          `;
 
           container.appendChild(div);
           
           // SECURITY FIX: Safely set content after DOM insertion
           const problemTextEl = document.getElementById(`problem-text-${i}`);
           const aopsLinkEl = document.getElementById(`aops-link-${i}`);
-          const sourceEl = document.getElementById(`source-${i}`);
           
-          setMathContent(problemTextEl, p.text || '');
+          setMathContent(problemTextEl, p.rewritten_problem || p.text || '');
           aopsLinkEl.href = escapeHtml(p.link || '');
           aopsLinkEl.textContent = 'View Discussion';
-          if (sourceEl) {
-            sourceEl.textContent = p.source || "Unknown";
-          }
         });
         
         updateProblemNav();
@@ -1453,27 +1486,11 @@
         let results = [];
 
         chosenProblems.forEach((p, i) => {
-          const overrideCheckbox = document.querySelector(`input.override[data-index="${i}"]`);
-          const userOverride = overrideCheckbox?.checked || false;
+          const answerInput = document.querySelector(`input[data-index="${i}"]`);
           const problemDiv = document.querySelector(`.problem[data-problem-index="${i}"]`);
           
           const existingIcon = problemDiv?.querySelector('.status-icon');
           if (existingIcon) existingIcon.remove();
-
-          if (userOverride) {
-            correctCount++;
-            results.push({ index: i, status: 'override' });
-            if (problemDiv) {
-              const icon = document.createElement('div');
-              icon.className = 'status-icon override';
-              icon.textContent = '✓';
-              problemDiv.appendChild(icon);
-              setTimeout(() => icon.classList.add('show'), 50);
-            }
-            return;
-          }
-
-          const answerInput = document.querySelector(`input[data-index="${i}"]:not(.override)`);
 
           if (answerInput) {
             const userAnswer = answerInput.value.trim();
@@ -1492,10 +1509,10 @@
             
             let correct = false;
 
-            if ("aime_answer" in p) {
+            if (p.aime_answer !== null && p.aime_answer !== undefined) {
               const expected = String(p.aime_answer % 1000);
               correct = userAnswer === expected;
-            } else if ("answer" in p) {
+            } else if (p.answer !== null && p.answer !== undefined) {
               correct = userAnswer === String(p.answer);
             }
 
