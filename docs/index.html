@@ -347,40 +347,57 @@
     }
 
     .problem-nav {
-      position: sticky;
-      top: 20px;
+      position: fixed;
+      left: 20px;
+      top: 140px;
+      width: 80px;
       z-index: 100;
       background: var(--bg-card);
-      padding: 20px;
+      padding: 16px;
       border-radius: 12px;
-      box-shadow: var(--shadow-sm);
-      margin: 20px 0;
+      box-shadow: var(--shadow-md);
       border: 1px solid var(--border-color);
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
     }
 
     .problem-nav-title {
       font-weight: 600;
       margin-bottom: 12px;
       color: var(--text-primary);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .problem-nav-progress {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 12px;
+      padding: 6px;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      font-weight: 600;
     }
 
     .problem-nav-grid {
-      display: grid;
-      grid-template-columns: repeat(15, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 8px;
     }
 
     .problem-nav-item {
-      aspect-ratio: 1;
+      width: 100%;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--bg-secondary);
       border: 2px solid var(--border-color);
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 16px;
       transition: all 0.2s;
       color: var(--text-primary);
     }
@@ -880,10 +897,35 @@
     }
     
     .mode-toggle {
-      margin: 16px 0 24px 0;
-      padding: 16px;
+      margin: 0;
+      padding: 20px;
       background: var(--bg-secondary);
       border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .filter-section {
+      background: var(--bg-card);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .filter-section h3 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .filter-option {
+      margin-bottom: 12px;
+    }
+
+    .filter-option:last-child {
+      margin-bottom: 0;
     }
     
     #instructions {
@@ -899,6 +941,171 @@
     
     #instructions:empty {
       display: none;
+    }
+
+    .stats-container {
+      background: var(--bg-card);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      border: 1px solid var(--border-color);
+    }
+
+    .stats-summary {
+      margin-bottom: 16px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .stats-summary-item {
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stats-details {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .stats-details summary {
+      font-weight: 600;
+      color: var(--primary-blue);
+      cursor: pointer;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stats-details summary:hover {
+      background: var(--bg-secondary);
+    }
+
+    .stats-details summary::marker {
+      content: '';
+    }
+
+    .stats-details summary::before {
+      content: '▶';
+      display: inline-block;
+      transition: transform 0.3s;
+      font-size: 12px;
+    }
+
+    .stats-details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .stats-table th {
+      text-align: left;
+      padding: 12px;
+      background: var(--bg-secondary);
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border-color);
+      font-size: 14px;
+    }
+
+    .stats-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 14px;
+    }
+
+    .stats-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .stats-row-insufficient {
+      background: #fee;
+      color: #c00;
+    }
+
+    [data-theme="dark"] .stats-row-insufficient {
+      background: #4a1111;
+      color: #ff6b6b;
+    }
+
+    .stats-row-barely {
+      background: #ffeaa7;
+      color: #856404;
+    }
+
+    [data-theme="dark"] .stats-row-barely {
+      background: #4a3c11;
+      color: #ffd93d;
+    }
+
+    .stats-row-good {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    [data-theme="dark"] .stats-row-good {
+      background: #1b4d20;
+      color: #a5d6a7;
+    }
+
+    .stats-row-plenty {
+      background: #cce5ff;
+      color: #004085;
+    }
+
+    [data-theme="dark"] .stats-row-plenty {
+      background: #1a3a52;
+      color: #64b5f6;
+    }
+
+    .stats-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .progress-bar-insufficient {
+      background: #dc3545;
+    }
+
+    .progress-bar-barely {
+      background: #ffc107;
+    }
+
+    .progress-bar-good {
+      background: #28a745;
+    }
+
+    .progress-bar-plenty {
+      background: #007bff;
     }
     
     a {
@@ -962,8 +1169,27 @@
         grid-template-columns: repeat(5, 1fr);
       }
 
+      .problem-nav {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-height: none;
+        margin: 20px 0;
+      }
+
       .problem-nav-grid {
-        grid-template-columns: repeat(5, 1fr);
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .problem-nav-item {
+        width: 44px;
+        flex-shrink: 0;
+      }
+
+      .main-content {
+        margin-left: 0 !important;
       }
       
       nav a {
@@ -1012,7 +1238,7 @@
     </div>
   </nav>
 
-  <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
+  <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;" class="main-content">
     <h1>Mock AIME Generator</h1>
     
     <div id="loadingProgress" class="loading-indicator">
@@ -1020,17 +1246,21 @@
       <p style="margin-top: 16px; font-weight: 500;">Loading problems...</p>
     </div>
 
-    <div style="background: var(--bg-card); padding: 32px; border-radius: 12px; box-shadow: var(--shadow-sm); margin-bottom: 32px; border: 1px solid var(--border-color);">
+    <div class="filter-section">
+      <h3>Filter Options</h3>
       <div class="mode-toggle">
-        <label>
-          <input type="checkbox" id="useFinalizedOnly" />
-          Use Finalized Problems Only
-        </label>
-        <br><br>
-        <label>
-          <input type="checkbox" id="useExpandedDb" />
-          Use Expanded Database
-        </label>
+        <div class="filter-option">
+          <label>
+            <input type="checkbox" id="useFinalizedOnly" />
+            Use Finalized Problems Only
+          </label>
+        </div>
+        <div class="filter-option">
+          <label>
+            <input type="checkbox" id="useExpandedDb" />
+            Use Expanded Database
+          </label>
+        </div>
         <div class="quality-selector" id="qualitySelector">
           <span class="quality-label">Minimum Quality:</span>
           <div class="stars" id="qualityStars">
@@ -1043,7 +1273,11 @@
           <span class="quality-rating-text" id="qualityRatingText">(3/5)</span>
         </div>
       </div>
-      <label for="difficulty" style="font-weight: 600; color: var(--primary-blue); font-size: 15px;">Select Difficulty Level:</label>
+    </div>
+
+    <div class="filter-section">
+      <h3>Difficulty Selection</h3>
+      <label for="difficulty" style="font-weight: 500; color: var(--text-secondary); font-size: 15px;">Select Difficulty Level:</label>
       <select id="difficulty">
         <option value="1">1 - Easiest</option>
         <option value="2">2</option>
@@ -1057,7 +1291,7 @@
         <option value="10">10 - Hardest</option>
       </select>
 
-      <div style="margin-top: 24px;">
+      <div style="margin-top: 20px;">
         <button id="generateBtn" onclick="generateMock()">Generate Mock</button>
         <button id="checkBtn" onclick="checkAnswers()">Check Answers</button>
       </div>
@@ -1067,7 +1301,8 @@
     <div class="stats" id="stats"></div>
     
     <div id="problemNav" style="display: none;" class="problem-nav">
-      <div class="problem-nav-title">Jump to Problem:</div>
+      <div class="problem-nav-title">Jump to:</div>
+      <div class="problem-nav-progress" id="problemNavProgress">0/15</div>
       <div class="problem-nav-grid" id="problemNavGrid"></div>
     </div>
 
@@ -1251,7 +1486,10 @@
 
       function updateProblemNav() {
         const navGrid = document.getElementById('problemNavGrid');
+        const navProgress = document.getElementById('problemNavProgress');
         navGrid.innerHTML = '';
+        
+        let answeredCount = 0;
         
         for (let i = 0; i < chosenProblems.length; i++) {
           const item = document.createElement('div');
@@ -1262,12 +1500,26 @@
           const input = document.querySelector(`input[data-index="${i}"]:not(.override)`);
           if (input && input.value.trim()) {
             item.classList.add('answered');
+            answeredCount++;
           }
           
           navGrid.appendChild(item);
         }
         
+        // Update progress indicator
+        if (navProgress) {
+          navProgress.textContent = `${answeredCount}/${chosenProblems.length} answered`;
+        }
+        
         document.getElementById('problemNav').style.display = chosenProblems.length > 0 ? 'block' : 'none';
+        
+        // Add margin to main content when nav is visible
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent && chosenProblems.length > 0 && window.innerWidth > 768) {
+          mainContent.style.marginLeft = '120px';
+        } else if (mainContent) {
+          mainContent.style.marginLeft = '0';
+        }
       }
 
       function scrollToProblem(index) {
@@ -1438,26 +1690,99 @@
         const buckets = bucketizeFine();
         const plan = difficultyTemplate[level];
 
-        let statText = "Available / Needed problems:\n";
+        // Calculate stats for summary
+        let totalAvailable = 0;
+        let canGenerate = true;
+        let insufficientDifficulties = [];
+        
         for (const [diff, countNeeded] of Object.entries(plan)) {
           const available = buckets[diff]?.length || 0;
-          statText += `  (${diff}): ${available} / ${countNeeded}\n`;
+          totalAvailable += available;
+          if (available < countNeeded) {
+            canGenerate = false;
+            insufficientDifficulties.push(diff);
+          }
         }
+
+        // Build stats table HTML
+        let tableHTML = '<table class="stats-table"><thead><tr><th>Difficulty</th><th>Available</th><th>Needed</th><th>Status</th></tr></thead><tbody>';
+        
+        for (const [diff, countNeeded] of Object.entries(plan)) {
+          const available = buckets[diff]?.length || 0;
+          let rowClass = '';
+          let statusIcon = '';
+          let statusText = '';
+          let progressPercent = 0;
+          let progressClass = '';
+          
+          if (available < countNeeded) {
+            rowClass = 'stats-row-insufficient';
+            statusIcon = '✗';
+            statusText = 'Insufficient';
+            progressPercent = countNeeded > 0 ? (available / countNeeded) * 100 : 0;
+            progressClass = 'progress-bar-insufficient';
+          } else if (available < countNeeded * 2) {
+            rowClass = 'stats-row-barely';
+            statusIcon = '⚠';
+            statusText = 'Barely enough';
+            progressPercent = 100;
+            progressClass = 'progress-bar-barely';
+          } else if (available < countNeeded * 10) {
+            rowClass = 'stats-row-good';
+            statusIcon = '✓';
+            statusText = 'Ready';
+            progressPercent = 100;
+            progressClass = 'progress-bar-good';
+          } else {
+            rowClass = 'stats-row-plenty';
+            statusIcon = '✓';
+            statusText = 'Plenty';
+            progressPercent = 100;
+            progressClass = 'progress-bar-plenty';
+          }
+          
+          tableHTML += `
+            <tr class="${rowClass}">
+              <td><strong>${diff}</strong></td>
+              <td>${available}</td>
+              <td>${countNeeded}</td>
+              <td>
+                <div class="stats-status">${statusIcon} ${statusText}</div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar ${progressClass}" style="width: ${Math.min(progressPercent, 100)}%"></div>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+        
+        tableHTML += '</tbody></table>';
+
+        // Build summary section
+        let summaryHTML = '<div class="stats-summary">';
+        summaryHTML += `<div class="stats-summary-item">📊 Total problems available: <strong>${totalAvailable}</strong></div>`;
+        
+        if (canGenerate) {
+          summaryHTML += '<div class="stats-summary-item" style="color: #28a745;">✓ Can generate mock for this difficulty level</div>';
+        } else {
+          summaryHTML += `<div class="stats-summary-item" style="color: #dc3545;">✗ Cannot generate: Insufficient problems at difficulties ${insufficientDifficulties.join(', ')}</div>`;
+        }
+        summaryHTML += '</div>';
+
         document.getElementById("stats").innerHTML = `
-          <div style="background: var(--bg-card); padding: 20px; border-radius: 12px; box-shadow: var(--shadow-sm); margin-bottom: 32px; border: 1px solid var(--border-color);">
-            <details>
-              <summary style="cursor: pointer; font-weight: 600; color: var(--primary-blue); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;">Available problems by difficulty (click to expand)</summary>
-              <pre style="margin-top: 15px; font-size: 14px; line-height: 1.8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; color: var(--text-primary);">${escapeHtml(statText)}</pre>
+          <div class="stats-container">
+            ${summaryHTML}
+            <details class="stats-details">
+              <summary>View detailed breakdown by difficulty</summary>
+              ${tableHTML}
             </details>
           </div>
         `;
 
-        for (const [diff, countNeeded] of Object.entries(plan)) {
-          if ((buckets[diff]?.length || 0) < countNeeded) {
-            document.getElementById("problems").innerHTML =
-              `<p style="color:red;"><strong>Not enough problems in bucket ${diff} to generate mock.</strong></p>`;
-            return;
-          }
+        if (!canGenerate) {
+          document.getElementById("problems").innerHTML =
+            `<p style="color:red;"><strong>Not enough problems to generate mock. Please adjust your filters or select a different difficulty level.</strong></p>`;
+          return;
         }
 
         chosenProblems = [];
