@@ -1210,10 +1210,13 @@
             // Default mode: finalized OR (aime_answer between 0-999, meaning it equals the answer column)
             if (p.finalized) {
               includeProb = true;
-            } else if (p.aime_answer !== null && p.aime_answer !== undefined && p.answer !== null && p.answer !== undefined) {
+            } else if (p.aime_answer !== null && p.aime_answer !== undefined && p.answer !== null && p.answer !== undefined && p.answer !== '') {
               // Check if aime_answer mod 1000 equals answer (standard AIME format)
+              // Convert both to strings and trim whitespace for comparison
               const aimeAnswerMod = p.aime_answer % 1000;
-              if (aimeAnswerMod === p.answer) {
+              const answerTrimmed = String(p.answer).trim();
+              // Only include if answer is a plain number (not LaTeX or fractions)
+              if (/^\d+$/.test(answerTrimmed) && String(aimeAnswerMod) === answerTrimmed) {
                 includeProb = true;
               }
             }
