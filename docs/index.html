@@ -913,14 +913,10 @@
 
     /* Star rating styles */
     .quality-selector {
-      display: none;
+      display: flex;
       margin-top: 10px;
       align-items: center;
       gap: 10px;
-    }
-
-    .quality-selector.show {
-      display: flex;
     }
 
     .quality-label {
@@ -1030,6 +1026,11 @@
           <input type="checkbox" id="useFinalizedOnly" />
           Use Finalized Problems Only
         </label>
+        <br><br>
+        <label>
+          <input type="checkbox" id="useExpandedDb" />
+          Use Expanded Database
+        </label>
         <div class="quality-selector" id="qualitySelector">
           <span class="quality-label">Minimum Quality:</span>
           <div class="stars" id="qualityStars">
@@ -1041,16 +1042,6 @@
           </div>
           <span class="quality-rating-text" id="qualityRatingText">(3/5)</span>
         </div>
-        <br><br>
-        <label>
-          <input type="checkbox" id="useExpandedDb" />
-          Use Expanded Database
-        </label>
-        &nbsp;&nbsp;&nbsp;
-        <label id="excludeBadLabel">
-          <input type="checkbox" id="excludeBad" checked />
-          Exclude Bad Problems
-        </label>
       </div>
       <label for="difficulty" style="font-weight: 600; color: var(--primary-blue); font-size: 15px;">Select Difficulty Level:</label>
       <select id="difficulty">
@@ -1168,21 +1159,6 @@
         }
       }, true);
 
-      // Filter logic
-      const useFinalizedOnlyCheckbox = document.getElementById('useFinalizedOnly');
-      const qualitySelector = document.getElementById('qualitySelector');
-      const excludeBadLabel = document.getElementById('excludeBadLabel');
-
-      useFinalizedOnlyCheckbox.addEventListener('change', () => {
-        if (useFinalizedOnlyCheckbox.checked) {
-          qualitySelector.classList.add('show');
-          excludeBadLabel.style.display = 'none';
-        } else {
-          qualitySelector.classList.remove('show');
-          excludeBadLabel.style.display = 'inline-flex';
-        }
-      });
-
       // Initialize quality stars
       updateQualityStars();
 
@@ -1207,41 +1183,33 @@
 
         const useFinalizedOnly = document.getElementById('useFinalizedOnly').checked;
         const useExpanded = document.getElementById('useExpandedDb').checked;
-        const excludeBad = document.getElementById('excludeBad').checked;
 
         for (const p of allProblems) {
           let d = parseFloat(p.difficulty);
           if (isNaN(d)) continue;
           
-          // Base rule: Only manually reviewed problems
-          if (!p.manually_reviewed) continue;
+          // Base requirement: manually reviewed AND has quality rating
+          if (!p.manually_reviewed || !p.quality || p.quality === 0) continue;
 
-          // Apply filtering logic
+          // Apply quality filter - this now applies to ALL modes
+          if (p.quality < selectedQuality) continue;
+
           let includeProb = false;
 
           if (useFinalizedOnly) {
-            // Use finalized problems with minimum quality
-            if (p.finalized && p.quality >= selectedQuality) {
+            // Use Finalized Only mode
+            if (p.finalized) {
+              includeProb = true;
+            }
+          } else if (useExpanded) {
+            // Use Expanded Database mode: finalized OR (manually reviewed with aime_answer)
+            if (p.finalized || (p.aime_answer !== null && p.aime_answer !== undefined)) {
               includeProb = true;
             }
           } else {
-            // Broader criteria based on expanded checkbox
-            if (useExpanded) {
-              // Use all finalized + manually reviewed problems
-              if (p.finalized || p.manually_reviewed) {
-                includeProb = true;
-              }
-            } else {
-              // Use problems that are (finalized OR aime_answer = answer)
-              if (p.finalized || (p.aime_answer !== null && p.answer !== null && 
-                  String(p.aime_answer % 1000) === String(p.answer))) {
-                includeProb = true;
-              }
-            }
-
-            // Apply exclude bad problems filter if enabled
-            if (excludeBad && p.quality === 1 && !p.finalized) {
-              includeProb = false;
+            // Default mode: finalized OR has aime_answer
+            if (p.finalized || (p.aime_answer !== null && p.aime_answer !== undefined)) {
+              includeProb = true;
             }
           }
 
@@ -1411,7 +1379,6 @@
         problemDiv.className = "problem mathjax-process";
         problemDiv.setAttribute("data-problem-index", index);
         
-        // Always use normal mode (not full database mode anymore)
         problemDiv.innerHTML = `
           ${getQualityBadgeHtml(newProblem.quality)}
           <a href="" target="_blank" class="aops-link-top" id="aops-link-${index}">View Discussion</a>
@@ -1492,7 +1459,6 @@
           div.setAttribute("data-problem-index", i);
           div.id = `problem-${i}`;
 
-          // Always use normal mode (not full database mode anymore)
           div.innerHTML = `
             ${getQualityBadgeHtml(p.quality)}
             <a href="" target="_blank" class="aops-link-top" id="aops-link-${i}">View Discussion</a>
