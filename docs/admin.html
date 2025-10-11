@@ -46,13 +46,6 @@
     .nav-links a:hover {
       background: #003366;
     }
-    .auth-info {
-      text-align: center;
-      margin-bottom: 20px;
-      padding: 15px;
-      background: #e3f2fd;
-      border-radius: 8px;
-    }
     .controls {
       margin: 20px 0;
       padding: 15px;
@@ -309,6 +302,7 @@
       display: flex;
       gap: 15px;
       align-items: center;
+      flex-wrap: wrap;
     }
     .stats {
       margin: 20px 0;
@@ -370,11 +364,6 @@
     <a href="search.html">Problem Search</a>
     <a href="login.html" class="auth-button">Login</a>
   </div>
-
-  <div class="auth-info" id="authInfo">
-    <span id="authStatus">Checking authentication...</span>
-    <button class="sign-out-btn" id="signOutBtn" onclick="signOut()" style="display: none;">Sign Out</button>
-  </div>
   
   <div class="stats" id="stats">Loading...</div>
 
@@ -391,6 +380,18 @@
       <label>
         <input type="checkbox" id="showFinalizedOnly" />
         Show only finalized problems
+      </label>
+      <label>
+        <input type="checkbox" id="showUnfinalizedOnly" />
+        Show only unfinalized problems
+      </label>
+      <label>
+        <input type="checkbox" id="showRatedOnly" />
+        Show only rated problems
+      </label>
+      <label>
+        <input type="checkbox" id="showUnratedOnly" />
+        Show only unrated problems
       </label>
       <button onclick="loadProblems()">Refresh</button>
     </div>
@@ -430,25 +431,16 @@
       const { data: { session } } = await supabaseClient.auth.getSession();
       currentUser = session?.user || null;
       
-      const authStatusEl = document.getElementById('authStatus');
-      const signOutBtn = document.getElementById('signOutBtn');
       const authButton = document.querySelector('.auth-button');
       
       if (currentUser) {
         // User is logged in
-        const displayName = currentUser.user_metadata?.display_name || currentUser.email;
-        authStatusEl.textContent = `Logged in as: ${displayName}`;
-        signOutBtn.style.display = 'inline-block';
-        
         if (authButton) {
           authButton.textContent = 'Profile';
           authButton.href = 'profile.html';
         }
       } else {
         // User is not logged in
-        authStatusEl.textContent = 'Not logged in (admin functionality limited)';
-        signOutBtn.style.display = 'none';
-        
         if (authButton) {
           authButton.textContent = 'Login';
           authButton.href = 'login.html';
@@ -516,16 +508,25 @@
       const showUnreviewed = document.getElementById('showUnreviewedOnly').checked;
       const showReviewed = document.getElementById('showReviewedOnly').checked;
       const showFinalized = document.getElementById('showFinalizedOnly').checked;
+      const showUnfinalized = document.getElementById('showUnfinalizedOnly').checked;
+      const showRated = document.getElementById('showRatedOnly').checked;
+      const showUnrated = document.getElementById('showUnratedOnly').checked;
       
-      if (showUnreviewed) {
-        allProblems = allData.filter(p => !p.manually_reviewed);
-      } else if (showReviewed) {
-        allProblems = allData.filter(p => p.manually_reviewed);
-      } else if (showFinalized) {
-        allProblems = allData.filter(p => p.finalized);
-      } else {
-        allProblems = allData;
-      }
+      allProblems = allData.filter(p => {
+        // Review status filters
+        if (showUnreviewed && p.manually_reviewed) return false;
+        if (showReviewed && !p.manually_reviewed) return false;
+        
+        // Finalized status filters
+        if (showFinalized && !p.finalized) return false;
+        if (showUnfinalized && p.finalized) return false;
+        
+        // Rating status filters
+        if (showRated && (!p.quality || p.quality === 0)) return false;
+        if (showUnrated && p.quality && p.quality > 0) return false;
+        
+        return true;
+      });
       
       currentPage = 1;
       updateStats();
@@ -537,11 +538,13 @@
       const reviewed = allProblems.filter(p => p.manually_reviewed).length;
       const unreviewed = total - reviewed;
       const finalized = allProblems.filter(p => p.finalized).length;
+      const rated = allProblems.filter(p => p.quality && p.quality > 0).length;
       
       document.getElementById('stats').innerHTML = `
         <strong>Total problems:</strong> ${total} | 
         <strong>Reviewed:</strong> ${reviewed} (${total > 0 ? Math.round(reviewed/total*100) : 0}%) | 
         <strong>Finalized:</strong> ${finalized} (${total > 0 ? Math.round(finalized/total*100) : 0}%) | 
+        <strong>Rated:</strong> ${rated} (${total > 0 ? Math.round(rated/total*100) : 0}%) | 
         <strong>Unreviewed:</strong> ${unreviewed}
       `;
     }
@@ -1004,6 +1007,7 @@
       loadProblems();
     };
     
+    // Add mutual exclusivity for the checkboxes
     document.getElementById('showUnreviewedOnly').addEventListener('change', function() {
       if (this.checked) {
         document.getElementById('showReviewedOnly').checked = false;
@@ -1022,6 +1026,25 @@
       if (this.checked) {
         document.getElementById('showUnreviewedOnly').checked = false;
         document.getElementById('showReviewedOnly').checked = false;
+        document.getElementById('showUnfinalizedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showUnfinalizedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showFinalizedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showRatedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showUnratedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showUnratedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showRatedOnly').checked = false;
       }
       loadProblems();
     });

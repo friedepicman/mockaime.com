@@ -428,6 +428,53 @@
     .problem.pulse {
       animation: problemPulse 0.3s ease-in-out;
     }
+
+    .quality-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+      color: #000;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .quality-badge.quality-0,
+    .quality-badge.no-quality {
+      background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+      color: white;
+    }
+
+    .quality-badge.quality-1 {
+      background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+      color: white;
+    }
+
+    .quality-badge.quality-2 {
+      background: linear-gradient(135deg, #fd7e14 0%, #e55a00 100%);
+      color: white;
+    }
+
+    .quality-badge.quality-3 {
+      background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+      color: #000;
+    }
+
+    .quality-badge.quality-4 {
+      background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+      color: white;
+    }
+
+    .quality-badge.quality-5 {
+      background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+      color: white;
+    }
     
     .answer {
       margin-top: 16px;
@@ -904,6 +951,12 @@
       opacity: 0.7;
     }
 
+    .quality-rating-text {
+      color: var(--text-tertiary);
+      font-size: 14px;
+      margin-left: 5px;
+    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 1.8rem;
@@ -925,6 +978,11 @@
       .problem {
         padding: 16px;
         padding-top: 48px;
+      }
+
+      .quality-badge {
+        top: 8px;
+        right: 8px;
       }
     }
   </style>
@@ -981,7 +1039,7 @@
             <span class="star" data-rating="4">★</span>
             <span class="star" data-rating="5">★</span>
           </div>
-          <span style="color: var(--text-tertiary); font-size: 14px;">(3/5)</span>
+          <span class="quality-rating-text" id="qualityRatingText">(3/5)</span>
         </div>
         <br><br>
         <label>
@@ -1078,7 +1136,7 @@
             star.classList.remove('filled');
           }
         });
-        document.querySelector('.quality-selector span:last-child').textContent = `(${selectedQuality}/5)`;
+        document.getElementById('qualityRatingText').textContent = `(${selectedQuality}/5)`;
       }
 
       // Star click handlers
@@ -1320,6 +1378,15 @@
         }
       });
 
+      function getQualityBadgeHtml(quality) {
+        if (!quality || quality === 0) {
+          return '<div class="quality-badge no-quality">No Rating</div>';
+        }
+        
+        const stars = '★'.repeat(quality);
+        return `<div class="quality-badge quality-${quality}">${stars} ${quality}/5</div>`;
+      }
+
       async function replaceProblem(index) {
         const currentProblem = chosenProblems[index];
         const currentDifficulty = (Math.round(parseFloat(currentProblem.difficulty) * 2) / 2).toFixed(1);
@@ -1346,6 +1413,7 @@
         
         // Always use normal mode (not full database mode anymore)
         problemDiv.innerHTML = `
+          ${getQualityBadgeHtml(newProblem.quality)}
           <a href="" target="_blank" class="aops-link-top" id="aops-link-${index}">View Discussion</a>
           <strong>Problem ${index + 1}:</strong>
           <span class="difficulty-indicator">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
@@ -1426,6 +1494,7 @@
 
           // Always use normal mode (not full database mode anymore)
           div.innerHTML = `
+            ${getQualityBadgeHtml(p.quality)}
             <a href="" target="_blank" class="aops-link-top" id="aops-link-${i}">View Discussion</a>
             <strong>Problem ${i + 1}:</strong>
             <span class="difficulty-indicator">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
