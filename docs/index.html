@@ -349,9 +349,9 @@
     .problem-nav {
       position: fixed;
       left: 50%;
-      transform: translateX(calc(-450px - 130px));
+      transform: translateX(calc(-450px - 160px));
       top: 140px;
-      width: 70px;
+      width: 140px;
       z-index: 100;
       background: var(--bg-card);
       padding: 12px;
@@ -360,30 +360,54 @@
       border: 1px solid var(--border-color);
       max-height: calc(100vh - 180px);
       overflow-y: auto;
+      display: none;
     }
 
-    .problem-nav::-webkit-scrollbar {
-      width: 6px;
+    .problem-nav.visible {
+      display: block;
     }
 
-    .problem-nav::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
-      border-radius: 3px;
+    .toggle-nav-btn {
+      position: fixed;
+      left: 50%;
+      transform: translateX(calc(-450px - 180px));
+      top: 140px;
+      z-index: 101;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: var(--shadow-md);
+      transition: all 0.2s;
+      display: none;
     }
 
-    .problem-nav::-webkit-scrollbar-thumb {
-      background: var(--border-strong);
-      border-radius: 3px;
+    .toggle-nav-btn.visible {
+      display: block;
     }
 
-    .problem-nav::-webkit-scrollbar-thumb:hover {
-      background: var(--text-tertiary);
+    .toggle-nav-btn:hover {
+      background: var(--primary-blue-light);
+      transform: translateX(calc(-450px - 180px)) translateY(-2px);
     }
 
     @media (max-width: 1200px) {
       .problem-nav {
         left: 20px;
         transform: none;
+      }
+
+      .toggle-nav-btn {
+        left: 20px;
+        transform: none;
+      }
+
+      .toggle-nav-btn:hover {
+        transform: translateY(-2px);
       }
     }
 
@@ -407,14 +431,13 @@
     }
 
     .problem-nav-grid {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 6px;
     }
 
     .problem-nav-item {
-      width: 100%;
-      height: 38px;
+      aspect-ratio: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -423,7 +446,7 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 15px;
+      font-size: 14px;
       transition: all 0.2s;
       color: var(--text-primary);
     }
@@ -1332,7 +1355,11 @@
     <div id="instructions"></div>
     <div class="stats" id="stats"></div>
     
-    <div id="problemNav" style="display: none;" class="problem-nav">
+    <button id="toggleNavBtn" class="toggle-nav-btn" onclick="toggleProblemNav()">
+      Show Navigation
+    </button>
+
+    <div id="problemNav" class="problem-nav">
       <div class="problem-nav-title">Jump to:</div>
       <div class="problem-nav-progress" id="problemNavProgress">0/15</div>
       <div class="problem-nav-grid" id="problemNavGrid"></div>
@@ -1428,6 +1455,22 @@
 
       // Initialize quality stars
       updateQualityStars();
+
+      let navVisible = false;
+
+      function toggleProblemNav() {
+        const nav = document.getElementById('problemNav');
+        const btn = document.getElementById('toggleNavBtn');
+        navVisible = !navVisible;
+        
+        if (navVisible) {
+          nav.classList.add('visible');
+          btn.textContent = 'Hide Navigation';
+        } else {
+          nav.classList.remove('visible');
+          btn.textContent = 'Show Navigation';
+        }
+      }
 
       const difficultyTemplate = {
         "1": { "2.5": 1, "3.0": 3, "3.5": 3, "4.0": 2, "4.5": 2, "5.0": 2, "5.5": 1, "6.0": 1, "6.5": 0, "7.0": 0, "7.5": 0, "8.0": 0 },
@@ -1543,7 +1586,15 @@
           navProgress.textContent = `${answeredCount}/${chosenProblems.length} answered`;
         }
         
-        document.getElementById('problemNav').style.display = chosenProblems.length > 0 ? 'block' : 'none';
+        // Show toggle button when problems are generated
+        const toggleBtn = document.getElementById('toggleNavBtn');
+        if (toggleBtn) {
+          if (chosenProblems.length > 0) {
+            toggleBtn.classList.add('visible');
+          } else {
+            toggleBtn.classList.remove('visible');
+          }
+        }
         
         // Add margin to main content when nav is visible
         const mainContent = document.querySelector('.main-content');
