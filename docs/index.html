@@ -1207,9 +1207,15 @@
               includeProb = true;
             }
           } else {
-            // Default mode: finalized OR has aime_answer
-            if (p.finalized || (p.aime_answer !== null && p.aime_answer !== undefined)) {
+            // Default mode: finalized OR (aime_answer between 0-999, meaning it equals the answer column)
+            if (p.finalized) {
               includeProb = true;
+            } else if (p.aime_answer !== null && p.aime_answer !== undefined && p.answer !== null && p.answer !== undefined) {
+              // Check if aime_answer mod 1000 equals answer (standard AIME format)
+              const aimeAnswerMod = p.aime_answer % 1000;
+              if (aimeAnswerMod === p.answer) {
+                includeProb = true;
+              }
             }
           }
 
