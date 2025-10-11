@@ -348,7 +348,8 @@
 
     .problem-nav {
       position: fixed;
-      left: 20px;
+      left: 50%;
+      transform: translateX(calc(-450px - 100px));
       top: 140px;
       width: 80px;
       z-index: 100;
@@ -359,6 +360,13 @@
       border: 1px solid var(--border-color);
       max-height: calc(100vh - 160px);
       overflow-y: auto;
+    }
+
+    @media (max-width: 1200px) {
+      .problem-nav {
+        left: 20px;
+        transform: none;
+      }
     }
 
     .problem-nav-title {
@@ -1173,6 +1181,7 @@
         position: relative;
         left: 0;
         top: 0;
+        transform: none;
         width: 100%;
         max-height: none;
         margin: 20px 0;
@@ -1190,6 +1199,10 @@
 
       .main-content {
         margin-left: 0 !important;
+      }
+
+      .container-wrapper {
+        display: block !important;
       }
       
       nav a {
@@ -1238,8 +1251,9 @@
     </div>
   </nav>
 
-  <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;" class="main-content">
-    <h1>Mock AIME Generator</h1>
+  <div style="max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: center; position: relative;" class="container-wrapper">
+    <div style="max-width: 900px; width: 100%;" class="main-content">
+      <h1>Mock AIME Generator</h1>
     
     <div id="loadingProgress" class="loading-indicator">
       <div class="loading-spinner"></div>
@@ -1515,8 +1529,8 @@
         
         // Add margin to main content when nav is visible
         const mainContent = document.querySelector('.main-content');
-        if (mainContent && chosenProblems.length > 0 && window.innerWidth > 768) {
-          mainContent.style.marginLeft = '120px';
+        if (mainContent && chosenProblems.length > 0 && window.innerWidth > 1200) {
+          mainContent.style.marginLeft = '0';
         } else if (mainContent) {
           mainContent.style.marginLeft = '0';
         }
