@@ -1175,6 +1175,12 @@
         "10": { "2.5": 0, "3.0": 1, "3.5": 1, "4.0": 2, "4.5": 2, "5.0": 1, "5.5": 2, "6.0": 1, "6.5": 2, "7.0": 1, "7.5": 1, "8.0": 1 }
       };
       
+      // FILTERING LOGIC:
+      // - Base requirement: ALL problems must be manually_reviewed AND have quality >= selectedQuality
+      // - Use Finalized Only: Only finalized problems
+      // - Use Expanded DB: finalized OR (has aime_answer)
+      // - Default mode: finalized OR (answer === aime_answer as strings, meaning 0-999 answers only)
+      
       function bucketizeFine() {
         const buckets = {};
         for (let d = 2.5; d <= 8; d += 0.5) {
