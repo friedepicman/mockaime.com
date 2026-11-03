@@ -166,7 +166,7 @@
 
     .attempt-item:hover {
       border-color: var(--primary-blue);
-      background: #f8f9fa;
+      background: var(--bg-secondary);
       transform: translateX(5px);
     }
 
@@ -194,7 +194,7 @@
       font-size: 12px;
       padding: 3px 8px;
       border-radius: 4px;
-      background: #e9ecef;
+      background: var(--bg-secondary);
       color: var(--text-secondary);
       margin-right: 6px;
     }
@@ -243,7 +243,7 @@
     }
 
     .problem-detail {
-      background: white;
+      background: var(--bg-card);
       border: 2px solid var(--border-color);
       border-radius: 8px;
       padding: 20px;
@@ -266,7 +266,7 @@
     }
 
     .problem-difficulty {
-      background: #e9ecef;
+      background: var(--bg-secondary);
       padding: 4px 12px;
       border-radius: 6px;
       font-size: 14px;
@@ -1031,6 +1031,7 @@
       line-height: 1.2;
     }
   </style>
+  <script>try { document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark'); } catch (e) {}</script>
   <link rel="stylesheet" href="theme.css">
   <script src="theme.js"></script>
 </head>
@@ -1044,7 +1045,7 @@
       <div style="display: flex; gap: 0; align-items: center;">
         <a href="index.html">Mock Test</a>
         <a href="practice.html">Practice</a>
-        <a href="past_tests.html" style="background: rgba(255,255,255,0.15);">Past Tests</a>
+        <a href="past_tests.html">Past Tests</a>
         <a href="search.html">Search</a>
         <a href="inbox.html" class="nav-inbox" style="display: inline-flex; align-items: center; position: relative;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1055,6 +1056,7 @@
         </a>
         <a href="profile.html">Profile</a>
         <button onclick="signOut()" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-left: 15px;">Sign Out</button>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Light</button>
       </div>
     </div>
   </nav>
@@ -2220,6 +2222,22 @@
         alert('Error updating profile: ' + error.message);
       }
     });
+
+    // Dark mode (same behavior as the other pages; dark by default)
+    function syncThemeButton() {
+      const btn = document.querySelector('.dark-mode-toggle');
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark';
+    }
+
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      syncThemeButton();
+    }
+
+    syncThemeButton();
 
     async function signOut() {
       logActivity('logout');
