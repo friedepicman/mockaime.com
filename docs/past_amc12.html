@@ -919,9 +919,10 @@
             <button class="version-btn version-btn-2021" data-season="Spring" data-version="B">Spring B</button>
           </div>
           <div style="display: flex; gap: 12px;">
-            <button class="version-btn version-btn-2021" data-season="Fall" data-version="A">Fall A</button>
-            <button class="version-btn version-btn-2021" data-season="Fall" data-version="B">Fall B</button>
+            <button class="version-btn-unavailable" disabled title="The Fall 2021 AMC 12 problems are not in the database yet">Fall A</button>
+            <button class="version-btn-unavailable" disabled title="The Fall 2021 AMC 12 problems are not in the database yet">Fall B</button>
           </div>
+          <div class="fall-unavailable-note">Fall 2021 tests aren't available yet.</div>
         </div>
       </div>
     </div>
@@ -1126,7 +1127,7 @@
     document.addEventListener('DOMContentLoaded', initDecadeTabs);
 
     // Handle version button clicks
-    document.querySelectorAll('.version-btn').forEach(btn => {
+    document.querySelectorAll('.version-btn:not(.version-btn-2021)').forEach(btn => {
       btn.addEventListener('click', () => {
         if (selectedYear) {
           const testName = `${selectedYear} AMC 12${btn.dataset.version}`;
@@ -1279,7 +1280,14 @@
 
     // Render problem text stored in Supabase (LaTeX with $...$), so past tests
     // no longer depend on the AoPS wiki API.
-    function renderDbText(raw, aopsUrl) {
+    // Diagram image URLs scraped from AoPS (docs/aops_diagrams.json), keyed by AoPS page name
+    let aopsDiagrams = {};
+    const diagramsReady = fetch('aops_diagrams.json')
+      .then(r => (r.ok ? r.json() : {}))
+      .catch(() => ({}))
+      .then(d => { aopsDiagrams = d || {}; });
+
+    function renderDbText(raw, aopsUrl, images) {
       const cleaned = String(raw)
         .replace(/<\/?onlyinclude>/gi, '')
         .replace(/<\/?math>/gi, '$')
@@ -1289,11 +1297,15 @@
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
-      const diagram = aopsUrl
+      const link = aopsUrl
         ? `<a class="diagram-link" href="${aopsUrl}" target="_blank" rel="noopener">[diagram: view on AoPS]</a>`
         : '[diagram]';
+      let next = 0;
       return escaped
-        .replace(/\[asy diagram\]/gi, diagram)
+        .replace(/\[asy diagram\]/gi, () => {
+          const src = images && images[next++];
+          return src ? `<img class="aops-diagram" src="${src.replace(/"/g, '&quot;')}" alt="Diagram">` : link;
+        })
         .replace(/\n\s*\n/g, '<br><br>')
         .replace(/\n/g, ' ');
     }
@@ -1420,6 +1432,8 @@
         const year = yearMatch ? yearMatch[1] : '';
         const contestMatch = testName.match(/AMC\s*(\d+[AB])/i);
         const contestId = contestMatch ? contestMatch[1] : '';
+        // Fall 2021 problems are stored as "2021 Fall AMC 10A #N"; everything else as "YEAR AMC 10A #N"
+        const sourcePrefix = /\bFall\b/.test(testName) ? `${year} Fall AMC` : `${year} AMC`;
         
         // Helper function to fetch with retry
         async function fetchWithRetry(queryFn, maxRetries = 3) {
@@ -1439,14 +1453,14 @@
           supabaseClient
             .from('problems')
             .select('source, answer, text')
-            .like('source', `${year} AMC ${contestId} #%`)
+            .like('source', `${sourcePrefix} ${contestId} #%`)
         );
         
         const combinedData = await fetchWithRetry(() =>
           supabaseClient
             .from('problems')
             .select('source, answer, text')
-            .like('source', `${year} AMC % / ${contestId} #%`)
+            .like('source', `${sourcePrefix} % / ${contestId} #%`)
         );
         
         // Create answer lookup map by problem number
@@ -1478,6 +1492,8 @@
           });
         }
         
+        // Start from an empty list here so overlapping loads can't stack two tests together
+        loadedProblems = [];
         for (let i = 1; i <= numProblems; i++) {
           const source = `${testName} #${i}`;
           loadedProblems.push({
@@ -1681,12 +1697,13 @@
 
       // Fetch all problems from AoPS API in parallel
       // Answers are already loaded in loadedProblems from loadTest()
+      await diagramsReady;
       const fetchPromises = loadedProblems.map(async (problem, index) => {
         const problemNum = index + 1;
         const pageName = getAoPSPageName(testName, problemNum);
         const dbText = loadedProblems[index].text;
         const { html, redirectedSource } = dbText
-          ? { html: renderDbText(dbText, `https://artofproblemsolving.com/wiki/index.php/${pageName}`), redirectedSource: null }
+          ? { html: renderDbText(dbText, `https://artofproblemsolving.com/wiki/index.php/${pageName}`, aopsDiagrams[pageName]), redirectedSource: null }
           : await fetchFromAoPS(pageName);
         const textElement = document.getElementById(`text-${index}`);
         const problemDiv = document.getElementById(`problem-${index}`);

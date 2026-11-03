@@ -381,3 +381,25 @@ footer { box-sizing: border-box; max-width: 100%; }
 nav > div > a:first-child img { filter: drop-shadow(0 0 1px rgba(255,255,255,0.35)); }
 
 .diagram-link { font-family: 'Source Sans 3', sans-serif; font-style: normal; font-size: 0.9em; white-space: nowrap; }
+
+/* AoPS diagrams are transparent PNGs with black lines, so give them a light backing in dark mode */
+.aops-diagram { display: block; max-width: 100%; height: auto; margin: 14px auto; padding: 10px; background: #ffffff; border-radius: 3px; }
+
+/* 2021 Fall AMC tests are not in the database */
+.version-btn-unavailable {
+  font-family: 'Source Sans 3', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px;
+  padding: 12px 28px;
+  min-width: 120px;
+  margin: 0;
+  border-radius: var(--ma-radius) !important;
+  border: 1px dashed var(--border-strong) !important;
+  background: transparent !important;
+  color: var(--text-tertiary) !important;
+  cursor: not-allowed !important;
+  text-decoration: line-through;
+  opacity: 1 !important;
+  transform: none !important;
+}
+.fall-unavailable-note { font-size: 14px; color: var(--text-tertiary); text-align: center; }
