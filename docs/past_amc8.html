@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Practice with past AIME tests from 1983-2024. All 15 problems with answer checking." />
+  <meta name="description" content="Practice with past AMC 8 tests from 1999-2024. All 25 problems with answer checking." />
   <link rel="icon" type="image/png" href="256px_transparentBG.png">
-  <title>Past AIME - Mock AIME</title>
+  <title>Past AMC 8 - Mock AIME</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/latin-modern-roman@1.0.0/style.min.css">
 
@@ -45,7 +45,7 @@
           session_id: getSessionId(),
           user_type: getUserType(userId),
           event_type: eventType,
-          page: 'past_aime',
+          page: 'past_amc8',
           problem_id: data.problemId || null,
           problem_source: data.source || null,
           difficulty: data.difficulty || null,
@@ -66,7 +66,7 @@
           session_id: getSessionId(),
           user_type: getUserType(userId),
           event_type: eventType,
-          page: 'past_aime',
+          page: 'past_amc8',
           element_id: data.elementId || null,
           element_text: data.elementText ? String(data.elementText).substring(0, 100) : null,
           element_type: data.elementType || null,
@@ -130,6 +130,19 @@
     setTimeout(initAnalytics, 500);
   </script>
 
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
     :root {
       --bg-primary: #f8f9fa;
@@ -140,8 +153,8 @@
       --text-tertiary: #6c757d;
       --border-color: #e9ecef;
       --border-strong: #dee2e6;
-      --primary-blue: #0056b3;
-      --primary-blue-light: #0066cc;
+      --primary-blue: #0084b4;
+      --primary-blue-light: #00a0d6;
       --accent-secondary: #00aa66;
       --success-color: #28a745;
       --error-color: #dc3545;
@@ -162,9 +175,7 @@
       --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
@@ -177,9 +188,9 @@
     }
 
     nav {
-      background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+      background: linear-gradient(135deg, #0084b4 0%, #006f99 100%);
       padding: 0;
-      box-shadow: 0 2px 8px rgba(0, 86, 179, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 150, 200, 0.3);
       margin-bottom: 40px;
       border-bottom: 3px solid #00aa66;
     }
@@ -192,9 +203,7 @@
       display: inline-block;
     }
 
-    nav a:hover {
-      background: rgba(255,255,255,0.1);
-    }
+    nav a:hover { background: rgba(255,255,255,0.1); }
 
     .dark-mode-toggle {
       background: rgba(255,255,255,0.1);
@@ -208,9 +217,7 @@
       margin-left: 10px;
     }
 
-    .dark-mode-toggle:hover {
-      background: rgba(255,255,255,0.2);
-    }
+    .dark-mode-toggle:hover { background: rgba(255,255,255,0.2); }
 
     .container {
       max-width: 900px;
@@ -225,7 +232,6 @@
       font-size: 2.2rem;
     }
 
-    /* Selector Section */
     .selector-section {
       background: var(--bg-card);
       border: 2px solid var(--border-color);
@@ -257,7 +263,7 @@
 
     .decade-tab:hover {
       border-color: var(--primary-blue);
-      background: rgba(0, 86, 179, 0.1);
+      background: rgba(0, 150, 200, 0.1);
     }
 
     .decade-tab.active {
@@ -353,9 +359,7 @@
       display: none;
     }
 
-    .loading-indicator.visible {
-      display: block;
-    }
+    .loading-indicator.visible { display: block; }
 
     .loading-spinner {
       display: inline-block;
@@ -372,7 +376,7 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Problems Wrapper - matches index.html */
+    /* Problems Wrapper */
     .problems-wrapper {
       background: var(--bg-card);
       padding: 30px;
@@ -383,9 +387,7 @@
       display: none;
     }
 
-    .problems-wrapper.visible {
-      display: block;
-    }
+    .problems-wrapper.visible { display: block; }
 
     .problems-header {
       border-bottom: 3px solid var(--primary-blue);
@@ -419,11 +421,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 80px;
+      min-width: 100px;
     }
 
     .cutoff-label {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -435,7 +437,7 @@
       color: var(--primary-blue);
     }
 
-    /* Problem Card - matches index.html */
+    /* Problem Card */
     .problem {
       background: var(--bg-card);
       padding: 28px;
@@ -507,14 +509,12 @@
       margin: 16px auto;
     }
 
-    /* Diagram images (larger ones) should be block */
     .problem-text img[width],
     .problem-text .image {
       display: block;
       margin: 16px auto;
     }
 
-    /* But small inline images stay inline */
     .problem-text img[height="17"],
     .problem-text img[height="18"],
     .problem-text img[height="19"],
@@ -556,7 +556,6 @@
       display: inline;
     }
 
-    /* Hide AoPS specific elements we don't need */
     .problem-text .toc,
     .problem-text #toc,
     .problem-text .mw-editsection,
@@ -569,6 +568,10 @@
       margin-top: 28px;
       padding-top: 20px;
       margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
       border-top: 1px solid var(--border-color);
     }
 
@@ -577,28 +580,50 @@
       font-weight: 500;
     }
 
-    input[type="text"] {
-      padding: 8px 12px;
-      font-size: 16px;
-      width: 80px;
+    /* Answer Choice Buttons */
+    .answer-choices {
+      display: flex;
+      gap: 8px;
+    }
+
+    .answer-choice {
+      width: 44px;
+      height: 44px;
       border: 2px solid var(--border-strong);
       border-radius: 8px;
-      transition: all 0.2s;
-      font-weight: 500;
-      text-align: center;
-      background: var(--bg-card);
+      background: var(--bg-secondary);
       color: var(--text-primary);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
     }
 
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #0056b3;
-      box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.1);
+    .answer-choice:hover {
+      border-color: var(--primary-blue);
+      background: rgba(0, 150, 200, 0.1);
     }
 
-    input[type="text"]::placeholder {
-      color: var(--text-tertiary);
-      opacity: 0.5;
+    .answer-choice.selected {
+      background: var(--primary-blue);
+      color: white;
+      border-color: var(--primary-blue);
+    }
+
+    .answer-choice.correct-answer {
+      background: var(--success-color);
+      color: white;
+      border-color: var(--success-color);
+    }
+
+    .answer-choice.wrong-answer {
+      background: var(--error-color);
+      color: white;
+      border-color: var(--error-color);
     }
 
     .result {
@@ -608,34 +633,8 @@
       font-weight: 600;
     }
 
-    .correct {
-      color: #28a745;
-    }
-
-    .incorrect {
-      color: #dc3545;
-    }
-
-    /* Problem Card - matches index.html */
-    .problem {
-      background: var(--bg-card);
-      padding: 28px;
-      padding-top: 48px;
-      margin: 24px 0;
-      border-radius: 8px;
-      box-shadow: var(--shadow-sm);
-      border: 2px solid var(--border-color);
-      border-left: 5px solid var(--primary-blue);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-    }
-
-    .problem:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--primary-blue-light);
-      border-left-color: var(--accent-secondary);
-    }
+    .correct { color: #28a745; }
+    .incorrect { color: #dc3545; }
 
     .problem.correct-bg {
       background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
@@ -688,14 +687,8 @@
     }
 
     @keyframes summarySlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .summary-header {
@@ -843,43 +836,13 @@
     }
 
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .decade-tabs {
-        gap: 6px;
-      }
-
-      .decade-tab {
-        padding: 8px 12px;
-        font-size: 13px;
-      }
-
-      .decade-years {
-        gap: 6px;
-      }
-
-      .year-btn {
-        padding: 8px 14px;
-        font-size: 13px;
-        min-width: 60px;
-      }
-
-      nav a {
-        padding: 16px 12px;
-        font-size: 14px;
-      }
-
-      .problems-header {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .problem {
-        padding: 20px;
-        padding-top: 44px;
-      }
+      h1 { font-size: 1.5rem; }
+      .decade-tabs { gap: 6px; }
+      .decade-tab { padding: 8px 12px; font-size: 13px; }
+      .decade-years { gap: 6px; }
+      .year-btn { padding: 8px 14px; font-size: 13px; min-width: 60px; }
+      nav a { padding: 16px 12px; font-size: 14px; }
+      .answer-choice { width: 40px; height: 40px; font-size: 14px; }
     }
 
     .inbox-badge {
@@ -897,20 +860,8 @@
       line-height: 1.2;
     }
   </style>
-
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      },
-      options: {
-        ignoreHtmlClass: 'no-mathjax',
-        processHtmlClass: 'mathjax-process'
-      }
-    };
-  </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <nav>
@@ -922,7 +873,7 @@
       <div style="display: flex; gap: 0; align-items: center;">
         <a href="index.html">Mock Test</a>
         <a href="practice.html">Practice</a>
-        <a href="past_tests.html" style="background: rgba(255,255,255,0.15);">Past Tests</a>
+        <a href="past_tests.html">Past Tests</a>
         <a href="search.html">Search</a>
         <a href="inbox.html" class="nav-inbox" style="display: inline-flex; align-items: center; position: relative;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -933,19 +884,17 @@
         </a>
         <a href="login.html" class="auth-button">Login</a>
         <div class="user-info"></div>
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark</button>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark</button>
       </div>
     </div>
   </nav>
 
   <div class="container">
-    <h1>Past AIME Tests</h1>
+    <h1>Past AMC 8 Tests</h1>
 
     <div class="selector-section">
       <!-- Decade Tabs -->
       <div class="decade-tabs" id="decadeTabs">
-        <button class="decade-tab" data-decade="1980">1980s</button>
-        <button class="decade-tab" data-decade="1990">1990s</button>
         <button class="decade-tab" data-decade="2000">2000s</button>
         <button class="decade-tab" data-decade="2010">2010s</button>
         <button class="decade-tab active" data-decade="2020">2020s</button>
@@ -958,8 +907,22 @@
 
       <div class="version-selector" id="versionSelector">
         <span class="version-label" id="versionLabel">Select version:</span>
-        <button class="version-btn" data-version="I">AIME I</button>
-        <button class="version-btn" data-version="II">AIME II</button>
+        <button class="version-btn" id="versionBtnA" data-version="A">AMC 10A</button>
+        <button class="version-btn" id="versionBtnB" data-version="B">AMC 10B</button>
+      </div>
+
+      <div class="version-selector" id="versionSelector2021">
+        <span class="version-label">2021 AMC 10:</span>
+        <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+          <div style="display: flex; gap: 12px;">
+            <button class="version-btn version-btn-2021" data-season="Spring" data-version="A">Spring A</button>
+            <button class="version-btn version-btn-2021" data-season="Spring" data-version="B">Spring B</button>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <button class="version-btn version-btn-2021" data-season="Fall" data-version="A">Fall A</button>
+            <button class="version-btn version-btn-2021" data-season="Fall" data-version="B">Fall B</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -978,29 +941,21 @@
       </div>
 
       <div class="cutoff-info" id="cutoffInfo" style="display: none;">
-        <div class="cutoff-item">
-          <span class="cutoff-label">USAMO (12A)</span>
-          <span class="cutoff-value" id="cutoffUSAMO12A">—</span>
+        <div class="cutoff-item" style="display: none;">
+          <span class="cutoff-label">AIME Cutoff</span>
+          <span class="cutoff-value" id="cutoffAIME">—</span>
         </div>
         <div class="cutoff-item">
-          <span class="cutoff-label">USAMO (12B)</span>
-          <span class="cutoff-value" id="cutoffUSAMO12B">—</span>
+          <span class="cutoff-label">Honor Roll (5%)</span>
+          <span class="cutoff-value" id="cutoffHR">—</span>
         </div>
         <div class="cutoff-item">
-          <span class="cutoff-label">USAJMO (10A)</span>
-          <span class="cutoff-value" id="cutoffUSAJMO10A">—</span>
-        </div>
-        <div class="cutoff-item">
-          <span class="cutoff-label">USAJMO (10B)</span>
-          <span class="cutoff-value" id="cutoffUSAJMO10B">—</span>
+          <span class="cutoff-label">DHR (1%)</span>
+          <span class="cutoff-value" id="cutoffDHR">—</span>
         </div>
         <div class="cutoff-item">
           <span class="cutoff-label">Mean</span>
           <span class="cutoff-value" id="cutoffMean">—</span>
-        </div>
-        <div class="cutoff-item">
-          <span class="cutoff-label">Median</span>
-          <span class="cutoff-value" id="cutoffMedian">—</span>
         </div>
       </div>
 
@@ -1008,54 +963,30 @@
     </div>
 
     <div id="summary">
-      <div class="summary-header" id="summaryHeader">Score: 0 / 15</div>
+      <div class="summary-header" id="summaryHeader">Score: 0 / 25</div>
       <div class="problem-grid" id="problemGrid"></div>
       <div class="results-cutoffs" id="resultsCutoffs" style="display: none;">
-        <h3>Your Results</h3>
+        <h3>Your Results vs Contest Cutoffs</h3>
         <div class="results-cutoff-grid">
           <div class="results-cutoff-item">
             <span class="results-label">Your Score</span>
             <span class="results-value" id="resultsUserScore">—</span>
           </div>
+          <div class="results-cutoff-item" style="display: none;">
+            <span class="results-label">AIME Cutoff</span>
+            <span class="results-value" id="resultsAIME">—</span>
+          </div>
+          <div class="results-cutoff-item">
+            <span class="results-label">Honor Roll (5%)</span>
+            <span class="results-value" id="resultsHR">—</span>
+          </div>
+          <div class="results-cutoff-item">
+            <span class="results-label">DHR (1%)</span>
+            <span class="results-value" id="resultsDHR">—</span>
+          </div>
           <div class="results-cutoff-item">
             <span class="results-label">Mean</span>
             <span class="results-value" id="resultsMean">—</span>
-          </div>
-          <div class="results-cutoff-item">
-            <span class="results-label">Median</span>
-            <span class="results-value" id="resultsMedian">—</span>
-          </div>
-        </div>
-        
-        <h4 style="margin-top: 20px; margin-bottom: 12px; color: var(--text-secondary); font-size: 14px;">Minimum AIME score for qualification (assuming DHR on AMC)</h4>
-        <div class="results-cutoff-grid">
-          <div class="results-cutoff-item">
-            <span class="results-label">USAMO</span>
-            <span class="results-value" id="resultsMinUSAMO">—</span>
-          </div>
-          <div class="results-cutoff-item">
-            <span class="results-label">USAJMO</span>
-            <span class="results-value" id="resultsMinUSAJMO">—</span>
-          </div>
-        </div>
-        
-        <h4 style="margin-top: 20px; margin-bottom: 12px; color: var(--text-secondary); font-size: 14px;">Index Cutoffs (AMC + 10×AIME)</h4>
-        <div class="results-cutoff-grid">
-          <div class="results-cutoff-item">
-            <span class="results-label">USAMO (12A)</span>
-            <span class="results-value" id="resultsUSAMO12A">—</span>
-          </div>
-          <div class="results-cutoff-item">
-            <span class="results-label">USAMO (12B)</span>
-            <span class="results-value" id="resultsUSAMO12B">—</span>
-          </div>
-          <div class="results-cutoff-item">
-            <span class="results-label">USAJMO (10A)</span>
-            <span class="results-value" id="resultsUSAJMO10A">—</span>
-          </div>
-          <div class="results-cutoff-item">
-            <span class="results-label">USAJMO (10B)</span>
-            <span class="results-value" id="resultsUSAJMO10B">—</span>
           </div>
         </div>
       </div>
@@ -1069,25 +1000,20 @@
     let userAnswers = {};
     let currentCutoffs = null;
 
-    // Decade years data (ascending order)
+    // AMC 8 years by decade (ascending order). There was no 2021 AMC 8.
     const decadeYears = {
-      '2020': [2020, 2021, 2022, 2023, 2024],
+      '2000': [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
       '2010': [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
-      '2000': [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
-      '1990': [1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-      '1980': [1983, 1984, 1985, 1986, 1987, 1988, 1989]
+      '2020': [2020, 2022, 2023, 2024]
     };
 
     // Initialize decade tabs
     function initDecadeTabs() {
-      // Render years for default decade
       renderYearsForDecade('2020');
 
-      // Add click handlers for decade tabs
       document.querySelectorAll('.decade-tab').forEach(tab => {
         tab.addEventListener('click', () => {
-          const decade = tab.dataset.decade;
-          selectDecade(decade);
+          selectDecade(tab.dataset.decade);
         });
       });
     }
@@ -1096,15 +1022,10 @@
       selectedDecade = decade;
       selectedYear = null;
 
-      // Update tab states
       document.querySelectorAll('.decade-tab').forEach(tab => {
         tab.classList.toggle('active', tab.dataset.decade === decade);
       });
 
-      // Hide version selector when switching decades
-      document.getElementById('versionSelector').classList.remove('visible');
-
-      // Render years for this decade
       renderYearsForDecade(decade);
     }
 
@@ -1116,7 +1037,6 @@
         `<button class="year-btn" data-year="${year}">${year}</button>`
       ).join('');
 
-      // Add click handlers
       container.querySelectorAll('.year-btn').forEach(btn => {
         btn.addEventListener('click', () => selectYear(parseInt(btn.dataset.year)));
       });
@@ -1128,14 +1048,14 @@
       const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? 'Light' : 'Dark';
       logActivity('toggle_dark_mode', { metadata: { theme: newTheme } });
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     if (savedTheme === 'dark') {
-      document.querySelector('.dark-mode-toggle').textContent = '☀️ Light';
+      document.querySelector('.dark-mode-toggle').textContent = 'Light';
     }
 
     // Auth
@@ -1168,44 +1088,47 @@
       window.location.reload();
     }
 
-    // Handle year selection
     function selectYear(year) {
       selectedYear = year;
+      userAnswers = {};
       
       logActivity('select_year', { metadata: { year: year } });
 
-      // Update button states
       document.querySelectorAll('.year-btn').forEach(btn => {
         btn.classList.toggle('selected', parseInt(btn.dataset.year) === year);
       });
 
-      // For 2000+, show version selector. For 1999 and earlier, load directly.
-      if (year >= 2000) {
-        const versionSelector = document.getElementById('versionSelector');
-        document.getElementById('versionLabel').textContent = `${year} AIME:`;
-        versionSelector.classList.add('visible');
-      } else {
-        document.getElementById('versionSelector').classList.remove('visible');
-        loadTest(`${year} AIME`);
-      }
+      const versionSelector = document.getElementById('versionSelector');
+      const versionSelector2021 = document.getElementById('versionSelector2021');
+      
+      // AMC 8 has a single test each year
+      versionSelector.classList.remove('visible');
+      versionSelector2021.classList.remove('visible');
+      loadTest(`${year} AMC 8`);
     }
 
-    // Add click handlers to year buttons (called after page load)
-    // Initialize decade tabs on page load
     document.addEventListener('DOMContentLoaded', initDecadeTabs);
 
     // Handle version button clicks
     document.querySelectorAll('.version-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         if (selectedYear) {
-          const testName = `${selectedYear} AIME ${btn.dataset.version}`;
+          const testName = `${selectedYear} AMC 10${btn.dataset.version}`;
           logActivity('select_version', { metadata: { testName: testName, version: btn.dataset.version } });
           loadTest(testName);
         }
       });
     });
 
-    // Escape HTML for security
+    // Handle 2021 version button clicks
+    document.querySelectorAll('.version-btn-2021').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const testName = `2021 ${btn.dataset.season} AMC 10${btn.dataset.version}`;
+        logActivity('select_version', { metadata: { testName: testName, season: btn.dataset.season, version: btn.dataset.version } });
+        loadTest(testName);
+      });
+    });
+
     function escapeHtml(text) {
       if (!text) return text;
       const div = document.createElement('div');
@@ -1213,7 +1136,6 @@
       return div.innerHTML;
     }
 
-    // Set math content safely (for fallback text content)
     function setMathContent(element, content) {
       if (!content) {
         element.innerHTML = '<em>No content</em>';
@@ -1225,7 +1147,7 @@
       }
     }
 
-    // Set HTML content from AoPS API (includes images)
+    // Set HTML content from AoPS API
     function setHtmlContent(element, html) {
       if (!html) {
         element.innerHTML = '<em>No content</em>';
@@ -1339,15 +1261,63 @@
       }
     }
 
-    // Fetch problem from AoPS Wiki API
+    // Render problem text stored in Supabase (LaTeX with $...$), so past tests
+    // no longer depend on the AoPS wiki API.
+    function renderDbText(raw, aopsUrl) {
+      const cleaned = String(raw)
+        .replace(/<\/?onlyinclude>/gi, '')
+        .replace(/<\/?math>/gi, '$')
+        .replace(/\\textdollar/g, '\\$')
+        .trim();
+      const escaped = cleaned
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      const diagram = aopsUrl
+        ? `<a class="diagram-link" href="${aopsUrl}" target="_blank" rel="noopener">[diagram: view on AoPS]</a>`
+        : '[diagram]';
+      return escaped
+        .replace(/\[asy diagram\]/gi, diagram)
+        .replace(/\n\s*\n/g, '<br><br>')
+        .replace(/\n/g, ' ');
+    }
+
+    // Fetch from AoPS - returns { html, redirectedSource } 
+    // redirectedSource is set if the page redirected (e.g., "2022 AMC 12A #1")
     async function fetchFromAoPS(pageName) {
       try {
-        const url = `https://artofproblemsolving.com/wiki/api.php?action=parse&page=${encodeURIComponent(pageName)}&format=json&prop=text&origin=*`;
+        const url = `https://artofproblemsolving.com/wiki/api.php?action=parse&page=${encodeURIComponent(pageName)}&format=json&prop=text&origin=*&redirects=true`;
         const response = await fetch(url);
         const data = await response.json();
         
         if (data.parse && data.parse.text && data.parse.text['*']) {
-          return { html: data.parse.text['*'], redirectedSource: null };
+          let html = data.parse.text['*'];
+          
+          // Check if this is a redirect page (contains "Redirect to:" text)
+          if (html.includes('Redirect to:') || html.includes('#REDIRECT')) {
+            // Try to extract the redirect target and fetch it
+            const redirectMatch = html.match(/href="\/wiki\/index\.php\/([^"]+)"/);
+            if (redirectMatch) {
+              const redirectTarget = decodeURIComponent(redirectMatch[1]);
+              const redirectUrl = `https://artofproblemsolving.com/wiki/api.php?action=parse&page=${encodeURIComponent(redirectTarget)}&format=json&prop=text&origin=*`;
+              const redirectResponse = await fetch(redirectUrl);
+              const redirectData = await redirectResponse.json();
+              if (redirectData.parse && redirectData.parse.text && redirectData.parse.text['*']) {
+                // Convert redirect target to source format: "2022_AMC_12A_Problems/Problem_1" -> "2022 AMC 12A #1"
+                const sourceMatch = redirectTarget.match(/^(\d{4})_(.+)_Problems\/Problem_(\d+)$/);
+                let redirectedSource = null;
+                if (sourceMatch) {
+                  const year = sourceMatch[1];
+                  const contest = sourceMatch[2].replace(/_/g, ' ');
+                  const problemNum = sourceMatch[3];
+                  redirectedSource = `${year} ${contest} #${problemNum}`;
+                }
+                return { html: redirectData.parse.text['*'], redirectedSource };
+              }
+            }
+          }
+          
+          return { html, redirectedSource: null };
         }
         return { html: null, redirectedSource: null };
       } catch (err) {
@@ -1356,13 +1326,24 @@
       }
     }
 
-    // Fetch answer from database
+    // Fetch answer from database using pattern matching
+    // Handles combined sources like "2022 AMC 10B #1 / 12B #1"
     async function fetchAnswerFromDB(source) {
       try {
+        // Extract the contest and problem number pattern
+        // e.g., "2022 AMC 10B #1" -> "%10B #1"
+        const match = source.match(/(AMC \d+[AB]?)\s*#(\d+)$/);
+        if (!match) {
+          console.error('Could not parse source:', source);
+          return null;
+        }
+        
+        const pattern = source; // AMC 8 sources are exact, e.g. "2006 AMC 8 #7"
+        
         const { data, error } = await supabaseClient
           .from('problems')
           .select('answer')
-          .eq('source', source)
+          .like('source', pattern)
           .maybeSingle();
         
         if (error) {
@@ -1380,27 +1361,29 @@
       }
     }
 
-    // Convert test name to AoPS page format
-    // e.g., "2024 AIME I" -> "2024_AIME_I_Problems/Problem_1"
     function getAoPSPageName(testName, problemNum) {
-      // Handle different formats
-      // "2024 AIME I" -> "2024_AIME_I_Problems/Problem_1"
-      // "1999 AIME" -> "1999_AIME_Problems/Problem_1"
-      const normalized = testName.replace(/ /g, '_');
+      // Handle 2021 Spring/Fall naming conventions
+      // AoPS uses "2021_AMC_10A" for Spring 2021 (no "Spring" in name)
+      // AoPS uses "2021_Fall_AMC_10A" for Fall 2021
+      let normalized = testName;
+      
+      // Remove "Spring" from 2021 tests - AoPS doesn't use it
+      if (normalized.includes('2021 Spring')) {
+        normalized = normalized.replace('2021 Spring ', '2021 ');
+      }
+      
+      normalized = normalized.replace(/ /g, '_');
       return `${normalized}_Problems/Problem_${problemNum}`;
     }
 
-    // Load test from database
     async function loadTest(testName, retryCount = 0) {
       if (!testName) {
         alert('Please select a test');
         return;
       }
 
-      // Save current test name for saving attempt later
       currentTestName = testName;
 
-      // Show loading, hide problems
       document.getElementById('loadingIndicator').classList.add('visible');
       document.getElementById('problemsWrapper').classList.remove('visible');
       document.getElementById('summary').classList.remove('visible');
@@ -1410,25 +1393,70 @@
       userAnswers = {};
       currentCutoffs = null;
 
-      // Disable version buttons while loading
-      document.querySelectorAll('.version-btn').forEach(btn => btn.disabled = true);
-
       try {
-        // AIME always has 15 problems
-        const numProblems = 15;
+        // AMC 8 always has 25 problems
+        const numProblems = 25;
         loadedProblems = [];
         
-        // Fetch all answers in one query using LIKE pattern
-        const { data: answersData, error } = await supabaseClient
-          .from('problems')
-          .select('source, answer')
-          .like('source', `${testName} #%`);
+        // Extract year and contest identifier (e.g., "2022" and "10A" from "2022 AMC 10A")
+        const yearMatch = testName.match(/^(\d{4})/);
+        const year = yearMatch ? yearMatch[1] : '';
+        const contestMatch = testName.match(/AMC\s*(\d+[AB]?)/i);
+        const contestId = contestMatch ? contestMatch[1] : '';
         
-        // Create answer lookup map
+        // Helper function to fetch with retry
+        async function fetchWithRetry(queryFn, maxRetries = 3) {
+          for (let i = 0; i < maxRetries; i++) {
+            const { data, error } = await queryFn();
+            if (!error && data) return data;
+            if (i < maxRetries - 1) {
+              await new Promise(r => setTimeout(r, 200 * (i + 1))); // Wait 200ms, 400ms, 600ms
+            }
+          }
+          return [];
+        }
+        
+        // Fetch answers that match this year and contest
+        // Use two queries: one for direct matches, one for combined sources
+        const directData = await fetchWithRetry(() =>
+          supabaseClient
+            .from('problems')
+            .select('source, answer, text')
+            .like('source', `${year} AMC ${contestId} #%`)
+        );
+        
+        const combinedData = await fetchWithRetry(() =>
+          supabaseClient
+            .from('problems')
+            .select('source, answer, text')
+            .like('source', `${year} AMC ${contestId} #% / %`)
+        );
+        
+        // Create answer lookup map by problem number
         const answerMap = {};
-        if (answersData) {
-          answersData.forEach(p => {
-            answerMap[p.source] = p.answer;
+        const textMap = {};
+        
+        // Process direct matches
+        if (directData) {
+          directData.forEach(p => {
+            const match = p.source.match(/#(\d+)/);
+            if (match) {
+              const problemNum = parseInt(match[1]);
+              answerMap[problemNum] = p.answer;
+              if (p.text) textMap[problemNum] = p.text;
+            }
+          });
+        }
+        
+        // Process combined sources (these have the 10A problem number first)
+        if (combinedData) {
+          combinedData.forEach(p => {
+            const match = p.source.match(/#(\d+)/);
+            if (match) {
+              const problemNum = parseInt(match[1]);
+              answerMap[problemNum] = p.answer;
+              if (p.text) textMap[problemNum] = p.text;
+            }
           });
         }
         
@@ -1436,11 +1464,13 @@
           const source = `${testName} #${i}`;
           loadedProblems.push({
             source: source,
-            answer: answerMap[source] || '',
+            answer: answerMap[i] || '',
+            text: textMap[i] || '',
             problemNum: i
           });
         }
 
+        console.log('Answers loaded:', loadedProblems.filter(p => p.answer).length, 'of', numProblems);
         await displayProblems(testName);
 
         logActivity('past_test_load', {
@@ -1453,54 +1483,58 @@
         alert('Error loading test. Please try again.');
       } finally {
         document.getElementById('loadingIndicator').classList.remove('visible');
-        document.querySelectorAll('.version-btn').forEach(btn => btn.disabled = false);
       }
+    }
+
+    function selectAnswer(index, answer) {
+      userAnswers[index] = answer;
+      document.querySelectorAll(`#problem-${index} .answer-choice`).forEach(btn => {
+        btn.classList.remove('selected');
+        if (btn.textContent === answer) {
+          btn.classList.add('selected');
+        }
+      });
+      logEvent('select_answer', { metadata: { problemIndex: index, answer: answer } });
     }
 
     async function fetchCutoffs(testName) {
       try {
-        // Parse test name: "2024 AIME I" -> year=2024, contest="AIME I"
+        // Parse test name: "2024 AMC 10A" -> year=2024, contest="AMC 10A"
+        // Or "2021 Spring AMC 10A" -> year=2021, contest="Spring AMC 10A"
         const match = testName.match(/^(\d{4})\s+(.+)$/);
         if (!match) return;
 
         const year = parseInt(match[1]);
-        const contest = match[2]; // "AIME I" or "AIME II"
+        let contest = match[2];
 
-        // Fetch AIME cutoffs
+        // Handle Spring/Fall variants
+        if (contest.includes('Spring') || contest.includes('Fall')) {
+          contest = contest.replace('AMC 10', 'AMC 10').trim();
+        }
+
         const { data, error } = await supabaseClient
           .from('contest_cutoffs')
           .select('*')
           .eq('year', year)
-          .eq('contest', contest)
+          .like('contest', `%${contest.replace('AMC 10', 'AMC 10')}%`)
           .single();
 
-        if (error || !data) return;
-
-        // Also fetch AMC 10A/10B/12A/12B DHR scores for the same year
-        const { data: amcData, error: amcError } = await supabaseClient
-          .from('contest_cutoffs')
-          .select('contest, dhr')
-          .eq('year', year)
-          .in('contest', ['AMC 10A', 'AMC 10B', 'AMC 12A', 'AMC 12B']);
-        
-        console.log('AMC DHR fetch for year', year, ':', amcData, amcError);
-        
-        // Add DHR scores to cutoffs data
-        if (amcData) {
-          amcData.forEach(amc => {
-            if (amc.contest === 'AMC 10A') {
-              data.dhr_10a = amc.dhr;
-            } else if (amc.contest === 'AMC 10B') {
-              data.dhr_10b = amc.dhr;
-            } else if (amc.contest === 'AMC 12A') {
-              data.dhr_12a = amc.dhr;
-            } else if (amc.contest === 'AMC 12B') {
-              data.dhr_12b = amc.dhr;
-            }
-          });
+        if (error || !data) {
+          // Try without Spring/Fall
+          const simpleContest = contest.replace('Spring ', '').replace('Fall ', '');
+          const { data: data2 } = await supabaseClient
+            .from('contest_cutoffs')
+            .select('*')
+            .eq('year', year)
+            .eq('contest', simpleContest)
+            .single();
+          
+          if (data2) {
+            currentCutoffs = data2;
+            displayCutoffs(data2);
+          }
+          return;
         }
-        
-        console.log('Final cutoffs data:', data);
 
         currentCutoffs = data;
         displayCutoffs(data);
@@ -1514,12 +1548,10 @@
       document.getElementById('toggleCutoffBtn').style.display = 'inline-block';
       
       // Populate cutoff values (but keep hidden)
-      document.getElementById('cutoffUSAMO12A').textContent = data.usamo_cutoff_12a || '—';
-      document.getElementById('cutoffUSAMO12B').textContent = data.usamo_cutoff_12b || '—';
-      document.getElementById('cutoffUSAJMO10A').textContent = data.usajmo_cutoff_10a || '—';
-      document.getElementById('cutoffUSAJMO10B').textContent = data.usajmo_cutoff_10b || '—';
+      document.getElementById('cutoffAIME').textContent = data.aime_cutoff || '—';
+      document.getElementById('cutoffHR').textContent = data.honor_roll || '—';
+      document.getElementById('cutoffDHR').textContent = data.dhr || '—';
       document.getElementById('cutoffMean').textContent = data.mean || '—';
-      document.getElementById('cutoffMedian').textContent = data.median || '—';
     }
 
     function toggleCutoffInfo() {
@@ -1538,81 +1570,64 @@
       logActivity('toggle_cutoff_info', { metadata: { opened: isOpening } });
     }
 
-    function showResultsCutoffs(userScore) {
+    function showResultsCutoffs(userScore, rawScore) {
       if (!currentCutoffs) return;
       
       const resultsSection = document.getElementById('resultsCutoffs');
       resultsSection.style.display = 'block';
       
-      // User score
-      const userScoreElement = document.getElementById('resultsUserScore');
-      userScoreElement.textContent = userScore;
+      // User score (AMC 8 scoring: 1 point per correct answer)
+      // Count actual answered problems (non-empty answers)
+      let answered = 0;
+      for (let i = 0; i < loadedProblems.length; i++) {
+        if (userAnswers[i] && userAnswers[i] !== '') {
+          answered++;
+        }
+      }
+      const blanks = loadedProblems.length - answered;
+      const amcScore = rawScore; // AMC 8: 1 point per correct answer, no blank credit
+      document.getElementById('resultsUserScore').textContent = `${amcScore} pts`;
       
-      // USAMO/USAJMO index cutoffs
-      document.getElementById('resultsUSAMO12A').textContent = currentCutoffs.usamo_cutoff_12a || '—';
-      document.getElementById('resultsUSAMO12B').textContent = currentCutoffs.usamo_cutoff_12b || '—';
-      document.getElementById('resultsUSAJMO10A').textContent = currentCutoffs.usajmo_cutoff_10a || '—';
-      document.getElementById('resultsUSAJMO10B').textContent = currentCutoffs.usajmo_cutoff_10b || '—';
+      // AIME Cutoff
+      const aimeValue = currentCutoffs.aime_cutoff;
+      const aimeElement = document.getElementById('resultsAIME');
+      aimeElement.textContent = aimeValue || '—';
+      if (aimeValue && amcScore >= aimeValue) {
+        aimeElement.classList.add('qualified');
+        aimeElement.classList.remove('not-qualified');
+      } else {
+        aimeElement.classList.remove('qualified');
+        aimeElement.classList.add('not-qualified');
+      }
       
-      // Mean and Median
+      // Honor Roll
+      const hrValue = currentCutoffs.honor_roll;
+      const hrElement = document.getElementById('resultsHR');
+      hrElement.textContent = hrValue || '—';
+      if (hrValue && amcScore >= hrValue) {
+        hrElement.classList.add('qualified');
+        hrElement.classList.remove('not-qualified');
+      } else {
+        hrElement.classList.remove('qualified');
+        hrElement.classList.add('not-qualified');
+      }
+      
+      // DHR
+      const dhrValue = currentCutoffs.dhr;
+      const dhrElement = document.getElementById('resultsDHR');
+      dhrElement.textContent = dhrValue || '—';
+      if (dhrValue && amcScore >= dhrValue) {
+        dhrElement.classList.add('qualified');
+        dhrElement.classList.remove('not-qualified');
+      } else {
+        dhrElement.classList.remove('qualified');
+        dhrElement.classList.add('not-qualified');
+      }
+      
+      // Mean (no highlighting)
       document.getElementById('resultsMean').textContent = currentCutoffs.mean || '—';
-      document.getElementById('resultsMedian').textContent = currentCutoffs.median || '—';
-      
-      // Calculate minimum AIME scores for USAMO (using AMC 12 DHR)
-      const minUSAMOScores = [];
-      if (currentCutoffs.usamo_cutoff_12a && currentCutoffs.dhr_12a) {
-        minUSAMOScores.push(Math.ceil((currentCutoffs.usamo_cutoff_12a - currentCutoffs.dhr_12a) / 10));
-      }
-      if (currentCutoffs.usamo_cutoff_12b && currentCutoffs.dhr_12b) {
-        minUSAMOScores.push(Math.ceil((currentCutoffs.usamo_cutoff_12b - currentCutoffs.dhr_12b) / 10));
-      }
-      
-      // Calculate minimum AIME scores for USAJMO (using AMC 10 DHR)
-      const minUSAJMOScores = [];
-      if (currentCutoffs.usajmo_cutoff_10a && currentCutoffs.dhr_10a) {
-        minUSAJMOScores.push(Math.ceil((currentCutoffs.usajmo_cutoff_10a - currentCutoffs.dhr_10a) / 10));
-      }
-      if (currentCutoffs.usajmo_cutoff_10b && currentCutoffs.dhr_10b) {
-        minUSAJMOScores.push(Math.ceil((currentCutoffs.usajmo_cutoff_10b - currentCutoffs.dhr_10b) / 10));
-      }
-      
-      const minUSAMOElement = document.getElementById('resultsMinUSAMO');
-      const minUSAJMOElement = document.getElementById('resultsMinUSAJMO');
-      
-      // Set USAMO min score
-      let minUSAMO = null;
-      if (minUSAMOScores.length > 0) {
-        minUSAMO = Math.min(...minUSAMOScores);
-        minUSAMOElement.textContent = minUSAMO;
-      } else {
-        minUSAMOElement.textContent = '—';
-      }
-      
-      // Set USAJMO min score
-      let minUSAJMO = null;
-      if (minUSAJMOScores.length > 0) {
-        minUSAJMO = Math.min(...minUSAJMOScores);
-        minUSAJMOElement.textContent = minUSAJMO;
-      } else {
-        minUSAJMOElement.textContent = '—';
-      }
-      
-      // Show green if user meets either cutoff (take the lower of the two)
-      const minCutoff = Math.min(
-        minUSAMO !== null ? minUSAMO : Infinity,
-        minUSAJMO !== null ? minUSAJMO : Infinity
-      );
-      
-      if (minCutoff !== Infinity && userScore >= minCutoff) {
-        userScoreElement.classList.add('qualified');
-        userScoreElement.classList.remove('not-qualified');
-      } else if (minCutoff !== Infinity) {
-        userScoreElement.classList.remove('qualified');
-        userScoreElement.classList.add('not-qualified');
-      } else {
-        userScoreElement.classList.remove('qualified', 'not-qualified');
-      }
     }
+
 
     async function displayProblems(testName) {
       document.getElementById('testTitle').textContent = testName;
@@ -1625,7 +1640,6 @@
       const container = document.getElementById('problemsList');
       container.innerHTML = '';
 
-      // Create all problem divs first
       loadedProblems.forEach((problem, index) => {
         const div = document.createElement('div');
         div.className = 'problem mathjax-process';
@@ -1642,7 +1656,13 @@
           </div>
           <div class="answer">
             <span class="answer-label">Answer:</span>
-            <input type="text" id="answer-${index}" maxlength="3" placeholder="000" data-index="${index}" />
+            <div class="answer-choices">
+              <button class="answer-choice" onclick="selectAnswer(${index}, 'A')">A</button>
+              <button class="answer-choice" onclick="selectAnswer(${index}, 'B')">B</button>
+              <button class="answer-choice" onclick="selectAnswer(${index}, 'C')">C</button>
+              <button class="answer-choice" onclick="selectAnswer(${index}, 'D')">D</button>
+              <button class="answer-choice" onclick="selectAnswer(${index}, 'E')">E</button>
+            </div>
             <span class="result" id="result-${index}"></span>
           </div>
         `;
@@ -1655,18 +1675,36 @@
       const fetchPromises = loadedProblems.map(async (problem, index) => {
         const problemNum = index + 1;
         const pageName = getAoPSPageName(testName, problemNum);
-        const { html, redirectedSource } = await fetchFromAoPS(pageName);
+        const dbText = loadedProblems[index].text;
+        const { html, redirectedSource } = dbText
+          ? { html: renderDbText(dbText, `https://artofproblemsolving.com/wiki/index.php/${pageName}`), redirectedSource: null }
+          : await fetchFromAoPS(pageName);
         const textElement = document.getElementById(`text-${index}`);
         const problemDiv = document.getElementById(`problem-${index}`);
         
         let problemLoaded = false;
         let answerLoaded = !!loadedProblems[index].answer;
         
-        if (html) {
+        if (html && dbText) {
+          textElement.innerHTML = html;
+          if (window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise([textElement]).catch(err => console.error('MathJax error:', err));
+          }
+          problemLoaded = true;
+        } else if (html) {
           setHtmlContent(textElement, html);
           problemLoaded = true;
         } else {
           textElement.innerHTML = '<em class="load-error">Failed to load problem from AoPS</em>';
+        }
+        
+        // If no answer yet and we have a redirect, try fetching answer for redirected source
+        if (!answerLoaded && redirectedSource) {
+          const answer = await fetchAnswerFromDB(redirectedSource);
+          if (answer) {
+            loadedProblems[index].answer = answer;
+            answerLoaded = true;
+          }
         }
         
         // Show indicators for missing problem or answer
@@ -1697,25 +1735,9 @@
         }
       });
 
-      // Wait for all fetches to complete
       await Promise.all(fetchPromises);
 
-      // Scroll to problems
       document.getElementById('problemsWrapper').scrollIntoView({ behavior: 'smooth' });
-
-      // Add enter key navigation
-      container.querySelectorAll('input[type="text"]').forEach(input => {
-        input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            const currentIndex = parseInt(input.dataset.index);
-            if (currentIndex < loadedProblems.length - 1) {
-              document.getElementById(`answer-${currentIndex + 1}`).focus();
-            } else {
-              checkAnswers();
-            }
-          }
-        });
-      });
     }
 
     function checkAnswers() {
@@ -1723,33 +1745,32 @@
       const results = [];
 
       loadedProblems.forEach((problem, index) => {
-        const input = document.getElementById(`answer-${index}`);
         const problemDiv = document.getElementById(`problem-${index}`);
         const resultSpan = document.getElementById(`result-${index}`);
         const sourceLink = document.getElementById(`source-${index}`);
         
-        const userAnswer = input.value.trim();
-        
-        let correctAnswer;
-        if (problem.aime_answer !== null && problem.aime_answer !== undefined) {
-          correctAnswer = String(problem.aime_answer % 1000);
-        } else {
-          correctAnswer = String(problem.answer || '');
-        }
+        const userAnswer = userAnswers[index] || '';
+        const correctAnswer = String(problem.answer || '').toUpperCase().trim();
 
-        const userPadded = userAnswer.padStart(3, '0');
-        const correctPadded = correctAnswer.padStart(3, '0');
-
-        const isCorrect = userAnswer !== '' && userPadded === correctPadded;
+        const isCorrect = userAnswer !== '' && userAnswer === correctAnswer;
         const isUnanswered = userAnswer === '';
 
-        // Remove any existing status classes
         problemDiv.classList.remove('correct-bg', 'incorrect-bg', 'unanswered-bg');
 
         // Show the source link to AoPS
         if (sourceLink) {
           sourceLink.style.display = '';
         }
+
+        // Update answer choice buttons
+        document.querySelectorAll(`#problem-${index} .answer-choice`).forEach(btn => {
+          btn.classList.remove('correct-answer', 'wrong-answer');
+          if (btn.textContent === correctAnswer) {
+            btn.classList.add('correct-answer');
+          } else if (btn.textContent === userAnswer && !isCorrect) {
+            btn.classList.add('wrong-answer');
+          }
+        });
 
         if (isCorrect) {
           correct++;
@@ -1777,7 +1798,6 @@
         });
       });
 
-      // Show summary
       document.getElementById('summaryHeader').textContent = `Score: ${correct} / ${loadedProblems.length}`;
       
       const grid = document.getElementById('problemGrid');
@@ -1786,7 +1806,7 @@
       `).join('');
 
       // Show results with cutoff comparison
-      showResultsCutoffs(correct);
+      showResultsCutoffs(correct, correct);
 
       document.getElementById('summary').classList.add('visible');
       document.getElementById('summary').scrollIntoView({ behavior: 'smooth' });
@@ -1803,39 +1823,22 @@
       savePastTestAttempt(correct, loadedProblems.length, results);
     }
 
-    // Save past test attempt to database
     async function savePastTestAttempt(score, totalProblems, results) {
       try {
-        // Build problems data for storage
         const problemsData = loadedProblems.map((problem, index) => {
-          const input = document.getElementById(`answer-${index}`);
-          const userAnswer = input?.value.trim() || null;
-          
           return {
             id: problem.id,
             source: problem.source,
             text: problem.rewritten_problem || problem.text,
             difficulty: problem.difficulty,
             answer: problem.answer,
-            aime_answer: problem.aime_answer,
-            user_answer: userAnswer,
+            user_answer: userAnswers[index] || null,
             link: problem.link
           };
         });
 
-        // Determine difficulty level based on year
-        let difficultyLevel = 3;
-        if (selectedYear >= 2016) {
-          difficultyLevel = 5;
-        } else if (selectedYear >= 2010) {
-          difficultyLevel = 4;
-        } else if (selectedYear >= 2000) {
-          difficultyLevel = 3;
-        } else if (selectedYear >= 1990) {
-          difficultyLevel = 2;
-        } else {
-          difficultyLevel = 1;
-        }
+        // AMC 8 is the easiest MAA contest
+        const difficultyLevel = 1;
 
         const attemptData = {
           user_id: currentUser?.id || null,

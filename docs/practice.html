@@ -682,11 +682,11 @@
       --text-tertiary: #6c757d;
       --border-color: #dee2e6;
       --border-strong: #adb5bd;
-      --primary-blue: #0056b3;
-      --primary-blue-light: #0056b3;
+      --primary-blue: #0084b4;
+      --primary-blue-light: #0084b4;
       --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
       --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
-      --accent-primary: #0056b3;
+      --accent-primary: #0084b4;
       --accent-secondary: #00aa66;
       --success-color: #28a745;
       --error-color: #dc3545;
@@ -734,8 +734,8 @@
     }
     
     nav {
-      background: #0056b3;
-      box-shadow: 0 2px 8px rgba(0, 86, 179, 0.3);
+      background: #0084b4;
+      box-shadow: 0 2px 8px rgba(0, 150, 200, 0.3);
       margin-bottom: 48px;
       border-bottom: 3px solid var(--accent-secondary);
     }
@@ -1757,7 +1757,7 @@
 
     .btn-primary:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 150, 200, 0.3);
     }
 
     .btn-primary:disabled {
@@ -1847,7 +1847,7 @@
     .answer-input:focus {
       outline: none;
       border-color: var(--primary-blue);
-      box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+      box-shadow: 0 0 0 3px rgba(0, 150, 200, 0.1);
     }
 
     /* AMC Answer Choice Buttons */
@@ -1879,7 +1879,7 @@
 
     .answer-choice:hover {
       border-color: var(--primary-blue);
-      background: rgba(0, 86, 179, 0.1);
+      background: rgba(0, 150, 200, 0.1);
     }
 
     .answer-choice.selected {
@@ -2220,8 +2220,8 @@
     
     .modal-select:focus, .modal-textarea:focus {
       outline: none;
-      border-color: #0056b3;
-      box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+      border-color: #0084b4;
+      box-shadow: 0 0 0 3px rgba(0, 150, 200, 0.1);
     }
     
     .modal-textarea {
@@ -2232,7 +2232,7 @@
     .modal-submit {
       margin-top: 24px;
       padding: 12px 24px;
-      background: #0056b3;
+      background: #0084b4;
       color: white;
       border: none;
       border-radius: 8px;
@@ -2245,7 +2245,7 @@
     
     .modal-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,68,136,0.3);
+      box-shadow: 0 4px 8px rgba(0,120,165,0.3);
     }
     
     .modal-submit:disabled {
@@ -2457,6 +2457,8 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <nav>
@@ -2479,7 +2481,7 @@
         </a>
         <a href="login.html" class="auth-button">Login</a>
         <div class="user-info"></div>
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark</button>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark</button>
       </div>
     </div>
   </nav>
@@ -2491,7 +2493,7 @@
     </p>
 
     <div id="loginPrompt" class="login-prompt" style="display: none;">
-      ⚠️ <a href="login.html">Log in</a> to save your XP progress!
+      <a href="login.html">Log in</a> to save your XP progress!
     </div>
 
     <!-- XP Display -->
@@ -2620,7 +2622,7 @@
     <div class="card">
       <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
         <span>Settings</span>
-        <button class="btn-secondary more-settings-toggle" onclick="toggleMoreSettings()">⚙️ More Settings</button>
+        <button class="btn-secondary more-settings-toggle" onclick="toggleMoreSettings()">More Settings</button>
       </div>
       
       <div style="margin-bottom: 16px;">
@@ -2767,7 +2769,7 @@
     <!-- Empty State -->
     <div id="emptyState" class="card" style="display: none;">
       <div class="empty-state">
-        <div class="empty-state-icon">😕</div>
+        <div class="empty-state-icon"></div>
         <p>No problems found matching your filters.<br>Try selecting more types or adjusting difficulty range.</p>
       </div>
     </div>
@@ -2978,13 +2980,13 @@
       const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? 'Light' : 'Dark';
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     if (savedTheme === 'dark') {
-      document.querySelector('.dark-mode-toggle').textContent = '☀️ Light';
+      document.querySelector('.dark-mode-toggle').textContent = 'Light';
     }
 
     // More Settings toggle
@@ -3489,10 +3491,10 @@
         levelUpHtml = '<div class="level-up-notification">';
         if (typeLevelUp) {
           const typeNames = { algebra: 'Algebra', geometry: 'Geometry', number_theory: 'Number Theory', counting: 'Counting' };
-          levelUpHtml += `<div class="level-up-item">🎉 ${typeNames[problemType]} leveled up to <strong>${newTypeLevel}</strong>!</div>`;
+          levelUpHtml += `<div class="level-up-item">${typeNames[problemType]} leveled up to <strong>${newTypeLevel}</strong>!</div>`;
         }
         if (generalLevelUp) {
-          levelUpHtml += `<div class="level-up-item">⭐ Overall leveled up to <strong>${newGeneralLevel}</strong>!</div>`;
+          levelUpHtml += `<div class="level-up-item">Overall leveled up to <strong>${newGeneralLevel}</strong>!</div>`;
         }
         levelUpHtml += '</div>';
       }
@@ -3632,7 +3634,7 @@
         updateSessionStats();
         
         // Update button
-        overrideBtn.textContent = '✓ Marked correct';
+        overrideBtn.textContent = 'Marked correct';
         overrideBtn.style.background = '#28a745';
         overrideBtn.style.color = 'white';
         

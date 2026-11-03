@@ -21,7 +21,7 @@
       --text-primary: #212529;
       --text-secondary: #495057;
       --border-color: #e9ecef;
-      --primary-blue: #0056b3;
+      --primary-blue: #0084b4;
       --success-color: #28a745;
       --error-color: #dc3545;
       --override-color: #17a2b8;
@@ -38,7 +38,7 @@
     nav {
       background: var(--primary-blue);
       padding: 0;
-      box-shadow: 0 2px 8px rgba(0, 86, 179, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 150, 200, 0.3);
       margin-bottom: 40px;
       border-bottom: 3px solid #00aa66;
     }
@@ -131,7 +131,7 @@
     }
 
     .btn:hover {
-      background: #0066cc;
+      background: #00a0d6;
       transform: translateY(-1px);
     }
 
@@ -374,7 +374,7 @@
     .quality-badge.quality-2 { background: linear-gradient(135deg, #fd7e14 0%, #e55a00 100%); color: white; }
     .quality-badge.quality-3 { background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%); color: #000; }
     .quality-badge.quality-4 { background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); color: white; }
-    .quality-badge.quality-5 { background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; }
+    .quality-badge.quality-5 { background: linear-gradient(135deg, #007bff 0%, #0084b4 100%); color: white; }
 
     .mock-summary {
       background: var(--bg-card);
@@ -1031,6 +1031,8 @@
       line-height: 1.2;
     }
   </style>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <nav>
@@ -1667,7 +1669,7 @@
       if (overrideCount > 0) {
         overrideSummaryDiv.innerHTML = `
           <div class="override-summary">
-            <span class="override-summary-icon">ℹ️</span>
+            <span class="override-summary-icon">ℹ</span>
             <span>${overrideCount} problem${overrideCount > 1 ? 's were' : ' was'} manually marked as correct</span>
           </div>
         `;

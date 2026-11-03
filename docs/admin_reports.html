@@ -17,7 +17,7 @@
     
     h1 {
       text-align: center;
-      color: #004488;
+      color: #006f99;
     }
     
     .nav-links {
@@ -29,7 +29,7 @@
       display: inline-block;
       padding: 10px 20px;
       margin: 0 5px;
-      background: #004488;
+      background: #006f99;
       color: white;
       text-decoration: none;
       border-radius: 4px;
@@ -53,7 +53,7 @@
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
       text-align: center;
-      border-left: 4px solid #004488;
+      border-left: 4px solid #006f99;
     }
 
     .stat-card.pending {
@@ -63,7 +63,7 @@
     .stat-number {
       font-size: 36px;
       font-weight: 700;
-      color: #004488;
+      color: #006f99;
       margin-bottom: 5px;
     }
 
@@ -102,7 +102,7 @@
     }
 
     .report-id-badge {
-      background: #004488;
+      background: #006f99;
       color: white;
       padding: 8px 16px;
       border-radius: 6px;
@@ -171,13 +171,13 @@
 
     .problem-editor-section {
       padding: 20px;
-      border-bottom: 3px solid #004488;
+      border-bottom: 3px solid #006f99;
     }
 
     .section-title {
       font-size: 20px;
       font-weight: bold;
-      color: #004488;
+      color: #006f99;
       margin-bottom: 15px;
       padding-bottom: 10px;
       border-bottom: 2px solid #dee2e6;
@@ -195,7 +195,7 @@
     .problem-card.reviewed.quality-2 { border-left-color: #fd7e14; }
     .problem-card.reviewed.quality-3 { border-left-color: #ffc107; }
     .problem-card.reviewed.quality-4 { border-left-color: #28a745; }
-    .problem-card.reviewed.quality-5 { border-left-color: #0066cc; }
+    .problem-card.reviewed.quality-5 { border-left-color: #00a0d6; }
 
     .problem-header {
       display: flex;
@@ -257,7 +257,7 @@
       background: #e7f3ff;
       padding: 15px;
       border-radius: 4px;
-      border: 2px solid #0066cc;
+      border: 2px solid #00a0d6;
       margin: 10px 0;
     }
 
@@ -276,7 +276,7 @@
 
     .section-label {
       font-weight: bold;
-      color: #0066cc;
+      color: #00a0d6;
       font-size: 14px;
       margin-bottom: 10px;
     }
@@ -380,7 +380,7 @@
 
     button {
       padding: 8px 16px;
-      background: #004488;
+      background: #006f99;
       color: white;
       border: none;
       border-radius: 4px;
@@ -406,7 +406,7 @@
     }
 
     .link {
-      color: #004488;
+      color: #006f99;
       text-decoration: none;
     }
 
@@ -424,7 +424,7 @@
       padding: 15px;
       margin: 15px 0;
       border-radius: 8px;
-      border-left: 4px solid #004488;
+      border-left: 4px solid #006f99;
       box-shadow: 0 0 4px rgba(0,0,0,0.1);
     }
 
@@ -438,7 +438,7 @@
     .change-title {
       font-weight: bold;
       font-size: 16px;
-      color: #004488;
+      color: #006f99;
     }
 
     .change-actions {
@@ -475,7 +475,7 @@
     }
 
     .change-detail strong {
-      color: #004488;
+      color: #006f99;
     }
 
     .mark-handled-section {
@@ -509,7 +509,7 @@
       width: 40px;
       height: 40px;
       border: 4px solid #ddd;
-      border-top: 4px solid #004488;
+      border-top: 4px solid #006f99;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -544,9 +544,11 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
 </head>
 <body>
-  <h1>📋 Problem Reports Management</h1>
+  <h1>Problem Reports Management</h1>
 
   <div class="nav-links">
     <a href="index.html">Mock AIME</a>
@@ -567,7 +569,7 @@
     <div class="stat-card" style="border-left-color: #28a745;">
       <label class="checkbox-label" style="justify-content: center; margin: 0;">
         <input type="checkbox" id="showHandledCheckbox" onchange="toggleShowHandled()" style="margin: 0;">
-        <span style="font-weight: 600; color: #004488;">Show Handled Reports</span>
+        <span style="font-weight: 600; color: #006f99;">Show Handled Reports</span>
       </label>
     </div>
   </div>
@@ -652,7 +654,7 @@
         renderReports();
       } catch (err) {
         console.error('Error loading reports:', err);
-        container.innerHTML = '<div class="no-reports"><div class="no-reports-icon">⚠️</div><h2>Error Loading Reports</h2></div>';
+        container.innerHTML = '<div class="no-reports"><div class="no-reports-icon"></div><h2>Error Loading Reports</h2></div>';
       }
     }
 
@@ -670,8 +672,8 @@
 
       if (reportsToShow.length === 0) {
         const message = showHandled 
-          ? '<div class="no-reports"><div class="no-reports-icon">📋</div><h2>No Reports</h2><p>There are no reports in the system.</p></div>'
-          : '<div class="no-reports"><div class="no-reports-icon">🎉</div><h2>All Clear!</h2><p>No pending reports to review.</p></div>';
+          ? '<div class="no-reports"><div class="no-reports-icon"></div><h2>No Reports</h2><p>There are no reports in the system.</p></div>'
+          : '<div class="no-reports"><div class="no-reports-icon"></div><h2>All Clear!</h2><p>No pending reports to review.</p></div>';
         container.innerHTML = message;
         return;
       }
@@ -701,7 +703,7 @@
       const date = new Date(report.created_at).toLocaleDateString();
       const isHandled = report.handled;
       const borderColor = isHandled ? '#28a745' : '#ffc107';
-      const handledBadge = isHandled ? '<span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">✓ HANDLED</span>' : '';
+      const handledBadge = isHandled ? '<span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">HANDLED</span>' : '';
       
       const typeBadges = types.map(type => {
         const label = type.replace('_', ' ');
@@ -784,14 +786,14 @@
         <div class="report-expanded" style="${isHandled ? 'border-left-color: #28a745;' : ''}">
           <div class="report-expanded-header" style="${isHandled ? 'background: #e8f5e9;' : ''}">
             <div>
-              <h2 style="margin: 0;">Report #${report.id} ${isHandled ? '<span style="color: #28a745; font-size: 18px;">✓ HANDLED</span>' : ''}</h2>
+              <h2 style="margin: 0;">Report #${report.id} ${isHandled ? '<span style="color: #28a745; font-size: 18px;">HANDLED</span>' : ''}</h2>
               <div style="color: #666; font-size: 14px; margin-top: 5px;">${date}</div>
             </div>
-            <button class="close-report-btn" onclick="closeReport()">✕ Close</button>
+            <button class="close-report-btn" onclick="closeReport()">Close</button>
           </div>
 
           <div class="problem-editor-section" style="${handledStyle}">
-            <div class="section-title">📝 Problem Editor - Problem #${problem.id}</div>
+            <div class="section-title">Problem Editor - Problem #${problem.id}</div>
             
             <div class="problem-card ${qualityClass} ${reviewedClass}" id="problem-${problem.id}">
               <div class="problem-header">
@@ -886,7 +888,7 @@
           </div>
 
           <div class="proposed-changes-section" style="${handledStyle}">
-            <div class="section-title">💡 Proposed Changes</div>
+            <div class="section-title">Proposed Changes</div>
             ${renderProposedChanges(report, problem, details, types, isHandled)}
           </div>
 
@@ -901,7 +903,7 @@
               </div>
             </div>
             <button class="btn-mark-handled" onclick="markReportHandled(${report.id})" style="align-self: flex-end;">
-              ✓ Mark as Handled
+              Mark as Handled
             </button>
           </div>
           `}
@@ -918,10 +920,10 @@
         changesHTML += `
           <div class="change-card">
             <div class="change-header">
-              <div class="change-title">⭐ Quality Rating: ${details.quality_rating}/5</div>
+              <div class="change-title">Quality Rating: ${details.quality_rating}/5</div>
               <div class="change-actions">
-                <button class="btn-accept" ${disabledAttr} onclick="acceptQuality(event, ${problem.id}, ${details.quality_rating})">✓ Accept</button>
-                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">✗ Reject</button>
+                <button class="btn-accept" ${disabledAttr} onclick="acceptQuality(event, ${problem.id}, ${details.quality_rating})">Accept</button>
+                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">Reject</button>
               </div>
             </div>
             <div class="change-content">
@@ -938,10 +940,10 @@
         changesHTML += `
           <div class="change-card">
             <div class="change-header">
-              <div class="change-title">📊 Difficulty Rating: ${details.difficulty_rating}</div>
+              <div class="change-title">Difficulty Rating: ${details.difficulty_rating}</div>
               <div class="change-actions">
-                <button class="btn-accept" ${disabledAttr} onclick="acceptDifficulty(event, ${problem.id}, ${details.difficulty_rating})">✓ Accept</button>
-                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">✗ Reject</button>
+                <button class="btn-accept" ${disabledAttr} onclick="acceptDifficulty(event, ${problem.id}, ${details.difficulty_rating})">Accept</button>
+                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">Reject</button>
               </div>
             </div>
             <div class="change-content">
@@ -958,10 +960,10 @@
         changesHTML += `
           <div class="change-card">
             <div class="change-header">
-              <div class="change-title">✏️ Correct Answer: ${escapeHtml(details.proposed_answer)}</div>
+              <div class="change-title">Correct Answer: ${escapeHtml(details.proposed_answer)}</div>
               <div class="change-actions">
-                <button class="btn-accept" ${disabledAttr} onclick="acceptAnswer(event, ${problem.id}, '${escapeHtml(details.proposed_answer)}')">✓ Accept</button>
-                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">✗ Reject</button>
+                <button class="btn-accept" ${disabledAttr} onclick="acceptAnswer(event, ${problem.id}, '${escapeHtml(details.proposed_answer)}')">Accept</button>
+                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">Reject</button>
               </div>
             </div>
             <div class="change-content">
@@ -980,10 +982,10 @@
         changesHTML += `
           <div class="change-card">
             <div class="change-header">
-              <div class="change-title">📝 Problem Statement Changes</div>
+              <div class="change-title">Problem Statement Changes</div>
               <div class="change-actions">
-                <button class="btn-accept" ${disabledAttr} onclick="acceptProblemStatement(event, ${problem.id}, ${report.id})">✓ Accept</button>
-                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">✗ Reject</button>
+                <button class="btn-accept" ${disabledAttr} onclick="acceptProblemStatement(event, ${problem.id}, ${report.id})">Accept</button>
+                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">Reject</button>
               </div>
             </div>
             <div class="change-content">
@@ -1007,10 +1009,10 @@
         changesHTML += `
           <div class="change-card">
             <div class="change-header">
-              <div class="change-title">📚 Source: ${escapeHtml(details.proposed_source)}</div>
+              <div class="change-title">Source: ${escapeHtml(details.proposed_source)}</div>
               <div class="change-actions">
-                <button class="btn-accept" ${disabledAttr} onclick="acceptSource(event, ${problem.id}, '${escapeHtml(details.proposed_source)}')">✓ Accept</button>
-                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">✗ Reject</button>
+                <button class="btn-accept" ${disabledAttr} onclick="acceptSource(event, ${problem.id}, '${escapeHtml(details.proposed_source)}')">Accept</button>
+                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">Reject</button>
               </div>
             </div>
             <div class="change-content">
@@ -1030,10 +1032,10 @@
         changesHTML += `
           <div class="change-card">
             <div class="change-header">
-              <div class="change-title">🏷️ Problem Type: ${proposedTypeLabel}</div>
+              <div class="change-title">Problem Type: ${proposedTypeLabel}</div>
               <div class="change-actions">
-                <button class="btn-accept" ${disabledAttr} onclick="acceptType(event, ${problem.id}, '${details.proposed_type}')">✓ Accept</button>
-                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">✗ Reject</button>
+                <button class="btn-accept" ${disabledAttr} onclick="acceptType(event, ${problem.id}, '${details.proposed_type}')">Accept</button>
+                <button class="btn-reject" ${disabledAttr} onclick="rejectChange(event)">Reject</button>
               </div>
             </div>
             <div class="change-content">
@@ -1134,7 +1136,7 @@
           card.classList.add(`quality-${quality}`);
         }
 
-        showSaveStatus(problemId, '✓ Quality updated');
+        showSaveStatus(problemId, 'Quality updated');
       }
     }
 
@@ -1191,7 +1193,7 @@
           setMathContent(renderDiv, text);
         }
         
-        showSaveStatus(problemId, '✓ Rewritten problem saved');
+        showSaveStatus(problemId, 'Rewritten problem saved');
       }
     }
 
@@ -1215,7 +1217,7 @@
           setMathContent(renderDiv, text);
         }
         
-        showSaveStatus(problemId, '✓ Text saved');
+        showSaveStatus(problemId, 'Text saved');
       }
     }
 
@@ -1245,7 +1247,7 @@
         showSaveStatus(problemId, `Error: ${error.message}`, true);
       } else {
         Object.assign(allProblems[problemId], updateData);
-        showSaveStatus(problemId, '✓ Changes saved');
+        showSaveStatus(problemId, 'Changes saved');
       }
     }
 
@@ -1270,7 +1272,7 @@
           }
         }
         
-        showSaveStatus(problemId, '✓ Review status updated');
+        showSaveStatus(problemId, 'Review status updated');
       }
     }
 
@@ -1285,7 +1287,7 @@
         alert('Failed to update finalized status');
       } else {
         allProblems[problemId].finalized = isFinalized;
-        showSaveStatus(problemId, '✓ Finalized status updated');
+        showSaveStatus(problemId, 'Finalized status updated');
       }
     }
 

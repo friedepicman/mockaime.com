@@ -27,7 +27,7 @@
       --text-tertiary: #6c757d;
       --border-color: #e9ecef;
       --border-strong: #dee2e6;
-      --primary-blue: #0056b3;
+      --primary-blue: #0084b4;
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
       --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
       
@@ -73,9 +73,9 @@
     }
 
     nav {
-      background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+      background: linear-gradient(135deg, #0084b4 0%, #006f99 100%);
       padding: 0;
-      box-shadow: 0 2px 8px rgba(0, 86, 179, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 150, 200, 0.3);
       margin-bottom: 40px;
       border-bottom: 3px solid #00aa66;
     }
@@ -314,6 +314,8 @@
       nav a { padding: 16px 12px; font-size: 14px; }
     }
   </style>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <nav>
@@ -335,7 +337,7 @@
           <span class="inbox-badge" id="navBadge" style="display: none;">0</span>
         </a>
         <a href="profile.html">Profile</a>
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark</button>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark</button>
       </div>
     </div>
   </nav>
@@ -478,7 +480,7 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme) {
         document.documentElement.setAttribute('data-theme', savedTheme);
-        document.querySelector('.dark-mode-toggle').textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+        document.querySelector('.dark-mode-toggle').textContent = savedTheme === 'dark' ? 'Light' : 'Dark';
       }
     }
 
@@ -487,7 +489,7 @@
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? 'Light' : 'Dark';
       logActivity('toggle_dark_mode', { metadata: { theme: newTheme } });
     }
 

@@ -153,8 +153,8 @@
       --text-tertiary: #6c757d;
       --border-color: #e9ecef;
       --border-strong: #dee2e6;
-      --primary-blue: #0056b3;
-      --primary-blue-light: #0066cc;
+      --primary-blue: #0084b4;
+      --primary-blue-light: #00a0d6;
       --accent-secondary: #00aa66;
       --success-color: #28a745;
       --error-color: #dc3545;
@@ -188,9 +188,9 @@
     }
 
     nav {
-      background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+      background: linear-gradient(135deg, #0084b4 0%, #006f99 100%);
       padding: 0;
-      box-shadow: 0 2px 8px rgba(0, 86, 179, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 150, 200, 0.3);
       margin-bottom: 40px;
       border-bottom: 3px solid #00aa66;
     }
@@ -263,7 +263,7 @@
 
     .decade-tab:hover {
       border-color: var(--primary-blue);
-      background: rgba(0, 86, 179, 0.1);
+      background: rgba(0, 150, 200, 0.1);
     }
 
     .decade-tab.active {
@@ -605,7 +605,7 @@
 
     .answer-choice:hover {
       border-color: var(--primary-blue);
-      background: rgba(0, 86, 179, 0.1);
+      background: rgba(0, 150, 200, 0.1);
     }
 
     .answer-choice.selected {
@@ -860,6 +860,8 @@
       line-height: 1.2;
     }
   </style>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <nav>
@@ -882,7 +884,7 @@
         </a>
         <a href="login.html" class="auth-button">Login</a>
         <div class="user-info"></div>
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark</button>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark</button>
       </div>
     </div>
   </nav>
@@ -1046,14 +1048,14 @@
       const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      document.querySelector('.dark-mode-toggle').textContent = newTheme === 'dark' ? 'Light' : 'Dark';
       logActivity('toggle_dark_mode', { metadata: { theme: newTheme } });
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     if (savedTheme === 'dark') {
-      document.querySelector('.dark-mode-toggle').textContent = '☀️ Light';
+      document.querySelector('.dark-mode-toggle').textContent = 'Light';
     }
 
     // Auth
@@ -1275,6 +1277,27 @@
       }
     }
 
+    // Render problem text stored in Supabase (LaTeX with $...$), so past tests
+    // no longer depend on the AoPS wiki API.
+    function renderDbText(raw, aopsUrl) {
+      const cleaned = String(raw)
+        .replace(/<\/?onlyinclude>/gi, '')
+        .replace(/<\/?math>/gi, '$')
+        .replace(/\\textdollar/g, '\\$')
+        .trim();
+      const escaped = cleaned
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      const diagram = aopsUrl
+        ? `<a class="diagram-link" href="${aopsUrl}" target="_blank" rel="noopener">[diagram: view on AoPS]</a>`
+        : '[diagram]';
+      return escaped
+        .replace(/\[asy diagram\]/gi, diagram)
+        .replace(/\n\s*\n/g, '<br><br>')
+        .replace(/\n/g, ' ');
+    }
+
     // Fetch from AoPS - returns { html, redirectedSource } 
     // redirectedSource is set if the page redirected (e.g., "2022 AMC 12A #1")
     async function fetchFromAoPS(pageName) {
@@ -1414,19 +1437,20 @@
         const directData = await fetchWithRetry(() =>
           supabaseClient
             .from('problems')
-            .select('source, answer')
+            .select('source, answer, text')
             .like('source', `${year} AMC ${contestId} #%`)
         );
         
         const combinedData = await fetchWithRetry(() =>
           supabaseClient
             .from('problems')
-            .select('source, answer')
+            .select('source, answer, text')
             .like('source', `${year} AMC ${contestId} #% / %`)
         );
         
         // Create answer lookup map by problem number
         const answerMap = {};
+        const textMap = {};
         
         // Process direct matches
         if (directData) {
@@ -1435,6 +1459,7 @@
             if (match) {
               const problemNum = parseInt(match[1]);
               answerMap[problemNum] = p.answer;
+              if (p.text) textMap[problemNum] = p.text;
             }
           });
         }
@@ -1446,6 +1471,7 @@
             if (match) {
               const problemNum = parseInt(match[1]);
               answerMap[problemNum] = p.answer;
+              if (p.text) textMap[problemNum] = p.text;
             }
           });
         }
@@ -1455,6 +1481,7 @@
           loadedProblems.push({
             source: source,
             answer: answerMap[i] || '',
+            text: textMap[i] || '',
             problemNum: i
           });
         }
@@ -1664,14 +1691,23 @@
       const fetchPromises = loadedProblems.map(async (problem, index) => {
         const problemNum = index + 1;
         const pageName = getAoPSPageName(testName, problemNum);
-        const { html, redirectedSource } = await fetchFromAoPS(pageName);
+        const dbText = loadedProblems[index].text;
+        const { html, redirectedSource } = dbText
+          ? { html: renderDbText(dbText, `https://artofproblemsolving.com/wiki/index.php/${pageName}`), redirectedSource: null }
+          : await fetchFromAoPS(pageName);
         const textElement = document.getElementById(`text-${index}`);
         const problemDiv = document.getElementById(`problem-${index}`);
         
         let problemLoaded = false;
         let answerLoaded = !!loadedProblems[index].answer;
         
-        if (html) {
+        if (html && dbText) {
+          textElement.innerHTML = html;
+          if (window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise([textElement]).catch(err => console.error('MathJax error:', err));
+          }
+          problemLoaded = true;
+        } else if (html) {
           setHtmlContent(textElement, html);
           problemLoaded = true;
         } else {

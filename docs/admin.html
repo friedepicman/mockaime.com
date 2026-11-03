@@ -20,7 +20,7 @@
     }
     h1 {
       text-align: center;
-      color: #004488;
+      color: #006f99;
     }
     .nav-links {
       text-align: center;
@@ -30,7 +30,7 @@
       display: inline-block;
       padding: 10px 20px;
       margin: 0 5px;
-      background: #004488;
+      background: #006f99;
       color: white;
       text-decoration: none;
       border-radius: 4px;
@@ -77,7 +77,7 @@
       border-left-color: #28a745; /* Green - Good */
     }
     .problem-card.reviewed.quality-5 {
-      border-left-color: #0066cc; /* Blue - Excellent */
+      border-left-color: #00a0d6; /* Blue - Excellent */
     }
     
     .problem-header {
@@ -140,7 +140,7 @@
       background: #e7f3ff;
       padding: 15px;
       border-radius: 4px;
-      border: 2px solid #0066cc;
+      border: 2px solid #00a0d6;
       margin: 10px 0;
     }
     
@@ -159,7 +159,7 @@
     
     .section-label {
       font-weight: bold;
-      color: #0066cc;
+      color: #00a0d6;
       font-size: 14px;
       margin-bottom: 10px;
     }
@@ -269,7 +269,7 @@
     
     button {
       padding: 8px 16px;
-      background: #004488;
+      background: #006f99;
       color: white;
       border: none;
       border-radius: 4px;
@@ -291,7 +291,7 @@
       color: #28a745;
     }
     .link {
-      color: #004488;
+      color: #006f99;
       text-decoration: none;
     }
     .link:hover {
@@ -377,6 +377,8 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <h1>Problem Admin Panel</h1>
@@ -390,7 +392,7 @@
 
   <!-- Send Message Section -->
   <div class="controls" style="margin-bottom: 20px;">
-    <h3 style="margin-top: 0; color: #004488;">📬 Send User Message</h3>
+    <h3 style="margin-top: 0; color: #006f99;">Send User Message</h3>
     <div style="display: grid; gap: 15px;">
       <div style="display: flex; gap: 15px; align-items: center;">
         <label style="min-width: 80px;">To:</label>
@@ -971,8 +973,8 @@
         statusEl.textContent = `Error: ${error.message}`;
         statusEl.style.color = '#dc3545';
       } else {
-        console.log('✓ Rewritten problem saved');
-        statusEl.textContent = '✓ Saved';
+        console.log('Rewritten problem saved');
+        statusEl.textContent = 'Saved';
         statusEl.style.color = '#28a745';
         
         const problem = allProblems.find(p => p.id === problemId);
@@ -1008,8 +1010,8 @@
         statusEl.textContent = `Error: ${error.message}`;
         statusEl.style.color = '#dc3545';
       } else {
-        console.log('✓ Text saved');
-        statusEl.textContent = '✓ Saved';
+        console.log('Text saved');
+        statusEl.textContent = 'Saved';
         statusEl.style.color = '#28a745';
         
         const problem = allProblems.find(p => p.id === problemId);
@@ -1057,8 +1059,8 @@
         statusEl.textContent = `Error: ${error.message}`;
         statusEl.style.color = '#dc3545';
       } else {
-        console.log('✓ Save successful');
-        statusEl.textContent = '✓ Saved';
+        console.log('Save successful');
+        statusEl.textContent = 'Saved';
         statusEl.style.color = '#28a745';
         
         const problem = allProblems.find(p => p.id === problemId);
@@ -1233,8 +1235,8 @@
 
         statusEl.style.color = '#28a745';
         statusEl.textContent = recipient === 'broadcast' 
-          ? '✓ Broadcast sent to all users!' 
-          : '✓ Message sent!';
+          ? 'Broadcast sent to all users!' 
+          : 'Message sent!';
 
         // Clear form
         document.getElementById('msgTitle').value = '';
@@ -1265,7 +1267,7 @@
       // Convert URLs to links
       escaped = escaped.replace(
         /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank" style="color: #0056b3;">$1</a>'
+        '<a href="$1" target="_blank" style="color: #0084b4;">$1</a>'
       );
       
       previewEl.innerHTML = escaped || '<span style="color: #999;">Preview will appear here...</span>';
