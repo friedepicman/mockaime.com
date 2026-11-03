@@ -10,359 +10,6 @@
   <title>Problem Admin - Mock AIME</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.4/dist/umd/supabase.min.js"></script>
   
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 1400px;
-      margin: auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-    h1 {
-      text-align: center;
-      color: #006f99;
-    }
-    .nav-links {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .nav-links a {
-      display: inline-block;
-      padding: 10px 20px;
-      margin: 0 5px;
-      background: #006f99;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-    .nav-links a:hover {
-      background: #003366;
-    }
-    .ai-review-link {
-      background: #28a745 !important;
-    }
-    .ai-review-link:hover {
-      background: #218838 !important;
-    }
-    .controls {
-      margin: 20px 0;
-      padding: 15px;
-      background: white;
-      border-radius: 8px;
-    }
-    .problem-card {
-      background: white;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.05);
-      border-left: 4px solid white;
-    }
-    
-    /* Quality-based sidebar colors - only when manually reviewed */
-    .problem-card.reviewed.quality-0 {
-      border-left-color: #6c757d; /* Gray - Unset */
-    }
-    .problem-card.reviewed.quality-1 {
-      border-left-color: #dc3545; /* Red - Poor */
-    }
-    .problem-card.reviewed.quality-2 {
-      border-left-color: #fd7e14; /* Orange - Below Average */
-    }
-    .problem-card.reviewed.quality-3 {
-      border-left-color: #ffc107; /* Yellow - Average */
-    }
-    .problem-card.reviewed.quality-4 {
-      border-left-color: #28a745; /* Green - Good */
-    }
-    .problem-card.reviewed.quality-5 {
-      border-left-color: #00a0d6; /* Blue - Excellent */
-    }
-    
-    .problem-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    
-    .problem-id {
-      font-weight: bold;
-      color: #666;
-    }
-    
-    .fields-row {
-      display: flex;
-      gap: 15px;
-      margin: 15px 0;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    
-    .field-group label {
-      font-weight: bold;
-      font-size: 13px;
-    }
-    
-    .field-group input, .field-group select {
-      margin: 0;
-    }
-    
-    .rendered-problem {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 4px;
-      border: 1px solid #dee2e6;
-      margin: 10px 0;
-      line-height: 1.6;
-    }
-    
-    .rewritten-section {
-      background: #e7f3ff;
-      padding: 15px;
-      border-radius: 4px;
-      border: 2px solid #00a0d6;
-      margin: 10px 0;
-    }
-    
-    .original-section {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 4px;
-      border: 1px solid #dee2e6;
-      margin: 10px 0;
-      display: none;
-    }
-    
-    .original-section.show {
-      display: block;
-    }
-    
-    .section-label {
-      font-weight: bold;
-      color: #00a0d6;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    
-    .raw-text-container {
-      margin: 10px 0;
-    }
-    
-    .toggle-raw-btn {
-      background: #6c757d;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-    
-    .toggle-raw-btn:hover {
-      background: #5a6268;
-    }
-    
-    .raw-textarea {
-      display: none;
-      width: 100%;
-      min-height: 100px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      margin: 10px 0;
-    }
-    
-    .raw-textarea.show {
-      display: block;
-    }
-    
-    textarea {
-      width: 100%;
-      min-height: 100px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-family: inherit;
-      font-size: 14px;
-      margin: 10px 0;
-    }
-    input[type="text"] {
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-      width: 200px;
-    }
-    .field-label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 16px;
-    }
-    .checkbox-label input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-    
-    .quality-rating {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    
-    .quality-label {
-      font-weight: bold;
-      font-size: 16px;
-    }
-    
-    .stars {
-      display: flex;
-      gap: 5px;
-    }
-    
-    .star {
-      font-size: 28px;
-      cursor: pointer;
-      color: #ddd;
-      transition: color 0.2s;
-      user-select: none;
-    }
-    
-    .star.filled {
-      color: #ffc107;
-    }
-    
-    .star.hover {
-      color: #ffc107;
-      opacity: 0.7;
-    }
-    
-    button {
-      padding: 8px 16px;
-      background: #006f99;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      margin: 5px;
-    }
-    button:hover {
-      background: #003366;
-    }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    .save-status {
-      display: inline-block;
-      margin-left: 10px;
-      font-size: 14px;
-      color: #28a745;
-    }
-    .link {
-      color: #006f99;
-      text-decoration: none;
-    }
-    .link:hover {
-      text-decoration: underline;
-    }
-    .filter-controls {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .stats {
-      margin: 20px 0;
-      padding: 15px;
-      background: #e3f2fd;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      margin: 20px 0;
-      padding: 15px;
-      background: white;
-      border-radius: 8px;
-    }
-    .pagination button {
-      padding: 8px 16px;
-    }
-    .pagination span {
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .sign-out-btn {
-      background: #dc3545;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-    .sign-out-btn:hover {
-      background: #c82333;
-    }
-    
-    .type-select {
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-      min-width: 130px;
-    }
-    
-    .type-badge {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-left: 10px;
-    }
-    
-    .type-badge.algebra { background: #667eea; color: white; }
-    .type-badge.geometry { background: #f5576c; color: white; }
-    .type-badge.number_theory { background: #4facfe; color: white; }
-    .type-badge.counting { background: #43e97b; color: white; }
-    .type-badge.none { background: #ccc; color: #666; }
-  </style>
 
   <script>
     window.MathJax = {
@@ -378,33 +25,55 @@
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="admin.css">
   <script src="theme.js"></script>
+  <link rel="icon" type="image/png" href="256px_transparentBG.png">
 </head>
 <body>
-  <h1>Problem Admin Panel</h1>
+  <nav>
+    <div>
+      <a href="index.html" style="display: flex; align-items: center; gap: 12px;">
+        <img src="256px_transparentBG.png" alt="Mock AIME Logo" style="height: 34px; width: auto;">
+        Mock AIME
+      </a>
+      <div class="nav-links-right">
+        <a href="index.html">Mock Test</a>
+        <a href="search.html">Search</a>
+        <a href="admin.html">Problems</a>
+        <a href="admin_reports.html">Reports</a>
+        <a href="login.html" class="auth-button">Login</a>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Light</button>
+      </div>
+    </div>
+  </nav>
 
-  <div class="nav-links">
-    <a href="index.html">Mock AIME</a>
-    <a href="search.html">Problem Search</a>
-    <a href="admin_reports.html">View Reports</a>
-    <a href="login.html" class="auth-button">Login</a>
-  </div>
+  <header class="ma-hero">
+    <div class="ma-hero-inner">
+      <div>
+        <div class="ma-eyebrow">Admin</div>
+        <h1>Problems</h1>
+        <p class="ma-tagline">Review, rate and edit problems, and message users.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-wrap">
 
   <!-- Send Message Section -->
-  <div class="controls" style="margin-bottom: 20px;">
-    <h3 style="margin-top: 0; color: #006f99;">Send User Message</h3>
-    <div style="display: grid; gap: 15px;">
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <label style="min-width: 80px;">To:</label>
-        <select id="msgRecipient" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-width: 200px;">
+  <details class="panel" id="msgPanel">
+    <summary style="cursor: pointer;"><h3 style="display: inline; margin: 0;">Send a message to users</h3></summary>
+    <div class="form-grid" style="margin-top: 16px;">
+      <label for="msgRecipient">To</label>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <select id="msgRecipient" style="min-width: 200px;">
           <option value="broadcast">Everyone (Broadcast)</option>
           <option value="specific">Specific User</option>
         </select>
-        <input type="text" id="msgUserId" placeholder="User UUID (paste from Supabase)" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1; display: none;" />
+        <input type="text" id="msgUserId" placeholder="User UUID (paste from Supabase)" style="flex: 1; display: none;" />
       </div>
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <label style="min-width: 80px;">Type:</label>
-        <select id="msgType" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-width: 200px;">
+      <label for="msgType">Type</label>
+      <div>
+        <select id="msgType" style="min-width: 200px;">
           <option value="announcement">Announcement</option>
           <option value="curated">Curated Content</option>
           <option value="milestone">Milestone</option>
@@ -413,31 +82,19 @@
           <option value="general">General</option>
         </select>
       </div>
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <label style="min-width: 80px;">From:</label>
-        <input type="text" id="msgSender" placeholder="[SYSTEM]" value="[SYSTEM]" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 200px;" />
-        <span style="color: #666; font-size: 13px;">Displays as sender name</span>
-      </div>
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <label style="min-width: 80px;">Title:</label>
-        <input type="text" id="msgTitle" placeholder="Message title" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1;" />
-      </div>
-      <div style="display: flex; gap: 15px; align-items: flex-start;">
-        <label style="min-width: 80px; padding-top: 8px;">Body:</label>
-        <textarea id="msgBody" placeholder="Message body (supports LaTeX with $...$ and URLs)" rows="5" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1; resize: vertical; font-family: monospace;" oninput="updatePreview()"></textarea>
-      </div>
-      <div style="display: flex; gap: 15px; align-items: flex-start;">
-        <label style="min-width: 80px; padding-top: 8px;">Preview:</label>
-        <div id="msgPreview" style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9; min-height: 60px; white-space: pre-wrap; line-height: 1.6;"></div>
-      </div>
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <label style="min-width: 80px;"></label>
-        <button onclick="sendMessage()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Send Message</button>
-        <span id="msgStatus" style="color: #28a745;"></span>
-      </div>
+      <label for="msgSender">From</label>
+      <div><input type="text" id="msgSender" placeholder="[SYSTEM]" value="[SYSTEM]" /><span class="hint">Displays as sender name</span></div>
+      <label for="msgTitle">Title</label>
+      <input type="text" id="msgTitle" placeholder="Message title" style="width: 100%;" />
+      <label for="msgBody" class="top">Body</label>
+      <textarea id="msgBody" placeholder="Message body (supports LaTeX with $...$ and URLs)" rows="5" style="font-family: 'JetBrains Mono', monospace !important; margin: 0;" oninput="updatePreview()"></textarea>
+      <label class="top">Preview</label>
+      <div id="msgPreview"></div>
+      <span></span>
+      <div><button class="btn-send" onclick="sendMessage()">Send message</button> <span id="msgStatus" style="color: var(--ok);"></span></div>
     </div>
-  </div>
-  
+  </details>
+
   <div class="stats" id="stats">Loading...</div>
 
   <div class="controls">
@@ -491,11 +148,29 @@
     <button onclick="goToPage(currentPage + 1)">Next</button>
     <button onclick="goToPage(totalPages)">Last</button>
   </div>
+  </main>
 
   <script>
     const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const t = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', t);
+      try { localStorage.setItem('theme', t); } catch (e) {}
+      document.querySelector('.dark-mode-toggle').textContent = t === 'dark' ? 'Light' : 'Dark';
+    }
+    (function () {
+      let t = 'dark';
+      try { t = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t);
+      document.addEventListener('DOMContentLoaded', () => {
+        const b = document.querySelector('.dark-mode-toggle');
+        if (b) b.textContent = t === 'dark' ? 'Light' : 'Dark';
+      });
+    })();
     // Admin auth check - redirects non-admins immediately
     const ADMIN_UUID = '6af62d68-67e7-42f6-b91f-58cac9d81cba';
     (async () => {
@@ -554,7 +229,7 @@
       // Use textContent to safely insert the content, then let MathJax process it
       element.textContent = content;
       // Re-render MathJax for this element
-      if (window.MathJax) {
+      if (window.MathJax && MathJax.typesetPromise) {
         MathJax.typesetPromise([element]).catch(err => console.error('MathJax error:', err));
       }
     }
@@ -806,7 +481,7 @@
                 <div class="stars" id="stars-${p.id}">
                   ${renderStars(p.id, p.quality)}
                 </div>
-                <span style="color: #666; font-size: 14px;">(${p.quality || 0}/5)</span>
+                <span style="color: var(--text-tertiary); font-size: 14px;">(${p.quality || 0}/5)</span>
               </div>
             </div>
             <div class="header-right">
@@ -845,22 +520,22 @@
           
           <div class="fields-row">
             <div class="field-group">
-              <label>Answer:</label>
+              <label title="Answer to the original source problem">Original answer</label>
               <input type="text" id="answer-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 100px;" />
             </div>
             
             <div class="field-group">
-              <label>AIME Answer (mod 1000):</label>
+              <label>AIME answer</label>
               <input type="text" id="aime-answer-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 100px;" />
             </div>
             
             <div class="field-group">
-              <label>Difficulty:</label>
+              <label>Difficulty</label>
               <input type="text" id="difficulty-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 80px;" />
             </div>
             
             <div class="field-group">
-              <label>Type:</label>
+              <label>Type</label>
               <select id="type-${p.id}" class="type-select" onchange="saveProblem(${p.id})">
                 <option value="">None</option>
                 <option value="algebra">Algebra</option>
@@ -871,13 +546,13 @@
             </div>
             
             <div class="field-group">
-              <label>Source:</label>
+              <label>Source</label>
               <input type="text" id="source-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 250px;" />
             </div>
           </div>
           
           <div style="margin-top: 5px;">
-            <span class="field-label" style="font-size: 13px;">Link:</span>
+            <span class="field-label" style="display: inline;">Link</span>
             <a href="" target="_blank" class="link" id="link-${p.id}"></a>
           </div>
           
@@ -922,7 +597,7 @@
       });
       
       // Re-render MathJax for all new content
-      if (window.MathJax) {
+      if (window.MathJax && MathJax.typesetPromise) {
         MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
       }
     }
@@ -939,7 +614,7 @@
         btn.textContent = 'Hide Original Problem';
         
         // Re-render MathJax for this section
-        if (window.MathJax) {
+        if (window.MathJax && MathJax.typesetPromise) {
           MathJax.typesetPromise([section]).catch(err => console.error('MathJax error:', err));
         }
       }
@@ -960,7 +635,7 @@
       const statusEl = document.getElementById(`status-${problemId}`);
       
       statusEl.textContent = 'Saving rewritten problem...';
-      statusEl.style.color = '#666';
+      statusEl.style.color = 'var(--text-tertiary)';
       
       const { data, error } = await supabaseClient
         .from('problems')
@@ -971,11 +646,11 @@
       if (error) {
         console.error('ERROR saving rewritten problem:', error);
         statusEl.textContent = `Error: ${error.message}`;
-        statusEl.style.color = '#dc3545';
+        statusEl.style.color = 'var(--bad)';
       } else {
         console.log('Rewritten problem saved');
         statusEl.textContent = 'Saved';
-        statusEl.style.color = '#28a745';
+        statusEl.style.color = 'var(--ok)';
         
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) {
@@ -997,7 +672,7 @@
       const statusEl = document.getElementById(`status-${problemId}`);
       
       statusEl.textContent = 'Saving text...';
-      statusEl.style.color = '#666';
+      statusEl.style.color = 'var(--text-tertiary)';
       
       const { data, error } = await supabaseClient
         .from('problems')
@@ -1008,11 +683,11 @@
       if (error) {
         console.error('ERROR saving text:', error);
         statusEl.textContent = `Error: ${error.message}`;
-        statusEl.style.color = '#dc3545';
+        statusEl.style.color = 'var(--bad)';
       } else {
         console.log('Text saved');
         statusEl.textContent = 'Saved';
-        statusEl.style.color = '#28a745';
+        statusEl.style.color = 'var(--ok)';
         
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) {
@@ -1038,7 +713,7 @@
       const statusEl = document.getElementById(`status-${problemId}`);
       
       statusEl.textContent = 'Saving...';
-      statusEl.style.color = '#666';
+      statusEl.style.color = 'var(--text-tertiary)';
       
       const updateData = {
         answer,
@@ -1057,11 +732,11 @@
       if (error) {
         console.error('ERROR DETAILS:', error);
         statusEl.textContent = `Error: ${error.message}`;
-        statusEl.style.color = '#dc3545';
+        statusEl.style.color = 'var(--bad)';
       } else {
         console.log('Save successful');
         statusEl.textContent = 'Saved';
-        statusEl.style.color = '#28a745';
+        statusEl.style.color = 'var(--ok)';
         
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) {
@@ -1200,24 +875,24 @@
 
       // Validation
       if (!title) {
-        statusEl.style.color = '#dc3545';
+        statusEl.style.color = 'var(--bad)';
         statusEl.textContent = 'Please enter a title';
         return;
       }
       if (!body) {
-        statusEl.style.color = '#dc3545';
+        statusEl.style.color = 'var(--bad)';
         statusEl.textContent = 'Please enter a message body';
         return;
       }
       if (recipient === 'specific' && !userId) {
-        statusEl.style.color = '#dc3545';
+        statusEl.style.color = 'var(--bad)';
         statusEl.textContent = 'Please enter a user UUID';
         return;
       }
 
       const sender = document.getElementById('msgSender').value.trim() || '[SYSTEM]';
 
-      statusEl.style.color = '#666';
+      statusEl.style.color = 'var(--text-tertiary)';
       statusEl.textContent = 'Sending...';
 
       try {
@@ -1233,7 +908,7 @@
 
         if (error) throw error;
 
-        statusEl.style.color = '#28a745';
+        statusEl.style.color = 'var(--ok)';
         statusEl.textContent = recipient === 'broadcast' 
           ? 'Broadcast sent to all users!' 
           : 'Message sent!';
@@ -1248,7 +923,7 @@
 
       } catch (err) {
         console.error('Error sending message:', err);
-        statusEl.style.color = '#dc3545';
+        statusEl.style.color = 'var(--bad)';
         statusEl.textContent = 'Failed to send message: ' + err.message;
       }
     }
@@ -1267,13 +942,13 @@
       // Convert URLs to links
       escaped = escaped.replace(
         /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank" style="color: #0084b4;">$1</a>'
+        '<a href="$1" target="_blank" style="color: var(--ma-accent);">$1</a>'
       );
       
-      previewEl.innerHTML = escaped || '<span style="color: #999;">Preview will appear here...</span>';
+      previewEl.innerHTML = escaped || '<span style="color: var(--text-tertiary);">Preview will appear here...</span>';
       
       // Re-render LaTeX
-      if (window.MathJax) {
+      if (window.MathJax && MathJax.typesetPromise) {
         MathJax.typesetPromise([previewEl]).catch(err => console.log('MathJax error:', err));
       }
     }
