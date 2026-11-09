@@ -1,7 +1,0 @@
-aops_cache/
-results.jsonl
-batches.json
-review.csv
-proposed_fixes.sql
-__pycache__/
-reported.json

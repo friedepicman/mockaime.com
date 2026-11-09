@@ -59,48 +59,14 @@
         // Log to activity_log
         await supabaseClient.from('activity_log').insert(payload);
         
-        // Also log to activity_all
-        await supabaseClient.from('activity_all').insert({
-          user_id: userId,
-          session_id: getSessionId(),
-          user_type: getUserType(userId),
-          event_type: eventType,
-          page: CURRENT_PAGE,
-          element_id: null,
-          element_text: null,
-          element_type: null,
-          url: window.location.href,
-          referrer: document.referrer || null,
-          metadata: {
-            ...data,
-            fromActivityLog: true
-          }
-        });
       } catch (e) {
         console.error('Activity log error:', e);
       }
     }
 
     // All events
-    async function logEvent(eventType, data = {}) {
-      try {
-        const userId = currentUser?.id || null;
-        await supabaseClient.from('activity_all').insert({
-          user_id: userId,
-          session_id: getSessionId(),
-          user_type: getUserType(userId),
-          event_type: eventType,
-          page: CURRENT_PAGE,
-          element_id: data.elementId || null,
-          element_text: data.elementText ? String(data.elementText).substring(0, 100) : null,
-          element_type: data.elementType || null,
-          url: window.location.href,
-          referrer: document.referrer || null,
-          metadata: data.metadata || null
-        });
-      } catch (e) {
-        console.error('Event log error:', e);
-      }
+    async function logEvent() {
+      // Disabled: the activity_all table was removed. Important events still go to activity_log via logActivity().
     }
 
     // Update inbox badge with unread count
@@ -230,23 +196,6 @@
         });
       });
 
-      // === PAGE LEAVE ===
-      window.addEventListener('beforeunload', () => {
-        const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000);
-        const data = JSON.stringify({
-          user_id: currentUser?.id || null,
-          session_id: getSessionId(),
-          user_type: getUserType(currentUser?.id),
-          event_type: 'page_leave',
-          page: CURRENT_PAGE,
-          url: window.location.href,
-          metadata: { secondsOnPage: timeOnPage, scrollDepth: lastScrollDepth }
-        });
-        navigator.sendBeacon(
-          `${SUPABASE_URL}/rest/v1/activity_all?apikey=${SUPABASE_ANON_KEY}`,
-          data
-        );
-      });
 
       // === KEYBOARD TRACKING (specific keys) ===
       document.addEventListener('keydown', (e) => {
@@ -2459,6 +2408,7 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="theme.css">
   <script src="theme.js"></script>
+  <script src="problem_history.js"></script>
 </head>
 <body>
   <nav>
@@ -2729,6 +2679,7 @@
           <span class="problem-badge badge-type" id="problemType">Algebra</span>
           <span class="problem-badge badge-difficulty" id="problemDifficulty">Difficulty: 5.0</span>
           <span class="problem-badge badge-xp" id="problemXp">+60 XP</span>
+          <span id="problemHistory" style="display: none;"></span>
         </div>
         <div class="problem-text" id="problemText"></div>
         
@@ -3107,7 +3058,7 @@
           authButton.href = 'profile.html';
         }
         loginPrompt.style.display = 'none';
-        await loadUserXp();
+        await Promise.all([loadUserXp(), ProblemHistory.load(supabaseClient, currentUser)]);
       } else {
         loginPrompt.style.display = 'block';
       }
@@ -3310,7 +3261,21 @@
       document.getElementById('problemDifficulty').textContent = `Difficulty: ${diff}`;
       
       const xp = getXpForDifficulty(parseFloat(problem.difficulty));
-      document.getElementById('problemXp').textContent = `+${xp} XP`;
+      const xpBadge = document.getElementById('problemXp');
+      if (currentUser && ProblemHistory.solvedBefore(problem.id)) {
+        // Already solved: correct answers give a quarter of the XP (rounded down)
+        xpBadge.textContent = `+${Math.floor(xp / 4)} XP`;
+        xpBadge.title = `You've solved this before, so it gives 1/4 of the usual ${xp} XP`;
+      } else {
+        xpBadge.textContent = `+${xp} XP`;
+        xpBadge.title = '';
+      }
+
+      // Show how the user did on this problem before (if they've seen it)
+      const historyEl = document.getElementById('problemHistory');
+      const historyHtml = currentUser ? ProblemHistory.badgeHtml(problem.id) : '';
+      historyEl.innerHTML = historyHtml;
+      historyEl.style.display = historyHtml ? '' : 'none';
       
       const problemText = problem.rewritten_problem || problem.text || '';
       setMathContent(document.getElementById('problemText'), problemText);
@@ -3423,6 +3388,7 @@
       let isCorrect = false;
       let xpChange = 0;
       let correctAnswer = '';
+      let repeatSolve = false;
       
       // If user is logged in, use secure server function
       if (currentUser) {
@@ -3446,6 +3412,9 @@
           isCorrect = data.correct;
           xpChange = data.xp_change;
           correctAnswer = String(data.correct_answer);
+          repeatSolve = !!data.repeat;
+          // The server saves the problem history; keep the local copy in sync
+          ProblemHistory.set(currentProblem.id, data.history);
           
           // Update local XP state from the change
           userXp[problemType] = Math.max(0, userXp[problemType] + xpChange);
@@ -3523,7 +3492,7 @@
         if (xpChange !== 0) {
           xpDisplayHtml = `
             <div class="xp-change ${xpChange > 0 ? 'positive' : 'negative'}">
-              ${xpChange > 0 ? '+' : ''}${Math.round(xpChange)} XP
+              ${xpChange > 0 ? '+' : ''}${Math.round(xpChange)} XP${isCorrect && repeatSolve ? ' <span style="font-weight: 400; font-size: 13px;">(1/4 XP, already solved)</span>' : ''}
             </div>
           `;
         }
@@ -3599,20 +3568,12 @@
       
       const difficulty = parseFloat(currentProblem.difficulty);
       const problemType = currentProblem.type;
-      const baseXp = getXpForDifficulty(difficulty);
-      
-      // Get current level to calculate what penalty was applied
-      const currentLevel = getLevelFromXp(userXp[problemType], false).level;
-      const penaltyApplied = calculatePenalty(currentLevel, difficulty);
-      
-      // XP to award = base XP + undo the penalty (penalty is negative, so subtract it)
-      const xpToAward = baseXp - penaltyApplied;
       
       try {
-        // Update XP in database
-        const { error } = await supabaseClient.rpc('override_practice_xp', {
-          p_problem_type: problemType,
-          p_xp_amount: xpToAward
+        // The server works out the XP: undo the penalty and award what a correct
+        // answer would have given (1/4 if the problem was already solved before)
+        const { data, error } = await supabaseClient.rpc('override_practice_xp', {
+          p_problem_id: currentProblem.id
         });
         
         if (error) {
@@ -3622,6 +3583,9 @@
           overrideBtn.textContent = 'I was correct';
           return;
         }
+        
+        const xpToAward = data.xp_change;
+        ProblemHistory.set(currentProblem.id, data.history);
         
         // Update local XP state
         userXp[problemType] = Math.max(0, userXp[problemType] + xpToAward);
@@ -3642,7 +3606,7 @@
         document.getElementById('resultHeader').textContent = 'Marked Correct';
         document.getElementById('resultDisplay').className = 'result-display show correct';
         document.getElementById('resultDetails').innerHTML = `
-          <div class="xp-change positive">+${Math.round(xpToAward)} XP (corrected)</div>
+          <div class="xp-change positive">+${Math.round(xpToAward)} XP (corrected)${data.repeat ? ' <span style="font-weight: 400; font-size: 13px;">(1/4 XP, already solved)</span>' : ''}</div>
         `;
         
         // Log the override

@@ -348,47 +348,13 @@
           metadata: data.metadata || null
         });
         
-        // Also log to activity_all
-        await supabaseClient.from('activity_all').insert({
-          user_id: userId,
-          session_id: getSessionId(),
-          user_type: getUserType(userId),
-          event_type: eventType,
-          page: CURRENT_PAGE,
-          element_id: null,
-          element_text: null,
-          element_type: null,
-          url: window.location.href,
-          referrer: document.referrer || null,
-          metadata: {
-            ...data,
-            fromActivityLog: true
-          }
-        });
       } catch (e) {
         console.error('Activity log error:', e);
       }
     }
 
-    async function logEvent(eventType, data = {}) {
-      try {
-        const userId = currentUser?.id || null;
-        await supabaseClient.from('activity_all').insert({
-          user_id: userId,
-          session_id: getSessionId(),
-          user_type: getUserType(userId),
-          event_type: eventType,
-          page: CURRENT_PAGE,
-          element_id: data.elementId || null,
-          element_text: data.elementText ? String(data.elementText).substring(0, 100) : null,
-          element_type: data.elementType || null,
-          url: window.location.href,
-          referrer: document.referrer || null,
-          metadata: data.metadata || null
-        });
-      } catch (e) {
-        console.error('Event log error:', e);
-      }
+    async function logEvent() {
+      // Disabled: the activity_all table was removed. Important events still go to activity_log via logActivity().
     }
 
     // Update inbox badge with unread count

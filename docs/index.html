@@ -76,48 +76,14 @@
         // Log to activity_log
         await supabaseClient.from('activity_log').insert(payload);
         
-        // Also log to activity_all
-        await supabaseClient.from('activity_all').insert({
-          user_id: userId,
-          session_id: getSessionId(),
-          user_type: getUserType(userId),
-          event_type: eventType,
-          page: CURRENT_PAGE,
-          element_id: null,
-          element_text: null,
-          element_type: null,
-          url: window.location.href,
-          referrer: document.referrer || null,
-          metadata: {
-            ...data,
-            fromActivityLog: true
-          }
-        });
       } catch (e) {
         console.error('Activity log error:', e);
       }
     }
 
     // All events
-    async function logEvent(eventType, data = {}) {
-      try {
-        const userId = currentUser?.id || null;
-        await supabaseClient.from('activity_all').insert({
-          user_id: userId,
-          session_id: getSessionId(),
-          user_type: getUserType(userId),
-          event_type: eventType,
-          page: CURRENT_PAGE,
-          element_id: data.elementId || null,
-          element_text: data.elementText ? String(data.elementText).substring(0, 100) : null,
-          element_type: data.elementType || null,
-          url: window.location.href,
-          referrer: document.referrer || null,
-          metadata: data.metadata || null
-        });
-      } catch (e) {
-        console.error('Event log error:', e);
-      }
+    async function logEvent() {
+      // Disabled: the activity_all table was removed. Important events still go to activity_log via logActivity().
     }
 
     // Update inbox badge with unread count
@@ -247,23 +213,6 @@
         });
       });
 
-      // === PAGE LEAVE ===
-      window.addEventListener('beforeunload', () => {
-        const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000);
-        const data = JSON.stringify({
-          user_id: currentUser?.id || null,
-          session_id: getSessionId(),
-          user_type: getUserType(currentUser?.id),
-          event_type: 'page_leave',
-          page: CURRENT_PAGE,
-          url: window.location.href,
-          metadata: { secondsOnPage: timeOnPage, scrollDepth: lastScrollDepth }
-        });
-        navigator.sendBeacon(
-          `${SUPABASE_URL}/rest/v1/activity_all?apikey=${SUPABASE_ANON_KEY}`,
-          data
-        );
-      });
 
       // === KEYBOARD TRACKING (specific keys) ===
       document.addEventListener('keydown', (e) => {
@@ -340,6 +289,7 @@
     let problemsLoaded = false;
     let currentUser = null;
     let problemOverrides = {}; // Track which problems were manually marked correct
+    let historyRecorded = new Set(); // Problem ids already saved to problem history for this mock
 
     async function updateAuthUI() {
       const { data: { session } } = await supabaseClient.auth.getSession();
@@ -417,6 +367,7 @@
 
     window.onload = async () => {
       await updateAuthUI();
+      await ProblemHistory.load(supabaseClient, currentUser);
       updateButtonStates();
       allProblems = await loadProblemsFromSupabase();
       problemsLoaded = true;
@@ -1831,6 +1782,7 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="theme.css">
   <script src="theme.js"></script>
+  <script src="problem_history.js"></script>
 </head>
 <body>
   <nav>
@@ -2852,6 +2804,7 @@
           <span class="source-label" id="source-label-${index}"></span>
           <a href="" target="_blank" class="aops-link-top" id="aops-link-${index}" style="display: none;"></a>
           <strong>Problem ${index + 1}:</strong>
+          ${currentUser ? ProblemHistory.badgeHtml(newProblem.id) : ''}
           <span class="difficulty-indicator" id="difficulty-${index}" style="display: none;">Difficulty: ${parseFloat(newProblem.difficulty).toFixed(1)}</span>
           <p class="problem-text" id="problem-text-${index}"></p>
           <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${index}" placeholder="000" /></div>
@@ -2903,6 +2856,12 @@
           overrideBtn.style.display = 'none';
         }
         
+        // Save "I was correct" to the user's problem history
+        if (currentUser) {
+          historyRecorded.add(problem.id);
+          ProblemHistory.record(supabaseClient, currentUser, [{ id: problem.id, correct: true, override: true }]);
+        }
+
         // Update the summary grid
         updateSummaryAfterOverride();
       }
@@ -3106,6 +3065,20 @@
         console.log('Saving mock attempt...');
         await saveMockAttempt(correctCount, chosenProblems.length, document.getElementById("difficulty").value, problemsWithAnswers);
 
+        // Save right/wrong to the user's problem history. Blank answers count as
+        // skipped and aren't saved; re-checking the same mock doesn't add attempts.
+        if (currentUser) {
+          const toRecord = [];
+          results.forEach(r => {
+            const p = chosenProblems[r.index];
+            if (!p || historyRecorded.has(p.id)) return;
+            if (r.status !== 'correct' && r.status !== 'incorrect') return;
+            historyRecorded.add(p.id);
+            toRecord.push({ id: p.id, correct: r.status === 'correct' });
+          });
+          ProblemHistory.record(supabaseClient, currentUser, toRecord);
+        }
+
         // Track mock test completion
         logActivity('mock_test_complete', {
           metadata: {
@@ -3149,6 +3122,7 @@
 
         // Reset overrides when generating new mock
         problemOverrides = {};
+        historyRecorded = new Set();
 
         const level = document.getElementById("difficulty").value;
 
@@ -3287,6 +3261,7 @@
             <span class="source-label" id="source-label-${i}"></span>
             <a href="" target="_blank" class="aops-link-top" id="aops-link-${i}" style="display: none;"></a>
             <strong>Problem ${i + 1}:</strong>
+            ${currentUser ? ProblemHistory.badgeHtml(p.id) : ''}
             <span class="difficulty-indicator" id="difficulty-${i}" style="display: none;">Difficulty: ${parseFloat(p.difficulty).toFixed(1)}</span>
             <p class="problem-text" id="problem-text-${i}"></p>
             <div class="answer"><span class="answer-label">Answer:</span> <input type="text" maxlength="3" data-index="${i}" placeholder="000" /></div>
@@ -3344,8 +3319,8 @@
   ">
     <div style="margin-bottom: 8px;">Made by <strong>Jason Yuan</strong></div>
     <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-      <a href="mailto:jyuan26@crystal.org" style="color: var(--text-secondary); text-decoration: none;">
-        jyuan26@crystal.org
+      <a href="mailto:jyuan26@berkeley.edu" style="color: var(--text-secondary); text-decoration: none;">
+        jyuan26@berkeley.edu
       </a>
       <a href="https://artofproblemsolving.com/community/user/506015" target="_blank" style="color: var(--text-secondary); text-decoration: none;">
         AoPS

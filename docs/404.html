@@ -77,15 +77,6 @@
       }
     });
 
-    supabaseClient.from('activity_all').insert({
-      session_id: getSessionId(),
-      user_type: 'guest',
-      event_type: 'page_view',
-      page: '404',
-      url: window.location.href,
-      referrer: document.referrer,
-      metadata: { attemptedUrl: window.location.href }
-    });
   </script>
 </body>
 </html>
