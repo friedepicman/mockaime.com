@@ -1,0 +1,13 @@
+Redesign site with sharp dark theme; load past tests from Supabase
+
+- Add docs/theme.css and docs/theme.js (dark by default, square edges,
+  logo palette, title band, footer) linked from every page
+- Swap hardcoded blues for the new palette and remove emojis from the UI
+- Past AIME/AMC pages read problem text from the problems table and only
+  fall back to the AoPS wiki API when text is missing
+- Rebuild past_amc8.html from the AMC 10 page (it was a copy of the AIME page)
+- Drop unused docs/auth.js, shared.js, shared-styles.css, 256px.png,
+  with_aime_answers.json
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Ks6q7Ua3Xvdb8aHJ9GFUFc

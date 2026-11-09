@@ -250,38 +250,14 @@
     }
 
     async function loadProblemsFromSupabase() {
-      let allProblems = [];
-      let from = 0;
-      const chunkSize = 1000;
-      let done = false;
-
-      while (!done) {
-        const { data, error } = await supabaseClient
-          .from('problems')
-          .select('*')
-          .order('id')
-          .range(from, from + chunkSize - 1);
-
-        if (error) {
-          console.error('Error fetching problems:', error);
-          return [];
-        }
-
-        if (data.length === 0) {
-          done = true;
-        } else {
-          allProblems.push(...data);
-          from += chunkSize;
-          
+      const { problems, complete } = await fetchAllProblems(supabaseClient, {
+        onProgress: (n) => {
           const loadingEl = document.getElementById('loadingProgress');
-          if (loadingEl) {
-            loadingEl.textContent = `Loading problems... ${allProblems.length}`;
-          }
+          if (loadingEl) loadingEl.textContent = `Loading problems... ${n}`;
         }
-      }
-
-      console.log('Loaded', allProblems.length, 'problems from Supabase');
-      return allProblems;
+      });
+      console.log('Loaded', problems.length, 'problems from Supabase', complete ? '' : '(incomplete)');
+      return problems;
     }
 
     let allProblems = [];
@@ -1783,6 +1759,7 @@
   <link rel="stylesheet" href="theme.css">
   <script src="theme.js"></script>
   <script src="problem_history.js"></script>
+  <script src="problem_loader.js"></script>
 </head>
 <body>
   <nav>

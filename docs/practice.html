@@ -2409,6 +2409,7 @@
   <link rel="stylesheet" href="theme.css">
   <script src="theme.js"></script>
   <script src="problem_history.js"></script>
+  <script src="problem_loader.js"></script>
 </head>
 <body>
   <nav>
@@ -3124,21 +3125,11 @@
     async function loadProblems() {
       document.getElementById('loadingState').style.display = 'block';
       
-      let allData = [];
-      let from = 0;
-      const chunkSize = 1000;
-      
-      while (true) {
-        const { data, error } = await supabaseClient
-          .from('problems')
-          .select('*')
-          .order('id')
-          .range(from, from + chunkSize - 1);
-        
-        if (error || data.length === 0) break;
-        allData.push(...data);
-        from += chunkSize;
-      }
+      // Only the columns practice uses, so each page loads faster
+      // Failures are retried; anything still missing is only logged to the console
+      const { problems: allData } = await fetchAllProblems(supabaseClient, {
+        columns: 'id, source, type, difficulty, quality, manually_reviewed, finalized, answer, aime_answer, text, rewritten_problem, link'
+      });
       
       allRawProblems = allData.filter(p => 
         p.type && 

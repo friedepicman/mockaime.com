@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - Mock AIME</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.4/dist/umd/supabase.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --bg-primary: #f8f9fa;
+      --bg-card: white;
+      --text-primary: #212529;
+      --text-secondary: #495057;
+      --border-color: #e9ecef;
+      --primary-blue: #0084b4;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+      --override-color: #17a2b8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    nav {
+      background: var(--primary-blue);
+      padding: 0;
+      box-shadow: 0 2px 8px rgba(0, 150, 200, 0.3);
+      margin-bottom: 40px;
+      border-bottom: 3px solid #00aa66;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 20px;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .profile-header {
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--primary-blue);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 0 auto 20px;
+    }
+
+    .section {
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: var(--primary-blue);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #00a0d6;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: #dc3545;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .btn-back {
+      background: #6c757d;
+      margin-bottom: 20px;
+    }
+
+    .btn-back:hover {
+      background: #5a6268;
+    }
+
+    .attempt-item {
+      padding: 15px 20px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .attempt-item:hover {
+      border-color: var(--primary-blue);
+      background: #f8f9fa;
+      transform: translateX(5px);
+    }
+
+    .attempt-info {
+      flex: 1;
+    }
+
+    .attempt-score {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--primary-blue);
+    }
+
+    .attempt-date {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .attempt-cutoffs {
+      margin-top: 6px;
+    }
+
+    .cutoff-badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #e9ecef;
+      color: var(--text-secondary);
+      margin-right: 6px;
+    }
+
+    .cutoff-badge.qualified {
+      background: rgba(40, 167, 69, 0.15);
+      color: var(--success-color);
+      font-weight: 600;
+    }
+
+    .cutoff-badge.not-qualified {
+      background: rgba(108, 117, 125, 0.1);
+      color: #6c757d;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-secondary);
+    }
+
+    .loading-problem {
+      color: var(--text-secondary);
+      font-style: italic;
+      padding: 20px 0;
+    }
+
+    .load-error {
+      color: var(--error-color);
+    }
+
+    .success-message {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success-color);
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .mock-detail-view {
+      display: none;
+    }
+
+    .mock-detail-view.active {
+      display: block;
+    }
+
+    .problem-detail {
+      background: white;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .problem-number {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary-blue);
+    }
+
+    .problem-difficulty {
+      background: #e9ecef;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .problem-text {
+      margin: 15px 0;
+      line-height: 1.8;
+    }
+
+    .answer-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .answer-box {
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      position: relative;
+    }
+
+    .answer-box.correct {
+      background: rgba(40, 167, 69, 0.1);
+      border: 2px solid var(--success-color);
+    }
+
+    .answer-box.incorrect {
+      background: rgba(220, 53, 69, 0.1);
+      border: 2px solid var(--error-color);
+    }
+
+    .answer-box.unanswered {
+      background: rgba(108, 117, 125, 0.1);
+      border: 2px solid #6c757d;
+    }
+
+    .answer-box.override {
+      background: rgba(23, 162, 184, 0.1);
+      border: 2px solid var(--override-color);
+    }
+
+    .answer-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+
+    .answer-value {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .override-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--override-color);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .override-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(23, 162, 184, 0.15);
+      color: var(--override-color);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 10px;
+      border: 1px solid var(--override-color);
+    }
+
+    .override-icon {
+      font-size: 16px;
+    }
+
+    .quality-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+      color: #000;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .quality-badge.quality-1 { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; }
+    .quality-badge.quality-2 { background: linear-gradient(135deg, #fd7e14 0%, #e55a00 100%); color: white; }
+    .quality-badge.quality-3 { background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%); color: #000; }
+    .quality-badge.quality-4 { background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); color: white; }
+    .quality-badge.quality-5 { background: linear-gradient(135deg, #007bff 0%, #0084b4 100%); color: white; }
+
+    .mock-summary {
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 8px;
+      border: 2px solid var(--primary-blue);
+      margin-bottom: 30px;
+    }
+
+    .mock-summary h3 {
+      margin-top: 0;
+      color: var(--primary-blue);
+    }
+
+    .summary-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .summary-stat {
+      text-align: center;
+    }
+
+    .summary-stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary-blue);
+    }
+
+    .summary-stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 5px;
+    }
+
+    .aops-link {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .aops-link:hover {
+      text-decoration: underline;
+    }
+
+    .source-label {
+      display: inline-block;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: var(--border-color);
+      text-decoration: none;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+
+    .source-label:hover {
+      background: var(--primary-blue);
+      color: white;
+    }
+
+    .override-summary {
+      background: rgba(23, 162, 184, 0.1);
+      border: 2px solid var(--override-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--override-color);
+      font-weight: 600;
+    }
+
+    .override-summary-icon {
+      font-size: 20px;
+    }
+
+    /* Cutoff Info Section */
+    .cutoff-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+
+    .cutoff-item {
+      text-align: center;
+      min-width: 100px;
+    }
+
+    .cutoff-label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .cutoff-value {
+      display: block;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .cutoff-value.qualified {
+      color: var(--success-color);
+    }
+
+    .cutoff-value.not-qualified {
+      color: var(--text-primary);
+    }
+
+    /* Categories grid layout - matching practice page */
+    .levels-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .level-card {
+      background: var(--bg-primary);
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .level-card.general-card {
+      grid-column: 1 / -1;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .level-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .level-card-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .level-card-xp {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-align: right;
+      margin-top: 8px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #c0c0c0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #1a4a7a, #4a9fd4);
+      transition: width 0.5s ease;
+    }
+
+    .general-card .level-card-header {
+      gap: 20px;
+    }
+
+    .general-card .general-left {
+      flex: 1;
+    }
+
+    .general-card .level-card-label {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .general-card .progress-bar {
+      height: 12px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 700px) {
+      .levels-section { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 400px) {
+      .levels-section { grid-template-columns: 1fr; }
+    }
+
+    .level-shield-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 65px;
+      height: 68px;
+    }
+
+    .level-shield {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 42px;
+      font-weight: 700;
+      font-size: 14px;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      position: relative;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: 2;
+    }
+
+    /* === TIERS 1-30: Simple hexagon with outlines === */
+    .shield-container-simple .shield-outline {
+      position: absolute;
+      width: 39px;
+      height: 45px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: 1;
+    }
+
+    .shield-container-simple .level-shield {
+      z-index: 2;
+    }
+
+    /* Simple hexagons: 1-30 - thin flat borders */
+    .shield-bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); }
+    .shield-bronze-outline { background: rgba(92, 51, 16, 0.5); }
+    .shield-bronze-outer { background: #5c2e0d; width: 42px !important; height: 48px !important; }
+    .shield-silver { background: linear-gradient(135deg, #c0c0c0, #808080); }
+    .shield-silver-outline { background: rgba(74, 74, 74, 0.5); }
+    .shield-silver-outer { background: #505050; width: 42px !important; height: 48px !important; }
+    .shield-gold { background: linear-gradient(135deg, #ffd700, #b8860b); color: #333; text-shadow: 0 1px 1px rgba(255,255,255,0.3); }
+    .shield-gold-outline { background: rgba(139, 105, 20, 0.5); }
+    .shield-gold-outer { background: #7a5a07; width: 42px !important; height: 48px !important; }
+
+    /* Triple layer hexagons: 31+ */
+    .shield-container-layered .shield-outer {
+      position: absolute;
+      width: 46px;
+      height: 53px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: 1;
+    }
+
+    .shield-container-layered .shield-middle {
+      position: absolute;
+      width: 42px;
+      height: 48px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: 2;
+    }
+
+    .shield-container-layered .level-shield {
+      width: 34px;
+      height: 39px;
+      font-size: 13px;
+      z-index: 3;
+    }
+
+    /* Emerald: 31-40 */
+    .shield-emerald-outer { background: linear-gradient(135deg, #1a5c2e, #0d2e17); }
+    .shield-emerald-middle { background: linear-gradient(135deg, #2e8b4a, #1a5c2e); }
+    .shield-emerald { background: linear-gradient(135deg, #50c878, #2e8b4a); animation: rainbowShift 3s ease infinite; }
+
+    /* Sapphire: 41-50 */
+    .shield-sapphire-outer { background: linear-gradient(135deg, #041a40, #020d20); }
+    .shield-sapphire-middle { background: linear-gradient(135deg, #0a3d8f, #041a40); }
+    .shield-sapphire { background: linear-gradient(135deg, #0f52ba, #0a3d8f); animation: rainbowShift 3s ease infinite; }
+
+    @keyframes rainbowShift {
+      0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+      50% { filter: hue-rotate(30deg) brightness(1.1); }
+    }
+
+    /* === TIERS 51-80: Design A - Side trapezoids with outlines === */
+    /* Horn outline (larger, behind the horn) */
+    .shield-horn-outline-left, .shield-horn-outline-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 20px;
+      z-index: 0;
+    }
+
+    .shield-horn-outline-left {
+      left: 0px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 75%);
+    }
+
+    .shield-horn-outline-right {
+      right: 0px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 0% 100%);
+    }
+
+    /* Design A: 51-80 - Side trapezoids */
+    .shield-horn-left, .shield-horn-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 18px;
+      z-index: 1;
+    }
+    .shield-horn-left { left: 1px; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 75%); }
+    .shield-horn-right { right: 1px; clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 0% 100%); }
+
+    /* === TIERS 81-100: Design B - Stretched trapezoids + triangles with outlines === */
+    .shield-container-designB .shield-horn-outline-left,
+    .shield-container-designB .shield-horn-outline-right {
+      width: 16px;
+    }
+
+    .shield-container-designB .shield-horn-left,
+    .shield-container-designB .shield-horn-right { width: 14px; }
+
+    /* Triangle outlines (larger, behind the triangles) */
+    .shield-tri-outline-topleft, .shield-tri-outline-topright, 
+    .shield-tri-outline-bottomleft, .shield-tri-outline-bottomright {
+      position: absolute;
+      width: 15px;
+      height: 13px;
+      z-index: 0;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+
+    .shield-tri-outline-topleft {
+      top: 5px;
+      left: 10px;
+      transform: rotate(-30deg);
+    }
+
+    .shield-tri-outline-topright {
+      top: 5px;
+      right: 10px;
+      transform: rotate(30deg);
+    }
+
+    .shield-tri-outline-bottomright {
+      bottom: 5px;
+      right: 10px;
+      transform: rotate(150deg);
+    }
+
+    .shield-tri-outline-bottomleft {
+      bottom: 5px;
+      left: 10px;
+      transform: rotate(-150deg);
+    }
+
+    /* Design B: 81-100 - Triangles */
+    .shield-tri-topleft, .shield-tri-topright, .shield-tri-bottomleft, .shield-tri-bottomright {
+      position: absolute;
+      width: 13px;
+      height: 11px;
+      z-index: 1;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .shield-tri-topleft { top: 6px; left: 11px; transform: rotate(-30deg); }
+    .shield-tri-topright { top: 6px; right: 11px; transform: rotate(30deg); }
+    .shield-tri-bottomright { bottom: 6px; right: 11px; transform: rotate(150deg); }
+    .shield-tri-bottomleft { bottom: 6px; left: 11px; transform: rotate(-150deg); }
+
+    /* Amethyst: 51-60 */
+    .shield-amethyst-outer { background: linear-gradient(135deg, #3d1f5c, #1f0f2e); }
+    .shield-amethyst-middle { background: linear-gradient(135deg, #5c2d8a, #3d1f5c); }
+    .shield-amethyst { background: linear-gradient(135deg, #9966cc, #5c2d8a); animation: rainbowShift 3s ease infinite; }
+    .shield-amethyst-horn { background: linear-gradient(to left, #3d1f5c, #9966cc); }
+    .shield-horn-right.shield-amethyst-horn { background: linear-gradient(to right, #3d1f5c, #9966cc); }
+    .shield-amethyst-horn-outline { background: rgba(31, 15, 46, 0.5); }
+
+    /* Ruby: 61-70 */
+    .shield-ruby-outer { background: linear-gradient(135deg, #5c0a1f, #2e050f); }
+    .shield-ruby-middle { background: linear-gradient(135deg, #8a1530, #5c0a1f); }
+    .shield-ruby { background: linear-gradient(135deg, #e0115f, #8a1530); animation: rainbowShift 3s ease infinite; }
+    .shield-ruby-horn { background: linear-gradient(to left, #5c0a1f, #e0115f); }
+    .shield-horn-right.shield-ruby-horn { background: linear-gradient(to right, #5c0a1f, #e0115f); }
+    .shield-ruby-horn-outline { background: rgba(46, 5, 15, 0.5); }
+
+    /* Diamond: 71-80 */
+    .shield-diamond-outer { background: linear-gradient(135deg, #006064, #003033); }
+    .shield-diamond-middle { background: linear-gradient(135deg, #00838f, #006064); }
+    .shield-diamond { background: linear-gradient(135deg, #b9f2ff, #4dd0e1, #00acc1); color: #003033; text-shadow: 0 1px 1px rgba(255,255,255,0.5); animation: rainbowShift 3s ease infinite; }
+    .shield-diamond-horn { background: linear-gradient(to left, #006064, #4dd0e1); }
+    .shield-horn-right.shield-diamond-horn { background: linear-gradient(to right, #006064, #4dd0e1); }
+    .shield-diamond-horn-outline { background: rgba(0, 48, 51, 0.5); }
+
+    /* Ripple effect for 81+ */
+    .shield-container-ripple::before,
+    .shield-container-ripple::after {
+      content: '';
+      position: absolute;
+      width: 46px;
+      height: 53px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: -1;
+      animation: ripplePulse 1.5s ease-out infinite;
+    }
+    .shield-container-ripple::before { animation-delay: 0.75s; }
+    @keyframes ripplePulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    /* Obsidian: 81-90 */
+    .shield-obsidian-outer { background: linear-gradient(135deg, #1a1a1a, #0a0a0a); }
+    .shield-obsidian-middle { background: linear-gradient(135deg, #333, #1a1a1a); }
+    .shield-obsidian { background: linear-gradient(135deg, #4a4a4a, #2a2a2a, #1a1a1a); }
+    .shield-obsidian-horn { background: linear-gradient(to left, #1a1a1a, #555); }
+    .shield-horn-right.shield-obsidian-horn { background: linear-gradient(to right, #1a1a1a, #555); }
+    .shield-obsidian-horn-outline { background: rgba(0, 0, 0, 0.4); }
+    .shield-obsidian-tri { background: linear-gradient(135deg, #333, #555); }
+    .shield-obsidian-tri-outline { background: rgba(0, 0, 0, 0.4); }
+    .shield-container-obsidian::before, .shield-container-obsidian::after { background: rgba(100, 100, 100, 0.6); }
+
+    /* Legendary: 91-100 - Platinum */
+    .shield-legendary-outer { background: linear-gradient(135deg, #6a9ab8, #4a7a98); animation: legendaryOuter 3s ease infinite; }
+    .shield-legendary-middle { background: linear-gradient(135deg, #8ec0dc, #6a9ab8); animation: legendaryMiddle 3s ease infinite; }
+    .shield-legendary { background: linear-gradient(135deg, #ffffff, #e8f0f8, #ffffff, #e0eaf4); background-size: 200% 200%; color: #333; text-shadow: none; animation: legendaryInner 3s ease infinite; box-shadow: 0 0 12px rgba(255,255,255,0.5); }
+    .shield-legendary-horn { background: linear-gradient(to left, #5a8aa8, #a8d0e8); }
+    .shield-horn-right.shield-legendary-horn { background: linear-gradient(to right, #5a8aa8, #a8d0e8); }
+    .shield-legendary-horn-outline { background: rgba(60, 90, 110, 0.5); }
+    .shield-legendary-tri { background: linear-gradient(135deg, #8ec0dc, #b8daf0); }
+    .shield-legendary-tri-outline { background: rgba(70, 100, 120, 0.5); }
+    .shield-container-legendary::before, .shield-container-legendary::after { background: linear-gradient(135deg, #c0e0f0, #a0c8e0, #c0e0f0); }
+
+    @keyframes legendaryOuter { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.15); } }
+    @keyframes legendaryMiddle { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.1); } }
+    @keyframes legendaryInner { 0%, 100% { background-position: 0% 50%; filter: brightness(1); } 50% { background-position: 100% 50%; filter: brightness(1.15); } }
+
+    /* Design C: 101-105 - Back shield */
+    .shield-back {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -45%);
+      width: 44px;
+      height: 54px;
+      z-index: -1;
+      clip-path: polygon(50% 0%, 100% 0%, 100% 60%, 50% 100%, 0% 60%, 0% 0%);
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* Master: 101-105 */
+    .shield-master-outer { background: linear-gradient(135deg, #8b6914, #4a3508); animation: masterOuter 2s ease infinite; }
+    .shield-master-middle { background: linear-gradient(135deg, #daa520, #8b6914); animation: masterMiddle 2s ease infinite; }
+    .shield-master { background: linear-gradient(135deg, #ffd700, #ffec8b, #ffd700, #daa520); background-size: 200% 200%; color: #4a3508; text-shadow: 0 0 4px rgba(255,215,0,0.8); animation: masterInner 2s ease infinite; }
+    .shield-master-horn { background: linear-gradient(to left, #8b6914, #ffd700); }
+    .shield-horn-right.shield-master-horn { background: linear-gradient(to right, #8b6914, #ffd700); }
+    .shield-master-horn-outline { background: rgba(61, 42, 4, 0.5); }
+    .shield-master-tri { background: linear-gradient(135deg, #daa520, #ffd700); }
+    .shield-master-tri-outline { background: rgba(107, 76, 10, 0.5); }
+    .shield-master-back { background: linear-gradient(to bottom, #8b6914, #4a3508); box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+    .shield-container-master::before, .shield-container-master::after { background: linear-gradient(135deg, #ffd700, #ffec8b, #ffd700); }
+
+    @keyframes masterOuter { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.3); } }
+    @keyframes masterMiddle { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.2); } }
+    @keyframes masterInner { 0%, 100% { background-position: 0% 50%; filter: brightness(1); } 50% { background-position: 100% 50%; filter: brightness(1.3); } }
+
+    /* Simple hexagons: 1-30 - thin flat borders */
+    .shield-bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); }
+    .shield-bronze-outer { background: #5c2e0d; width: 42px !important; height: 48px !important; }
+    .shield-silver { background: linear-gradient(135deg, #c0c0c0, #808080); }
+    .shield-silver-outer { background: #505050; width: 42px !important; height: 48px !important; }
+    .shield-gold { background: linear-gradient(135deg, #ffd700, #b8860b); color: #333; text-shadow: 0 1px 1px rgba(255,255,255,0.3); }
+    .shield-gold-outer { background: #7a5a07; width: 42px !important; height: 48px !important; }
+
+    /* Triple layer hexagons: 31+ */
+    .shield-container-layered .shield-outer {
+      position: absolute;
+      width: 46px;
+      height: 53px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: 1;
+    }
+
+    .shield-container-layered .shield-middle {
+      position: absolute;
+      width: 42px;
+      height: 48px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: 2;
+    }
+
+    .shield-container-layered .level-shield {
+      width: 34px;
+      height: 39px;
+      font-size: 13px;
+      z-index: 3;
+    }
+
+    /* Emerald: 31-40 */
+    .shield-emerald-outer { background: linear-gradient(135deg, #1a5c2e, #0d2e17); }
+    .shield-emerald-middle { background: linear-gradient(135deg, #2e8b4a, #1a5c2e); }
+    .shield-emerald { background: linear-gradient(135deg, #50c878, #2e8b4a); animation: rainbowShift 3s ease infinite; }
+
+    /* Sapphire: 41-50 */
+    .shield-sapphire-outer { background: linear-gradient(135deg, #041a40, #020d20); }
+    .shield-sapphire-middle { background: linear-gradient(135deg, #0a3d8f, #041a40); }
+    .shield-sapphire { background: linear-gradient(135deg, #0f52ba, #0a3d8f); animation: rainbowShift 3s ease infinite; }
+
+    @keyframes rainbowShift {
+      0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+      50% { filter: hue-rotate(30deg) brightness(1.1); }
+    }
+
+    /* Design A: 51-80 - Side trapezoids */
+    .shield-horn-left, .shield-horn-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 18px;
+      z-index: 0;
+    }
+    .shield-horn-left { left: 1px; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 75%); }
+    .shield-horn-right { right: 1px; clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 0% 100%); }
+    .shield-container-designB .shield-horn-left,
+    .shield-container-designB .shield-horn-right { width: 14px; }
+
+    /* Amethyst: 51-60 */
+    .shield-amethyst-outer { background: linear-gradient(135deg, #3d1f5c, #1f0f2e); }
+    .shield-amethyst-middle { background: linear-gradient(135deg, #5c2d8a, #3d1f5c); }
+    .shield-amethyst { background: linear-gradient(135deg, #9966cc, #5c2d8a); animation: rainbowShift 3s ease infinite; }
+    .shield-amethyst-horn { background: linear-gradient(to left, #3d1f5c, #9966cc); }
+    .shield-horn-right.shield-amethyst-horn { background: linear-gradient(to right, #3d1f5c, #9966cc); }
+
+    /* Ruby: 61-70 */
+    .shield-ruby-outer { background: linear-gradient(135deg, #5c0a1f, #2e050f); }
+    .shield-ruby-middle { background: linear-gradient(135deg, #8a1530, #5c0a1f); }
+    .shield-ruby { background: linear-gradient(135deg, #e0115f, #8a1530); animation: rainbowShift 3s ease infinite; }
+    .shield-ruby-horn { background: linear-gradient(to left, #5c0a1f, #e0115f); }
+    .shield-horn-right.shield-ruby-horn { background: linear-gradient(to right, #5c0a1f, #e0115f); }
+
+    /* Diamond: 71-80 */
+    .shield-diamond-outer { background: linear-gradient(135deg, #006064, #003033); }
+    .shield-diamond-middle { background: linear-gradient(135deg, #00838f, #006064); }
+    .shield-diamond { background: linear-gradient(135deg, #b9f2ff, #4dd0e1, #00acc1); color: #003033; text-shadow: 0 1px 1px rgba(255,255,255,0.5); animation: rainbowShift 3s ease infinite; }
+    .shield-diamond-horn { background: linear-gradient(to left, #006064, #4dd0e1); }
+    .shield-horn-right.shield-diamond-horn { background: linear-gradient(to right, #006064, #4dd0e1); }
+
+    /* Design B: 81-100 - Triangles */
+    .shield-tri-topleft, .shield-tri-topright, .shield-tri-bottomleft, .shield-tri-bottomright {
+      position: absolute;
+      width: 13px;
+      height: 11px;
+      z-index: 0;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .shield-tri-topleft { top: 6px; left: 11px; transform: rotate(-30deg); }
+    .shield-tri-topright { top: 6px; right: 11px; transform: rotate(30deg); }
+    .shield-tri-bottomright { bottom: 6px; right: 11px; transform: rotate(150deg); }
+    .shield-tri-bottomleft { bottom: 6px; left: 11px; transform: rotate(-150deg); }
+
+    /* Ripple effect for 81+ */
+    .shield-container-ripple::before,
+    .shield-container-ripple::after {
+      content: '';
+      position: absolute;
+      width: 46px;
+      height: 53px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      z-index: -1;
+      animation: ripplePulse 1.5s ease-out infinite;
+    }
+    .shield-container-ripple::before { animation-delay: 0.75s; }
+    @keyframes ripplePulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    /* Obsidian: 81-90 */
+    .shield-obsidian-outer { background: linear-gradient(135deg, #1a1a1a, #0a0a0a); }
+    .shield-obsidian-middle { background: linear-gradient(135deg, #333, #1a1a1a); }
+    .shield-obsidian { background: linear-gradient(135deg, #4a4a4a, #2a2a2a, #1a1a1a); }
+    .shield-obsidian-horn { background: linear-gradient(to left, #1a1a1a, #555); }
+    .shield-horn-right.shield-obsidian-horn { background: linear-gradient(to right, #1a1a1a, #555); }
+    .shield-obsidian-tri { background: linear-gradient(135deg, #333, #555); }
+    .shield-container-obsidian::before, .shield-container-obsidian::after { background: rgba(100, 100, 100, 0.6); }
+
+    /* Legendary: 91-100 - Platinum */
+    .shield-legendary-outer { background: linear-gradient(135deg, #6a9ab8, #4a7a98); animation: legendaryOuter 3s ease infinite; }
+    .shield-legendary-middle { background: linear-gradient(135deg, #8ec0dc, #6a9ab8); animation: legendaryMiddle 3s ease infinite; }
+    .shield-legendary { background: linear-gradient(135deg, #ffffff, #e8f0f8, #ffffff, #e0eaf4); background-size: 200% 200%; color: #333; text-shadow: none; animation: legendaryInner 3s ease infinite; box-shadow: 0 0 12px rgba(255,255,255,0.5); }
+    .shield-legendary-horn { background: linear-gradient(to left, #5a8aa8, #a8d0e8); }
+    .shield-horn-right.shield-legendary-horn { background: linear-gradient(to right, #5a8aa8, #a8d0e8); }
+    .shield-legendary-tri { background: linear-gradient(135deg, #8ec0dc, #b8daf0); }
+    .shield-container-legendary::before, .shield-container-legendary::after { background: linear-gradient(135deg, #c0e0f0, #a0c8e0, #c0e0f0); }
+
+    @keyframes legendaryOuter { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.15); } }
+    @keyframes legendaryMiddle { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.1); } }
+    @keyframes legendaryInner { 0%, 100% { background-position: 0% 50%; filter: brightness(1); } 50% { background-position: 100% 50%; filter: brightness(1.15); } }
+
+    /* Design C: 101-105 - Back shield */
+    .shield-back {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -45%);
+      width: 44px;
+      height: 54px;
+      z-index: -1;
+      clip-path: polygon(50% 0%, 100% 0%, 100% 60%, 50% 100%, 0% 60%, 0% 0%);
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* Master: 101-105 */
+    .shield-master-outer { background: linear-gradient(135deg, #8b6914, #4a3508); animation: masterOuter 2s ease infinite; }
+    .shield-master-middle { background: linear-gradient(135deg, #daa520, #8b6914); animation: masterMiddle 2s ease infinite; }
+    .shield-master { background: linear-gradient(135deg, #ffd700, #ffec8b, #ffd700, #daa520); background-size: 200% 200%; color: #4a3508; text-shadow: 0 0 4px rgba(255,215,0,0.8); animation: masterInner 2s ease infinite; }
+    .shield-master-horn { background: linear-gradient(to left, #8b6914, #ffd700); }
+    .shield-horn-right.shield-master-horn { background: linear-gradient(to right, #8b6914, #ffd700); }
+    .shield-master-tri { background: linear-gradient(135deg, #daa520, #ffd700); }
+    .shield-master-back { background: linear-gradient(to bottom, #8b6914, #4a3508); box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+    .shield-container-master::before, .shield-container-master::after { background: linear-gradient(135deg, #ffd700, #ffec8b, #ffd700); }
+
+    @keyframes masterOuter { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.3); } }
+    @keyframes masterMiddle { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.2); } }
+    @keyframes masterInner { 0%, 100% { background-position: 0% 50%; filter: brightness(1); } 50% { background-position: 100% 50%; filter: brightness(1.3); } }
+
+    .inbox-badge {
+      position: absolute;
+      top: 10px;
+      right: 6px;
+      background: #dc3545;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 5px;
+      border-radius: 8px;
+      min-width: 16px;
+      text-align: center;
+      line-height: 1.2;
+    }
+  </style>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+  <nav>
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+      <a href="index.html" style="display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 600; padding: 16px 0;">
+        <img src="256px_transparentBG.png" alt="Mock AIME Logo" style="height: 40px; width: auto;">
+        Mock AIME
+      </a>
+      <div style="display: flex; gap: 0; align-items: center;">
+        <a href="index.html">Mock Test</a>
+        <a href="practice.html">Practice</a>
+        <a href="past_tests.html" style="background: rgba(255,255,255,0.15);">Past Tests</a>
+        <a href="search.html">Search</a>
+        <a href="inbox.html" class="nav-inbox" style="display: inline-flex; align-items: center; position: relative;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span class="inbox-badge" id="navBadge" style="display: none;">0</span>
+        </a>
+        <a href="profile.html">Profile</a>
+        <button onclick="signOut()" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-left: 15px;">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Profile Overview -->
+    <div id="profileOverview">
+      <div class="profile-header">
+        <div class="profile-avatar" id="userAvatar">U</div>
+        <h1 id="userName">Loading...</h1>
+        <p id="userEmail"></p>
+      </div>
+
+      <!-- Practice Levels Section -->
+      <div class="section">
+        <h2>Practice Levels</h2>
+        <div class="levels-section" id="levelsContainer">
+          <div class="loading">Loading levels...</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Profile Settings</h2>
+        <div id="updateMessage" class="success-message" style="display: none;"></div>
+        <form id="profileForm">
+          <div class="form-group">
+            <label for="displayName">Display Name</label>
+            <input type="text" id="displayName" required>
+          </div>
+          <div class="form-group">
+            <label for="emailDisplay">Email</label>
+            <input type="email" id="emailDisplay" disabled>
+          </div>
+          <button type="submit" class="btn">Update Profile</button>
+        </form>
+      </div>
+
+      <div class="section">
+        <h2>Recent Mock Tests</h2>
+        <div id="recentAttempts" class="loading">Loading your test history...</div>
+      </div>
+
+      <div class="section">
+        <h2>Account Actions</h2>
+        <button onclick="resetPassword()" class="btn">Reset Password</button>
+        <button onclick="deleteAccount()" class="btn btn-danger" style="margin-left: 10px;">Delete Account</button>
+      </div>
+    </div>
+
+    <!-- Mock Detail View -->
+    <div id="mockDetailView" class="mock-detail-view">
+      <button onclick="backToProfile()" class="btn btn-back">← Back to Profile</button>
+      
+      <div class="mock-summary">
+        <h3>Mock Test Summary</h3>
+        <div class="summary-stats">
+          <div class="summary-stat">
+            <div class="summary-stat-value" id="detailScore">0/15</div>
+            <div class="summary-stat-label">Score</div>
+          </div>
+          <div class="summary-stat">
+            <div class="summary-stat-value" id="detailPercentage">0%</div>
+            <div class="summary-stat-label">Percentage</div>
+          </div>
+          <div class="summary-stat">
+            <div class="summary-stat-value" id="detailDifficulty">5</div>
+            <div class="summary-stat-label" id="detailDifficultyLabel">Difficulty Level</div>
+          </div>
+          <div class="summary-stat">
+            <div class="summary-stat-value" id="detailDate">-</div>
+            <div class="summary-stat-label">Completed</div>
+          </div>
+        </div>
+        <div id="overrideSummary"></div>
+      </div>
+
+      <!-- Contest Info/Cutoffs Section for Past Tests -->
+      <div class="cutoff-info" id="detailCutoffInfo" style="display: none;">
+        <div class="cutoff-item">
+          <span class="cutoff-label">Your Score</span>
+          <span class="cutoff-value" id="detailUserScore">—</span>
+        </div>
+        <div class="cutoff-item" id="detailAIMEItem">
+          <span class="cutoff-label">AIME Cutoff</span>
+          <span class="cutoff-value" id="detailAIMECutoff">—</span>
+        </div>
+        <div class="cutoff-item" id="detailHRItem">
+          <span class="cutoff-label">Honor Roll (5%)</span>
+          <span class="cutoff-value" id="detailHR">—</span>
+        </div>
+        <div class="cutoff-item" id="detailDHRItem">
+          <span class="cutoff-label">DHR (1%)</span>
+          <span class="cutoff-value" id="detailDHR">—</span>
+        </div>
+        <div class="cutoff-item" id="detailMeanItem">
+          <span class="cutoff-label">Mean</span>
+          <span class="cutoff-value" id="detailMean">—</span>
+        </div>
+        <div class="cutoff-item" id="detailUSAJMOItem" style="display: none;">
+          <span class="cutoff-label">USAJMO Cutoff</span>
+          <span class="cutoff-value" id="detailUSAJMO">—</span>
+        </div>
+        <div class="cutoff-item" id="detailUSAMOItem" style="display: none;">
+          <span class="cutoff-label">USAMO Cutoff</span>
+          <span class="cutoff-value" id="detailUSAMO">—</span>
+        </div>
+      </div>
+
+      <div id="problemsList"></div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Supabase
+    const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ============================================
+    // ANALYTICS TRACKING
+    // ============================================
+    const MOD_USER_ID = '6af62d68-67e7-42f6-b91f-58cac9d81cba';
+    const CURRENT_PAGE = 'profile';
+
+    function getSessionId() {
+      let sessionId = localStorage.getItem('mockAIME_sessionId');
+      if (!sessionId) {
+        sessionId = 'sess_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
+        localStorage.setItem('mockAIME_sessionId', sessionId);
+      }
+      return sessionId;
+    }
+
+    function getUserType(userId) {
+      if (!userId) return 'guest';
+      if (userId === MOD_USER_ID) return 'mod';
+      return 'user';
+    }
+
+    async function logActivity(eventType, data = {}) {
+      try {
+        const userId = currentUser?.id || null;
+        
+        // Log to activity_log
+        await supabaseClient.from('activity_log').insert({
+          user_id: userId,
+          session_id: getSessionId(),
+          user_type: getUserType(userId),
+          event_type: eventType,
+          page: CURRENT_PAGE,
+          problem_id: null,
+          problem_source: null,
+          difficulty: null,
+          is_correct: null,
+          user_answer: null,
+          metadata: data.metadata || null
+        });
+        
+        // Also log to activity_all
+        await supabaseClient.from('activity_all').insert({
+          user_id: userId,
+          session_id: getSessionId(),
+          user_type: getUserType(userId),
+          event_type: eventType,
+          page: CURRENT_PAGE,
+          element_id: null,
+          element_text: null,
+          element_type: null,
+          url: window.location.href,
+          referrer: document.referrer || null,
+          metadata: {
+            ...data,
+            fromActivityLog: true
+          }
+        });
+      } catch (e) {
+        console.error('Activity log error:', e);
+      }
+    }
+
+    async function logEvent(eventType, data = {}) {
+      try {
+        const userId = currentUser?.id || null;
+        await supabaseClient.from('activity_all').insert({
+          user_id: userId,
+          session_id: getSessionId(),
+          user_type: getUserType(userId),
+          event_type: eventType,
+          page: CURRENT_PAGE,
+          element_id: data.elementId || null,
+          element_text: data.elementText ? String(data.elementText).substring(0, 100) : null,
+          element_type: data.elementType || null,
+          url: window.location.href,
+          referrer: document.referrer || null,
+          metadata: data.metadata || null
+        });
+      } catch (e) {
+        console.error('Event log error:', e);
+      }
+    }
+
+    // Update inbox badge with unread count
+    async function updateInboxBadge() {
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session?.user) return;
+
+        const { data, error } = await supabaseClient
+          .from('user_messages')
+          .select('id')
+          .or(`user_id.eq.${session.user.id},user_id.is.null`)
+          .is('read_at', null);
+
+        if (error) throw error;
+
+        const badge = document.getElementById('navBadge');
+        if (badge && data) {
+          const count = data.length;
+          if (count > 0) {
+            badge.textContent = count > 99 ? '99+' : count;
+            badge.style.display = 'inline-block';
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+      } catch (err) {
+        console.error('Error updating inbox badge:', err);
+      }
+    }
+
+    setTimeout(updateInboxBadge, 1000);
+
+    function initAnalytics() {
+      logActivity('page_view', { metadata: { referrer: document.referrer } });
+      logActivity('profile_view');
+      logEvent('page_view', {
+        metadata: { referrer: document.referrer, userAgent: navigator.userAgent }
+      });
+
+      document.addEventListener('click', (e) => {
+        const target = e.target;
+        const clickedEl = target.closest('button, a, input, select, details, summary') || target;
+        logEvent('click', {
+          elementId: clickedEl.id || null,
+          elementText: (clickedEl.textContent?.trim() || '').substring(0, 100),
+          elementType: clickedEl.tagName?.toLowerCase() || null,
+          metadata: { classList: Array.from(clickedEl.classList || []) }
+        });
+      });
+    }
+
+    setTimeout(initAnalytics, 500);
+
+    let currentUser = null;
+    let allAttempts = [];
+
+    // Level system constants
+    const LEVEL_TIERS = [
+      [1, 25],     // Levels 1-10: 25 XP each
+      [11, 50],    // Levels 11-20: 50 XP each (1 problem at 3.5)
+      [21, 100],   // Levels 21-30: 100 XP each (2 problems at 3.5)
+      [31, 150],   // Levels 31-40: 150 XP each (3 problems at 3.5)
+      [41, 200],   // Levels 41-50: 200 XP each (4 problems at 3.5)
+      [51, 250],   // Levels 51-60: 250 XP each (5 problems at 3.5)
+      [61, 350],   // Levels 61-70: 350 XP each (7 problems at 3.5)
+      [71, 500],   // Levels 71-80: 500 XP each (10 problems at 3.5)
+      [81, 700],   // Levels 81-90: 700 XP each (14 problems at 3.5)
+      [91, 900],   // Levels 91-100: 900 XP each (18 problems at 3.5)
+      [101, 2000]  // Levels 101-105: 2000 XP each (40 problems at 3.5)
+    ];
+    const MAX_LEVEL = 105;
+    const GENERAL_MULTIPLIER = 4;
+
+    // Precompute XP tables
+    const XP_FOR_LEVEL = [0];
+    const XP_FOR_LEVEL_GENERAL = [0];
+    
+    function getXpForLevelUp(level, isGeneral = false) {
+      if (level >= MAX_LEVEL) return Infinity;
+      let baseXp = LEVEL_TIERS[0][1];
+      for (let i = LEVEL_TIERS.length - 1; i >= 0; i--) {
+        if (level >= LEVEL_TIERS[i][0]) {
+          baseXp = LEVEL_TIERS[i][1];
+          break;
+        }
+      }
+      return isGeneral ? baseXp * GENERAL_MULTIPLIER : baseXp;
+    }
+
+    // Initialize XP tables
+    for (let level = 1; level <= MAX_LEVEL; level++) {
+      XP_FOR_LEVEL[level] = (XP_FOR_LEVEL[level - 1] || 0) + getXpForLevelUp(level);
+      XP_FOR_LEVEL_GENERAL[level] = (XP_FOR_LEVEL_GENERAL[level - 1] || 0) + getXpForLevelUp(level, true);
+    }
+
+    function getLevelFromXp(totalXp, isGeneral = false) {
+      const xpTable = isGeneral ? XP_FOR_LEVEL_GENERAL : XP_FOR_LEVEL;
+      for (let level = MAX_LEVEL; level >= 1; level--) {
+        const xpNeeded = xpTable[level - 1] || 0;
+        if (totalXp >= xpNeeded) {
+          const xpIntoLevel = totalXp - xpNeeded;
+          const xpForNext = getXpForLevelUp(level, isGeneral);
+          return {
+            level: Math.min(level, MAX_LEVEL),
+            currentXp: xpIntoLevel,
+            xpForNext: xpForNext
+          };
+        }
+      }
+      const firstLevelXp = isGeneral ? 25 * GENERAL_MULTIPLIER : 25;
+      return { level: 1, currentXp: totalXp, xpForNext: firstLevelXp };
+    }
+
+    function getShieldTier(level) {
+      if (level >= 101) return { name: 'master', layered: true, design: 'C', ripple: true };
+      if (level >= 91) return { name: 'legendary', layered: true, design: 'B', ripple: true };
+      if (level >= 81) return { name: 'obsidian', layered: true, design: 'B', ripple: true };
+      if (level >= 71) return { name: 'diamond', layered: true, design: 'A', ripple: false };
+      if (level >= 61) return { name: 'ruby', layered: true, design: 'A', ripple: false };
+      if (level >= 51) return { name: 'amethyst', layered: true, design: 'A', ripple: false };
+      if (level >= 41) return { name: 'sapphire', layered: true, design: null, ripple: false };
+      if (level >= 31) return { name: 'emerald', layered: true, design: null, ripple: false };
+      if (level >= 21) return { name: 'gold', layered: false, design: null, ripple: false };
+      if (level >= 11) return { name: 'silver', layered: false, design: null, ripple: false };
+      return { name: 'bronze', layered: false, design: null, ripple: false };
+    }
+
+    function buildShieldHtml(level) {
+      const tier = getShieldTier(level);
+      let html = '';
+      
+      let containerClasses = 'level-shield-container shield-container-layered';
+      if (tier.design === 'B' || tier.design === 'C') containerClasses += ' shield-container-designB';
+      if (tier.ripple) containerClasses += ` shield-container-ripple shield-container-${tier.name}`;
+      
+      html += `<div class="${containerClasses}">`;
+      
+      if (tier.design === 'C') {
+        html += `<div class="shield-back shield-${tier.name}-back"></div>`;
+      }
+      
+      if (tier.design === 'B' || tier.design === 'C') {
+        html += `<div class="shield-tri-outline-topleft shield-${tier.name}-tri-outline"></div>`;
+        html += `<div class="shield-tri-outline-topright shield-${tier.name}-tri-outline"></div>`;
+        html += `<div class="shield-tri-outline-bottomright shield-${tier.name}-tri-outline"></div>`;
+        html += `<div class="shield-tri-outline-bottomleft shield-${tier.name}-tri-outline"></div>`;
+        html += `<div class="shield-tri-topleft shield-${tier.name}-tri"></div>`;
+        html += `<div class="shield-tri-topright shield-${tier.name}-tri"></div>`;
+        html += `<div class="shield-tri-bottomright shield-${tier.name}-tri"></div>`;
+        html += `<div class="shield-tri-bottomleft shield-${tier.name}-tri"></div>`;
+      }
+      
+      if (tier.design === 'A' || tier.design === 'B' || tier.design === 'C') {
+        html += `<div class="shield-horn-outline-left shield-${tier.name}-horn-outline"></div>`;
+        html += `<div class="shield-horn-outline-right shield-${tier.name}-horn-outline"></div>`;
+        html += `<div class="shield-horn-left shield-${tier.name}-horn"></div>`;
+        html += `<div class="shield-horn-right shield-${tier.name}-horn"></div>`;
+      }
+      
+      // Outer layer (all tiers now use this)
+      html += `<div class="shield-outer shield-${tier.name}-outer"></div>`;
+      
+      // Middle layer (31+ only)
+      if (tier.layered) {
+        html += `<div class="shield-middle shield-${tier.name}-middle"></div>`;
+      }
+      
+      html += `<div class="level-shield shield-${tier.name}">${level}</div>`;
+      html += '</div>';
+      
+      return html;
+    }
+
+    window.onload = async () => {
+      await checkAuth();
+      await loadUserData();
+      await loadStats();
+      await loadLevels();
+      await loadRecentAttempts();
+    };
+
+    async function checkAuth() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+      currentUser = session.user;
+    }
+
+    async function loadUserData() {
+      if (!currentUser) return;
+
+      const { data: profile } = await supabaseClient
+        .from('user_profiles')
+        .select('*')
+        .eq('id', currentUser.id)
+        .single();
+
+      const displayName = profile?.display_name || 
+                         currentUser.user_metadata?.display_name || 
+                         currentUser.email;
+
+      document.getElementById('userName').textContent = displayName;
+      document.getElementById('userEmail').textContent = currentUser.email;
+      document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
+      document.getElementById('displayName').value = displayName;
+      document.getElementById('emailDisplay').value = currentUser.email;
+    }
+
+    async function loadStats() {
+      if (!currentUser) return;
+
+      const { data: attempts } = await supabaseClient
+        .from('mock_attempts')
+        .select('score, total_problems, problems_data, overrides')
+        .eq('user_id', currentUser.id)
+        .order('completed_at', { ascending: false });
+
+      if (!attempts || attempts.length === 0) {
+        return;
+      }
+    }
+
+    async function loadLevels() {
+      if (!currentUser) return;
+
+      const { data: profile } = await supabaseClient
+        .from('user_profiles')
+        .select('xp_algebra, xp_geometry, xp_number_theory, xp_counting, xp_general')
+        .eq('id', currentUser.id)
+        .single();
+
+      const xp = {
+        algebra: profile?.xp_algebra || 0,
+        geometry: profile?.xp_geometry || 0,
+        number_theory: profile?.xp_number_theory || 0,
+        counting: profile?.xp_counting || 0,
+        general: profile?.xp_general || 0
+      };
+
+      const container = document.getElementById('levelsContainer');
+      
+      // Reordered: Algebra, Counting, Geometry, Number Theory
+      const types = [
+        { key: 'algebra', label: 'Algebra', isGeneral: false },
+        { key: 'counting', label: 'Counting', isGeneral: false },
+        { key: 'geometry', label: 'Geometry', isGeneral: false },
+        { key: 'number_theory', label: 'Number Theory', isGeneral: false }
+      ];
+
+      let html = types.map(type => {
+        const levelInfo = getLevelFromXp(xp[type.key], type.isGeneral);
+        const xpText = levelInfo.level >= MAX_LEVEL 
+          ? `MAX (${xp[type.key].toLocaleString()} XP)`
+          : `${levelInfo.currentXp.toLocaleString()} / ${levelInfo.xpForNext.toLocaleString()} XP`;
+        const progressPercent = levelInfo.level >= MAX_LEVEL ? 100 : Math.round((levelInfo.currentXp / levelInfo.xpForNext) * 100);
+        
+        return `
+          <div class="level-card">
+            <div class="level-card-header">
+              <span class="level-card-label">${type.label}</span>
+              ${buildShieldHtml(levelInfo.level)}
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: ${progressPercent}%;"></div></div>
+            <div class="level-card-xp">${xpText}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Add Overall section
+      const generalLevelInfo = getLevelFromXp(xp.general, true);
+      const generalXpText = generalLevelInfo.level >= MAX_LEVEL 
+        ? `MAX (${xp.general.toLocaleString()} XP)`
+        : `${generalLevelInfo.currentXp.toLocaleString()} / ${generalLevelInfo.xpForNext.toLocaleString()} XP`;
+      const generalProgressPercent = generalLevelInfo.level >= MAX_LEVEL ? 100 : Math.round((generalLevelInfo.currentXp / generalLevelInfo.xpForNext) * 100);
+
+      html += `
+        <div class="level-card general-card">
+          <div class="level-card-header">
+            <div class="general-left">
+              <div class="level-card-label">Overall</div>
+              <div class="progress-bar"><div class="progress-fill" style="width: ${generalProgressPercent}%;"></div></div>
+              <div class="level-card-xp">${generalXpText}</div>
+            </div>
+            ${buildShieldHtml(generalLevelInfo.level)}
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    async function loadRecentAttempts() {
+      if (!currentUser) return;
+
+      const { data: attempts } = await supabaseClient
+        .from('mock_attempts')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .order('completed_at', { ascending: false })
+        .limit(10);
+
+      allAttempts = attempts || [];
+
+      const container = document.getElementById('recentAttempts');
+
+      if (!attempts || attempts.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No mock tests completed yet. <a href="index.html">Take your first test!</a></p>';
+        return;
+      }
+
+      // Fetch cutoffs for all past tests
+      const testNames = [...new Set(attempts.filter(a => a.test_name).map(a => a.test_name))];
+      const cutoffsMap = {};
+      
+      if (testNames.length > 0) {
+        // Parse year and contest from test names
+        for (const testName of testNames) {
+          const match = testName.match(/^(\d{4})\s+(.+)$/);
+          if (match) {
+            const year = parseInt(match[1]);
+            let contest = match[2];
+            // Simplify contest name for lookup
+            const simpleContest = contest.replace('Spring ', '').replace('Fall ', '');
+            
+            const { data } = await supabaseClient
+              .from('contest_cutoffs')
+              .select('*')
+              .eq('year', year)
+              .eq('contest', simpleContest)
+              .single();
+            
+            if (data) {
+              cutoffsMap[testName] = data;
+            }
+          }
+        }
+      }
+
+      container.innerHTML = attempts.map((attempt, index) => {
+        const isPastTest = attempt.test_name && !attempt.test_name.startsWith('Mock');
+        const cutoff = cutoffsMap[attempt.test_name];
+        
+        // Calculate AMC score (6 points per correct, 1.5 per blank for AMC 10/12)
+        let scoreDisplay = `${attempt.score}/${attempt.total_problems}`;
+        let cutoffDisplay = '';
+        
+        if (isPastTest && cutoff) {
+          const isAMC = attempt.test_name.includes('AMC');
+          const isAIME = attempt.test_name.includes('AIME');
+          
+          if (isAMC && attempt.total_problems === 25) {
+            // AMC scoring: 6 per correct, 1.5 per blank, 0 per wrong
+            const blanks = attempt.total_problems - Object.keys(attempt.problems_data || {}).filter(k => attempt.problems_data[k]?.user_answer).length;
+            const amcScore = (attempt.score * 6) + (blanks * 1.5);
+            scoreDisplay = `${amcScore} pts (${attempt.score}/${attempt.total_problems})`;
+            
+            if (cutoff.aime_cutoff) {
+              const qualified = amcScore >= cutoff.aime_cutoff;
+              cutoffDisplay = `<span class="cutoff-badge ${qualified ? 'qualified' : 'not-qualified'}">AIME: ${cutoff.aime_cutoff}${qualified ? ' ✓' : ''}</span>`;
+            }
+          } else if (isAIME) {
+            if (cutoff.usajmo_cutoff_10a) {
+              cutoffDisplay = `<span class="cutoff-badge">USAJMO: ${cutoff.usajmo_cutoff_10a}</span>`;
+            }
+          }
+        }
+        
+        const title = isPastTest ? attempt.test_name : `Mock AIME - Level ${attempt.difficulty_level}`;
+        
+        return `
+          <div class="attempt-item" onclick="viewMockDetail(${index})">
+            <div class="attempt-info">
+              <div><strong>${title}</strong></div>
+              <div class="attempt-date">${new Date(attempt.completed_at).toLocaleDateString()} at ${new Date(attempt.completed_at).toLocaleTimeString()}</div>
+              ${cutoffDisplay ? `<div class="attempt-cutoffs">${cutoffDisplay}</div>` : ''}
+            </div>
+            <div class="attempt-score">${scoreDisplay}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function viewMockDetail(index) {
+      const attempt = allAttempts[index];
+      const isPastTest = attempt.test_name && !attempt.test_name.startsWith('Mock');
+      
+      logActivity('view_mock_detail', { 
+        metadata: { 
+          testName: attempt.test_name || `Mock Level ${attempt.difficulty_level}`,
+          score: attempt.score,
+          totalProblems: attempt.total_problems,
+          isPastTest: isPastTest
+        } 
+      });
+      
+      document.getElementById('profileOverview').style.display = 'none';
+      document.getElementById('mockDetailView').classList.add('active');
+
+      const percentage = Math.round((attempt.score / attempt.total_problems) * 100);
+      document.getElementById('detailScore').textContent = `${attempt.score}/${attempt.total_problems}`;
+      document.getElementById('detailPercentage').textContent = `${percentage}%`;
+      document.getElementById('detailDifficulty').textContent = isPastTest ? attempt.test_name : `Level ${attempt.difficulty_level}`;
+      document.getElementById('detailDifficultyLabel').textContent = isPastTest ? 'Test' : 'Difficulty Level';
+      document.getElementById('detailDate').textContent = new Date(attempt.completed_at).toLocaleDateString();
+
+      const overrides = attempt.overrides || {};
+      const overrideCount = Object.keys(overrides).filter(key => overrides[key]).length;
+      
+      const overrideSummaryDiv = document.getElementById('overrideSummary');
+      if (overrideCount > 0) {
+        overrideSummaryDiv.innerHTML = `
+          <div class="override-summary">
+            <span class="override-summary-icon">ℹ</span>
+            <span>${overrideCount} problem${overrideCount > 1 ? 's were' : ' was'} manually marked as correct</span>
+          </div>
+        `;
+      } else {
+        overrideSummaryDiv.innerHTML = '';
+      }
+
+      // Display cutoffs for past tests
+      const cutoffSection = document.getElementById('detailCutoffInfo');
+      if (isPastTest) {
+        await displayCutoffsForTest(attempt);
+      } else {
+        cutoffSection.style.display = 'none';
+      }
+
+      displayProblems(attempt);
+      window.scrollTo(0, 0);
+    }
+
+    async function displayCutoffsForTest(attempt) {
+      const cutoffSection = document.getElementById('detailCutoffInfo');
+      const testName = attempt.test_name;
+      
+      // Parse year and contest from test name
+      const match = testName.match(/^(\d{4})\s+(.+)$/);
+      if (!match) {
+        cutoffSection.style.display = 'none';
+        return;
+      }
+      
+      const year = parseInt(match[1]);
+      let contest = match[2];
+      const simpleContest = contest.replace('Spring ', '').replace('Fall ', '');
+      
+      // Determine test type
+      const isAMC = testName.includes('AMC');
+      const isAMC8 = testName.includes('AMC 8');
+      const isAMC10 = testName.includes('AMC 10');
+      const isAMC12 = testName.includes('AMC 12');
+      const isAIME = testName.includes('AIME');
+      
+      // Fetch cutoffs
+      let cutoffData = null;
+      try {
+        let { data } = await supabaseClient
+          .from('contest_cutoffs')
+          .select('*')
+          .eq('year', year)
+          .like('contest', `%${contest}%`)
+          .single();
+        
+        if (!data) {
+          const result = await supabaseClient
+            .from('contest_cutoffs')
+            .select('*')
+            .eq('year', year)
+            .eq('contest', simpleContest)
+            .single();
+          data = result.data;
+        }
+        
+        cutoffData = data;
+      } catch (err) {
+        console.error('Error fetching cutoffs:', err);
+      }
+      
+      // Calculate user's AMC score if applicable
+      let userScoreDisplay = `${attempt.score}`;
+      let amcScore = null;
+      
+      if ((isAMC10 || isAMC12) && attempt.total_problems === 25) {
+        // AMC scoring: 6 per correct, 1.5 per blank
+        const problems = attempt.problems_data || [];
+        let answered = 0;
+        problems.forEach(p => {
+          if (p.user_answer && p.user_answer !== '') answered++;
+        });
+        const blanks = attempt.total_problems - answered;
+        amcScore = (attempt.score * 6) + (blanks * 1.5);
+        userScoreDisplay = `${amcScore} pts`;
+      } else if (isAIME) {
+        userScoreDisplay = `${attempt.score}`;
+      }
+      
+      document.getElementById('detailUserScore').textContent = userScoreDisplay;
+      
+      // Reset visibility
+      document.getElementById('detailAIMEItem').style.display = 'none';
+      document.getElementById('detailHRItem').style.display = 'none';
+      document.getElementById('detailDHRItem').style.display = 'none';
+      document.getElementById('detailMeanItem').style.display = 'none';
+      document.getElementById('detailUSAJMOItem').style.display = 'none';
+      document.getElementById('detailUSAMOItem').style.display = 'none';
+      
+      if (cutoffData) {
+        // Show AMC cutoffs
+        if (isAMC10 || isAMC12) {
+          if (cutoffData.aime_cutoff) {
+            document.getElementById('detailAIMEItem').style.display = 'block';
+            const aimeEl = document.getElementById('detailAIMECutoff');
+            aimeEl.textContent = cutoffData.aime_cutoff;
+            if (amcScore !== null && amcScore >= cutoffData.aime_cutoff) {
+              aimeEl.classList.add('qualified');
+              aimeEl.classList.remove('not-qualified');
+            } else {
+              aimeEl.classList.remove('qualified');
+              aimeEl.classList.add('not-qualified');
+            }
+          }
+          if (cutoffData.honor_roll) {
+            document.getElementById('detailHRItem').style.display = 'block';
+            const hrEl = document.getElementById('detailHR');
+            hrEl.textContent = cutoffData.honor_roll;
+            if (amcScore !== null && amcScore >= cutoffData.honor_roll) {
+              hrEl.classList.add('qualified');
+              hrEl.classList.remove('not-qualified');
+            } else {
+              hrEl.classList.remove('qualified');
+              hrEl.classList.add('not-qualified');
+            }
+          }
+          if (cutoffData.dhr) {
+            document.getElementById('detailDHRItem').style.display = 'block';
+            const dhrEl = document.getElementById('detailDHR');
+            dhrEl.textContent = cutoffData.dhr;
+            if (amcScore !== null && amcScore >= cutoffData.dhr) {
+              dhrEl.classList.add('qualified');
+              dhrEl.classList.remove('not-qualified');
+            } else {
+              dhrEl.classList.remove('qualified');
+              dhrEl.classList.add('not-qualified');
+            }
+          }
+          if (cutoffData.mean) {
+            document.getElementById('detailMeanItem').style.display = 'block';
+            document.getElementById('detailMean').textContent = cutoffData.mean;
+          }
+        }
+        
+        // Show AIME cutoffs
+        if (isAIME) {
+          if (cutoffData.usajmo_cutoff_10a || cutoffData.usajmo_cutoff_10b) {
+            document.getElementById('detailUSAJMOItem').style.display = 'block';
+            const usajmoCutoff = cutoffData.usajmo_cutoff_10a || cutoffData.usajmo_cutoff_10b;
+            const usajmoEl = document.getElementById('detailUSAJMO');
+            usajmoEl.textContent = usajmoCutoff;
+            if (attempt.score >= usajmoCutoff) {
+              usajmoEl.classList.add('qualified');
+              usajmoEl.classList.remove('not-qualified');
+            } else {
+              usajmoEl.classList.remove('qualified');
+              usajmoEl.classList.add('not-qualified');
+            }
+          }
+          if (cutoffData.usamo_cutoff_12a || cutoffData.usamo_cutoff_12b) {
+            document.getElementById('detailUSAMOItem').style.display = 'block';
+            const usamoCutoff = cutoffData.usamo_cutoff_12a || cutoffData.usamo_cutoff_12b;
+            const usamoEl = document.getElementById('detailUSAMO');
+            usamoEl.textContent = usamoCutoff;
+            if (attempt.score >= usamoCutoff) {
+              usamoEl.classList.add('qualified');
+              usamoEl.classList.remove('not-qualified');
+            } else {
+              usamoEl.classList.remove('qualified');
+              usamoEl.classList.add('not-qualified');
+            }
+          }
+          if (cutoffData.mean) {
+            document.getElementById('detailMeanItem').style.display = 'block';
+            document.getElementById('detailMean').textContent = cutoffData.mean;
+          }
+        }
+        
+        // Show AMC 8 cutoffs
+        if (isAMC8) {
+          if (cutoffData.honor_roll) {
+            document.getElementById('detailHRItem').style.display = 'block';
+            const hrEl = document.getElementById('detailHR');
+            hrEl.textContent = cutoffData.honor_roll;
+            if (attempt.score >= cutoffData.honor_roll) {
+              hrEl.classList.add('qualified');
+              hrEl.classList.remove('not-qualified');
+            } else {
+              hrEl.classList.remove('qualified');
+              hrEl.classList.add('not-qualified');
+            }
+          }
+          if (cutoffData.dhr) {
+            document.getElementById('detailDHRItem').style.display = 'block';
+            const dhrEl = document.getElementById('detailDHR');
+            dhrEl.textContent = cutoffData.dhr;
+            if (attempt.score >= cutoffData.dhr) {
+              dhrEl.classList.add('qualified');
+              dhrEl.classList.remove('not-qualified');
+            } else {
+              dhrEl.classList.remove('qualified');
+              dhrEl.classList.add('not-qualified');
+            }
+          }
+          if (cutoffData.mean) {
+            document.getElementById('detailMeanItem').style.display = 'block';
+            document.getElementById('detailMean').textContent = cutoffData.mean;
+          }
+        }
+        
+        cutoffSection.style.display = 'flex';
+      } else {
+        // No cutoff data available, just show user score
+        cutoffSection.style.display = 'flex';
+      }
+    }
+
+    function backToProfile() {
+      logActivity('back_to_profile');
+      document.getElementById('profileOverview').style.display = 'block';
+      document.getElementById('mockDetailView').classList.remove('active');
+      window.scrollTo(0, 0);
+    }
+
+    async function displayProblems(attempt) {
+      const container = document.getElementById('problemsList');
+      container.innerHTML = '<div class="loading">Loading problems...</div>';
+
+      const problems = attempt.problems_data || [];
+      const overrides = attempt.overrides || {};
+      const isPastTest = attempt.test_name && !attempt.test_name.startsWith('Mock');
+      
+      if (!problems || problems.length === 0) {
+        container.innerHTML = '<p>No problem data available for this attempt.</p>';
+        return;
+      }
+
+      // For past tests, create initial HTML with loading placeholders then fetch from AoPS
+      const problemsHTML = problems.map((problem, index) => {
+        const userAnswer = problem.user_answer || null;
+        const correctAnswer = problem.aime_answer ? String(problem.aime_answer % 1000) : String(problem.answer || '');
+        const wasOverridden = problem.manually_corrected || overrides[index];
+        
+        const isNaturallyCorrect = userAnswer === correctAnswer;
+        const isCorrect = isNaturallyCorrect || wasOverridden;
+        const isUnanswered = !userAnswer;
+
+        let statusClass = 'unanswered';
+        let statusText = 'Not Answered';
+        
+        if (!isUnanswered) {
+          if (isNaturallyCorrect) {
+            statusClass = 'correct';
+            statusText = 'Correct';
+          } else if (wasOverridden) {
+            statusClass = 'override';
+            statusText = 'Manually Marked Correct';
+          } else {
+            statusClass = 'incorrect';
+            statusText = 'Incorrect';
+          }
+        }
+
+        const qualityBadge = problem.quality ? 
+          `<span class="quality-badge quality-${problem.quality}">${'★'.repeat(problem.quality)} ${problem.quality}/5</span>` : 
+          '';
+
+        const overrideBadgeHTML = wasOverridden ? '<span class="override-badge">Override</span>' : '';
+        const overrideIndicatorHTML = wasOverridden ? '<div class="override-indicator"><span class="override-icon">✓</span>Manually marked as correct</div>' : '';
+
+        // For past tests, show loading state for problem text
+        const problemTextContent = isPastTest 
+          ? '<div class="loading-problem">Loading problem from AoPS...</div>'
+          : (problem.rewritten_problem || problem.text || 'Problem text not available');
+
+        // Generate AoPS link for past tests
+        let sourceLink = '';
+        if (isPastTest && attempt.test_name) {
+          const aopsPageName = getAoPSPageName(attempt.test_name, index + 1);
+          const aopsUrl = `https://artofproblemsolving.com/wiki/index.php/${aopsPageName}`;
+          sourceLink = `<a href="${aopsUrl}" target="_blank" class="source-label">${problem.source || attempt.test_name + ' #' + (index + 1)}</a>`;
+        } else if (problem.link) {
+          sourceLink = `<a href="${problem.link}" target="_blank" class="source-label">${problem.source || 'View Source'}</a>`;
+        } else if (problem.source) {
+          sourceLink = `<span class="source-label" style="cursor: default;">${problem.source}</span>`;
+        }
+
+        const difficultyDisplay = problem.difficulty ? `Difficulty: ${parseFloat(problem.difficulty).toFixed(1)}` : 'Difficulty: NaN';
+
+        return `
+          <div class="problem-detail mathjax-process" id="problem-detail-${index}">
+            <div class="problem-header">
+              <div>
+                <span class="problem-number">Problem ${index + 1}</span>
+                ${qualityBadge}
+              </div>
+              <span class="problem-difficulty">${difficultyDisplay}</span>
+            </div>
+            
+            <div class="problem-text" id="problem-text-${index}">${problemTextContent}</div>
+            
+            <div class="answer-section">
+              <div class="answer-box ${statusClass}" style="position: relative;">
+                ${overrideBadgeHTML}
+                <div class="answer-label">Your Answer</div>
+                <div class="answer-value">${userAnswer || '—'}</div>
+              </div>
+              <div class="answer-box correct">
+                <div class="answer-label">Correct Answer</div>
+                <div class="answer-value">${correctAnswer}</div>
+              </div>
+              <div class="answer-box" style="border: 2px solid var(--border-color);">
+                <div class="answer-label">Status</div>
+                <div class="answer-value" style="font-size: 16px;">${statusText}</div>
+              </div>
+            </div>
+            
+            ${overrideIndicatorHTML}
+            
+            ${sourceLink}
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = problemsHTML;
+
+      // For past tests, fetch problem text from AoPS API
+      if (isPastTest && attempt.test_name) {
+        const fetchPromises = problems.map(async (problem, index) => {
+          const problemNum = index + 1;
+          const pageName = getAoPSPageName(attempt.test_name, problemNum);
+          const { html } = await fetchFromAoPS(pageName);
+          const textElement = document.getElementById(`problem-text-${index}`);
+          
+          if (html && textElement) {
+            setHtmlContent(textElement, html);
+          } else if (textElement) {
+            // Fallback to stored text if AoPS fetch fails
+            textElement.innerHTML = problem.rewritten_problem || problem.text || '<em class="load-error">Failed to load problem from AoPS</em>';
+          }
+        });
+        
+        await Promise.all(fetchPromises);
+      }
+
+      if (window.MathJax) {
+        MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
+      }
+    }
+
+    // Helper function to get AoPS page name from test name
+    function getAoPSPageName(testName, problemNum) {
+      // Handle 2021 Spring/Fall naming conventions
+      // AoPS uses "2021_AMC_12A" for Spring 2021 (no "Spring" in name)
+      // AoPS uses "2021_Fall_AMC_12A" for Fall 2021
+      let normalized = testName;
+      
+      // Remove "Spring" from 2021 tests - AoPS doesn't use it
+      if (normalized.includes('2021 Spring')) {
+        normalized = normalized.replace('2021 Spring ', '2021 ');
+      }
+      
+      normalized = normalized.replace(/ /g, '_');
+      return `${normalized}_Problems/Problem_${problemNum}`;
+    }
+
+    // Fetch from AoPS API - returns { html, redirectedSource } 
+    async function fetchFromAoPS(pageName) {
+      try {
+        const url = `https://artofproblemsolving.com/wiki/api.php?action=parse&page=${encodeURIComponent(pageName)}&format=json&prop=text&origin=*&redirects=true`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.parse && data.parse.text && data.parse.text['*']) {
+          let html = data.parse.text['*'];
+          
+          // Check if this is a redirect page (contains "Redirect to:" text)
+          if (html.includes('Redirect to:') || html.includes('#REDIRECT')) {
+            // Try to extract the redirect target and fetch it
+            const redirectMatch = html.match(/href="\/wiki\/index\.php\/([^"]+)"/);
+            if (redirectMatch) {
+              const redirectTarget = decodeURIComponent(redirectMatch[1]);
+              const redirectUrl = `https://artofproblemsolving.com/wiki/api.php?action=parse&page=${encodeURIComponent(redirectTarget)}&format=json&prop=text&origin=*`;
+              const redirectResponse = await fetch(redirectUrl);
+              const redirectData = await redirectResponse.json();
+              if (redirectData.parse && redirectData.parse.text && redirectData.parse.text['*']) {
+                const sourceMatch = redirectTarget.match(/^(\d{4})_(.+)_Problems\/Problem_(\d+)$/);
+                let redirectedSource = null;
+                if (sourceMatch) {
+                  const year = sourceMatch[1];
+                  const contest = sourceMatch[2].replace(/_/g, ' ');
+                  const problemNum = sourceMatch[3];
+                  redirectedSource = `${year} ${contest} #${problemNum}`;
+                }
+                return { html: redirectData.parse.text['*'], redirectedSource };
+              }
+            }
+          }
+          
+          return { html, redirectedSource: null };
+        }
+        return { html: null, redirectedSource: null };
+      } catch (err) {
+        console.error('AoPS fetch error:', err);
+        return { html: null, redirectedSource: null };
+      }
+    }
+
+    // Set HTML content from AoPS API (clean up and format)
+    function setHtmlContent(element, html) {
+      if (!html) {
+        element.innerHTML = '<em>No content</em>';
+        return;
+      }
+      
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      
+      // Remove edit sections
+      tempDiv.querySelectorAll('.mw-editsection').forEach(el => el.remove());
+      
+      // Remove table of contents
+      tempDiv.querySelectorAll('.toc, #toc').forEach(el => el.remove());
+      
+      // Find content between Problem header and next h2 header
+      const allContent = tempDiv.innerHTML;
+      
+      // Find where Problem section starts (after the Problem h2)
+      const problemHeaderMatch = allContent.match(/<h2[^>]*>.*?Problem.*?<\/h2>/i);
+      let startIndex = 0;
+      if (problemHeaderMatch) {
+        startIndex = problemHeaderMatch.index + problemHeaderMatch[0].length;
+      }
+      
+      // Find the next h2 header after the problem content
+      const remainingContent = allContent.substring(startIndex);
+      const nextH2Match = remainingContent.match(/<h2[^>]*>/i);
+      let endIndex = allContent.length;
+      if (nextH2Match) {
+        endIndex = startIndex + nextH2Match.index;
+      }
+      
+      // Extract just the problem content
+      let problemContent = allContent.substring(startIndex, endIndex);
+      
+      // Clean up the content
+      const cleanDiv = document.createElement('div');
+      cleanDiv.innerHTML = problemContent;
+      
+      // Remove any "Problem N" headers (h2, bold, etc.)
+      cleanDiv.querySelectorAll('h2').forEach(h2 => {
+        const text = h2.textContent.trim();
+        if (text === 'Problem' || /^Problem\s+\d+$/.test(text)) {
+          h2.remove();
+        }
+      });
+      
+      // Remove big bold "Problem N" text
+      cleanDiv.querySelectorAll('p, div, b, strong, big').forEach(el => {
+        const text = el.textContent.trim();
+        if (/^Problem\s+\d+$/.test(text)) {
+          el.remove();
+        }
+      });
+      
+      // Remove redirect/note text like "The following problem is from..."
+      cleanDiv.querySelectorAll('p, blockquote, i, em').forEach(el => {
+        const text = el.textContent.trim().toLowerCase();
+        if (text.length < 300 && (
+            text.includes('the following problem is from') || 
+            text.includes('redirect to this page') ||
+            text.includes('problems redirect to') ||
+            text.includes('so those problems redirect'))) {
+          el.remove();
+        }
+      });
+      
+      // Remove all links but keep their text content (preserve images)
+      cleanDiv.querySelectorAll('a').forEach(link => {
+        const img = link.querySelector('img');
+        if (img) {
+          link.parentNode.replaceChild(img, link);
+        } else {
+          const text = document.createTextNode(link.textContent);
+          link.parentNode.replaceChild(text, link);
+        }
+      });
+      
+      // Fix math element display
+      cleanDiv.querySelectorAll('.mwe-math-element').forEach(mathEl => {
+        mathEl.style.display = 'inline';
+        mathEl.style.verticalAlign = 'middle';
+      });
+      
+      cleanDiv.querySelectorAll('.mwe-math-fallback-image-inline').forEach(img => {
+        img.style.display = 'inline';
+        img.style.verticalAlign = 'middle';
+        img.style.margin = '0 2px';
+      });
+      
+      cleanDiv.querySelectorAll('img').forEach(img => {
+        const height = parseInt(img.getAttribute('height') || '0');
+        const isLatex = img.classList.contains('latex') || 
+                        img.classList.contains('mwe-math-fallback-image-inline') ||
+                        img.alt?.startsWith('$') ||
+                        img.src?.includes('latex') ||
+                        img.src?.includes('math');
+        
+        if (height < 50 || isLatex) {
+          img.style.display = 'inline';
+          img.style.verticalAlign = 'middle';
+          img.style.margin = '0 2px';
+        }
+      });
+      
+      element.innerHTML = cleanDiv.innerHTML;
+      
+      if (window.MathJax) {
+        MathJax.typesetPromise([element]).catch(err => console.error('MathJax error:', err));
+      }
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const displayName = document.getElementById('displayName').value;
+      logActivity('update_profile', { metadata: { displayName: displayName } });
+
+      try {
+        const { error } = await supabaseClient
+          .from('user_profiles')
+          .upsert({
+            id: currentUser.id,
+            display_name: displayName,
+            updated_at: new Date().toISOString()
+          });
+
+        if (error) throw error;
+
+        logActivity('update_profile_success');
+        document.getElementById('updateMessage').textContent = 'Profile updated successfully!';
+        document.getElementById('updateMessage').style.display = 'block';
+        
+        setTimeout(() => {
+          document.getElementById('updateMessage').style.display = 'none';
+        }, 3000);
+
+        document.getElementById('userName').textContent = displayName;
+        document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
+
+      } catch (error) {
+        logActivity('update_profile_error', { metadata: { error: error.message } });
+        alert('Error updating profile: ' + error.message);
+      }
+    });
+
+    async function signOut() {
+      logActivity('logout');
+      await supabaseClient.auth.signOut();
+      window.location.href = 'index.html';
+    }
+
+    async function resetPassword() {
+      logActivity('reset_password_request');
+      try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(currentUser.email, {
+          redirectTo: `${window.location.origin}/reset-password.html`
+        });
+
+        if (error) throw error;
+        alert('Password reset link sent to your email!');
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    async function deleteAccount() {
+      logActivity('delete_account_initiated');
+      if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+        logActivity('delete_account_cancelled', { metadata: { stage: 'first_confirm' } });
+        return;
+      }
+
+      if (!confirm('This will permanently delete all your data. Are you absolutely sure?')) {
+        logActivity('delete_account_cancelled', { metadata: { stage: 'second_confirm' } });
+        return;
+      }
+
+      try {
+        logActivity('delete_account_confirmed');
+        await supabaseClient.from('mock_attempts').delete().eq('user_id', currentUser.id);
+        await supabaseClient.from('user_bookmarks').delete().eq('user_id', currentUser.id);
+        await supabaseClient.from('user_profiles').delete().eq('id', currentUser.id);
+
+        alert('Account deleted successfully.');
+        await supabaseClient.auth.signOut();
+        window.location.href = 'index.html';
+      } catch (error) {
+        alert('Error deleting account: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

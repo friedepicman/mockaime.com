@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+    LATEST VERSION - Updated: Compact layout with rewritten preview by default
+    Version: 2024-01-07-v5 - Added problem type dropdown
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Problem Admin - Mock AIME</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.4/dist/umd/supabase.min.js"></script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1400px;
+      margin: auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #006f99;
+    }
+    .nav-links {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .nav-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background: #006f99;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .nav-links a:hover {
+      background: #003366;
+    }
+    .ai-review-link {
+      background: #28a745 !important;
+    }
+    .ai-review-link:hover {
+      background: #218838 !important;
+    }
+    .controls {
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+    }
+    .problem-card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      border-left: 4px solid white;
+    }
+    
+    /* Quality-based sidebar colors - only when manually reviewed */
+    .problem-card.reviewed.quality-0 {
+      border-left-color: #6c757d; /* Gray - Unset */
+    }
+    .problem-card.reviewed.quality-1 {
+      border-left-color: #dc3545; /* Red - Poor */
+    }
+    .problem-card.reviewed.quality-2 {
+      border-left-color: #fd7e14; /* Orange - Below Average */
+    }
+    .problem-card.reviewed.quality-3 {
+      border-left-color: #ffc107; /* Yellow - Average */
+    }
+    .problem-card.reviewed.quality-4 {
+      border-left-color: #28a745; /* Green - Good */
+    }
+    .problem-card.reviewed.quality-5 {
+      border-left-color: #00a0d6; /* Blue - Excellent */
+    }
+    
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .problem-id {
+      font-weight: bold;
+      color: #666;
+    }
+    
+    .fields-row {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .field-group label {
+      font-weight: bold;
+      font-size: 13px;
+    }
+    
+    .field-group input, .field-group select {
+      margin: 0;
+    }
+    
+    .rendered-problem {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+    
+    .rewritten-section {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 4px;
+      border: 2px solid #00a0d6;
+      margin: 10px 0;
+    }
+    
+    .original-section {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      margin: 10px 0;
+      display: none;
+    }
+    
+    .original-section.show {
+      display: block;
+    }
+    
+    .section-label {
+      font-weight: bold;
+      color: #00a0d6;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .raw-text-container {
+      margin: 10px 0;
+    }
+    
+    .toggle-raw-btn {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    
+    .toggle-raw-btn:hover {
+      background: #5a6268;
+    }
+    
+    .raw-textarea {
+      display: none;
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+    
+    .raw-textarea.show {
+      display: block;
+    }
+    
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 200px;
+    }
+    .field-label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+    }
+    .checkbox-label input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    .quality-rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .quality-label {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .stars {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .star {
+      font-size: 28px;
+      cursor: pointer;
+      color: #ddd;
+      transition: color 0.2s;
+      user-select: none;
+    }
+    
+    .star.filled {
+      color: #ffc107;
+    }
+    
+    .star.hover {
+      color: #ffc107;
+      opacity: 0.7;
+    }
+    
+    button {
+      padding: 8px 16px;
+      background: #006f99;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #003366;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .save-status {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 14px;
+      color: #28a745;
+    }
+    .link {
+      color: #006f99;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+    .filter-controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .stats {
+      margin: 20px 0;
+      padding: 15px;
+      background: #e3f2fd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+    }
+    .pagination button {
+      padding: 8px 16px;
+    }
+    .pagination span {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .sign-out-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .sign-out-btn:hover {
+      background: #c82333;
+    }
+    
+    .type-select {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      min-width: 130px;
+    }
+    
+    .type-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    .type-badge.algebra { background: #667eea; color: white; }
+    .type-badge.geometry { background: #f5576c; color: white; }
+    .type-badge.number_theory { background: #4facfe; color: white; }
+    .type-badge.counting { background: #43e97b; color: white; }
+    .type-badge.none { background: #ccc; color: #666; }
+  </style>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        ignoreHtmlClass: 'no-mathjax',
+        processHtmlClass: 'mathjax-render'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="theme.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+  <h1>Problem Admin Panel</h1>
+
+  <div class="nav-links">
+    <a href="index.html">Mock AIME</a>
+    <a href="search.html">Problem Search</a>
+    <a href="admin_reports.html">View Reports</a>
+    <a href="login.html" class="auth-button">Login</a>
+  </div>
+
+  <!-- Send Message Section -->
+  <div class="controls" style="margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #006f99;">Send User Message</h3>
+    <div style="display: grid; gap: 15px;">
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <label style="min-width: 80px;">To:</label>
+        <select id="msgRecipient" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-width: 200px;">
+          <option value="broadcast">Everyone (Broadcast)</option>
+          <option value="specific">Specific User</option>
+        </select>
+        <input type="text" id="msgUserId" placeholder="User UUID (paste from Supabase)" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1; display: none;" />
+      </div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <label style="min-width: 80px;">Type:</label>
+        <select id="msgType" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-width: 200px;">
+          <option value="announcement">Announcement</option>
+          <option value="curated">Curated Content</option>
+          <option value="milestone">Milestone</option>
+          <option value="welcome">Welcome</option>
+          <option value="report_update">Report Update</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <label style="min-width: 80px;">From:</label>
+        <input type="text" id="msgSender" placeholder="[SYSTEM]" value="[SYSTEM]" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 200px;" />
+        <span style="color: #666; font-size: 13px;">Displays as sender name</span>
+      </div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <label style="min-width: 80px;">Title:</label>
+        <input type="text" id="msgTitle" placeholder="Message title" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1;" />
+      </div>
+      <div style="display: flex; gap: 15px; align-items: flex-start;">
+        <label style="min-width: 80px; padding-top: 8px;">Body:</label>
+        <textarea id="msgBody" placeholder="Message body (supports LaTeX with $...$ and URLs)" rows="5" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1; resize: vertical; font-family: monospace;" oninput="updatePreview()"></textarea>
+      </div>
+      <div style="display: flex; gap: 15px; align-items: flex-start;">
+        <label style="min-width: 80px; padding-top: 8px;">Preview:</label>
+        <div id="msgPreview" style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9; min-height: 60px; white-space: pre-wrap; line-height: 1.6;"></div>
+      </div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <label style="min-width: 80px;"></label>
+        <button onclick="sendMessage()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Send Message</button>
+        <span id="msgStatus" style="color: #28a745;"></span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="stats" id="stats">Loading...</div>
+
+  <div class="controls">
+    <div class="filter-controls">
+      <label>
+        <input type="checkbox" id="showUnreviewedOnly" />
+        Show only unreviewed problems
+      </label>
+      <label>
+        <input type="checkbox" id="showReviewedOnly" />
+        Show only reviewed problems
+      </label>
+      <label>
+        <input type="checkbox" id="showFinalizedOnly" />
+        Show only finalized problems
+      </label>
+      <label>
+        <input type="checkbox" id="showUnfinalizedOnly" />
+        Show only unfinalized problems
+      </label>
+      <label>
+        <input type="checkbox" id="showRatedOnly" />
+        Show only rated problems
+      </label>
+      <label>
+        <input type="checkbox" id="showUnratedOnly" />
+        Show only unrated problems
+      </label>
+      <label>
+        <input type="checkbox" id="showUntypedOnly" />
+        Show only untyped problems
+      </label>
+      <button onclick="loadProblems()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button onclick="goToPage(1)">First</button>
+    <button onclick="goToPage(currentPage - 1)" id="prevBtn">Previous</button>
+    <span id="pageInfo">Page 1 of 1</span>
+    <button onclick="goToPage(currentPage + 1)" id="nextBtn">Next</button>
+    <button onclick="goToPage(totalPages)" id="lastBtn">Last</button>
+  </div>
+
+  <div id="problems"></div>
+
+  <div class="pagination">
+    <button onclick="goToPage(1)">First</button>
+    <button onclick="goToPage(currentPage - 1)">Previous</button>
+    <span id="pageInfo2">Page 1 of 1</span>
+    <button onclick="goToPage(currentPage + 1)">Next</button>
+    <button onclick="goToPage(totalPages)">Last</button>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://ftdbplxkyaocyrjpmjyb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZGJwbHhreWFvY3lyanBtanliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxMDgxMDUsImV4cCI6MjA2NzY4NDEwNX0.hE0V09JxdLYNbZqPVH3HZxNpLPP2rXIaBsNGUHO3upc';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Admin auth check - redirects non-admins immediately
+    const ADMIN_UUID = '6af62d68-67e7-42f6-b91f-58cac9d81cba';
+    (async () => {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session || session.user.id !== ADMIN_UUID) {
+        window.location.href = '404.html';
+      }
+    })();
+    let allProblems = [];
+    let currentPage = 1;
+    let totalPages = 1;
+    const problemsPerPage = 100;
+    let currentUser = null;
+
+    // Authentication functions
+    async function updateAuthUI() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      currentUser = session?.user || null;
+      
+      const authButton = document.querySelector('.auth-button');
+      
+      if (currentUser) {
+        // User is logged in
+        if (authButton) {
+          authButton.textContent = 'Profile';
+          authButton.href = 'profile.html';
+        }
+      } else {
+        // User is not logged in
+        if (authButton) {
+          authButton.textContent = 'Login';
+          authButton.href = 'login.html';
+        }
+      }
+    }
+
+    async function signOut() {
+      await supabaseClient.auth.signOut();
+      await updateAuthUI();
+    }
+
+    // SECURITY FIX: HTML escaping function
+    function escapeHtml(text) {
+      if (!text) return text;
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // SECURITY FIX: Safe HTML insertion function
+    function setMathContent(element, content) {
+      if (!content) {
+        element.innerHTML = '<em>No content</em>';
+        return;
+      }
+      // Use textContent to safely insert the content, then let MathJax process it
+      element.textContent = content;
+      // Re-render MathJax for this element
+      if (window.MathJax) {
+        MathJax.typesetPromise([element]).catch(err => console.error('MathJax error:', err));
+      }
+    }
+
+    async function loadProblems() {
+      document.getElementById('problems').innerHTML = '<p>Loading problems...</p>';
+      
+      let allData = [];
+      let from = 0;
+      const chunkSize = 1000;
+      let hasMore = true;
+      
+      while (hasMore) {
+        const { data, error } = await supabaseClient
+          .from('problems')
+          .select('*')
+          .order('id', { ascending: true })
+          .range(from, from + chunkSize - 1);
+        
+        if (error) {
+          console.error('Error loading problems:', error);
+          alert('Failed to load problems');
+          return;
+        }
+        
+        if (data.length === 0) {
+          hasMore = false;
+        } else {
+          allData.push(...data);
+          from += chunkSize;
+          document.getElementById('problems').innerHTML = `<p>Loading problems... (${allData.length} loaded)</p>`;
+        }
+      }
+      
+      const showUnreviewed = document.getElementById('showUnreviewedOnly').checked;
+      const showReviewed = document.getElementById('showReviewedOnly').checked;
+      const showFinalized = document.getElementById('showFinalizedOnly').checked;
+      const showUnfinalized = document.getElementById('showUnfinalizedOnly').checked;
+      const showRated = document.getElementById('showRatedOnly').checked;
+      const showUnrated = document.getElementById('showUnratedOnly').checked;
+      const showUntyped = document.getElementById('showUntypedOnly').checked;
+      
+      allProblems = allData.filter(p => {
+        // Review status filters
+        if (showUnreviewed && p.manually_reviewed) return false;
+        if (showReviewed && !p.manually_reviewed) return false;
+        
+        // Finalized status filters
+        if (showFinalized && !p.finalized) return false;
+        if (showUnfinalized && p.finalized) return false;
+        
+        // Rating status filters
+        if (showRated && (!p.quality || p.quality === 0)) return false;
+        if (showUnrated && p.quality && p.quality > 0) return false;
+        
+        // Type filter
+        if (showUntyped && p.type) return false;
+        
+        return true;
+      });
+      
+      currentPage = 1;
+      updateStats();
+      renderProblems();
+    }
+
+    function updateStats() {
+      const total = allProblems.length;
+      const reviewed = allProblems.filter(p => p.manually_reviewed).length;
+      const unreviewed = total - reviewed;
+      const finalized = allProblems.filter(p => p.finalized).length;
+      const rated = allProblems.filter(p => p.quality && p.quality > 0).length;
+      const typed = allProblems.filter(p => p.type).length;
+      
+      document.getElementById('stats').innerHTML = `
+        <strong>Total problems:</strong> ${total} | 
+        <strong>Reviewed:</strong> ${reviewed} (${total > 0 ? Math.round(reviewed/total*100) : 0}%) | 
+        <strong>Finalized:</strong> ${finalized} (${total > 0 ? Math.round(finalized/total*100) : 0}%) | 
+        <strong>Rated:</strong> ${rated} (${total > 0 ? Math.round(rated/total*100) : 0}%) | 
+        <strong>Typed:</strong> ${typed} (${total > 0 ? Math.round(typed/total*100) : 0}%) | 
+        <strong>Unreviewed:</strong> ${unreviewed}
+      `;
+    }
+
+    function goToPage(page) {
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderProblems();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updatePaginationControls() {
+      const pageInfo = `Page ${currentPage} of ${totalPages}`;
+      document.getElementById('pageInfo').textContent = pageInfo;
+      document.getElementById('pageInfo2').textContent = pageInfo;
+      
+      document.getElementById('prevBtn').disabled = currentPage === 1;
+      document.querySelectorAll('button').forEach(btn => {
+        if (btn.textContent === 'Previous' || btn.textContent === 'First') {
+          btn.disabled = currentPage === 1;
+        }
+        if (btn.textContent === 'Next' || btn.textContent === 'Last') {
+          btn.disabled = currentPage === totalPages;
+        }
+      });
+    }
+
+    function toggleRawText(problemId, type) {
+      const textarea = document.getElementById(`raw-${type}-${problemId}`);
+      const btn = document.getElementById(`toggle-${type}-btn-${problemId}`);
+      
+      if (textarea.classList.contains('show')) {
+        textarea.classList.remove('show');
+        btn.textContent = 'Show Raw Text';
+      } else {
+        textarea.classList.add('show');
+        btn.textContent = 'Hide Raw Text';
+      }
+    }
+
+    function renderStars(problemId, currentQuality) {
+      const quality = currentQuality || 0;
+      let starsHTML = '';
+      
+      for (let i = 1; i <= 5; i++) {
+        const filled = i <= quality ? 'filled' : '';
+        starsHTML += `<span class="star ${filled}" data-rating="${i}">★</span>`;
+      }
+      
+      return starsHTML;
+    }
+
+    function getTypeBadge(type) {
+      if (!type) return '<span class="type-badge none">No Type</span>';
+      const labels = {
+        algebra: 'Algebra',
+        geometry: 'Geometry',
+        number_theory: 'Number Theory',
+        counting: 'Counting'
+      };
+      return `<span class="type-badge ${type}">${labels[type] || type}</span>`;
+    }
+
+    // Add event delegation for star clicks and hovers
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
+        const starsContainer = e.target.parentElement;
+        const problemId = starsContainer.id.replace('stars-', '');
+        const rating = parseInt(e.target.getAttribute('data-rating'));
+        setQuality(problemId, rating);
+      }
+    });
+
+    document.addEventListener('mouseenter', function(e) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
+        const rating = parseInt(e.target.getAttribute('data-rating'));
+        const starsContainer = e.target.parentElement;
+        const allStars = starsContainer.querySelectorAll('.star');
+        
+        allStars.forEach((star, index) => {
+          star.classList.remove('hover');
+          if (index < rating) {
+            star.classList.add('hover');
+          }
+        });
+      }
+    }, true);
+
+    document.addEventListener('mouseleave', function(e) {
+      if (e.target && e.target.classList && e.target.classList.contains('star')) {
+        const starsContainer = e.target.parentElement;
+        const allStars = starsContainer.querySelectorAll('.star');
+        allStars.forEach(star => star.classList.remove('hover'));
+      }
+    }, true);
+
+    async function setQuality(problemId, quality) {
+      console.log('Setting quality for problem', problemId, 'to', quality);
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update({ quality: quality })
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('Error updating quality:', error);
+        alert('Failed to update quality');
+      } else {
+        console.log('Quality updated successfully');
+        
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.quality = quality;
+        }
+        
+        const starsContainer = document.getElementById(`stars-${problemId}`);
+        if (starsContainer) {
+          starsContainer.innerHTML = renderStars(problemId, quality);
+        }
+        
+        // Update sidebar color by updating all quality classes
+        const card = document.getElementById(`problem-${problemId}`);
+        if (card) {
+          // Remove all quality classes
+          for (let i = 0; i <= 5; i++) {
+            card.classList.remove(`quality-${i}`);
+          }
+          // Add the new quality class
+          card.classList.add(`quality-${quality}`);
+        }
+      }
+    }
+
+    function renderProblems() {
+      const container = document.getElementById('problems');
+      
+      if (allProblems.length === 0) {
+        container.innerHTML = '<p>No problems found.</p>';
+        return;
+      }
+      
+      totalPages = Math.ceil(allProblems.length / problemsPerPage);
+      const startIdx = (currentPage - 1) * problemsPerPage;
+      const endIdx = Math.min(startIdx + problemsPerPage, allProblems.length);
+      const pageProblems = allProblems.slice(startIdx, endIdx);
+      
+      updatePaginationControls();
+      
+      // SECURITY FIX: Build elements safely instead of using template literals
+      container.innerHTML = '';
+      
+      pageProblems.forEach((p) => {
+        const qualityClass = `quality-${p.quality || 0}`;
+        const reviewedClass = p.manually_reviewed ? 'reviewed' : '';
+        
+        const problemCard = document.createElement('div');
+        problemCard.className = `problem-card ${qualityClass} ${reviewedClass}`;
+        problemCard.id = `problem-${p.id}`;
+        
+        // Build the HTML structure safely
+        problemCard.innerHTML = `
+          <div class="problem-header">
+            <div class="header-left">
+              <span class="problem-id">Problem ID: ${p.id}</span>
+              ${getTypeBadge(p.type)}
+              <div class="quality-rating">
+                <span class="quality-label">Quality:</span>
+                <div class="stars" id="stars-${p.id}">
+                  ${renderStars(p.id, p.quality)}
+                </div>
+                <span style="color: #666; font-size: 14px;">(${p.quality || 0}/5)</span>
+              </div>
+            </div>
+            <div class="header-right">
+              <label class="checkbox-label">
+                <input type="checkbox" 
+                       ${p.manually_reviewed ? 'checked' : ''} 
+                       onchange="updateReviewStatus(${p.id}, this.checked)">
+                Manually Reviewed
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" 
+                       ${p.finalized ? 'checked' : ''} 
+                       onchange="updateFinalizedStatus(${p.id}, this.checked)">
+                Finalized
+              </label>
+            </div>
+          </div>
+          
+          <button class="toggle-raw-btn" id="toggle-original-btn-${p.id}" onclick="toggleOriginalSection(${p.id})">Show Original Problem</button>
+          
+          <div class="original-section" id="original-section-${p.id}">
+            <div class="section-label">Original Problem Statement:</div>
+            <div class="rendered-problem mathjax-render" id="original-render-${p.id}">
+            </div>
+            <button class="toggle-raw-btn" style="margin-top: 10px;" id="toggle-original-raw-btn-${p.id}" onclick="toggleRawText(${p.id}, 'original')">Show Raw Text</button>
+            <textarea class="raw-textarea" id="raw-original-${p.id}" onblur="saveProblemText(${p.id})"></textarea>
+          </div>
+          
+          <div class="rewritten-section">
+            <div class="section-label">Rewritten Problem (AIME Format):</div>
+            <div class="rendered-problem mathjax-render" id="rewritten-render-${p.id}">
+            </div>
+            <button class="toggle-raw-btn" style="margin-top: 10px;" id="toggle-rewritten-btn-${p.id}" onclick="toggleRawText(${p.id}, 'rewritten')">Show Raw Text</button>
+            <textarea class="raw-textarea" id="raw-rewritten-${p.id}" onblur="saveRewrittenProblem(${p.id})"></textarea>
+          </div>
+          
+          <div class="fields-row">
+            <div class="field-group">
+              <label>Answer:</label>
+              <input type="text" id="answer-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 100px;" />
+            </div>
+            
+            <div class="field-group">
+              <label>AIME Answer (mod 1000):</label>
+              <input type="text" id="aime-answer-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 100px;" />
+            </div>
+            
+            <div class="field-group">
+              <label>Difficulty:</label>
+              <input type="text" id="difficulty-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 80px;" />
+            </div>
+            
+            <div class="field-group">
+              <label>Type:</label>
+              <select id="type-${p.id}" class="type-select" onchange="saveProblem(${p.id})">
+                <option value="">None</option>
+                <option value="algebra">Algebra</option>
+                <option value="geometry">Geometry</option>
+                <option value="number_theory">Number Theory</option>
+                <option value="counting">Counting</option>
+              </select>
+            </div>
+            
+            <div class="field-group">
+              <label>Source:</label>
+              <input type="text" id="source-${p.id}" value="" onblur="saveProblem(${p.id})" style="width: 250px;" />
+            </div>
+          </div>
+          
+          <div style="margin-top: 5px;">
+            <span class="field-label" style="font-size: 13px;">Link:</span>
+            <a href="" target="_blank" class="link" id="link-${p.id}"></a>
+          </div>
+          
+          <div style="margin-top: 10px;">
+            <button onclick="saveProblem(${p.id})">Save Changes</button>
+            <span class="save-status" id="status-${p.id}"></span>
+          </div>
+        `;
+        
+        container.appendChild(problemCard);
+        
+        // SECURITY FIX: Safely set content using textContent and populate form fields
+        const originalRender = document.getElementById(`original-render-${p.id}`);
+        const rewrittenRender = document.getElementById(`rewritten-render-${p.id}`);
+        const originalTextarea = document.getElementById(`raw-original-${p.id}`);
+        const rewrittenTextarea = document.getElementById(`raw-rewritten-${p.id}`);
+        const linkElement = document.getElementById(`link-${p.id}`);
+        
+        // Safely set math content
+        setMathContent(originalRender, p.text || '');
+        setMathContent(rewrittenRender, p.rewritten_problem || '');
+        
+        // Safely set textarea values
+        originalTextarea.value = p.text || '';
+        rewrittenTextarea.value = p.rewritten_problem || '';
+        
+        // Safely set form field values
+        document.getElementById(`answer-${p.id}`).value = p.answer || '';
+        document.getElementById(`aime-answer-${p.id}`).value = p.aime_answer || '';
+        document.getElementById(`difficulty-${p.id}`).value = p.difficulty || '';
+        document.getElementById(`source-${p.id}`).value = p.source || '';
+        document.getElementById(`type-${p.id}`).value = p.type || '';
+        
+        // Safely set link
+        if (p.link) {
+          linkElement.href = escapeHtml(p.link);
+          linkElement.textContent = p.link;
+        } else {
+          linkElement.href = '#';
+          linkElement.textContent = 'No link';
+        }
+      });
+      
+      // Re-render MathJax for all new content
+      if (window.MathJax) {
+        MathJax.typesetPromise().catch(err => console.error('MathJax error:', err));
+      }
+    }
+
+    function toggleOriginalSection(problemId) {
+      const section = document.getElementById(`original-section-${problemId}`);
+      const btn = document.getElementById(`toggle-original-btn-${problemId}`);
+      
+      if (section.classList.contains('show')) {
+        section.classList.remove('show');
+        btn.textContent = 'Show Original Problem';
+      } else {
+        section.classList.add('show');
+        btn.textContent = 'Hide Original Problem';
+        
+        // Re-render MathJax for this section
+        if (window.MathJax) {
+          MathJax.typesetPromise([section]).catch(err => console.error('MathJax error:', err));
+        }
+      }
+    }
+
+    function toggleRewrittenRender(problemId) {
+      // This function is no longer needed but kept for compatibility
+      return;
+    }
+
+    async function enableRewriteSection(problemId) {
+      // This function is no longer needed but kept for compatibility
+      return;
+    }
+
+    async function saveRewrittenProblem(problemId) {
+      const text = document.getElementById(`raw-rewritten-${problemId}`).value;
+      const statusEl = document.getElementById(`status-${problemId}`);
+      
+      statusEl.textContent = 'Saving rewritten problem...';
+      statusEl.style.color = '#666';
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update({ rewritten_problem: text })
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('ERROR saving rewritten problem:', error);
+        statusEl.textContent = `Error: ${error.message}`;
+        statusEl.style.color = '#dc3545';
+      } else {
+        console.log('Rewritten problem saved');
+        statusEl.textContent = 'Saved';
+        statusEl.style.color = '#28a745';
+        
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.rewritten_problem = text;
+        }
+        
+        // SECURITY FIX: Update the rendered preview safely
+        const renderDiv = document.getElementById(`rewritten-render-${problemId}`);
+        if (renderDiv) {
+          setMathContent(renderDiv, text);
+        }
+        
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+    }
+
+    async function saveProblemText(problemId) {
+      const text = document.getElementById(`raw-original-${problemId}`).value;
+      const statusEl = document.getElementById(`status-${problemId}`);
+      
+      statusEl.textContent = 'Saving text...';
+      statusEl.style.color = '#666';
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update({ text })
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('ERROR saving text:', error);
+        statusEl.textContent = `Error: ${error.message}`;
+        statusEl.style.color = '#dc3545';
+      } else {
+        console.log('Text saved');
+        statusEl.textContent = 'Saved';
+        statusEl.style.color = '#28a745';
+        
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.text = text;
+        }
+        
+        // SECURITY FIX: Update the rendered preview safely
+        const renderDiv = document.getElementById(`original-render-${problemId}`);
+        if (renderDiv) {
+          setMathContent(renderDiv, text);
+        }
+        
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+    }
+
+    async function saveProblem(problemId) {
+      const answer = document.getElementById(`answer-${problemId}`).value;
+      const aimeAnswer = document.getElementById(`aime-answer-${problemId}`).value;
+      const difficulty = document.getElementById(`difficulty-${problemId}`).value;
+      const source = document.getElementById(`source-${problemId}`).value;
+      const type = document.getElementById(`type-${problemId}`).value;
+      const statusEl = document.getElementById(`status-${problemId}`);
+      
+      statusEl.textContent = 'Saving...';
+      statusEl.style.color = '#666';
+      
+      const updateData = {
+        answer,
+        source,
+        type: type || null,
+        aime_answer: aimeAnswer ? parseInt(aimeAnswer) : null,
+        difficulty: difficulty ? parseFloat(difficulty) : null
+      };
+      
+      const { data, error } = await supabaseClient
+        .from('problems')
+        .update(updateData)
+        .eq('id', problemId)
+        .select();
+      
+      if (error) {
+        console.error('ERROR DETAILS:', error);
+        statusEl.textContent = `Error: ${error.message}`;
+        statusEl.style.color = '#dc3545';
+      } else {
+        console.log('Save successful');
+        statusEl.textContent = 'Saved';
+        statusEl.style.color = '#28a745';
+        
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) {
+          problem.answer = answer;
+          problem.aime_answer = aimeAnswer ? parseInt(aimeAnswer) : null;
+          problem.difficulty = difficulty ? parseFloat(difficulty) : null;
+          problem.source = source;
+          problem.type = type || null;
+        }
+        
+        // Update the type badge in the header
+        const headerLeft = document.querySelector(`#problem-${problemId} .header-left`);
+        if (headerLeft) {
+          const existingBadge = headerLeft.querySelector('.type-badge');
+          if (existingBadge) {
+            existingBadge.outerHTML = getTypeBadge(type || null);
+          }
+        }
+        
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+    }
+
+    async function updateReviewStatus(problemId, isReviewed) {
+      const { error } = await supabaseClient
+        .from('problems')
+        .update({ manually_reviewed: isReviewed })
+        .eq('id', problemId);
+      
+      if (error) {
+        console.error('Error updating review status:', error);
+        alert('Failed to update review status');
+      } else {
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) problem.manually_reviewed = isReviewed;
+        
+        // Update the card class to show/hide quality colors
+        const card = document.getElementById(`problem-${problemId}`);
+        if (card) {
+          if (isReviewed) {
+            card.classList.add('reviewed');
+          } else {
+            card.classList.remove('reviewed');
+          }
+        }
+        
+        updateStats();
+      }
+    }
+
+    async function updateFinalizedStatus(problemId, isFinalized) {
+      const { error } = await supabaseClient
+        .from('problems')
+        .update({ finalized: isFinalized })
+        .eq('id', problemId);
+      
+      if (error) {
+        console.error('Error updating finalized status:', error);
+        alert('Failed to update finalized status');
+      } else {
+        const problem = allProblems.find(p => p.id === problemId);
+        if (problem) problem.finalized = isFinalized;
+        updateStats();
+      }
+    }
+
+    window.onload = async () => {
+      await updateAuthUI();
+      loadProblems();
+    };
+    
+    // Add mutual exclusivity for the checkboxes
+    document.getElementById('showUnreviewedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showReviewedOnly').checked = false;
+        document.getElementById('showFinalizedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showReviewedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showUnreviewedOnly').checked = false;
+        document.getElementById('showFinalizedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showFinalizedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showUnreviewedOnly').checked = false;
+        document.getElementById('showReviewedOnly').checked = false;
+        document.getElementById('showUnfinalizedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showUnfinalizedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showFinalizedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showRatedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showUnratedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showUnratedOnly').addEventListener('change', function() {
+      if (this.checked) {
+        document.getElementById('showRatedOnly').checked = false;
+      }
+      loadProblems();
+    });
+    document.getElementById('showUntypedOnly').addEventListener('change', function() {
+      loadProblems();
+    });
+
+    // Message recipient toggle
+    document.getElementById('msgRecipient').addEventListener('change', function() {
+      const userIdInput = document.getElementById('msgUserId');
+      if (this.value === 'specific') {
+        userIdInput.style.display = 'block';
+      } else {
+        userIdInput.style.display = 'none';
+        userIdInput.value = '';
+      }
+    });
+
+    // Send message function
+    async function sendMessage() {
+      const recipient = document.getElementById('msgRecipient').value;
+      const userId = document.getElementById('msgUserId').value.trim();
+      const msgType = document.getElementById('msgType').value;
+      const title = document.getElementById('msgTitle').value.trim();
+      const body = document.getElementById('msgBody').value.trim();
+      const statusEl = document.getElementById('msgStatus');
+
+      // Validation
+      if (!title) {
+        statusEl.style.color = '#dc3545';
+        statusEl.textContent = 'Please enter a title';
+        return;
+      }
+      if (!body) {
+        statusEl.style.color = '#dc3545';
+        statusEl.textContent = 'Please enter a message body';
+        return;
+      }
+      if (recipient === 'specific' && !userId) {
+        statusEl.style.color = '#dc3545';
+        statusEl.textContent = 'Please enter a user UUID';
+        return;
+      }
+
+      const sender = document.getElementById('msgSender').value.trim() || '[SYSTEM]';
+
+      statusEl.style.color = '#666';
+      statusEl.textContent = 'Sending...';
+
+      try {
+        const { error } = await supabaseClient
+          .from('user_messages')
+          .insert({
+            user_id: recipient === 'broadcast' ? null : userId,
+            title: title,
+            body: body,
+            message_type: msgType,
+            sent_from: sender
+          });
+
+        if (error) throw error;
+
+        statusEl.style.color = '#28a745';
+        statusEl.textContent = recipient === 'broadcast' 
+          ? 'Broadcast sent to all users!' 
+          : 'Message sent!';
+
+        // Clear form
+        document.getElementById('msgTitle').value = '';
+        document.getElementById('msgBody').value = '';
+        document.getElementById('msgPreview').innerHTML = '';
+
+        // Clear status after 3 seconds
+        setTimeout(() => { statusEl.textContent = ''; }, 3000);
+
+      } catch (err) {
+        console.error('Error sending message:', err);
+        statusEl.style.color = '#dc3545';
+        statusEl.textContent = 'Failed to send message: ' + err.message;
+      }
+    }
+
+    // Live preview with LaTeX
+    function updatePreview() {
+      const body = document.getElementById('msgBody').value;
+      const previewEl = document.getElementById('msgPreview');
+      
+      // Escape HTML but preserve newlines
+      let escaped = body
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      
+      // Convert URLs to links
+      escaped = escaped.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank" style="color: #0084b4;">$1</a>'
+      );
+      
+      previewEl.innerHTML = escaped || '<span style="color: #999;">Preview will appear here...</span>';
+      
+      // Re-render LaTeX
+      if (window.MathJax) {
+        MathJax.typesetPromise([previewEl]).catch(err => console.log('MathJax error:', err));
+      }
+    }
+  </script>
+</body>
+</html>
